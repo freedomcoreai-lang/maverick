@@ -164,21 +164,21 @@
         });
     }
 
-    // Build a pill-group filter row and append it to a section header.
+    // Build a pill-group filter row and append it under the section header.
     function injectSortControl(sectionId, key) {
         var sec = el('section-' + sectionId);
         if (!sec) return;
         var hdr = sec.querySelector('.sl-section-header');
-        if (!hdr || hdr.querySelector('.sl-sort-pills')) return;
+        if (!hdr || sec.querySelector('.sl-sort-pills')) return;
         var pills = sortPills[key] || [];
         var group = document.createElement('div');
         group.className = 'sl-sort-pills';
-        group.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;';
+        group.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px;padding:0;width:100%;';
         pills.forEach(function(p) {
             var btn = document.createElement('button');
             btn.className = 'sl-sort-pill' + (sortMode[key] === p.mode ? ' active' : '');
             btn.setAttribute('data-mode', p.mode);
-            btn.style.cssText = 'padding:4px 10px;font-size:0.65rem;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--text-dim);border-radius:14px;cursor:pointer;font-family:inherit;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;transition:all 0.15s;';
+            btn.style.cssText = 'padding:5px 12px;font-size:0.62rem;font-weight:700;border:1px solid var(--bb-border, var(--border));background:transparent;color:var(--bb-text-dim, var(--text-dim));border-radius:14px;cursor:pointer;font-family:inherit;letter-spacing:1px;text-transform:uppercase;white-space:nowrap;transition:all 0.15s;';
             if (sortMode[key] === p.mode) {
                 btn.style.borderColor = 'var(--bb-green)';
                 btn.style.color = 'var(--bb-green)';
@@ -187,13 +187,12 @@
             btn.textContent = p.label;
             btn.addEventListener('click', function() {
                 sortMode[key] = p.mode;
-                // update sibling pill styles
                 var sibs = group.querySelectorAll('.sl-sort-pill');
                 for (var i = 0; i < sibs.length; i++) {
                     var isActive = sibs[i].getAttribute('data-mode') === p.mode;
                     sibs[i].classList.toggle('active', isActive);
-                    sibs[i].style.borderColor = isActive ? 'var(--bb-green)' : 'var(--border)';
-                    sibs[i].style.color = isActive ? 'var(--bb-green)' : 'var(--text-dim)';
+                    sibs[i].style.borderColor = isActive ? 'var(--bb-green)' : 'var(--bb-border, var(--border))';
+                    sibs[i].style.color = isActive ? 'var(--bb-green)' : 'var(--bb-text-dim, var(--text-dim))';
                     sibs[i].style.background = isActive ? 'rgba(0,230,118,0.08)' : 'transparent';
                 }
                 if (key === 'movers') renderMovers();
@@ -202,7 +201,12 @@
             });
             group.appendChild(btn);
         });
-        hdr.appendChild(group);
+        // Insert on its own row after the header, not jammed next to the title
+        if (hdr.nextSibling) {
+            sec.insertBefore(group, hdr.nextSibling);
+        } else {
+            sec.appendChild(group);
+        }
     }
     setTimeout(function() {
         injectSortControl('symbols', 'symbols');
@@ -428,15 +432,21 @@
 
     // ── Symbol Grid Click Handler (event delegation) ─────────
 
-    var symbolsGrid = el('symbols-grid');
-    if (symbolsGrid) {
-        symbolsGrid.addEventListener('click', function(e) {
-            var card = e.target.closest('[data-symbol]');
-            if (!card) return;
-            var symbol = card.getAttribute('data-symbol');
+    // Wire click-to-open-detail on every symbol container:
+    // Symbols grid (cards), Market Movers list, Volume Leaders list,
+    // Squeeze list, and the Fishing/Explosions lists.
+    ['symbols-grid', 'movers-display', 'volume-display',
+     'squeeze-list', 'fishing-list', 'explosions-list'].forEach(function(containerId) {
+        var container = el(containerId);
+        if (!container) return;
+        container.style.cursor = '';
+        container.addEventListener('click', function(e) {
+            var row = e.target.closest('[data-symbol]');
+            if (!row) return;
+            var symbol = row.getAttribute('data-symbol');
             if (symbol) openSymbolOverlay(symbol);
         });
-    }
+    });
 
     // ── Renderers ────────────────────────────────────────────
 

@@ -122,11 +122,25 @@
         );
     }
 
+    // Normalise a raw symbol (e.g. "BTC", "BTCUSDTM", "XBTUSDT") into a
+    // KuCoin TradingView perp ticker: "BTCUSDT.P". Champion emits bare bases.
+    function tvTickerFor(sym) {
+        if (!sym) return 'BTCUSDT.P';
+        var s = String(sym).toUpperCase().trim();
+        if (s === 'XBT') s = 'BTC';
+        s = s.replace(/^XBT/, 'BTC');
+        s = s.replace(/USDTM$/, 'USDT');   // KuCoin futures → spot-like
+        s = s.replace(/USDT\.P$/, 'USDT'); // already perp — rebuild below
+        if (!/USDT$/.test(s)) s = s + 'USDT';
+        return s + '.P';
+    }
+
     // Opens a modal overlay containing the embedded TradingView widget
     // for the given symbol. Theme-aware so it matches the site's day/night mode.
     function openChartOverlay(sym) {
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const tvSym = encodeURIComponent('KUCOIN:' + sym);
+        const ticker = tvTickerFor(sym);
+        const tvSym = encodeURIComponent('KUCOIN:' + ticker);
         const src = 'https://s.tradingview.com/widgetembed/?frameElementId=tv_signal_chart' +
             '&symbol=' + tvSym +
             '&interval=15&hidesidetoolbar=1&symboledit=0&saveimage=0' +
@@ -137,8 +151,8 @@
         wrap.id = 'sig-chart-overlay';
         wrap.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:stretch;';
         wrap.innerHTML =
-            '<button id="sig-chart-close" aria-label="Close" style="position:fixed;top:12px;left:16px;z-index:1010;background:rgba(0,0,0,0.7);border:1px solid #333;border-radius:50%;color:#fff;font-size:1.5rem;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>' +
-            '<div style="position:fixed;top:18px;right:18px;z-index:1010;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;background:rgba(0,0,0,0.5);padding:8px 14px;border-radius:6px;">' + esc(sym) + ' &middot; 15m</div>' +
+            '<button id="sig-chart-close" aria-label="Close" style="position:fixed;top:12px;right:16px;z-index:1010;background:rgba(0,0,0,0.85);border:1px solid #ff1744;border-radius:50%;color:#fff;font-size:1.4rem;line-height:1;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.5);">&times;</button>' +
+            '<div style="position:fixed;top:18px;left:16px;z-index:1010;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;background:rgba(0,0,0,0.6);padding:8px 14px;border-radius:6px;">' + esc(sym) + ' · ' + esc(ticker) + '</div>' +
             '<iframe src="' + src + '" style="flex:1;width:100%;border:none;background:#0a0f18;" allowfullscreen></iframe>';
         document.body.appendChild(wrap);
         document.body.style.overflow = 'hidden';
