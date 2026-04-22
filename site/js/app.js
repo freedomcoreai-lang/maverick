@@ -1643,12 +1643,14 @@ function renderSignals(signals) {
             }
 
             // Full Indicator Stack (every feature this champion pulls per bar)
+            // CSP-safe: use data-stack-toggle attribute + delegated listener below
+            // instead of an inline onclick (blocked by script-src 'self').
             if (c.feature_panel && c.feature_panel.length) {
                 var stackId = 'champ-stack-' + Math.random().toString(36).slice(2,8);
                 html += '<div style="margin-bottom:16px;">';
-                html += '<div onclick="var x=document.getElementById(\'' + stackId + '\'); var a=document.getElementById(\'' + stackId + '-arrow\'); var open=x.style.display!==\'none\'; x.style.display=open?\'none\':\'flex\'; a.style.transform=open?\'rotate(0deg)\':\'rotate(180deg)\';" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding:8px 0;border-top:1px dashed var(--border);">';
+                html += '<div data-stack-toggle="' + stackId + '" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding:10px 0;border-top:1px dashed var(--border);user-select:none;">';
                 html += '<span>Full Indicator Stack &middot; ' + c.feature_panel.length + ' Features Feeding Every Decision</span>';
-                html += '<span id="' + stackId + '-arrow" style="opacity:0.5;font-size:0.65rem;transition:transform 0.3s;">&#9660;</span>';
+                html += '<span id="' + stackId + '-arrow" style="opacity:0.7;font-size:0.75rem;transition:transform 0.3s;">&#9660;</span>';
                 html += '</div>';
                 html += '<div id="' + stackId + '" style="display:none;flex-direction:column;gap:5px;max-height:360px;overflow-y:auto;padding-right:6px;">';
                 c.feature_panel.forEach(function(f){
@@ -1671,7 +1673,26 @@ function renderSignals(signals) {
 
             detail.innerHTML = html;
             initToggle();
+            initStackToggles(detail);
         }).catch(function(){});
+    }
+
+    // CSP-safe delegated listener for [data-stack-toggle="<id>"] rows inside
+    // the champion detail panel. Binds once per detail node.
+    function initStackToggles(root){
+        if (!root || root._stackBound) return;
+        root._stackBound = true;
+        root.addEventListener('click', function(e){
+            var toggle = e.target.closest('[data-stack-toggle]');
+            if (!toggle) return;
+            var id = toggle.getAttribute('data-stack-toggle');
+            var panel = document.getElementById(id);
+            var arrow = document.getElementById(id + '-arrow');
+            if (!panel) return;
+            var open = panel.style.display !== 'none' && panel.style.display !== '';
+            panel.style.display = open ? 'none' : 'flex';
+            if (arrow) arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
     }
 
     function tickCountdown(){
