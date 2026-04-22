@@ -879,6 +879,12 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     .nav-hamburger { display: block; }
     .ntfy-badge { display: none; }
     .nav-live { display: none; }
+    /* Tighten nav so GitHub + theme-btn + SSL all stay visible on narrow phones */
+    .nav { padding: 8px 12px; gap: 8px; }
+    .nav-right { gap: 6px; flex-shrink: 0; }
+    .nav-right > * { flex-shrink: 0; }
+    .nav-logo { min-width: 0; flex-shrink: 1; }
+    .nav-logo-text { letter-spacing: 2px; font-size: 0.95rem; }
     .origin-grid { grid-template-columns: 1fr 1fr; }
     .engine-grid { grid-template-columns: 1fr; }
     .tier-grid { grid-template-columns: 1fr; }
@@ -890,6 +896,12 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     .pos-summary { grid-template-columns: repeat(2, 1fr); }
     .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
     .security-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+    /* Very narrow phones: hide the logo wordmark, keep the logo image */
+    .nav-logo-text { display: none; }
+    .nav { padding: 8px 10px; gap: 6px; }
+    .nav-right { gap: 4px; }
 }
 @media (max-width: 480px) {
     .hero-actions { flex-direction: column; align-items: stretch; }

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422m">
+    <link rel="stylesheet" href="/css/style.css?v=20260422n">
     <style>
         .sg-wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
         .sg-hero { padding: 40px 0 24px; }
@@ -66,6 +66,85 @@
             border-bottom: 1px solid var(--border);
             font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
             letter-spacing: 2.5px; text-transform: uppercase;
+        }
+
+        /* ── Signal card (champ-sig) — responsive row layout ── */
+        .champ-sig {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s;
+            overflow: hidden;
+        }
+        .champ-sig.is-open { border-color: var(--accent); }
+        .champ-sig-head {
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 68px minmax(0, 1fr) 110px 72px;
+            gap: 10px;
+            padding: 12px 14px;
+            align-items: center;
+            user-select: none;
+        }
+        .champ-sig-head > * { pointer-events: none; }
+        .cs-ago {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--text-dim);
+        }
+        .cs-body { min-width: 0; }
+        .cs-body-top {
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .cs-dir {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem; font-weight: 800;
+            letter-spacing: 1.5px; padding: 3px 8px; border-radius: 4px;
+            white-space: nowrap;
+        }
+        .cs-symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem; font-weight: 800; color: var(--text);
+        }
+        .cs-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem; color: var(--text-dim); letter-spacing: 1px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            max-width: 100%;
+        }
+        .cs-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem; color: var(--text-dim); margin-top: 3px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .cs-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem; letter-spacing: 1.5px;
+            text-align: right; white-space: nowrap;
+        }
+        .cs-toggle {
+            text-align: right; color: var(--accent);
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px; white-space: nowrap;
+        }
+
+        /* On narrow viewports, stack so fields never overlap */
+        @media (max-width: 640px) {
+            .champ-sig-head {
+                grid-template-columns: 1fr auto;
+                grid-template-areas:
+                    "body   toggle"
+                    "ago    status";
+                gap: 6px 10px;
+                padding: 10px 12px;
+            }
+            .cs-body   { grid-area: body; }
+            .cs-toggle { grid-area: toggle; }
+            .cs-ago    { grid-area: ago; }
+            .cs-status { grid-area: status; text-align: right; }
+            .cs-meta { white-space: normal; }
         }
     </style>
 </head>

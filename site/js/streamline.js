@@ -103,8 +103,19 @@
 
     // ── Tab Switching ────────────────────────────────────────
 
-    // Sort state per section (toggle A-Z vs metric)
-    var sortMode = { symbols: 'metric', movers: 'metric', volume: 'metric' };
+    // Sort state per section: cycles desc → asc → alpha
+    var sortMode = { symbols: 'desc', movers: 'desc', volume: 'desc' };
+    // Labels for each section in each mode — shown on the toggle button
+    var sortLabels = {
+        symbols: { desc: 'Sort: ADX ▼', asc: 'Sort: ADX ▲', alpha: 'Sort: A→Z' },
+        movers:  { desc: 'Sort: Biggest Gain ▼', asc: 'Sort: Biggest Loss ▲', alpha: 'Sort: A→Z' },
+        volume:  { desc: 'Sort: High Vol ▼', asc: 'Sort: Low Vol ▲', alpha: 'Sort: A→Z' }
+    };
+    function nextSortMode(m) {
+        if (m === 'desc') return 'asc';
+        if (m === 'asc') return 'alpha';
+        return 'desc';
+    }
 
     var tabContainer = document.querySelector('.sl-tabs');
     if (tabContainer) {
@@ -152,11 +163,11 @@
         if (!hdr || hdr.querySelector('.sl-sort-toggle')) return;
         var btn = document.createElement('button');
         btn.className = 'sl-sort-toggle';
-        btn.style.cssText = 'margin-left:auto;padding:4px 10px;font-size:0.7rem;font-weight:700;border:1px solid var(--border);background:var(--card-bg);color:var(--text-dim);border-radius:4px;cursor:pointer;font-family:inherit;';
-        btn.textContent = sortMode[key] === 'alpha' ? 'Sort: A→Z' : 'Sort: Metric ▼';
+        btn.style.cssText = 'margin-left:auto;padding:4px 10px;font-size:0.7rem;font-weight:700;border:1px solid var(--border);background:var(--card-bg);color:var(--text-dim);border-radius:4px;cursor:pointer;font-family:inherit;white-space:nowrap;';
+        btn.textContent = sortLabels[key][sortMode[key]];
         btn.addEventListener('click', function() {
-            sortMode[key] = sortMode[key] === 'alpha' ? 'metric' : 'alpha';
-            btn.textContent = sortMode[key] === 'alpha' ? 'Sort: A→Z' : 'Sort: Metric ▼';
+            sortMode[key] = nextSortMode(sortMode[key]);
+            btn.textContent = sortLabels[key][sortMode[key]];
             if (key === 'movers') renderMovers();
             else if (key === 'volume') renderVolume();
             else if (key === 'symbols') renderSymbolsFromCache();
@@ -412,12 +423,14 @@
         // Cache for overlay use
         symbolDataCache = data;
 
-        // Sort: alphabetical OR by ADX 4h descending (default)
+        // Sort: alphabetical, or by ADX 4h desc/asc
         var sorted = data.slice().sort(function(a, b) {
             if (sortMode.symbols === 'alpha') {
                 return cleanSymbol(a.symbol).localeCompare(cleanSymbol(b.symbol));
             }
-            return (parseFloat(b.adx_4h) || 0) - (parseFloat(a.adx_4h) || 0);
+            var av = parseFloat(a.adx_4h) || 0;
+            var bv = parseFloat(b.adx_4h) || 0;
+            return sortMode.symbols === 'asc' ? av - bv : bv - av;
         });
 
         var html = '';
@@ -875,7 +888,11 @@
             if (sortMode.movers === 'alpha') {
                 return cleanSymbol(a.symbol).localeCompare(cleanSymbol(b.symbol));
             }
-            return Math.abs(parseFloat(b.pct_change) || 0) - Math.abs(parseFloat(a.pct_change) || 0);
+            var av = parseFloat(a.pct_change) || 0;
+            var bv = parseFloat(b.pct_change) || 0;
+            // desc = biggest gainers at top (signed, high → low)
+            // asc  = biggest losers at top  (signed, low → high)
+            return sortMode.movers === 'asc' ? av - bv : bv - av;
         });
 
         var html = '';
@@ -907,7 +924,9 @@
             if (sortMode.volume === 'alpha') {
                 return cleanSymbol(a.symbol).localeCompare(cleanSymbol(b.symbol));
             }
-            return (parseFloat(b.volume_ratio) || 0) - (parseFloat(a.volume_ratio) || 0);
+            var av = parseFloat(a.volume_ratio) || 0;
+            var bv = parseFloat(b.volume_ratio) || 0;
+            return sortMode.volume === 'asc' ? av - bv : bv - av;
         });
 
         var html = '';

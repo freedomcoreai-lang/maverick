@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422m">
+    <link rel="stylesheet" href="/css/style.css?v=20260422n">
     <style>
         .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .ax-hero-badge {
@@ -669,11 +669,12 @@
 
         // Tier status tags across the grid
         function updateTierTags(currentTier, tokenDeployed) {
-            const order = ['none','observer','signal','sovereign'];
+            const order = ['none','observer','signal','pro','sovereign'];
             const myIdx = order.indexOf(currentTier || 'none');
             const tags = {
                 observer:  document.getElementById('status-observer'),
                 signal:    document.getElementById('status-signal'),
+                pro:       document.getElementById('status-pro'),
                 sovereign: document.getElementById('status-sovereign'),
             };
             Object.entries(tags).forEach(([n, el]) => {

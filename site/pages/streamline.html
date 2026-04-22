@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422m">
+    <link rel="stylesheet" href="/css/style.css?v=20260422n">
     <style>
         /* ═══════════════════════════════════════════════════════════════
            STREAMLINE MISSION CONTROL. BLACKBOX DASHBOARD
@@ -1242,12 +1242,13 @@
 
         /* ── Symbol Detail Overlay ── */
         .overlay-close {
-            position: fixed; top: 12px; left: 16px; z-index: 1010;
-            background: rgba(0,0,0,0.7); border: 1px solid #333; border-radius: 50%;
-            color: var(--bb-text); font-size: 1.5rem; width: 40px; height: 40px;
+            position: fixed; top: 12px; right: 16px; z-index: 1010;
+            background: rgba(0,0,0,0.85); border: 1px solid var(--bb-red-border, #ff1744); border-radius: 50%;
+            color: var(--bb-text); font-size: 1.4rem; line-height: 1; width: 40px; height: 40px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5);
         }
-        .overlay-close:hover { background: rgba(255,23,68,0.4); }
+        .overlay-close:hover { background: rgba(255,23,68,0.55); color: #fff; }
         .overlay-chart {
             width: 100%; height: 60vh; min-height: 300px;
             border: none; display: block;

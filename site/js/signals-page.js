@@ -213,21 +213,21 @@
         // below is click-inert so users can interact with the breakdown without
         // accidentally closing the card.
         let html =
-            '<div class="champ-sig" data-sig-id="' + s.id + '" style="background:var(--card);border:1px solid ' + (isOpen ? 'var(--accent)' : 'var(--border)') + ';border-radius:12px;margin-bottom:8px;transition:border-color 0.2s;overflow:hidden;">' +
-                '<div class="champ-sig-head" data-toggle-id="' + s.id + '" style="cursor:pointer;display:grid;grid-template-columns:72px 1fr 110px 80px;gap:10px;padding:12px 14px;align-items:center;user-select:none;">' +
-                    '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;color:var(--text-dim);pointer-events:none;">' + ago(s.ts_unix) + '</div>' +
-                    '<div style="min-width:0;pointer-events:none;">' +
-                        '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
-                            '<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;font-weight:800;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;color:' + ds.color + ';background:' + ds.bg + ';">' + ds.label + '</span>' +
-                            '<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.95rem;font-weight:800;color:var(--text);">' + esc(s.symbol || '') + '</span>' +
-                            '<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.6rem;color:var(--text-dim);letter-spacing:1px;">' + esc(s.signal_label || '') + '</span>' +
+            '<div class="champ-sig' + (isOpen ? ' is-open' : '') + '" data-sig-id="' + s.id + '">' +
+                '<div class="champ-sig-head" data-toggle-id="' + s.id + '">' +
+                    '<div class="cs-ago">' + ago(s.ts_unix) + '</div>' +
+                    '<div class="cs-body">' +
+                        '<div class="cs-body-top">' +
+                            '<span class="cs-dir" style="color:' + ds.color + ';background:' + ds.bg + ';">' + ds.label + '</span>' +
+                            '<span class="cs-symbol">' + esc(s.symbol || '') + '</span>' +
+                            '<span class="cs-label">' + esc(s.signal_label || '') + '</span>' +
                         '</div>' +
-                        '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;color:var(--text-dim);margin-top:3px;">' +
+                        '<div class="cs-meta">' +
                             'entry ' + fmtPrice(s.entry_price) + (s.stop_price ? '  ·  stop ' + fmtPrice(s.stop_price) : '') + (s.leverage ? '  ·  ' + s.leverage + 'x' : '') +
                         '</div>' +
                     '</div>' +
-                    '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:1.5px;color:' + ss.color + ';text-align:right;pointer-events:none;">' + ss.label + '</div>' +
-                    '<div style="text-align:right;color:var(--accent);font-size:0.78rem;font-family:\'JetBrains Mono\',monospace;letter-spacing:1px;pointer-events:none;">' + (isOpen ? '▲ HIDE' : '▼ OPEN') + '</div>' +
+                    '<div class="cs-status" style="color:' + ss.color + ';">' + ss.label + '</div>' +
+                    '<div class="cs-toggle">' + (isOpen ? '▲ HIDE' : '▼ OPEN') + '</div>' +
                 '</div>';
 
         if (isOpen) {
