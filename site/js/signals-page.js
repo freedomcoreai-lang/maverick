@@ -149,9 +149,20 @@
             '&style=1&timezone=Etc%2FUTC&withdateranges=1&showvolume=true';
         const wrap = document.createElement('div');
         wrap.id = 'sig-chart-overlay';
-        wrap.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:stretch;';
+        wrap.style.cssText = 'position:fixed;inset:0;z-index:1000;background:#0a0f18;display:flex;flex-direction:column;align-items:stretch;';
+        // Header bar lives ABOVE the iframe so the close button never sits on
+        // the price axis or any chart value. Iframe takes whatever height
+        // remains via flex:1.
         wrap.innerHTML =
-            '<button id="sig-chart-close" aria-label="Close" style="position:fixed;top:72px;right:16px;z-index:1010;background:rgba(0,0,0,0.85);border:1px solid #ff1744;border-radius:50%;color:#fff;font-size:1.4rem;line-height:1;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.5);">&times;</button>' +
+            '<div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;' +
+                 'padding:10px 14px;background:#06090f;border-bottom:1px solid rgba(255,255,255,0.08);">' +
+                '<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;' +
+                       'text-transform:uppercase;color:var(--gold);">Champion Chart · ' + esc(sym) + '</span>' +
+                '<button id="sig-chart-close" aria-label="Close chart" type="button" ' +
+                        'style="background:rgba(0,0,0,0.85);border:1px solid #ff1744;border-radius:50%;' +
+                        'color:#fff;font-size:1.1rem;line-height:1;width:32px;height:32px;cursor:pointer;' +
+                        'display:flex;align-items:center;justify-content:center;flex-shrink:0;">&times;</button>' +
+            '</div>' +
             '<iframe src="' + src + '" style="flex:1;width:100%;border:none;background:#0a0f18;" allowfullscreen></iframe>';
         document.body.appendChild(wrap);
         document.body.style.overflow = 'hidden';
