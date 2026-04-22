@@ -84,6 +84,10 @@ body::after {
 }
 [data-theme="light"] .grid-bg { opacity: 0.5; }
 
+/* Frontier card CTA → Access page */
+.frontier-cta { transition: opacity 0.2s, letter-spacing 0.2s; }
+.frontier-cta:hover { opacity: 0.85; letter-spacing: 2px; }
+
 /* === NAV === */
 .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 200;
