@@ -116,11 +116,46 @@
         ).join('');
         return (
             '<div style="margin-top:16px;">' +
-                '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:#ffd700;text-transform:uppercase;margin-bottom:8px;">🧬 DNA Snapshot at signal time · ' + Object.keys(dna).length + ' knobs</div>' +
+                '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:8px;">🧬 DNA Snapshot at signal time · ' + Object.keys(dna).length + ' knobs</div>' +
                 '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px;">' + rows + '</div>' +
             '</div>'
         );
     }
+
+    // Opens a modal overlay containing the embedded TradingView widget
+    // for the given symbol. Theme-aware so it matches the site's day/night mode.
+    function openChartOverlay(sym) {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const tvSym = encodeURIComponent('KUCOIN:' + sym);
+        const src = 'https://s.tradingview.com/widgetembed/?frameElementId=tv_signal_chart' +
+            '&symbol=' + tvSym +
+            '&interval=15&hidesidetoolbar=1&symboledit=0&saveimage=0' +
+            '&toolbarbg=' + (isLight ? 'ffffff' : '0a0f18') +
+            '&theme=' + (isLight ? 'light' : 'dark') +
+            '&style=1&timezone=Etc%2FUTC&withdateranges=1&showvolume=true';
+        const wrap = document.createElement('div');
+        wrap.id = 'sig-chart-overlay';
+        wrap.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:stretch;';
+        wrap.innerHTML =
+            '<button id="sig-chart-close" aria-label="Close" style="position:fixed;top:12px;left:16px;z-index:1010;background:rgba(0,0,0,0.7);border:1px solid #333;border-radius:50%;color:#fff;font-size:1.5rem;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;">&times;</button>' +
+            '<div style="position:fixed;top:18px;right:18px;z-index:1010;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;background:rgba(0,0,0,0.5);padding:8px 14px;border-radius:6px;">' + esc(sym) + ' &middot; 15m</div>' +
+            '<iframe src="' + src + '" style="flex:1;width:100%;border:none;background:#0a0f18;" allowfullscreen></iframe>';
+        document.body.appendChild(wrap);
+        document.body.style.overflow = 'hidden';
+        function closeChart() {
+            const el = document.getElementById('sig-chart-overlay');
+            if (el) el.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', escHandler);
+        }
+        function escHandler(e) { if (e.key === 'Escape') closeChart(); }
+        wrap.addEventListener('click', function(e) {
+            if (e.target.id === 'sig-chart-close' || e.target === wrap) closeChart();
+        });
+        document.addEventListener('keydown', escHandler);
+    }
+    // Expose to inline onclick handlers
+    window.fcOpenSignalChart = openChartOverlay;
 
     function indicatorsBlock(bar, s) {
         const picks = [
@@ -197,12 +232,7 @@
 
         if (isOpen) {
             const reasonExplain = explainLabel(s.signal_label, s.direction);
-            // TradingView chart link: strip USDTM suffix, prepend KUCOIN: exchange.
-            // e.g. BTCUSDTM -> KUCOIN:BTCUSDTM -> tradingview.com/chart?symbol=KUCOIN:BTCUSDTM
             const sym = (s.symbol || '').toUpperCase();
-            const tvSymbol = 'KUCOIN:' + sym;
-            const tvChartUrl = 'https://www.tradingview.com/chart/?symbol=' + encodeURIComponent(tvSymbol) + '&interval=15';
-            const coinalyzeUrl = 'https://coinalyze.net/futures-data/' + encodeURIComponent(sym.replace('USDTM','').toLowerCase()) + '/';
 
             // Inert expanded panel - does NOT bubble clicks to the toggle.
             html += '<div class="champ-sig-body" data-close-id="' + s.id + '" style="padding:0 16px 16px 16px;border-top:1px solid var(--border);">' +
@@ -210,16 +240,12 @@
                     '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:6px;">🎯 Why this fired</div>' +
                     '<div style="color:var(--text);font-size:0.88rem;line-height:1.65;">' + esc(reasonExplain) + '</div>' +
                 '</div>' +
-                // Chart link quick-access row
-                '<div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">' +
-                    '<a href="' + tvChartUrl + '" target="_blank" rel="noopener noreferrer" ' +
-                    'style="flex:1; min-width:180px; padding:12px 14px; background:linear-gradient(135deg,rgba(41,98,255,0.12),rgba(41,98,255,0.05)); border:1px solid rgba(41,98,255,0.35); border-radius:8px; text-decoration:none; color:var(--text); font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; text-align:center;">' +
-                        '📈 View ' + esc(sym) + ' on TradingView' +
-                    '</a>' +
-                    '<a href="' + coinalyzeUrl + '" target="_blank" rel="noopener noreferrer" ' +
-                    'style="flex:1; min-width:180px; padding:12px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:8px; text-decoration:none; color:var(--text-dim); font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; text-align:center;">' +
-                        '📊 Open interest / funding' +
-                    '</a>' +
+                // Embedded chart trigger - opens TradingView widget in-app modal
+                '<div style="margin-top:14px;">' +
+                    '<button onclick="event.stopPropagation();window.fcOpenSignalChart(\'' + esc(sym) + '\');" ' +
+                    'style="width:100%; padding:12px 14px; background:linear-gradient(135deg,rgba(78,205,196,0.12),rgba(62,168,245,0.08)); border:1px solid var(--green); border-radius:8px; cursor:pointer; color:var(--text); font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; text-align:center;">' +
+                        '📈 View ' + esc(sym) + ' chart' +
+                    '</button>' +
                 '</div>' +
                 indicatorsBlock(s.bar || {}, s) +
                 dnaBlock(s.dna || {}) +
