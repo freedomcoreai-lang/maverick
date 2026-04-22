@@ -81,14 +81,22 @@
                     list.innerHTML = '<div class="empty-note">No closed trades today yet. Live positions may still be running.</div>';
                 } else {
                     list.innerHTML = trades.map(function(t) {
-                        var pnlCls = t.pnl_pct >= 0 ? 'pos' : 'neg';
+                        var pnlPos = (t.pnl_pct || 0) >= 0;
+                        var cls = pnlPos ? 'pos' : 'neg';
                         var hhmm = (t.time || '').substr(11,5);
-                        return '<div class="trade-row">' +
-                            '<div class="trade-time">' + esc(hhmm) + '</div>' +
-                            '<div><div class="trade-sym">' + esc(t.symbol || '?') + '</div><div class="trade-regime">' + esc(t.regime || '--') + ' &middot; ' + esc((t.exit_reason || '').replace(/_/g, ' ')) + '</div></div>' +
-                            '<div style="color:var(--text-dim); font-size:0.68rem;">$' + (t.pnl_usd !== undefined ? t.pnl_usd.toFixed(2) : '--') + '</div>' +
-                            '<div class="trade-pnl ' + pnlCls + '">' + fmtPct(t.pnl_pct) + '</div>' +
-                            '</div>';
+                        var pnlUsd = (t.pnl_usd !== undefined && t.pnl_usd !== null)
+                            ? (pnlPos ? '+$' : '-$') + Math.abs(Number(t.pnl_usd)).toFixed(2)
+                            : '--';
+                        var meta = esc(t.regime || '--') + ' · ' + esc((t.exit_reason || '').replace(/_/g, ' '));
+                        return '<div class="trade-row ' + cls + '">' +
+                            '<div class="tr-body">' +
+                                '<span class="tr-time">' + esc(hhmm) + '</span>' +
+                                '<span class="tr-sym">' + esc(t.symbol || '?') + '</span>' +
+                            '</div>' +
+                            '<div class="tr-pnl ' + cls + '">' + pnlUsd + '</div>' +
+                            '<div class="tr-meta">' + meta + '</div>' +
+                            '<div class="tr-pct ' + cls + '">' + fmtPct(t.pnl_pct) + '</div>' +
+                        '</div>';
                     }).join('');
                 }
             }
@@ -102,13 +110,16 @@
                 } else {
                     posList.innerHTML = pos.map(function(p) {
                         var dir = (p.direction || '').toLowerCase();
-                        var roiCls = p.roi_pct >= 0 ? 'pos' : 'neg';
-                        return '<div class="position-row">' +
-                            '<div class="trade-sym">' + esc(p.symbol || '?') + '</div>' +
-                            '<div class="position-dir ' + esc(dir) + '">' + esc(p.direction || '--') + '</div>' +
-                            '<div class="trade-regime">' + esc(p.regime || '--') + '</div>' +
-                            '<div class="position-roi ' + roiCls + '" style="color:' + (p.roi_pct >= 0 ? 'var(--green)' : 'var(--red)') + ';">' + fmtPct(p.roi_pct) + '</div>' +
-                            '</div>';
+                        var dirLabel = (p.direction || '--').toUpperCase();
+                        var roiCls = (p.roi_pct || 0) >= 0 ? 'pos' : 'neg';
+                        return '<div class="position-row ' + esc(dir) + '">' +
+                            '<div class="pr-body">' +
+                                '<span class="pr-sym">' + esc(p.symbol || '?') + '</span>' +
+                                '<span class="pr-dir ' + esc(dir) + '">' + esc(dirLabel) + '</span>' +
+                            '</div>' +
+                            '<div class="pr-roi ' + roiCls + '">' + fmtPct(p.roi_pct) + '</div>' +
+                            '<div class="pr-meta">' + esc(p.regime || '--') + '</div>' +
+                        '</div>';
                     }).join('');
                 }
             }

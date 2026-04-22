@@ -88,13 +88,19 @@ body::after {
 .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     padding: 10px 20px;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center;
+    /* Deliberately NOT space-between — the logo's position must be hard-docked
+       next to the hamburger. nav-right pushes itself to the right via margin-left:auto. */
     background: #0a1628;
     backdrop-filter: blur(24px);
     border-bottom: none;
     transition: background 0.3s;
-    gap: 16px;
+    gap: 10px;
 }
+.nav-hamburger { flex-shrink: 0; order: 1; }
+.nav-logo      { flex-shrink: 0; order: 2; }
+.nav-center    { order: 3; flex: 1 1 auto; justify-content: center; }
+.nav-right     { order: 4; margin-left: auto; flex-shrink: 0; }
 /* Neon cyan/blue underline — full viewport width, sits right below the nav */
 .nav-neon-line {
     position: fixed;
