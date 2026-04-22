@@ -74,7 +74,8 @@
     const portalBtn = document.getElementById('portal-btn');
     const subLogoutBtn = document.getElementById('sub-logout-btn');
 
-    let selectedTier = 'observer';
+    let selectedTier = 'signal';
+    let selectedCycle = 'monthly';
     document.querySelectorAll('.ax-tier-choice').forEach((el) => {
         el.addEventListener('click', () => {
             document.querySelectorAll('.ax-tier-choice').forEach(e => e.classList.remove('selected'));
@@ -99,9 +100,17 @@
             const d = await r.json();
             const byT = {};
             (d.plans || []).forEach(p => byT[p.tier] = p);
-            if (byT.observer)  document.getElementById('price-observer').textContent = byT.observer.display;
-            if (byT.signal)    document.getElementById('price-signal').textContent   = byT.signal.display;
-            if (byT.sovereign) document.getElementById('price-sovereign').textContent = byT.sovereign.display;
+            // New plans response uses monthly_display / annual_display.
+            // Default tier-choice buttons show monthly. Pick whichever
+            // field is present so older API responses still render too.
+            const pickDisplay = (p) => p && (p.monthly_display || p.display || '');
+            const setPrice = (id, p) => {
+                const el = document.getElementById(id);
+                if (el && p) el.textContent = pickDisplay(p);
+            };
+            setPrice('price-signal',    byT.signal);
+            setPrice('price-pro',       byT.pro);
+            setPrice('price-sovereign', byT.sovereign);
             if (!d.stripe_enabled) {
                 subBtn.disabled = true;
                 subBtn.textContent = 'SUBSCRIPTIONS OPENING SOON';
@@ -122,7 +131,7 @@
                 const r = await apiFetch('/api/sub/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tier: selectedTier, email }),
+                    body: JSON.stringify({ tier: selectedTier, billing_cycle: selectedCycle, email }),
                 });
                 const d = await r.json();
                 if (d.url) {
