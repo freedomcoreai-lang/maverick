@@ -152,7 +152,6 @@
         wrap.style.cssText = 'position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:stretch;';
         wrap.innerHTML =
             '<button id="sig-chart-close" aria-label="Close" style="position:fixed;top:72px;right:16px;z-index:1010;background:rgba(0,0,0,0.85);border:1px solid #ff1744;border-radius:50%;color:#fff;font-size:1.4rem;line-height:1;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.5);">&times;</button>' +
-            '<div style="position:fixed;top:78px;left:16px;z-index:1010;color:#fff;font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;background:rgba(0,0,0,0.7);padding:6px 10px;border-radius:6px;">' + esc(sym) + ' · ' + esc(ticker) + '</div>' +
             '<iframe src="' + src + '" style="flex:1;width:100%;border:none;background:#0a0f18;" allowfullscreen></iframe>';
         document.body.appendChild(wrap);
         document.body.style.overflow = 'hidden';
