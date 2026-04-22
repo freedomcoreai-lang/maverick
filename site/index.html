@@ -130,17 +130,16 @@
         <div class="hero-subtitle-brand">FreedomCore</div>
 
         <p class="hero-desc">
-            You are about to watch an experiment. A self-evolving AI rewrites its own trading logic
-            every forty-eight hours, across eighty-eight markets, trading real capital with zero human
-            intervention. We don't predict. We evolve faster than the market.
+            Every 7 days, an AI tears up its own trading logic and writes a new one. 88 markets. Real capital.
+            No human hand on the wheel. We don&rsquo;t forecast. We mutate faster than conditions change.
             <br><br>
-            You are not buying yield. You are buying coverage. A front-row seat to an AI trying to
-            solve markets in public. It might succeed. It might burn. You'll see either live.
+            This isn&rsquo;t yield. It&rsquo;s a ringside ticket to an AI trying to solve markets in the open.
+            It might compound into something extraordinary. It might crater on camera. You see every move.
         </p>
 
         <!-- POWERED BY - the two frontier models teaming up -->
         <div style="margin-top:22px; padding:18px 22px; background:var(--gold-bg); border:1px solid var(--gold-border); border-radius:14px; max-width:760px; display:inline-block; text-align:left;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:12px; text-align:center;">Powered by the frontier</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:12px; text-align:center;">Gemini 3.1 + Claude Opus 4.7</div>
             <div style="color:var(--text); font-size:0.98rem; line-height:1.6; font-weight:600; margin-bottom:10px;">
                 Two of the most capable models ever built are teaming up inside MAVERICK. <b style="color:var(--gold);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--gold);">Claude Opus 4.7</b> audits the architecture before live deployment.
             </div>
@@ -355,15 +354,15 @@
                 A single reigning champion owns everything: entry logic, sizing, leverage, stops, trails,
                 exits. It runs across all 88 perpetual futures, ticking every second. The swarm evolves
                 new candidates continuously. Only a strategy that strictly beats the live champion on a
-                fresh 6-day backtest window takes the throne. If nothing beats it, the system holds.
-                No change for the sake of change. The current apex is <strong>Goliath Gamma v1.2.1</strong>,
-                and the 1000-generation mega hunt is actively honing its successor right now.
+                fresh 6-day honest-physics backtest takes the throne. If nothing beats it, the system holds.
+                No change for the sake of change. The current apex is <strong id="live-champion-name">loading…</strong>,
+                and the swarm is actively honing its successor right now.
             </p>
             <div class="engine-grid">
                 <div class="engine-card trend">
                     <div class="engine-icon">&#127919;</div>
-                    <div class="engine-name">Goliath Gamma (Live Champion)</div>
-                    <div class="engine-desc">The reigning live strategy. A Dual-Regime Omni-Router: when ADX drops below 20 the market is declared 'ranging' and the engine fades 50-bar structural extremes with RSI exhaustion confirmation. When ADX climbs above 25 the engine flips to momentum mode and only fires breakouts carrying 1.5x average volume for institutional backing. Hard-coded 'Chop Death Zone' veto blocks the exact liquidity hunts that liquidated prior champions. 2.5 ATR initial stop on every entry - tight enough to matter, wide enough to survive market-maker wicks. Two-phase ratchet: break-even buffer at 1.5 ATR profit, 1.5 ATR volatility trail above 3.0 ATR.</div>
+                    <div class="engine-name" id="live-champion-card-name">Live Champion</div>
+                    <div class="engine-desc" id="live-champion-card-desc">The reigning live strategy. Reads <span id="live-champion-features">the live feature set</span> and fires entries the moment its conditions line up, across all 88 perpetual futures. A 2.5 ATR initial stop protects capital, a two-stage volatility trail ratchets profits as the move extends, and a 4-hour time-exit closes any position that fails to work. When the swarm evolves a strategy that strictly beats this one on an honest-physics backtest, the atomic hot-swap pipeline replaces it live - and this card updates the moment it does.</div>
                 </div>
                 <div class="engine-card trap">
                     <div class="engine-icon">&#9881;</div>
@@ -378,7 +377,7 @@
                 <div class="engine-card genesis">
                     <div class="engine-icon">&#129529;</div>
                     <div class="engine-name">The God-Mode Swarm</div>
-                    <div class="engine-desc">Two of the most capable models ever built are teaming up inside MAVERICK. <strong>Gemini 3.1</strong> writes each candidate strategy - entry logic, pre-filter, position management, DNA - from a blank scaffold with total authority. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. The swarm is running a 1000-generation mega hunt right now. The reigning apex (PHASE_4_KINETIC_SOLACE) has already scored 50× the previous champion in backtest. Every new Google or Anthropic model release auto-upgrades the pipeline the very next cycle. You are always running the best AI available on Earth.</div>
+                    <div class="engine-desc">Two of the most capable models ever built are teaming up inside MAVERICK. <strong>Gemini 3.1</strong> writes each candidate strategy - entry logic, pre-filter, position management, DNA - from a blank scaffold, anchored to market structure on every thesis. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. Candidates are rejected if they duplicate a previously-scored thesis, violate the payoff-ratio floor, or crack under honest-physics lookahead detection. Every new Google or Anthropic model release auto-upgrades the pipeline the very next cycle. You are always running the best AI available on Earth.</div>
                 </div>
             </div>
         </div>
@@ -717,5 +716,36 @@
     <script src="/js/app.js"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
+    <script>
+    // Live champion card sync — pulls current champion from /api/swarm_champion
+    // and updates the "Live Champion" card on every page load + every 60s.
+    // No hot-swap ever leaves marketing copy lying about who is live.
+    (function() {
+        async function refreshLiveChampion() {
+            try {
+                const res = await fetch('/api/swarm_champion', { cache: 'no-store' });
+                if (!res.ok) return;
+                const d = await res.json();
+                if (!d.found) return;
+                const nameEl = document.getElementById('live-champion-name');
+                const cardNameEl = document.getElementById('live-champion-card-name');
+                const featEl = document.getElementById('live-champion-features');
+                if (nameEl && d.name) nameEl.textContent = d.name;
+                if (cardNameEl && d.strategy_name) cardNameEl.textContent = d.strategy_name + ' (Live Champion)';
+                if (featEl && Array.isArray(d.required_features) && d.required_features.length) {
+                    const feats = d.required_features.map(f => f.toUpperCase()).join(', ');
+                    featEl.textContent = feats;
+                }
+            } catch (e) { /* silent — card keeps generic fallback */ }
+        }
+        // On load + every 60s
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', refreshLiveChampion);
+        } else {
+            refreshLiveChampion();
+        }
+        setInterval(refreshLiveChampion, 60000);
+    })();
+    </script>
 </body>
 </html>
