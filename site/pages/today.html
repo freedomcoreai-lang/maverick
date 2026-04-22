@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422p">
+    <link rel="stylesheet" href="/css/style.css?v=20260422q">
     <style>
         .today-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
         .today-hero-badge {
@@ -303,127 +303,7 @@
 
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js"></script>
-    <script src="/js/mav-wallet.js?v=20260422b"></script>
-    <script>
-    (function() {
-        function fmtPct(v) { if (v === undefined || v === null) return '-'; var n = Number(v); return (n >= 0 ? '+' : '') + n.toFixed(2) + '%'; }
-        function fmtDate(d) {
-            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-            var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-            return days[d.getUTCDay()] + ', ' + d.getUTCDate() + ' ' + months[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
-        }
-        document.getElementById('today-date').textContent = fmtDate(new Date());
-
-        // Next Saturday 17:00 BST = 16:00 UTC
-        function updateCountdown() {
-            var now = new Date();
-            var target = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 16, 0, 0));
-            while (target.getUTCDay() !== 6 || target <= now) {
-                target.setUTCDate(target.getUTCDate() + 1);
-            }
-            var ms = target - now;
-            if (ms <= 0) { document.getElementById('countdown-timer').textContent = 'FIRING'; return; }
-            var d = Math.floor(ms / 86400000);
-            var h = Math.floor((ms % 86400000) / 3600000);
-            var m = Math.floor((ms % 3600000) / 60000);
-            var s = Math.floor((ms % 60000) / 1000);
-            document.getElementById('countdown-timer').textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        function el(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
-        function fmtClass(v) { return (v || '').toString(); }
-
-        function _apiHeaders() {
-            return (typeof window.fcMergeHeaders === 'function')
-                ? window.fcMergeHeaders()
-                : {'X-API-Key': 'fcweb_60fd94aa2d910f38a9f3e0557076791a'};
-        }
-
-        async function loadPerformance() {
-            try {
-                var r = await fetch('/api_data/performance.json?_=' + Date.now(), {cache: 'no-store'});
-                var d = await r.json();
-                var s = d.summary_24h || {};
-                var pnl = s.pnl_pct;
-                var pnlEl = document.getElementById('today-pnl');
-                pnlEl.textContent = fmtPct(pnl);
-                pnlEl.style.color = pnl == null ? 'var(--text)' : (pnl > 0 ? 'var(--green)' : pnl < 0 ? 'var(--red)' : 'var(--text)');
-                el('today-wr', (s.win_rate !== undefined && s.win_rate !== null ? s.win_rate.toFixed(1) + '%' : '-'));
-                el('today-trades', (s.trades || 0) + ' trades today');
-                el('today-open', (d.live_positions || []).length);
-
-                // Today's trades
-                var today = new Date().toISOString().slice(0, 10);
-                var trades = (d.recent_trades || []).filter(function(t) { return (t.time || '').startsWith(today); });
-                var list = document.getElementById('today-trades-list');
-                if (trades.length === 0) {
-                    list.innerHTML = '<div class="empty-note">No closed trades today yet. Live positions may still be running.</div>';
-                } else {
-                    list.innerHTML = trades.map(function(t) {
-                        var pnlCls = t.pnl_pct >= 0 ? 'pos' : 'neg';
-                        var hhmm = (t.time || '').substr(11,5);
-                        return '<div class="trade-row">' +
-                            '<div class="trade-time">' + hhmm + '</div>' +
-                            '<div><div class="trade-sym">' + (t.symbol || '?') + '</div><div class="trade-regime">' + (t.regime || '--') + ' &middot; ' + (t.exit_reason || '').replace(/_/g, ' ') + '</div></div>' +
-                            '<div style="color:var(--text-dim); font-size:0.68rem;">$' + (t.pnl_usd !== undefined ? t.pnl_usd.toFixed(2) : '--') + '</div>' +
-                            '<div class="trade-pnl ' + pnlCls + '">' + fmtPct(t.pnl_pct) + '</div>' +
-                            '</div>';
-                    }).join('');
-                }
-
-                // Positions
-                var pos = d.live_positions || [];
-                var posList = document.getElementById('today-positions-list');
-                if (pos.length === 0) {
-                    posList.innerHTML = '<div class="empty-note">No open positions right now.</div>';
-                } else {
-                    posList.innerHTML = pos.map(function(p) {
-                        var dir = (p.direction || '').toLowerCase();
-                        var roiCls = p.roi_pct >= 0 ? 'pos' : 'neg';
-                        return '<div class="position-row">' +
-                            '<div class="trade-sym">' + (p.symbol || '?') + '</div>' +
-                            '<div class="position-dir ' + dir + '">' + (p.direction || '--') + '</div>' +
-                            '<div class="trade-regime">' + (p.regime || '--') + '</div>' +
-                            '<div class="position-roi ' + roiCls + '" style="color:' + (p.roi_pct >= 0 ? 'var(--green)' : 'var(--red)') + ';">' + fmtPct(p.roi_pct) + '</div>' +
-                            '</div>';
-                    }).join('');
-                }
-            } catch (e) {
-                document.getElementById('today-trades-list').innerHTML = '<div class="empty-note">Performance feed unreachable.</div>';
-            }
-        }
-
-        async function loadChampion() {
-            try {
-                var r = await fetch('/api/live/champion', {cache: 'no-store', headers: _apiHeaders()});
-                var c = await r.json();
-                el('champ-label', 'Platinum Champion · ' + (c.live_verified ? 'Live Verified' : 'Live'));
-                el('champ-name', c.fighter_name || 'Unnamed Champion');
-                el('champ-codename', (c.name || '') + ' v' + (c.version || '?'));
-                el('champ-tagline', c.tagline || 'New species. Awaiting narrative.');
-            } catch (e) {
-                el('champ-name', 'Champion data unreachable');
-            }
-        }
-
-        async function loadStats() {
-            try {
-                var r = await fetch('/api/live/stats', {cache: 'no-store', headers: _apiHeaders()});
-                var s = await r.json();
-                el('today-symbols', s.active_symbols || '-');
-            } catch (e) {}
-        }
-
-        function refreshAll() {
-            loadPerformance();
-            loadChampion();
-            loadStats();
-        }
-        refreshAll();
-        setInterval(refreshAll, 60000);
-    })();
-    </script>
+    <script src="/js/mav-wallet.js?v=20260422q"></script>
+    <script src="/js/today-page.js?v=20260422q"></script>
 </body>
 </html>
