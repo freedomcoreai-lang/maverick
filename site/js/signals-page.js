@@ -254,9 +254,10 @@
                     '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:6px;">🎯 Why this fired</div>' +
                     '<div style="color:var(--text);font-size:0.88rem;line-height:1.65;">' + esc(reasonExplain) + '</div>' +
                 '</div>' +
-                // Embedded chart trigger - opens TradingView widget in-app modal
+                // Embedded chart trigger — CSP-safe via data-chart-sym attribute
+                // (inline onclick is blocked by our script-src 'self' policy).
                 '<div style="margin-top:14px;">' +
-                    '<button onclick="event.stopPropagation();window.fcOpenSignalChart(\'' + esc(sym) + '\');" ' +
+                    '<button class="champ-sig-chart-btn" data-chart-sym="' + esc(sym) + '" ' +
                     'style="width:100%; padding:12px 14px; background:linear-gradient(135deg,rgba(78,205,196,0.12),rgba(62,168,245,0.08)); border:1px solid var(--green); border-radius:8px; cursor:pointer; color:var(--text); font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; font-weight:700; text-align:center;">' +
                         '📈 View ' + esc(sym) + ' chart' +
                     '</button>' +
@@ -350,7 +351,17 @@
     // close the card (fixes the "clunky double-click / auto-close" issue).
     // The explicit ✕ Close button closes. Re-clicking the header also closes.
     feedEl.addEventListener('click', (e) => {
-        // Explicit close button wins first
+        // Chart button fires TradingView overlay. Stop propagation so it
+        // doesn't bubble to the header toggle below.
+        const chartBtn = e.target.closest('.champ-sig-chart-btn');
+        if (chartBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const sym = chartBtn.getAttribute('data-chart-sym');
+            if (sym) openChartOverlay(sym);
+            return;
+        }
+        // Explicit close button wins next
         const closeBtn = e.target.closest('.champ-sig-close');
         if (closeBtn) {
             const cid = parseInt(closeBtn.getAttribute('data-close-id'), 10);
