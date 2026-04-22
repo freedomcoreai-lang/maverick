@@ -84,7 +84,7 @@
     });
 
     const FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-        || 'fc_live_fa03a80eb6948c7ac11f96bc';
+        || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
     const apiFetch = (url, opts) => {
         const o = Object.assign({ credentials: 'same-origin' }, opts || {});
         o.headers = (typeof window.fcMergeHeaders === 'function')

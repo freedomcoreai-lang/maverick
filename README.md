@@ -55,6 +55,10 @@ The live site is independently graded **A+** by:
 
 Full 13-month hardening timeline lives on the site at [/pages/security.html](https://freedomcore.io/pages/security.html).
 
+### About the `FC_API_KEY` string in the source
+
+You will see `fcweb_60fd94aa2d910f38a9f3e0557076791a` hardcoded in several JS files. **This is intentional and not a leak.** It is a public CSRF-style bot-bouncer, shipped in plaintext to every browser that loads freedomcore.io. Anyone can grab it from view-source. Its only job is to filter out the most casual scraping. Real API protection lives in nginx (rate limiting, origin pinning, method whitelisting, and per-route gating). Automated secret scanners will flag it; the `.gitguardian.yml` at the repo root marks it as a known false positive.
+
 ## Not financial advice
 
 MAVERICK is an experimental AI system. It may lose money. It may crash. It may be switched off. Holders are paying for coverage of a live experiment - nothing else. No equity. No dividends. No share of trading profits. No guaranteed return. Crypto is volatile. $MAV can go to zero. Only participate with capital you can afford to lose entirely.

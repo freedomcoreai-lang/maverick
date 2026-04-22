@@ -1,0 +1,14 @@
+version: 2
+
+# GitGuardian config for the MAVERICK public repo.
+#
+# The FC_API_KEY string below ("fc_live_...") is intentionally public.
+# It is shipped in plaintext to every visitor's browser via the JS bundle
+# on freedomcore.io. It exists as a CSRF-style bot-bouncer, not as an
+# auth secret. Real protection lives in nginx (origin pinning + rate
+# limiting). See README.md "Security" section for the full explanation.
+
+secret:
+  ignored-matches:
+    - name: FC_API_KEY (public CSRF-style bot bouncer, by design)
+      match: fcweb_60fd94aa2d910f38a9f3e0557076791a

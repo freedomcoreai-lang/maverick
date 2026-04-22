@@ -7,7 +7,7 @@
     var track = document.getElementById('ticker-track');
     if (!track) return;
 
-    var API_KEY = 'fc_live_fa03a80eb6948c7ac11f96bc';
+    var API_KEY = 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
     var ENDPOINT = '/api/news';
 
     function esc(s) {

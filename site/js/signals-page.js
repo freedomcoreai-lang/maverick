@@ -6,7 +6,7 @@
     'use strict';
 
     const FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-        || 'fc_live_fa03a80eb6948c7ac11f96bc';
+        || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
     // Prefer mav-wallet's header merger (attaches X-Owner-Key from localStorage
     // automatically so owner-bypass works regardless of script load order).
     const apiFetch = (u, o) => {

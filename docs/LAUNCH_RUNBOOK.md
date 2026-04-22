@@ -96,7 +96,7 @@ systemctl restart maverick-dashboard
 
 Smoke test:
 ```
-curl -H "X-API-Key: fc_live_fa03a80eb6948c7ac11f96bc" \
+curl -H "X-API-Key: fcweb_60fd94aa2d910f38a9f3e0557076791a" \
   https://freedomcore.io/api/gate/status
 # Should return token_deployed: true
 ```
