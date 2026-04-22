@@ -103,19 +103,28 @@
 
     // ── Tab Switching ────────────────────────────────────────
 
-    // Sort state per section: cycles desc → asc → alpha
+    // Sort state per section — each section has its own pill-group
     var sortMode = { symbols: 'desc', movers: 'desc', volume: 'desc' };
-    // Labels for each section in each mode — shown on the toggle button
-    var sortLabels = {
-        symbols: { desc: 'Sort: ADX ▼', asc: 'Sort: ADX ▲', alpha: 'Sort: A→Z' },
-        movers:  { desc: 'Sort: Biggest Gain ▼', asc: 'Sort: Biggest Loss ▲', alpha: 'Sort: A→Z' },
-        volume:  { desc: 'Sort: High Vol ▼', asc: 'Sort: Low Vol ▲', alpha: 'Sort: A→Z' }
+    // Pill definitions per section. Each pill: { mode, label }
+    var sortPills = {
+        symbols: [
+            { mode: 'desc',  label: 'ADX ▼' },
+            { mode: 'asc',   label: 'ADX ▲' },
+            { mode: 'alpha', label: 'A→Z' }
+        ],
+        movers: [
+            { mode: 'desc',    label: 'Biggest Gain ▲' },
+            { mode: 'asc',     label: 'Biggest Loss ▼' },
+            { mode: 'winners', label: 'Winners only' },
+            { mode: 'losers',  label: 'Losers only' },
+            { mode: 'alpha',   label: 'A→Z' }
+        ],
+        volume: [
+            { mode: 'desc',  label: 'High Vol ▼' },
+            { mode: 'asc',   label: 'Low Vol ▲' },
+            { mode: 'alpha', label: 'A→Z' }
+        ]
     };
-    function nextSortMode(m) {
-        if (m === 'desc') return 'asc';
-        if (m === 'asc') return 'alpha';
-        return 'desc';
-    }
 
     var tabContainer = document.querySelector('.sl-tabs');
     if (tabContainer) {
@@ -155,26 +164,45 @@
         });
     }
 
-    // Inject sort control into a section header. Toggles between metric-sort and A-Z.
+    // Build a pill-group filter row and append it to a section header.
     function injectSortControl(sectionId, key) {
         var sec = el('section-' + sectionId);
         if (!sec) return;
         var hdr = sec.querySelector('.sl-section-header');
-        if (!hdr || hdr.querySelector('.sl-sort-toggle')) return;
-        var btn = document.createElement('button');
-        btn.className = 'sl-sort-toggle';
-        btn.style.cssText = 'margin-left:auto;padding:4px 10px;font-size:0.7rem;font-weight:700;border:1px solid var(--border);background:var(--card-bg);color:var(--text-dim);border-radius:4px;cursor:pointer;font-family:inherit;white-space:nowrap;';
-        btn.textContent = sortLabels[key][sortMode[key]];
-        btn.addEventListener('click', function() {
-            sortMode[key] = nextSortMode(sortMode[key]);
-            btn.textContent = sortLabels[key][sortMode[key]];
-            if (key === 'movers') renderMovers();
-            else if (key === 'volume') renderVolume();
-            else if (key === 'symbols') renderSymbolsFromCache();
+        if (!hdr || hdr.querySelector('.sl-sort-pills')) return;
+        var pills = sortPills[key] || [];
+        var group = document.createElement('div');
+        group.className = 'sl-sort-pills';
+        group.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;';
+        pills.forEach(function(p) {
+            var btn = document.createElement('button');
+            btn.className = 'sl-sort-pill' + (sortMode[key] === p.mode ? ' active' : '');
+            btn.setAttribute('data-mode', p.mode);
+            btn.style.cssText = 'padding:4px 10px;font-size:0.65rem;font-weight:700;border:1px solid var(--border);background:transparent;color:var(--text-dim);border-radius:14px;cursor:pointer;font-family:inherit;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;transition:all 0.15s;';
+            if (sortMode[key] === p.mode) {
+                btn.style.borderColor = 'var(--bb-green)';
+                btn.style.color = 'var(--bb-green)';
+                btn.style.background = 'rgba(0,230,118,0.08)';
+            }
+            btn.textContent = p.label;
+            btn.addEventListener('click', function() {
+                sortMode[key] = p.mode;
+                // update sibling pill styles
+                var sibs = group.querySelectorAll('.sl-sort-pill');
+                for (var i = 0; i < sibs.length; i++) {
+                    var isActive = sibs[i].getAttribute('data-mode') === p.mode;
+                    sibs[i].classList.toggle('active', isActive);
+                    sibs[i].style.borderColor = isActive ? 'var(--bb-green)' : 'var(--border)';
+                    sibs[i].style.color = isActive ? 'var(--bb-green)' : 'var(--text-dim)';
+                    sibs[i].style.background = isActive ? 'rgba(0,230,118,0.08)' : 'transparent';
+                }
+                if (key === 'movers') renderMovers();
+                else if (key === 'volume') renderVolume();
+                else if (key === 'symbols') renderSymbolsFromCache();
+            });
+            group.appendChild(btn);
         });
-        hdr.style.display = 'flex';
-        hdr.style.alignItems = 'center';
-        hdr.appendChild(btn);
+        hdr.appendChild(group);
     }
     setTimeout(function() {
         injectSortControl('symbols', 'symbols');
@@ -884,15 +912,21 @@
             return;
         }
 
-        var sorted = symbolDataCache.slice().sort(function(a, b) {
-            if (sortMode.movers === 'alpha') {
+        var mode = sortMode.movers;
+        var pool = symbolDataCache.slice();
+        if (mode === 'winners') {
+            pool = pool.filter(function(s) { return (parseFloat(s.pct_change) || 0) > 0; });
+        } else if (mode === 'losers') {
+            pool = pool.filter(function(s) { return (parseFloat(s.pct_change) || 0) < 0; });
+        }
+        var sorted = pool.sort(function(a, b) {
+            if (mode === 'alpha') {
                 return cleanSymbol(a.symbol).localeCompare(cleanSymbol(b.symbol));
             }
             var av = parseFloat(a.pct_change) || 0;
             var bv = parseFloat(b.pct_change) || 0;
-            // desc = biggest gainers at top (signed, high → low)
-            // asc  = biggest losers at top  (signed, low → high)
-            return sortMode.movers === 'asc' ? av - bv : bv - av;
+            // Gainers-first (desc/winners) → high → low; Losers-first (asc/losers) → low → high
+            return (mode === 'asc' || mode === 'losers') ? av - bv : bv - av;
         });
 
         var html = '';
