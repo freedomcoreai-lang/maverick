@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <link rel="stylesheet" href="/css/style.css?v=20260422i">
 </head>
 <body>
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
@@ -37,7 +37,7 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
             <div class="ssl-badge" title="SSL Certificate Verified">
@@ -79,13 +79,16 @@
                     <span class="ssl-popup-value">256-bit AES</span>
                 </div>
                 <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
-                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <a href="/pages/security.html" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
                     <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
                 </div>
             </div>
                 <a href="https://ntfy.sh/maverick_apex_9381?auth=0128" target="_blank" rel="noopener noreferrer" class="ntfy-badge" title="Live Push Alerts">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                 ALERTS
+            </a>
+            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             </a>
             <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
             <div class="nav-live"><div class="live-dot"></div> LIVE</div>
@@ -136,10 +139,10 @@
         </p>
 
         <!-- POWERED BY - the two frontier models teaming up -->
-        <div style="margin-top:22px; padding:14px 18px; background:rgba(255,215,0,0.04); border:1px solid rgba(255,215,0,0.25); border-radius:12px; max-width:720px; display:inline-block;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:#ffd700; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px;">Powered by the frontier</div>
+        <div style="margin-top:22px; padding:14px 18px; background:var(--gold-bg); border:1px solid var(--gold-border); border-radius:12px; max-width:720px; display:inline-block;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px;">Powered by the frontier</div>
             <div style="color:var(--text); font-size:0.92rem; line-height:1.65;">
-                <b style="color:#ffd700;">Gemini 3.1</b> writes the code. <b style="color:#ffd700;">Claude 4.7</b> audits the architecture. They collaborate on every generation.
+                <b style="color:var(--gold);">Gemini 3.1</b> writes the code. <b style="color:var(--gold);">Claude 4.7</b> audits the architecture. They collaborate on every generation.
                 <br>
                 <span style="color:var(--text-dim); font-size:0.82rem;">The swarm auto-upgrades to every new model release the day it ships. You are always running the best AI available on Earth.</span>
             </div>
@@ -181,7 +184,7 @@
                 <!-- Champion header - click to expand -->
                 <div id="sh-champ-toggle" style="cursor:pointer; padding:14px 20px; display:flex; align-items:center; justify-content:space-between;">
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <span style="font-size:0.58rem; color:#fbbf24; font-weight:800; letter-spacing:1px; background:rgba(251,191,36,0.12); padding:3px 10px; border-radius:4px;">CHAMPION</span>
+                        <span style="font-size:0.58rem; color:var(--champion); font-weight:800; letter-spacing:1px; background:var(--champion-bg); padding:3px 10px; border-radius:4px;">CHAMPION</span>
                         <span id="sh-champ-name" style="font-size:0.65rem; color:var(--text,#e5e7eb); font-weight:600;"></span>
                     </div>
                     <div style="display:flex; align-items:center; gap:10px;">
@@ -541,7 +544,7 @@
                         <li>Entry, exit, and trail alerts</li>
                         <li>Engine specific filtering</li>
                     </ul>
-                    <div class="tier-soon" style="color:#ffd700;">Preview Signal feed &rarr;</div>
+                    <div class="tier-soon" style="color:var(--gold);">Preview Signal feed &rarr;</div>
                 </a>
                 <a class="tier-card" href="/pages/swarm.html" style="text-decoration:none;color:inherit;display:block;">
                     <div class="tier-badge">Tier 3 &middot; 100,000 $MAV / $499 mo</div>
@@ -565,7 +568,7 @@
     <!-- SECURITY SHIELD (feature section) -->
     <section id="security" class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label" style="color:#ffd700;">// Security</div>
+            <div class="section-label" style="color:var(--gold);">// Security</div>
             <h2 class="section-title">A+ rated security.<br>Thirteen months hardened.</h2>
             <p class="section-text">
                 Every connection is encrypted with TLS 1.3. Every header is hardened. Every
@@ -578,25 +581,25 @@
             <!-- Gold padlock feature hero — the headline credibility signal -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin:36px 0 44px;">
                 <div style="grid-column:1 / -1; background:linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02)); border:1px solid rgba(255,215,0,0.35); border-radius:18px; padding:32px 28px; display:flex; gap:22px; align-items:center; flex-wrap:wrap; box-shadow:0 0 40px rgba(255,215,0,0.08);">
-                    <div style="flex-shrink:0; color:#ffd700; filter:drop-shadow(0 0 16px rgba(255,215,0,0.45));">
+                    <div style="flex-shrink:0; color:var(--gold); filter:drop-shadow(0 0 16px rgba(255,215,0,0.45));">
                         <svg width="72" height="72" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                     </div>
                     <div style="flex:1; min-width:240px;">
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:#ffd700; letter-spacing:3px; text-transform:uppercase; margin-bottom:8px;">Mozilla Observatory · SSL Labs · SecurityHeaders.com</div>
-                        <div style="font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:900; color:#ffd700; line-height:1.1; margin-bottom:10px; letter-spacing:-0.5px;">A+ GRADE · 100 / 100</div>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px;">Mozilla Observatory · SSL Labs · SecurityHeaders.com</div>
+                        <div style="font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:900; color:var(--gold); line-height:1.1; margin-bottom:10px; letter-spacing:-0.5px;">A+ GRADE · 100 / 100</div>
                         <div style="color:var(--text-dim); font-size:0.92rem; line-height:1.6;">TLS 1.3 with AES-256. HSTS preload. Strict Content Security Policy. No inline scripts. No third-party code loaded without a self-hosted copy. Every header independently audited and scored perfect.</div>
                     </div>
                     <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; width:100%;">
                         <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:#ffd700;">13</div>
+                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">13</div>
                             <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Months Hardening</div>
                         </div>
                         <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:#ffd700;">7+</div>
+                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">7+</div>
                             <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Header Policies</div>
                         </div>
                         <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:#ffd700;">0</div>
+                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">0</div>
                             <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Breach Incidents</div>
                         </div>
                     </div>

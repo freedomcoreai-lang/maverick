@@ -21,6 +21,13 @@
     --scanline: rgba(0,0,0,0.02);
     --glow-primary: rgba(62, 168, 245, 0.15);
     --glow-secondary: rgba(78, 205, 196, 0.10);
+    --gold: #ffd700;
+    --gold-bg: rgba(255, 215, 0, 0.10);
+    --gold-border: rgba(255, 215, 0, 0.28);
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --champion: #fbbf24;
+    --champion-bg: rgba(251, 191, 36, 0.12);
 }
 [data-theme="light"] {
     --bg: #f0f4f8;
@@ -28,12 +35,12 @@
     --card: rgba(255, 255, 255, 0.95);
     --border: rgba(6, 10, 16, 0.10);
     --text: #060a10;
-    --text-dim: #3a4a5c;
+    --text-dim: #2c3a4d;
     --green: #2ba89e;
     --green-dim: rgba(43, 168, 158, 0.08);
     --blue: #2580c8;
     --blue-dim: rgba(37, 128, 200, 0.08);
-    --amber: #c48512;
+    --amber: #b8740a;
     --purple: #6d3bcc;
     --red: #d42020;
     --cyan: #2ba89e;
@@ -41,6 +48,13 @@
     --scanline: rgba(0,0,0,0.008);
     --glow-primary: rgba(37, 128, 200, 0.10);
     --glow-secondary: rgba(43, 168, 158, 0.06);
+    --gold: #b8740a;
+    --gold-bg: rgba(184, 116, 10, 0.08);
+    --gold-border: rgba(184, 116, 10, 0.35);
+    --silver: #5a6a7a;
+    --bronze: #8b4513;
+    --champion: #b8740a;
+    --champion-bg: rgba(184, 116, 10, 0.10);
 }
 
 html { scroll-behavior: smooth; }
@@ -468,7 +482,8 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 .pos-telem-item { color: var(--text-dim); }
 .pos-telem-item span { color: var(--text); font-weight: 600; }
 .pos-empty {
-    text-align: center; padding: 40px; color: var(--text-dim);
+    text-align: center; padding: 40px; color: var(--text);
+    opacity: 0.75;
     font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
 }
 

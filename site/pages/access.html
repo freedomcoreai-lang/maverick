@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <link rel="stylesheet" href="/css/style.css?v=20260422i">
     <style>
         .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .ax-hero-badge {
@@ -23,7 +23,7 @@
         }
         .ax-h1 {
             font-size: clamp(2.4rem, 7vw, 4.4rem);
-            background: linear-gradient(135deg, var(--accent), #ffd700 60%, #ff9500);
+            background: linear-gradient(135deg, var(--green), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -121,7 +121,7 @@
             position: relative; transition: border-color 0.3s;
         }
         .ax-tier.unlocked { border-color: var(--green); box-shadow: 0 0 22px rgba(78,205,196,0.08); }
-        .ax-tier.featured { border-top: 3px solid #ffd700; }
+        .ax-tier.featured { border-top: 3px solid var(--gold); }
         .ax-tier .tier-label {
             font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
             color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
@@ -195,7 +195,7 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
             <div class="ssl-badge" title="SSL Certificate Verified">
@@ -204,7 +204,7 @@
             </div>
             <div class="ssl-popup" id="ssl-popup">
                 <div class="ssl-popup-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--gold)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                     CONNECTION SECURE
                 </div>
                 <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
@@ -215,10 +215,13 @@
                 <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
                 <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
                 <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
-                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <a href="/pages/security.html" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
                     <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
                 </div>
             </div>
+            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
             <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
             <div class="nav-live"><div class="live-dot"></div> LIVE</div>
         </div>
@@ -256,11 +259,11 @@
                 the best AI in the world rewrite its own trading logic every forty-eight hours,
                 across eighty-eight markets, with real capital on the line.
             </p>
-            <div style="margin-top:24px; padding:16px 20px; background:rgba(255,215,0,0.04); border:1px solid rgba(255,215,0,0.22); border-radius:12px; max-width:680px; margin-left:auto; margin-right:auto; text-align:left;">
-                <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:#ffd700; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; text-align:center;">Powered by the frontier</div>
+            <div style="margin-top:24px; padding:16px 20px; background:var(--gold-bg); border:1px solid rgba(255,215,0,0.22); border-radius:12px; max-width:680px; margin-left:auto; margin-right:auto; text-align:left;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; text-align:center;">Powered by the frontier</div>
                 <div style="color:var(--text); font-size:0.92rem; line-height:1.7;">
                     Two of the most capable models ever built are teaming up inside MAVERICK.
-                    <b style="color:#ffd700;">Gemini 3.1</b> invents each candidate strategy. <b style="color:#ffd700;">Claude 4.7</b> audits the architecture before live deployment.
+                    <b style="color:var(--gold);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--gold);">Claude 4.7</b> audits the architecture before live deployment.
                     <br><br>
                     <span style="color:var(--text-dim); font-size:0.84rem;">Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. This is the only experiment of its kind.</span>
                 </div>
@@ -317,10 +320,11 @@
                 <!-- not subscribed -->
                 <div id="fiat-not-subscribed">
                     <div class="ax-select-row">
-                        <div class="ax-tier-choice selected" data-tier="observer"><div class="tc-name">Observer</div><div class="tc-price" id="price-observer">$29/mo</div></div>
-                        <div class="ax-tier-choice" data-tier="signal"><div class="tc-name">Signal</div><div class="tc-price" id="price-signal">$99/mo</div></div>
-                        <div class="ax-tier-choice" data-tier="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$499/mo</div></div>
+                        <div class="ax-tier-choice selected" data-tier="signal"><div class="tc-name">Signal</div><div class="tc-price" id="price-signal">$29/mo</div></div>
+                        <div class="ax-tier-choice" data-tier="pro"><div class="tc-name">Pro</div><div class="tc-price" id="price-pro">$79/mo</div></div>
+                        <div class="ax-tier-choice" data-tier="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$199/mo</div></div>
                     </div>
+                    <div style="text-align:center; font-size:0.62rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin:6px 0 10px;">Annual: save 33% &middot; cancel anytime</div>
                     <input class="ax-sub-input" type="email" id="sub-email" placeholder="your@email.com" autocomplete="email">
                     <button class="ax-btn amber block" id="subscribe-btn" style="margin-top:10px;">SUBSCRIBE &amp; WATCH</button>
                     <div class="ax-note">Already a subscriber? <a href="#" id="magic-link" style="color:var(--accent);">Send me a sign-in link</a></div>
@@ -340,31 +344,37 @@
 
         </div>
 
+        <!-- SPECTATOR NOTE (free, no wallet, no card) -->
+        <div style="text-align:center; max-width:780px; margin:32px auto 8px; padding:14px 20px; border:1px dashed var(--border); border-radius:10px; font-size:0.78rem; color:var(--text); opacity:0.85; line-height:1.6;">
+            <span style="font-family:'JetBrains Mono',monospace; color:var(--green); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; font-size:0.65rem;">Tier 0 &middot; Spectator</span><br>
+            Marketing site, security audit, public roadmap and the launch story are free for everyone &mdash; no wallet, no card, no signup. Connect or subscribe below to unlock the live machine.
+        </div>
+
         <!-- TIER CARDS (each links to the tier's flagship page) -->
         <div class="ax-tiers">
             <a class="ax-tier" data-tier="observer" href="/pages/today.html" style="text-decoration:none; color:inherit; display:block;">
                 <div class="tier-label">Tier 1 &middot; OBSERVER</div>
                 <h3>Observer</h3>
-                <div class="req">Hold 1,000 $MAV</div>
-                <div class="req-alt">or $29 / month</div>
+                <div class="req">Connect wallet (free)</div>
+                <div class="req-alt">or hold 1,000 $MAV after launch</div>
                 <ul>
-                    <li>Live swarm evolution feed (full detail)</li>
+                    <li>Real-time swarm evolution feed (full detail)</li>
                     <li>AI agent intelligence chain terminal</li>
                     <li>Weekly DNA mutation reports</li>
                     <li>Hall of Fame breakdown archive</li>
                     <li>Full performance dashboard</li>
                 </ul>
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
-                    <span class="status-tag soon" id="status-observer">Pre-launch Grace</span>
+                    <span class="status-tag soon" id="status-observer">Free with Wallet</span>
                     <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN TODAY PAGE &rarr;</span>
                 </div>
             </a>
 
-            <a class="ax-tier featured" data-tier="signal" href="/pages/signals.html" style="text-decoration:none; color:inherit; display:block;">
+            <a class="ax-tier" data-tier="signal" href="/pages/signals.html" style="text-decoration:none; color:inherit; display:block;">
                 <div class="tier-label">Tier 2 &middot; SIGNAL</div>
                 <h3>Signal</h3>
-                <div class="req">Hold 10,000 $MAV</div>
-                <div class="req-alt">or $99 / month</div>
+                <div class="req">Hold 2,000 $MAV</div>
+                <div class="req-alt">or $29 / month &middot; $232 / year</div>
                 <ul>
                     <li>Everything in Observer</li>
                     <li>Real-time trade signals to ntfy channel</li>
@@ -374,25 +384,43 @@
                 </ul>
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
                     <span class="status-tag locked" id="status-signal">Locked</span>
-                    <span style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SIGNAL FEED &rarr;</span>
+                    <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SIGNAL FEED &rarr;</span>
+                </div>
+            </a>
+
+            <a class="ax-tier featured" data-tier="pro" href="/pages/signals.html" style="text-decoration:none; color:inherit; display:block;">
+                <div class="tier-label">Tier 3 &middot; PRO &middot; most picked</div>
+                <h3>Pro</h3>
+                <div class="req">Hold 7,500 $MAV</div>
+                <div class="req-alt">or $79 / month &middot; $632 / year</div>
+                <ul>
+                    <li>Everything in Signal</li>
+                    <li><strong>Copy-trading webhook endpoint</strong></li>
+                    <li>Multi-channel alert routing (Discord, Telegram, Slack)</li>
+                    <li>Per-symbol risk caps</li>
+                    <li>Priority support</li>
+                </ul>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
+                    <span class="status-tag locked" id="status-pro">Locked</span>
+                    <span style="color:var(--green); font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">COPY THE MACHINE &rarr;</span>
                 </div>
             </a>
 
             <a class="ax-tier" data-tier="sovereign" href="/pages/swarm.html" style="text-decoration:none; color:inherit; display:block;">
-                <div class="tier-label">Tier 3 &middot; SOVEREIGN</div>
+                <div class="tier-label">Tier 4 &middot; SOVEREIGN</div>
                 <h3>Sovereign</h3>
-                <div class="req">Hold 100,000 $MAV</div>
-                <div class="req-alt">or $499 / month</div>
+                <div class="req">Hold 20,000 $MAV</div>
+                <div class="req-alt">or $199 / month &middot; $1,592 / year</div>
                 <ul>
-                    <li>Everything in Signal</li>
-                    <li>Copy-trading webhook endpoint</li>
+                    <li>Everything in Pro</li>
+                    <li>Direct REST API access (rate-limited, authenticated)</li>
                     <li>Custom risk parameter overrides</li>
-                    <li>Direct REST API access</li>
                     <li>Weighted vote on swarm architecture</li>
+                    <li>White-glove onboarding call</li>
                 </ul>
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
                     <span class="status-tag locked" id="status-sovereign">Locked</span>
-                    <span style="color:#b9c5ff; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SWARM TERMINALS &rarr;</span>
+                    <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SWARM TERMINALS &rarr;</span>
                 </div>
             </a>
         </div>
@@ -419,7 +447,7 @@
 
             <div class="ax-faq-item">
                 <div class="ax-faq-q">Crypto or subscription - which should I pick?</div>
-                <div class="ax-faq-a">If you already have a Base wallet, $MAV is simpler long-term. If you don't touch crypto, the $29-$499/mo subscription is identical access, billed by Stripe. Both unlock the same tiers.</div>
+                <div class="ax-faq-a">If you already have a Base wallet, $MAV is simpler long-term and your tier holds whatever happens to MAV's price. If you don't touch crypto, the $29-$199/mo subscription is identical access, billed by Stripe. Both unlock the same tiers. Annual saves 33% on either rail.</div>
             </div>
 
             <div class="ax-faq-item">

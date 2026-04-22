@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <link rel="stylesheet" href="/css/style.css?v=20260422i">
     <style>
         .sec-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
         .sec-hero {
@@ -21,13 +21,13 @@
             display: inline-block; padding: 6px 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.64rem; letter-spacing: 2.5px; text-transform: uppercase;
-            color: #ffd700; border: 1px solid #ffd700;
+            color: var(--gold); border: 1px solid var(--gold);
             border-radius: 20px; margin-bottom: 16px;
         }
         .sec-title {
             font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 900; letter-spacing: -1.5px;
             line-height: 1.05; margin-bottom: 14px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffb700 60%, #ff9500 100%);
+            background: linear-gradient(135deg, var(--green), var(--accent));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .sec-intro {
@@ -41,16 +41,16 @@
             box-shadow: 0 0 40px rgba(255,215,0,0.1);
         }
         .sec-padlock {
-            color: #ffd700; filter: drop-shadow(0 0 16px rgba(255,215,0,0.5));
+            color: var(--gold); filter: drop-shadow(0 0 16px rgba(255,215,0,0.5));
         }
         .sec-grade-label {
             font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
-            color: #ffd700; letter-spacing: 2.5px; text-transform: uppercase;
+            color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase;
             margin-bottom: 6px;
         }
         .sec-grade-value {
             font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900;
-            color: #ffd700; line-height: 1.1; letter-spacing: -0.5px;
+            color: var(--gold); line-height: 1.1; letter-spacing: -0.5px;
         }
         .sec-grade-desc {
             color: var(--text-dim); font-size: 0.88rem; line-height: 1.6;
@@ -66,7 +66,7 @@
             border: 1px solid rgba(255,215,0,0.2);
         }
         .sec-stat-val {
-            font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 800; color: #ffd700;
+            font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 800; color: var(--gold);
         }
         .sec-stat-lbl {
             font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
@@ -118,7 +118,7 @@
         }
         .sec-verify-btn {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 28px; background: #ffd700; color: #000;
+            padding: 14px 28px; background: var(--gold); color: #000;
             font-family: 'JetBrains Mono', monospace; font-weight: 800;
             font-size: 0.76rem; letter-spacing: 2px; text-transform: uppercase;
             text-decoration: none; border-radius: 10px;
@@ -146,7 +146,7 @@
         .sec-timeline-body {
             color: var(--text); font-size: 0.88rem; line-height: 1.55;
         }
-        .sec-timeline-body b { color: #ffd700; }
+        .sec-timeline-body b { color: var(--gold); }
     </style>
 </head>
 <body>
@@ -169,13 +169,16 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
             <div class="ssl-badge" title="SSL Certificate Verified">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                 <span>SSL SECURED</span>
             </div>
+            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
             <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
             <div class="nav-live"><div class="live-dot"></div> LIVE</div>
         </div>
@@ -300,7 +303,7 @@
                 </div>
 
                 <div class="sec-card">
-                    <div class="sec-icon" style="color:#ffd700;">
+                    <div class="sec-icon" style="color:var(--gold);">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7z"/></svg>
                     </div>
                     <div class="sec-card-title">No Inline JavaScript</div>
@@ -343,7 +346,7 @@
 
         <!-- VERIFY YOURSELF -->
         <section class="sec-verify">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:2.5px; color:#ffd700; text-transform:uppercase; margin-bottom:12px;">🔍 Verify Independently</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:2.5px; color:var(--gold); text-transform:uppercase; margin-bottom:12px;">🔍 Verify Independently</div>
             <p style="color:var(--text-dim); font-size:0.92rem; line-height:1.6; margin-bottom:16px;">Don't take my word for any of this. Click through to three independent third-party auditors and see the A+ grade for yourself. Every button below checks freedomcore.io live.</p>
             <a class="sec-verify-btn" href="https://securityheaders.com/?q=freedomcore.io&followRedirects=on" target="_blank" rel="noopener noreferrer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>

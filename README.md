@@ -38,13 +38,17 @@ LP locked:  https://team.finance/view-coin/0xTBD (24 months)
 
 $MAV is a utility access token. It does not grant equity, dividends, or any share of trading profit. It gates access to the [freedomcore.io](https://freedomcore.io) dashboard.
 
-| Tier | Hold $MAV | Card Alt | Access |
-|---|---|---|---|
-| **Observer** | 1,000 | $29 / mo | Live swarm feed, DNA mutation reports, performance dashboard, Hall of Fame archive |
-| **Signal** | 10,000 | $99 / mo | Everything in Observer + real-time trade signals, entry/exit alerts, weekly swarm prompt vote |
-| **Sovereign** | 100,000 | $499 / mo | Everything in Signal + copy-trading webhook, custom risk overrides, direct REST API, weighted architecture vote |
+| Tier | Hold $MAV | Card Alt | Annual Alt | Access |
+|---|---|---|---|---|
+| **Spectator** | — | free | free | Marketing site, security audit, public roadmap, launch story |
+| **Observer** | 1,000 (free pre-launch) | free with wallet | free with wallet | Real-time swarm feed, mutation reports, Hall of Fame, performance dashboard |
+| **Signal** | 2,000 | $29 / mo | $232 / yr | Everything above + real-time trade signals, entry/exit/stop alerts, weekly swarm vote |
+| **Pro** ⭐ | 7,500 | $79 / mo | $632 / yr | Everything above + **copy-trading webhook**, multi-channel alert routing, per-symbol risk caps, priority support |
+| **Sovereign** | 20,000 | $199 / mo | $1,592 / yr | Everything above + REST API, custom risk overrides, weighted architecture vote, white-glove onboarding |
 
-Token-holders and card-subscribers land in the same tier system. Pick whichever rail fits.
+Token-holders and card-subscribers land in the same tier system. Pick whichever rail fits. Annual saves 33% on either.
+
+Pricing reflects 12-platform competitor research (Cryptohopper, 3Commas, Token Metrics, Nansen, Messari, CryptoQuant, Bybit/Bitget copy trading, TradingView). Prosumer ceiling for self-serve crypto tooling is ~$200/mo; we set Sovereign at $199 deliberately. Copy-trading is in **Pro** (the middle tier 60-70% of buyers pick), not gated behind Sovereign.
 
 ## Security
 

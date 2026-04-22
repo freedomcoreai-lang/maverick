@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <link rel="stylesheet" href="/css/style.css?v=20260422i">
     <style>
         /* Medalist page - podium aesthetic */
         .medal-hero {
@@ -24,7 +24,7 @@
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #ffd700 0%, #c0c0c0 50%, #cd7f32 100%);
+            background: linear-gradient(135deg, var(--green), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -85,18 +85,18 @@
             height: 4px;
         }
         .medal-card.platinum::before { background: linear-gradient(90deg, #e8e8ff, #b9c5ff, #8a9fff); }
-        .medal-card.gold::before     { background: linear-gradient(90deg, #ffd700, #ffb700, #ff9700); }
-        .medal-card.silver::before   { background: linear-gradient(90deg, #f0f0f0, #c0c0c0, #999999); }
-        .medal-card.bronze::before   { background: linear-gradient(90deg, #ffaa6b, #cd7f32, #a05a1c); }
+        .medal-card.gold::before     { background: linear-gradient(90deg, var(--gold), #ffb700, #ff9700); }
+        .medal-card.silver::before   { background: linear-gradient(90deg, #f0f0f0, var(--silver), #999999); }
+        .medal-card.bronze::before   { background: linear-gradient(90deg, #ffaa6b, var(--bronze), #a05a1c); }
 
         .medal-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
         }
         .medal-card.platinum:hover { border-color: #b9c5ff; }
-        .medal-card.gold:hover     { border-color: #ffd700; }
-        .medal-card.silver:hover   { border-color: #c0c0c0; }
-        .medal-card.bronze:hover   { border-color: #cd7f32; }
+        .medal-card.gold:hover     { border-color: var(--gold); }
+        .medal-card.silver:hover   { border-color: var(--silver); }
+        .medal-card.bronze:hover   { border-color: var(--bronze); }
 
         .medal-emoji {
             font-size: 3.5rem;
@@ -115,9 +115,9 @@
         }
         .medal-card.platinum .medal-label { color: #b9c5ff; }
         .medal-card.platinum .medal-emoji { filter: brightness(1.2) grayscale(1) drop-shadow(0 0 10px rgba(185, 197, 255, 0.5)); }
-        .medal-card.gold .medal-label     { color: #ffd700; }
-        .medal-card.silver .medal-label   { color: #c0c0c0; }
-        .medal-card.bronze .medal-label   { color: #cd7f32; }
+        .medal-card.gold .medal-label     { color: var(--gold); }
+        .medal-card.silver .medal-label   { color: var(--silver); }
+        .medal-card.bronze .medal-label   { color: var(--bronze); }
 
         .medal-display-name {
             font-size: 1.7rem;
@@ -273,9 +273,9 @@
             filter: brightness(1.25) grayscale(1) drop-shadow(0 0 14px rgba(185, 197, 255, 0.55));
         }
         .medal-modal-header.platinum .medal-modal-rank  { color: #b9c5ff; }
-        .medal-modal-header.gold .medal-modal-rank      { color: #ffd700; }
-        .medal-modal-header.silver .medal-modal-rank    { color: #c0c0c0; }
-        .medal-modal-header.bronze .medal-modal-rank    { color: #cd7f32; }
+        .medal-modal-header.gold .medal-modal-rank      { color: var(--gold); }
+        .medal-modal-header.silver .medal-modal-rank    { color: var(--silver); }
+        .medal-modal-header.bronze .medal-modal-rank    { color: var(--bronze); }
         .medal-modal-rank {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -468,7 +468,7 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
             <div class="ssl-badge" title="SSL Certificate Verified">
@@ -477,7 +477,7 @@
             </div>
             <div class="ssl-popup" id="ssl-popup">
                 <div class="ssl-popup-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--gold)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                     CONNECTION SECURE
                 </div>
                 <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
@@ -488,10 +488,13 @@
                 <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
                 <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
                 <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
-                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <a href="/pages/security.html" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
                     <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
                 </div>
             </div>
+            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
             <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
             <div class="nav-live"><div class="live-dot"></div> LIVE</div>
         </div>

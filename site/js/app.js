@@ -1549,17 +1549,19 @@ function renderSignals(signals) {
             b.style.display = 'block';
             if (d.running) {
                 var isMega = d.mode === 'MEGA HUNT' || (d.phase || '').indexOf('MEGA') >= 0;
-                dot.style.background = isMega ? '#f59e0b' : 'var(--green, #10b981)';
-                dot.style.boxShadow = '0 0 12px ' + (isMega ? '#f59e0b' : 'var(--green, #10b981)');
+                var megaCol = 'var(--champion)';
+                var liveCol = 'var(--green, #10b981)';
+                dot.style.background = isMega ? megaCol : liveCol;
+                dot.style.boxShadow = '0 0 12px ' + (isMega ? megaCol : liveCol);
                 dot.style.animation = 'pulse-dot 1.5s infinite';
-                lbl.style.color = isMega ? '#f59e0b' : 'var(--green, #10b981)';
+                lbl.style.color = isMega ? megaCol : liveCol;
                 lbl.textContent = isMega ? '🔥 MEGA HUNT LIVE · 1000-GEN' : 'SWARM EVOLVING LIVE';
-                det.style.color = isMega ? '#f59e0b' : 'var(--green, #10b981)';
+                det.style.color = isMega ? megaCol : liveCol;
                 det.textContent = 'Gen ' + d.gen + '/' + d.total + (isMega ? ' · Hunting champion-beater' : ' ' + (d.phase || '') + (d.focus ? ' | ' + d.focus : ''));
                 bar.style.width = (d.total > 0 ? (d.gen / d.total * 100) : 0) + '%';
                 bar.style.background = isMega
-                    ? 'linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b)'
-                    : 'linear-gradient(90deg, var(--green, #10b981), #34d399)';
+                    ? 'linear-gradient(90deg, var(--champion), var(--accent), var(--champion))'
+                    : 'linear-gradient(90deg, var(--green, #10b981), var(--accent, #3ea8f5))';
                 if (d.champion_score > 0 && d.champion_gen !== lastChampGen) {
                     lastChampGen = d.champion_gen;
                     fetchChampion();
@@ -1626,15 +1628,36 @@ function renderSignals(signals) {
                 html += '</div>';
             }
 
-            // Techniques with descriptions
+            // Techniques (high-level strategic patterns the LLM wove together)
             if (c.techniques && c.techniques.length) {
-                html += '<div style="margin-bottom:16px;"><div style="font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">' + c.techniques.length + ' Detected Techniques</div>';
+                html += '<div style="margin-bottom:16px;"><div style="font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">' + c.techniques.length + ' Strategic Techniques</div>';
                 html += '<div style="display:flex;flex-direction:column;gap:6px;">';
                 c.techniques.forEach(function(t){
                     var desc = (c.technique_details && c.technique_details[t]) ? c.technique_details[t] : '';
                     html += '<div style="background:var(--bg2,#0a0f18);border:1px solid var(--border);border-radius:6px;padding:8px 12px;">';
                     html += '<div style="font-size:0.62rem;font-weight:700;color:var(--accent,#3ea8f5);">' + t + '</div>';
                     if (desc) html += '<div style="font-size:0.58rem;color:var(--text,#e4e8f0);opacity:0.75;margin-top:3px;line-height:1.6;">' + desc + '</div>';
+                    html += '</div>';
+                });
+                html += '</div></div>';
+            }
+
+            // Full Indicator Stack (every feature this champion pulls per bar)
+            if (c.feature_panel && c.feature_panel.length) {
+                var stackId = 'champ-stack-' + Math.random().toString(36).slice(2,8);
+                html += '<div style="margin-bottom:16px;">';
+                html += '<div onclick="var x=document.getElementById(\'' + stackId + '\'); var a=document.getElementById(\'' + stackId + '-arrow\'); var open=x.style.display!==\'none\'; x.style.display=open?\'none\':\'flex\'; a.style.transform=open?\'rotate(0deg)\':\'rotate(180deg)\';" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;padding:8px 0;border-top:1px dashed var(--border);">';
+                html += '<span>Full Indicator Stack &middot; ' + c.feature_panel.length + ' Features Feeding Every Decision</span>';
+                html += '<span id="' + stackId + '-arrow" style="opacity:0.5;font-size:0.65rem;transition:transform 0.3s;">&#9660;</span>';
+                html += '</div>';
+                html += '<div id="' + stackId + '" style="display:none;flex-direction:column;gap:5px;max-height:360px;overflow-y:auto;padding-right:6px;">';
+                c.feature_panel.forEach(function(f){
+                    html += '<div style="background:var(--bg2,#0a0f18);border:1px solid var(--border);border-left:2px solid var(--green,#4ecdc4);border-radius:5px;padding:7px 11px;">';
+                    html += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;">';
+                    html += '<span style="font-size:0.6rem;font-weight:700;color:var(--text,#e4e8f0);">' + f.label + '</span>';
+                    html += '<code style="font-size:0.52rem;color:var(--text-dim,#5a6a82);font-family:\'JetBrains Mono\',monospace;">' + f.feature + '</code>';
+                    html += '</div>';
+                    if (f.description) html += '<div style="font-size:0.55rem;color:var(--text,#e4e8f0);opacity:0.7;margin-top:2px;line-height:1.55;">' + f.description + '</div>';
                     html += '</div>';
                 });
                 html += '</div></div>';
