@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Today | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .today-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        .today-hero-badge {
+            display: inline-block; padding: 6px 14px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: var(--accent); letter-spacing: 2px;
+            border: 1px solid var(--accent); border-radius: 20px;
+            text-transform: uppercase; margin-bottom: 20px;
+        }
+        .today-date {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
+        }
+        .today-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px; margin-top: 28px;
+        }
+        .today-stat {
+            padding: 20px 18px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 14px;
+            border-top: 3px solid var(--green); text-align: left;
+        }
+        .today-stat.red { border-top-color: var(--red); }
+        .today-stat.blue { border-top-color: var(--accent); }
+        .today-stat.amber { border-top-color: #f5a623; }
+        .today-stat-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
+            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .today-stat-value {
+            font-family: 'JetBrains Mono', monospace; font-size: 2rem;
+            font-weight: 800; color: var(--text); line-height: 1.1;
+        }
+        .today-stat-sub {
+            font-size: 0.72rem; color: var(--text-dim); margin-top: 8px;
+            line-height: 1.4;
+        }
+        .today-section-title {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+            margin-top: 60px; margin-bottom: 14px; padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .champion-card {
+            padding: 28px 24px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 16px;
+            border-left: 4px solid #b9c5ff; margin-top: 16px;
+            position: relative; overflow: hidden;
+        }
+        .champion-card::before {
+            content: '🏆'; position: absolute; right: 18px; top: 18px;
+            font-size: 1.6rem; opacity: 0.55;
+            filter: brightness(1.2) grayscale(1);
+        }
+        .champion-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: #b9c5ff; letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .champion-name {
+            font-size: 1.6rem; font-weight: 800; color: var(--text);
+            margin-bottom: 4px; line-height: 1.2;
+        }
+        .champion-codename {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            color: var(--text-dim); letter-spacing: 0.5px;
+            margin-bottom: 14px; text-transform: uppercase;
+        }
+        .champion-tagline {
+            color: var(--text-dim); font-size: 0.88rem;
+            line-height: 1.65; font-style: italic;
+            padding: 12px 14px; border-left: 2px solid var(--border);
+        }
+
+        .countdown-card {
+            padding: 24px 20px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 14px;
+            text-align: center; margin-top: 16px;
+        }
+        .countdown-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .countdown-timer {
+            font-family: 'JetBrains Mono', monospace; font-size: 2.2rem;
+            font-weight: 700; color: var(--green); letter-spacing: 2px;
+        }
+        .countdown-caption {
+            font-size: 0.8rem; color: var(--text-dim);
+            margin-top: 12px; line-height: 1.5;
+        }
+
+        .trade-row {
+            display: grid; grid-template-columns: 70px 1fr 90px 100px;
+            gap: 10px; padding: 10px 14px; align-items: center;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 8px; margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.74rem;
+        }
+        .trade-sym { color: var(--text); font-weight: 700; }
+        .trade-regime { color: var(--text-dim); font-size: 0.66rem; letter-spacing: 1px; }
+        .trade-time { color: var(--text-dim); font-size: 0.62rem; }
+        .trade-pnl { font-weight: 700; text-align: right; }
+        .trade-pnl.pos { color: var(--green); }
+        .trade-pnl.neg { color: var(--red); }
+
+        .position-row {
+            display: grid; grid-template-columns: 80px 70px 1fr 90px;
+            gap: 10px; padding: 12px 14px; align-items: center;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 8px; margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;
+        }
+        .position-dir { font-weight: 700; letter-spacing: 1px; font-size: 0.65rem; text-align:center; padding: 3px 6px; border-radius: 4px; }
+        .position-dir.long { color: var(--green); background: rgba(78,205,196,0.08); }
+        .position-dir.short { color: var(--red); background: rgba(239,68,68,0.08); }
+        .position-roi { font-weight: 700; text-align: right; }
+
+        .twitter-embed {
+            padding: 20px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 14px;
+            margin-top: 16px; text-align: center;
+        }
+        .twitter-btn {
+            display: inline-block; padding: 14px 28px; margin-top: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            color: var(--text); background: var(--accent);
+            border-radius: 8px; text-decoration: none;
+            letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+        }
+        .twitter-btn:hover { opacity: 0.9; }
+
+        .empty-note {
+            padding: 20px; background: var(--card);
+            border: 1px dashed var(--border); border-radius: 10px;
+            color: var(--text-dim); font-size: 0.8rem; text-align: center;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <div class="today-wrap">
+        <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:30px;margin-top:0;">
+            <div class="hero-glow"></div>
+            <div class="today-hero-badge"><span class="live-dot" style="display:inline-block; width:6px; height:6px; background:var(--green); border-radius:50%; margin-right:6px; vertical-align:middle;"></span>LIVE TODAY</div>
+            <h1 style="font-size:clamp(2.5rem,7vw,4.5rem);background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;font-weight:900;margin-bottom:8px;">TODAY</h1>
+            <div class="today-date" id="today-date">Loading&hellip;</div>
+            <p style="color:var(--text-dim);max-width:640px;margin:20px auto 0;font-size:0.95rem;line-height:1.6;">The live heartbeat of the organism. Today&rsquo;s trades, today&rsquo;s champion, today&rsquo;s countdown to the next swarm cycle. Auto-refreshes every 60 seconds.</p>
+        </section>
+
+        <!-- TODAY STATS -->
+        <div class="today-grid" id="today-grid">
+            <div class="today-stat"><div class="today-stat-label">Today&rsquo;s PnL</div><div class="today-stat-value" id="today-pnl">&mdash;</div><div class="today-stat-sub">Realized %</div></div>
+            <div class="today-stat blue"><div class="today-stat-label">Win Rate</div><div class="today-stat-value" id="today-wr">&mdash;</div><div class="today-stat-sub" id="today-trades">&mdash; trades</div></div>
+            <div class="today-stat amber"><div class="today-stat-label">Open Positions</div><div class="today-stat-value" id="today-open">&mdash;</div><div class="today-stat-sub">Currently held</div></div>
+            <div class="today-stat blue"><div class="today-stat-label">Symbols Live</div><div class="today-stat-value" id="today-symbols">&mdash;</div><div class="today-stat-sub">Under watch</div></div>
+        </div>
+
+        <!-- LIVE CHAMPION -->
+        <div class="today-section-title">// Reigning Champion</div>
+        <div class="champion-card" id="champion-card">
+            <div class="champion-label" id="champ-label">Loading throne&hellip;</div>
+            <div class="champion-name" id="champ-name">&mdash;</div>
+            <div class="champion-codename" id="champ-codename">&mdash;</div>
+            <div class="champion-tagline" id="champ-tagline">&mdash;</div>
+        </div>
+
+        <!-- COUNTDOWN -->
+        <div class="today-section-title">// Next Swarm Cycle</div>
+        <div class="countdown-card">
+            <div class="countdown-label">Saturday 17:00 BST &middot; 50-Generation Tournament</div>
+            <div class="countdown-timer" id="countdown-timer">&mdash;</div>
+            <div class="countdown-caption">When the timer hits zero the LLM fires fifty generations across the latest six-day market window. If any candidate beats the reigning champion, it takes the throne and is deployed live.</div>
+        </div>
+
+        <!-- TODAY'S TRADES -->
+        <div class="today-section-title">// Today&rsquo;s Trades</div>
+        <div id="today-trades-list"><div class="empty-note">Loading today&rsquo;s trades&hellip;</div></div>
+
+        <!-- LIVE POSITIONS -->
+        <div class="today-section-title">// Live Positions</div>
+        <div id="today-positions-list"><div class="empty-note">Loading positions&hellip;</div></div>
+
+        <!-- LATEST TWEET LINK -->
+        <div class="today-section-title">// Today&rsquo;s Broadcast</div>
+        <div class="twitter-embed">
+            <p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:14px;">The Sentinel posts the daily swarm report to X at 18:00 BST every evening. Read today&rsquo;s broadcast straight from the live feed.</p>
+            <a class="twitter-btn" href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">OPEN @freedomcoreai &rarr;</a>
+        </div>
+
+        <div style="height:60px;"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script>
+    (function() {
+        function fmtPct(v) { if (v === undefined || v === null) return '-'; var n = Number(v); return (n >= 0 ? '+' : '') + n.toFixed(2) + '%'; }
+        function fmtDate(d) {
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            return days[d.getUTCDay()] + ', ' + d.getUTCDate() + ' ' + months[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+        }
+        document.getElementById('today-date').textContent = fmtDate(new Date());
+
+        // Next Saturday 17:00 BST = 16:00 UTC
+        function updateCountdown() {
+            var now = new Date();
+            var target = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 16, 0, 0));
+            while (target.getUTCDay() !== 6 || target <= now) {
+                target.setUTCDate(target.getUTCDate() + 1);
+            }
+            var ms = target - now;
+            if (ms <= 0) { document.getElementById('countdown-timer').textContent = 'FIRING'; return; }
+            var d = Math.floor(ms / 86400000);
+            var h = Math.floor((ms % 86400000) / 3600000);
+            var m = Math.floor((ms % 3600000) / 60000);
+            var s = Math.floor((ms % 60000) / 1000);
+            document.getElementById('countdown-timer').textContent = d + 'd ' + h + 'h ' + m + 'm ' + s + 's';
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        function el(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+        function fmtClass(v) { return (v || '').toString(); }
+
+        function _apiHeaders() {
+            return (typeof window.fcMergeHeaders === 'function')
+                ? window.fcMergeHeaders()
+                : {'X-API-Key': 'fc_live_fa03a80eb6948c7ac11f96bc'};
+        }
+
+        async function loadPerformance() {
+            try {
+                var r = await fetch('/api_data/performance.json?_=' + Date.now(), {cache: 'no-store'});
+                var d = await r.json();
+                var s = d.summary_24h || {};
+                var pnl = s.pnl_pct;
+                var pnlEl = document.getElementById('today-pnl');
+                pnlEl.textContent = fmtPct(pnl);
+                pnlEl.style.color = pnl == null ? 'var(--text)' : (pnl > 0 ? 'var(--green)' : pnl < 0 ? 'var(--red)' : 'var(--text)');
+                el('today-wr', (s.win_rate !== undefined && s.win_rate !== null ? s.win_rate.toFixed(1) + '%' : '-'));
+                el('today-trades', (s.trades || 0) + ' trades today');
+                el('today-open', (d.live_positions || []).length);
+
+                // Today's trades
+                var today = new Date().toISOString().slice(0, 10);
+                var trades = (d.recent_trades || []).filter(function(t) { return (t.time || '').startsWith(today); });
+                var list = document.getElementById('today-trades-list');
+                if (trades.length === 0) {
+                    list.innerHTML = '<div class="empty-note">No closed trades today yet. Live positions may still be running.</div>';
+                } else {
+                    list.innerHTML = trades.map(function(t) {
+                        var pnlCls = t.pnl_pct >= 0 ? 'pos' : 'neg';
+                        var hhmm = (t.time || '').substr(11,5);
+                        return '<div class="trade-row">' +
+                            '<div class="trade-time">' + hhmm + '</div>' +
+                            '<div><div class="trade-sym">' + (t.symbol || '?') + '</div><div class="trade-regime">' + (t.regime || '--') + ' &middot; ' + (t.exit_reason || '').replace(/_/g, ' ') + '</div></div>' +
+                            '<div style="color:var(--text-dim); font-size:0.68rem;">$' + (t.pnl_usd !== undefined ? t.pnl_usd.toFixed(2) : '--') + '</div>' +
+                            '<div class="trade-pnl ' + pnlCls + '">' + fmtPct(t.pnl_pct) + '</div>' +
+                            '</div>';
+                    }).join('');
+                }
+
+                // Positions
+                var pos = d.live_positions || [];
+                var posList = document.getElementById('today-positions-list');
+                if (pos.length === 0) {
+                    posList.innerHTML = '<div class="empty-note">No open positions right now.</div>';
+                } else {
+                    posList.innerHTML = pos.map(function(p) {
+                        var dir = (p.direction || '').toLowerCase();
+                        var roiCls = p.roi_pct >= 0 ? 'pos' : 'neg';
+                        return '<div class="position-row">' +
+                            '<div class="trade-sym">' + (p.symbol || '?') + '</div>' +
+                            '<div class="position-dir ' + dir + '">' + (p.direction || '--') + '</div>' +
+                            '<div class="trade-regime">' + (p.regime || '--') + '</div>' +
+                            '<div class="position-roi ' + roiCls + '" style="color:' + (p.roi_pct >= 0 ? 'var(--green)' : 'var(--red)') + ';">' + fmtPct(p.roi_pct) + '</div>' +
+                            '</div>';
+                    }).join('');
+                }
+            } catch (e) {
+                document.getElementById('today-trades-list').innerHTML = '<div class="empty-note">Performance feed unreachable.</div>';
+            }
+        }
+
+        async function loadChampion() {
+            try {
+                var r = await fetch('/api/live/champion', {cache: 'no-store', headers: _apiHeaders()});
+                var c = await r.json();
+                el('champ-label', 'Platinum Champion · ' + (c.live_verified ? 'Live Verified' : 'Live'));
+                el('champ-name', c.fighter_name || 'Unnamed Champion');
+                el('champ-codename', (c.name || '') + ' v' + (c.version || '?'));
+                el('champ-tagline', c.tagline || 'New species. Awaiting narrative.');
+            } catch (e) {
+                el('champ-name', 'Champion data unreachable');
+            }
+        }
+
+        async function loadStats() {
+            try {
+                var r = await fetch('/api/live/stats', {cache: 'no-store', headers: _apiHeaders()});
+                var s = await r.json();
+                el('today-symbols', s.active_symbols || '-');
+            } catch (e) {}
+        }
+
+        function refreshAll() {
+            loadPerformance();
+            loadChampion();
+            loadStats();
+        }
+        refreshAll();
+        setInterval(refreshAll, 60000);
+    })();
+    </script>
+</body>
+</html>

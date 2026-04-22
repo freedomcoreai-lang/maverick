@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Performance | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .perf-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        .perf-hero { padding: 100px 0 40px; text-align: center; }
+        .perf-hero h1 {
+            font-family: 'Inter', sans-serif; font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px;
+        }
+        .perf-hero p { color: var(--text-dim); max-width: 600px; margin: 0 auto; line-height: 1.8; }
+        .perf-section { padding: 36px 0; border-top: 1px solid var(--border); }
+        .perf-section-head {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            letter-spacing: 3px; color: var(--accent); text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .perf-updated {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); text-align: center; margin-top: 8px;
+        }
+
+        /* Summary cards */
+        .perf-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .perf-period {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px; text-align: center;
+        }
+        .perf-period-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+        }
+        .perf-pnl {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.8rem;
+            font-weight: 700; margin-bottom: 8px;
+        }
+        .perf-pnl.positive { color: var(--green); }
+        .perf-pnl.negative { color: var(--red); }
+        .perf-meta {
+            font-size: 0.75rem; color: var(--text-dim); line-height: 1.8;
+        }
+        .perf-meta span { color: var(--text); font-weight: 500; }
+
+        /* Equity curve */
+        .equity-bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 160px; margin: 20px 0; }
+        .equity-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; }
+        .equity-bar {
+            width: 100%; border-radius: 4px 4px 0 0; min-height: 4px;
+            transition: height 0.5s ease;
+        }
+        .equity-bar.positive { background: var(--green); }
+        .equity-bar.negative { background: var(--red); }
+        .equity-bar-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); margin-top: 8px;
+        }
+        .equity-bar-val {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text); margin-bottom: 4px;
+        }
+
+        /* Trade table */
+        .trade-table { width: 100%; border-collapse: collapse; }
+        .trade-table th {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;
+            padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border);
+        }
+        .trade-table td {
+            font-size: 0.8rem; padding: 10px 12px; border-bottom: 1px solid rgba(30,55,90,0.2);
+            color: var(--text-dim);
+        }
+        .trade-table .sym { color: var(--text); font-weight: 600; }
+        .trade-table .pnl-pos { color: var(--green); font-weight: 600; }
+        .trade-table .pnl-neg { color: var(--red); font-weight: 600; }
+
+        /* Live positions */
+        .pos-live-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+            padding: 14px 18px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .pos-live-sym { font-weight: 600; font-size: 0.9rem; }
+        .pos-live-dir {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            letter-spacing: 1px; margin-left: 10px;
+        }
+        .pos-live-dir.long { color: var(--green); }
+        .pos-live-dir.short { color: var(--red); }
+        .pos-live-roi { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; }
+
+        .empty-state {
+            text-align: center; padding: 30px; color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .back-bar {
+            position: relative; z-index: 2; padding: 10px 24px;
+            background: rgba(62,168,245,0.03); border-bottom: 1px solid var(--border);
+            margin-top: 56px;
+        }
+        .back-bar a {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); text-decoration: none; letter-spacing: 1px;
+        }
+
+        [data-theme="light"] .perf-period { background: rgba(255,255,255,0.9); }
+        [data-theme="light"] .pos-live-card { background: rgba(255,255,255,0.9); }
+
+        @media (max-width: 600px) {
+            .perf-wrap { padding: 0 16px; }
+            .perf-summary { grid-template-columns: 1fr; }
+            .trade-table { font-size: 0.7rem; }
+            .trade-table th, .trade-table td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <div class="perf-wrap">
+        <div class="perf-hero">
+            <div class="hero-badge">Autonomous Trading Performance</div>
+            <h1>PERFORMANCE</h1>
+            <p>Live results from MAVERICK's autonomous trading on KuCoin Futures. Updated every 15 minutes. No manual intervention. No cherry-picked results.</p>
+            <div class="perf-updated" id="perf-updated">Loading...</div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="perf-section">
+            <div class="perf-section-head">// Performance Summary</div>
+            <div class="perf-summary">
+                <div class="perf-period">
+                    <div class="perf-period-label">Last 24 Hours</div>
+                    <div class="perf-pnl" id="pnl-24h">--</div>
+                    <div class="perf-meta">
+                        <span id="wr-24h">--</span> Win Rate<br>
+                        <span id="trades-24h">--</span> Trades<br>
+                        Avg Win: <span id="avgwin-24h">--</span> / Avg Loss: <span id="avgloss-24h">--</span>
+                    </div>
+                </div>
+                <div class="perf-period">
+                    <div class="perf-period-label">Last 7 Days</div>
+                    <div class="perf-pnl" id="pnl-7d">--</div>
+                    <div class="perf-meta">
+                        <span id="wr-7d">--</span> Win Rate<br>
+                        <span id="trades-7d">--</span> Trades<br>
+                        Avg Win: <span id="avgwin-7d">--</span> / Avg Loss: <span id="avgloss-7d">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EQUITY CURVE -->
+        <div class="perf-section">
+            <div class="perf-section-head">// Equity Curve (7 Day)</div>
+            <div class="equity-bar-chart" id="equity-chart"></div>
+        </div>
+
+        <!-- LIVE POSITIONS -->
+        <div class="perf-section">
+            <div class="perf-section-head">// Live Positions</div>
+            <div id="live-positions"></div>
+        </div>
+
+        <!-- RECENT TRADES -->
+        <div class="perf-section">
+            <div class="perf-section-head">// Recent Trades</div>
+            <div style="overflow-x:auto;">
+                <table class="trade-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Regime</th>
+                            <th>Exit</th>
+                            <th>PnL %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trades-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" class="back-to-top">Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
+    </footer>
+
+    <script src="/js/app.js?v=20260410"></script>
+    <script src="/js/performance.js?v=20260410"></script>
+    <script src="/js/tracker.js" defer></script>
+</body>
+</html>

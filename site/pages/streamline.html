@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#06060c">
+    <meta name="description" content="Streamline - 1.3GB live market intelligence database powering MAVERICK. 88 symbols, 98 indicators, 272 tables.">
+    <title>Streamline | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           STREAMLINE MISSION CONTROL. BLACKBOX DASHBOARD
+           ═══════════════════════════════════════════════════════════════ */
+
+        :root {
+            --bb-bg: #06060c;
+            --bb-panel: #0b0b14;
+            --bb-header: #0e0e18;
+            --bb-border: #16162a;
+            --bb-green: #00e676;
+            --bb-red: #ff1744;
+            --bb-amber: #ffab00;
+            --bb-cyan: #00e5ff;
+            --bb-purple: #b388ff;
+            --bb-green-bg: rgba(0, 230, 118, 0.08);
+            --bb-red-bg: rgba(255, 23, 68, 0.08);
+            --bb-amber-bg: rgba(255, 171, 0, 0.08);
+            --bb-cyan-bg: rgba(0, 229, 255, 0.08);
+            --bb-purple-bg: rgba(179, 136, 255, 0.08);
+            --bb-green-border: rgba(0, 230, 118, 0.25);
+            --bb-red-border: rgba(255, 23, 68, 0.25);
+            --bb-amber-border: rgba(255, 171, 0, 0.25);
+            --bb-cyan-border: rgba(0, 229, 255, 0.25);
+            --bb-purple-border: rgba(179, 136, 255, 0.25);
+            --bb-text: #e0e0e0;
+            --bb-text-dim: #6a6a8a;
+            --bb-text-muted: #3a3a5a;
+        }
+
+        [data-theme="light"] {
+            --bb-bg: #f0f4f8;
+            --bb-panel: #ffffff;
+            --bb-header: #f5f7fa;
+            --bb-border: #d8dfe8;
+            --bb-green: #1a9e6e;
+            --bb-red: #d42020;
+            --bb-amber: #b87a00;
+            --bb-cyan: #0a7e9e;
+            --bb-purple: #6d3bcc;
+            --bb-green-bg: rgba(26, 158, 110, 0.06);
+            --bb-red-bg: rgba(212, 32, 32, 0.06);
+            --bb-amber-bg: rgba(184, 122, 0, 0.06);
+            --bb-cyan-bg: rgba(10, 126, 158, 0.06);
+            --bb-purple-bg: rgba(109, 59, 204, 0.06);
+            --bb-green-border: rgba(26, 158, 110, 0.2);
+            --bb-red-border: rgba(212, 32, 32, 0.2);
+            --bb-amber-border: rgba(184, 122, 0, 0.2);
+            --bb-cyan-border: rgba(10, 126, 158, 0.2);
+            --bb-purple-border: rgba(109, 59, 204, 0.2);
+            --bb-text: #1a2a3c;
+            --bb-text-dim: #4a5a6c;
+            --bb-text-muted: #8a96a8;
+        }
+
+        /* ── GLOBAL OVERRIDES ── */
+        body {
+            background: var(--bb-bg) !important;
+            color: var(--bb-text);
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bb-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--bb-border); border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a2a4a; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 8px rgba(0, 230, 118, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 230, 118, 0.6); }
+        }
+        @keyframes scan-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes squeeze-compress {
+            0%, 100% { transform: scaleX(1); }
+            50% { transform: scaleX(0.97); }
+        }
+        @keyframes border-glow-amber {
+            0%, 100% { border-color: rgba(255, 171, 0, 0.25); }
+            50% { border-color: rgba(255, 171, 0, 0.6); }
+        }
+        @keyframes border-glow-green {
+            0%, 100% { border-color: rgba(0, 230, 118, 0.25); }
+            50% { border-color: rgba(0, 230, 118, 0.6); }
+        }
+
+        /* ═══════════════════════════════════════
+           INTRO SECTION
+           ═══════════════════════════════════════ */
+        .sl-intro {
+            max-width: 1600px; margin: 0 auto; padding: 100px 24px 40px;
+            position: relative; z-index: 2;
+        }
+        .sl-intro-inner { max-width: 800px; }
+        .sl-intro-badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--bb-green); background: var(--bb-green-bg);
+            padding: 5px 14px; border-radius: 16px; margin-bottom: 16px;
+            border: 1px solid var(--bb-green-border);
+        }
+        .sl-intro-title {
+            font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 900; letter-spacing: -2px; line-height: 1;
+            background: linear-gradient(135deg, var(--bb-green), var(--bb-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; margin-bottom: 20px;
+        }
+        .sl-intro-desc {
+            font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.8;
+            color: var(--bb-text-dim); margin-bottom: 28px;
+        }
+        .sl-intro-stats {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+            margin-bottom: 24px;
+        }
+        .sl-intro-stat {
+            background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 8px;
+            padding: 16px 12px; text-align: center;
+        }
+        .sl-intro-stat-val {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.4rem;
+            font-weight: 700; color: var(--bb-green); display: block; margin-bottom: 4px;
+        }
+        .sl-intro-stat-lbl {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--bb-text-muted); letter-spacing: 1px; text-transform: uppercase;
+        }
+        .sl-intro-sub {
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; line-height: 1.7;
+            color: var(--bb-text-dim);
+        }
+        .sl-intro-link {
+            color: var(--bb-cyan); text-decoration: none; border-bottom: 1px solid var(--bb-cyan-border);
+            transition: border-color 0.2s;
+        }
+        .sl-intro-link:hover { border-color: var(--bb-cyan); }
+
+        @media (max-width: 768px) {
+            .sl-intro { padding: 80px 16px 32px; }
+            .sl-intro-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .sl-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ═══════════════════════════════════════
+           1. STICKY HEADER BAR
+           ═══════════════════════════════════════ */
+        .sl-header {
+            position: sticky;
+            top: 56px;
+            z-index: 50;
+            background: var(--bb-header);
+            border-bottom: 1px solid var(--bb-border);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .sl-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sl-header-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: var(--bb-green);
+            text-shadow: 0 0 20px rgba(0, 230, 118, 0.4), 0 0 40px rgba(0, 230, 118, 0.15);
+            text-transform: uppercase;
+        }
+        .sl-header-version {
+            font-size: 0.55rem;
+            color: var(--bb-text-dim);
+            background: var(--bb-panel);
+            padding: 2px 6px;
+            border-radius: 3px;
+            border: 1px solid var(--bb-border);
+            letter-spacing: 1px;
+        }
+        .sl-header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+            color: var(--bb-text-dim);
+        }
+        .sl-header-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .sl-header-stat .val {
+            color: var(--bb-green);
+            font-weight: 700;
+        }
+        .sl-header-stat .label {
+            color: var(--bb-text-muted);
+            text-transform: uppercase;
+            font-size: 0.55rem;
+            letter-spacing: 1px;
+        }
+        .sl-live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--bb-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            display: inline-block;
+        }
+        .sl-header-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--bb-border);
+        }
+
+        /* ═══════════════════════════════════════
+           2. NAVIGATION TABS
+           ═══════════════════════════════════════ */
+        .sl-tabs {
+            display: flex;
+            gap: 0;
+            background: var(--bb-panel);
+            border-bottom: 1px solid var(--bb-border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            position: sticky;
+            top: 99px;
+            z-index: 49;
+        }
+        .sl-tabs::-webkit-scrollbar { display: none; }
+        .sl-tab {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: var(--bb-text-dim);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+        .sl-tab:hover {
+            color: var(--bb-text);
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .sl-tab.active {
+            color: var(--bb-green);
+            border-bottom-color: var(--bb-green);
+        }
+        .sl-tab-count {
+            font-size: 0.55rem;
+            background: var(--bb-header);
+            color: var(--bb-text-dim);
+            padding: 1px 5px;
+            border-radius: 3px;
+            min-width: 16px;
+            text-align: center;
+            border: 1px solid var(--bb-border);
+            font-weight: 700;
+        }
+        .sl-tab.active .sl-tab-count {
+            background: var(--bb-green-bg);
+            color: var(--bb-green);
+            border-color: var(--bb-green-border);
+        }
+
+        /* ═══════════════════════════════════════
+           3. SECTIONS (tab content)
+           ═══════════════════════════════════════ */
+        .sl-section {
+            display: none;
+            padding: 12px 0;
+            animation: fade-in 0.3s ease;
+        }
+        .sl-section.active {
+            display: block;
+        }
+        .sl-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+        }
+        .sl-section-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bb-text-dim);
+        }
+        .sl-section-meta {
+            font-size: 0.6rem;
+            color: var(--bb-text-muted);
+        }
+
+        /* ═══════════════════════════════════════
+           3a. ALL SYMBOLS GRID
+           ═══════════════════════════════════════ */
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+            gap: 6px;
+            padding: 4px;
+        }
+        .symbol-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .symbol-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: var(--bb-header);
+            transform: translateY(-1px);
+        }
+        .symbol-card.bullish {
+            border-left: 2px solid var(--bb-green);
+        }
+        .symbol-card.bearish {
+            border-left: 2px solid var(--bb-red);
+        }
+        .symbol-card.neutral {
+            border-left: 2px solid var(--bb-text-muted);
+        }
+        .symbol-card-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--bb-text);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .symbol-card-dir {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .symbol-card-dir.long { color: var(--bb-green); }
+        .symbol-card-dir.short { color: var(--bb-red); }
+        .symbol-card-dir.neutral { color: var(--bb-text-muted); }
+        .symbol-card-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.55rem;
+            color: var(--bb-text-dim);
+            margin-top: 2px;
+        }
+        .symbol-card-row .label {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--bb-text-muted);
+        }
+        .symbol-card-row .val { font-weight: 600; }
+        .symbol-card-row .val.high { color: var(--bb-green); }
+        .symbol-card-row .val.medium { color: var(--bb-amber); }
+        .symbol-card-row .val.low { color: var(--bb-red); }
+        .symbol-squeeze-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 4px;
+        }
+        .symbol-squeeze-dot.on {
+            background: var(--bb-amber);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .symbol-squeeze-dot.off {
+            background: var(--bb-text-muted);
+        }
+        .symbol-confluence-dots {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+        .confluence-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+        .confluence-dot.filled { background: var(--bb-green); }
+        .confluence-dot.empty { background: var(--bb-text-muted); }
+
+        /* ═══════════════════════════════════════
+           3b. SYMBOL DETAIL OVERLAY
+           ═══════════════════════════════════════ */
+        .symbol-detail-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            background: var(--bb-bg);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .symbol-detail-overlay.open {
+            display: block;
+        }
+        .symbol-detail-chart {
+            flex: 1;
+            position: relative;
+            min-height: 0;
+        }
+        .symbol-detail-chart iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .symbol-detail-panel {
+            width: 380px;
+            background: rgba(11, 11, 20, 0.92);
+            border-left: 1px solid var(--bb-border);
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .symbol-detail-close {
+            position: absolute;
+            top: 12px;
+            right: 396px;
+            width: 32px;
+            height: 32px;
+            background: rgba(11, 11, 20, 0.8);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            color: var(--bb-text-dim);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            transition: all 0.15s ease;
+        }
+        .symbol-detail-close:hover {
+            background: var(--bb-red-bg);
+            border-color: var(--bb-red-border);
+            color: var(--bb-red);
+        }
+        .detail-symbol-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--bb-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .detail-section {
+            background: var(--bb-header);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 10px;
+        }
+        .detail-section-title {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bb-text-muted);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--bb-border);
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            font-size: 0.65rem;
+        }
+        .detail-row .label {
+            color: var(--bb-text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .detail-row .val {
+            font-weight: 600;
+            color: var(--bb-text);
+        }
+        .detail-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .detail-badge.pass {
+            background: var(--bb-green-bg);
+            color: var(--bb-green);
+            border: 1px solid var(--bb-green-border);
+        }
+        .detail-badge.fail {
+            background: var(--bb-red-bg);
+            color: var(--bb-red);
+            border: 1px solid var(--bb-red-border);
+        }
+        .detail-confluence-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+        }
+        .detail-confluence-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 6px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+            font-size: 0.6rem;
+        }
+        .detail-confluence-item .check-label {
+            color: var(--bb-text-dim);
+        }
+
+        /* ═══════════════════════════════════════
+           4. SIGNALS TABLE
+           ═══════════════════════════════════════ */
+        .signals-table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+        }
+        .signals-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.65rem;
+        }
+        .signals-table th {
+            background: var(--bb-header);
+            color: var(--bb-text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.55rem;
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--bb-border);
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+        .signals-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid rgba(22, 22, 42, 0.5);
+            color: var(--bb-text-dim);
+            white-space: nowrap;
+        }
+        .signals-table tr {
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .signals-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .signals-table tbody tr.expanded {
+            background: var(--bb-header);
+        }
+        .signal-dir-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .signal-dir-badge.long {
+            background: var(--bb-green-bg);
+            color: var(--bb-green);
+            border: 1px solid var(--bb-green-border);
+        }
+        .signal-dir-badge.short {
+            background: var(--bb-red-bg);
+            color: var(--bb-red);
+            border: 1px solid var(--bb-red-border);
+        }
+        .signal-type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.55rem;
+            font-weight: 600;
+            background: var(--bb-purple-bg);
+            color: var(--bb-purple);
+            border: 1px solid var(--bb-purple-border);
+        }
+        .signal-tier-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .signal-tier-badge.t1 {
+            background: var(--bb-green-bg);
+            color: var(--bb-green);
+            border: 1px solid var(--bb-green-border);
+        }
+        .signal-tier-badge.t2 {
+            background: var(--bb-cyan-bg);
+            color: var(--bb-cyan);
+            border: 1px solid var(--bb-cyan-border);
+        }
+        .signal-tier-badge.t3 {
+            background: var(--bb-amber-bg);
+            color: var(--bb-amber);
+            border: 1px solid var(--bb-amber-border);
+        }
+        .signal-confluence-bar {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+        .signal-confluence-bar .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .signal-confluence-bar .dot.filled { background: var(--bb-green); }
+        .signal-confluence-bar .dot.empty { background: var(--bb-text-muted); }
+        .signal-expand-row {
+            display: none;
+        }
+        .signal-expand-row.open {
+            display: table-row;
+        }
+        .signal-expand-row td {
+            padding: 12px 16px;
+            background: rgba(14, 14, 24, 0.8);
+        }
+        .signal-expand-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .signal-expand-block {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 8px 10px;
+        }
+        .signal-expand-block-title {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bb-text-muted);
+            margin-bottom: 6px;
+        }
+
+        /* ═══════════════════════════════════════
+           5. SQUEEZE SECTION
+           ═══════════════════════════════════════ */
+        .squeeze-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .squeeze-item {
+            display: grid;
+            grid-template-columns: 110px 1fr 80px 80px 70px;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 3px;
+            font-size: 0.65rem;
+            transition: all 0.15s ease;
+        }
+        .squeeze-item:hover {
+            background: var(--bb-header);
+        }
+        .squeeze-item.active-squeeze {
+            animation: border-glow-amber 2s ease-in-out infinite;
+        }
+        .squeeze-item.recently-fired {
+            animation: border-glow-green 2s ease-in-out infinite;
+        }
+        .squeeze-symbol {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--bb-text);
+        }
+        .squeeze-bar-container {
+            position: relative;
+            height: 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .squeeze-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .squeeze-bar-fill.amber {
+            background: linear-gradient(90deg, rgba(255, 171, 0, 0.3), rgba(255, 171, 0, 0.6));
+        }
+        .squeeze-bar-fill.green {
+            background: linear-gradient(90deg, rgba(0, 230, 118, 0.3), rgba(0, 230, 118, 0.6));
+        }
+        .squeeze-bar-fill.red {
+            background: linear-gradient(90deg, rgba(255, 23, 68, 0.3), rgba(255, 23, 68, 0.6));
+        }
+        .squeeze-bar-label {
+            position: absolute;
+            top: 0;
+            left: 6px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: var(--bb-text);
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        }
+        .squeeze-meta {
+            font-size: 0.6rem;
+            color: var(--bb-text-dim);
+            text-align: right;
+        }
+        .squeeze-meta.positive { color: var(--bb-green); }
+        .squeeze-meta.negative { color: var(--bb-red); }
+
+        /* ═══════════════════════════════════════
+           6. EXPLOSIONS SECTION
+           ═══════════════════════════════════════ */
+        .explosions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 6px;
+        }
+        .explosion-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: all 0.15s ease;
+        }
+        .explosion-card:hover {
+            background: var(--bb-header);
+        }
+        .explosion-card.long-dir {
+            border-left: 3px solid var(--bb-green);
+        }
+        .explosion-card.short-dir {
+            border-left: 3px solid var(--bb-red);
+        }
+        .explosion-arrow {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+        .explosion-arrow.up { color: var(--bb-green); }
+        .explosion-arrow.down { color: var(--bb-red); }
+        .explosion-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .explosion-symbol {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--bb-text);
+            margin-bottom: 4px;
+        }
+        .explosion-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 0.6rem;
+        }
+        .explosion-stat {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .explosion-stat .label {
+            color: var(--bb-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .explosion-stat .val { font-weight: 600; }
+        .explosion-time {
+            font-size: 0.55rem;
+            color: var(--bb-text-muted);
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════
+           7. FISHING SECTION
+           ═══════════════════════════════════════ */
+        .fishing-table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+        }
+        .fishing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.65rem;
+        }
+        .fishing-table th {
+            background: var(--bb-header);
+            color: var(--bb-text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.55rem;
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--bb-border);
+            white-space: nowrap;
+        }
+        .fishing-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid rgba(22, 22, 42, 0.5);
+            white-space: nowrap;
+        }
+        .fishing-symbol {
+            color: var(--bb-cyan);
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+        .fishing-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.55rem;
+            font-weight: 600;
+        }
+        .fishing-status.waiting {
+            background: var(--bb-amber-bg);
+            color: var(--bb-amber);
+            border: 1px solid var(--bb-amber-border);
+        }
+        .fishing-status.filled {
+            background: var(--bb-green-bg);
+            color: var(--bb-green);
+            border: 1px solid var(--bb-green-border);
+        }
+        .fishing-status.expired {
+            background: var(--bb-red-bg);
+            color: var(--bb-red);
+            border: 1px solid var(--bb-red-border);
+        }
+        .fishing-countdown {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--bb-amber);
+            font-weight: 600;
+        }
+        .fishing-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--bb-text-muted);
+            font-size: 0.7rem;
+        }
+        .fishing-empty-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            opacity: 0.3;
+        }
+
+        /* ═══════════════════════════════════════
+           8. STATS SECTION
+           ═══════════════════════════════════════ */
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .stats-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stats-card-value {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--bb-text);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stats-card-value.green { color: var(--bb-green); }
+        .stats-card-value.red { color: var(--bb-red); }
+        .stats-card-value.amber { color: var(--bb-amber); }
+        .stats-card-value.cyan { color: var(--bb-cyan); }
+        .stats-card-label {
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bb-text-muted);
+        }
+        .stats-symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .stats-symbol-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 10px 12px;
+        }
+        .stats-symbol-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--bb-text);
+            margin-bottom: 6px;
+        }
+        .stats-win-bar {
+            display: flex;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--bb-header);
+        }
+        .stats-win-bar .win-fill {
+            background: var(--bb-green);
+            transition: width 0.3s ease;
+        }
+        .stats-win-bar .loss-fill {
+            background: var(--bb-red);
+            transition: width 0.3s ease;
+        }
+        .stats-symbol-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.55rem;
+            color: var(--bb-text-dim);
+            margin-top: 4px;
+        }
+        .stats-exits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 6px;
+        }
+        .stats-exit-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+        }
+        .stats-exit-reason {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--bb-text-dim);
+            margin-bottom: 4px;
+        }
+        .stats-exit-count {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--bb-text);
+        }
+        .stats-exit-pct {
+            font-size: 0.55rem;
+            color: var(--bb-text-muted);
+        }
+
+        /* ═══════════════════════════════════════
+           9. HEALTH STRIP
+           ═══════════════════════════════════════ */
+        .health-strip {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: var(--bb-header);
+            border-top: 1px solid var(--bb-border);
+            padding: 4px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.55rem;
+            letter-spacing: 0.5px;
+            color: var(--bb-text-dim);
+        }
+        .health-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .health-item .label {
+            color: var(--bb-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .health-item .val {
+            font-weight: 700;
+        }
+        .health-item .val.ok { color: var(--bb-green); }
+        .health-item .val.warn { color: var(--bb-amber); }
+        .health-item .val.bad { color: var(--bb-red); }
+        .health-divider {
+            width: 1px;
+            height: 10px;
+            background: var(--bb-border);
+        }
+
+        /* ═══════════════════════════════════════
+           EMPTY / LOADING STATES
+           ═══════════════════════════════════════ */
+        .sl-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--bb-text-muted);
+            font-size: 0.7rem;
+            text-align: center;
+        }
+        .sl-empty-icon {
+            font-size: 2.5rem;
+            opacity: 0.2;
+            margin-bottom: 12px;
+        }
+        .sl-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 40px;
+            color: var(--bb-text-muted);
+            font-size: 0.65rem;
+        }
+        .sl-loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--bb-border);
+            border-top-color: var(--bb-green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .sl-header {
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 12px;
+            }
+            .sl-header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            .sl-main {
+                padding: 0 6px;
+            }
+            .symbols-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 4px;
+            }
+            .symbol-detail-overlay.open {
+                flex-direction: column;
+            }
+            .symbol-detail-chart {
+                height: 45vh;
+                min-height: 250px;
+            }
+            .symbol-detail-panel {
+                width: 100%;
+                height: 55vh;
+                border-left: none;
+                border-top: 1px solid var(--bb-border);
+            }
+            .symbol-detail-close {
+                right: 12px;
+                top: 8px;
+            }
+            .squeeze-item {
+                grid-template-columns: 90px 1fr 60px 60px;
+                font-size: 0.6rem;
+                padding: 6px 8px;
+            }
+            .squeeze-item > :nth-child(5) {
+                display: none;
+            }
+            .explosions-grid {
+                grid-template-columns: 1fr;
+            }
+            .health-strip {
+                gap: 10px;
+                padding: 4px 8px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .stats-summary {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .symbols-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ── BOTTOM SPACER for health strip ── */
+        .sl-bottom-spacer {
+            height: 32px;
+        }
+
+        /* ═══════════════════════════════════════════════
+           JS-RENDERED COMPONENT STYLES
+           ═══════════════════════════════════════════════ */
+
+        /* ── Symbol Cards (rendered by JS) ── */
+        .sym-card {
+            background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 8px;
+            padding: 12px; cursor: pointer; transition: all 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .sym-card:hover { border-color: var(--bb-green); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,230,118,0.1); }
+        .sym-card-name { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--bb-text); margin-bottom: 4px; }
+        .sym-card-price { font-family: 'JetBrains Mono',monospace; font-size: 0.8rem; color: var(--bb-text-muted); margin-bottom: 8px; }
+        .sym-card-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .sym-card-adx { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; color: var(--bb-text-dim); background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; }
+        .sym-card-conf { font-size: 0.7rem; letter-spacing: 1px; }
+        .sym-card-mode { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; padding: 2px 6px; border-radius: 4px; }
+        /* ── Equilibrium Values ── */
+        .sym-card-eq {
+            display: flex; align-items: center; gap: 6px; margin-top: 6px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+        }
+        .eq-label { color: var(--bb-purple); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .eq-val { color: var(--bb-text-muted); padding: 1px 4px; border-radius: 3px; }
+        .eq-hot { color: var(--bb-green); background: rgba(0,230,118,0.1); font-weight: 600; }
+        .eq-warm { color: var(--bb-amber); background: rgba(255,171,0,0.08); }
+        .eq-far { color: var(--bb-text-muted); }
+
+        .sym-mode-bull { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25); }
+        .sym-mode-bear { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.25); }
+        .sym-mode-neutral { color: var(--bb-amber); background: rgba(255,171,0,0.08); border: 1px solid rgba(255,171,0,0.25); }
+        .sym-mode-breakout { color: var(--bb-cyan); background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.25); }
+        .sym-bull { border-left: 3px solid rgba(0,230,118,0.5); }
+        .sym-bear { border-left: 3px solid rgba(255,23,68,0.5); }
+        .sym-neutral { border-left: 3px solid rgba(255,171,0,0.3); }
+        .sym-breakout { border-left: 3px solid rgba(0,229,255,0.4); }
+
+        /* ── Confluence Dots ── */
+        .conf-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin: 0 1px; }
+        .conf-dot.filled { background: var(--bb-green); }
+        .conf-dot.empty { background: rgba(255,255,255,0.1); }
+
+        /* ── Symbol Detail Overlay ── */
+        .overlay-close {
+            position: fixed; top: 12px; right: 16px; z-index: 1010;
+            background: rgba(0,0,0,0.7); border: 1px solid #333; border-radius: 50%;
+            color: var(--bb-text); font-size: 1.5rem; width: 40px; height: 40px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .overlay-close:hover { background: rgba(255,23,68,0.4); }
+        .overlay-chart {
+            width: 100%; height: 60vh; min-height: 300px;
+            border: none; display: block;
+        }
+        .overlay-panel {
+            width: 100%; max-width: 1200px; margin: 0 auto;
+            background: var(--bb-bg);
+            padding: 0 16px;
+        }
+        .overlay-panel-inner { padding: 20px 0 60px; }
+        .op-header { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--bb-border); }
+        .op-symbol { font-family: 'Inter',sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--bb-text); }
+        .op-price { font-family: 'JetBrains Mono',monospace; font-size: 1rem; color: var(--bb-text-dim); margin: 4px 0; }
+        .op-mode { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; display: inline-block; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .op-mode-bull { color: var(--bb-green); background: rgba(0,230,118,0.1); }
+        .op-mode-bear { color: var(--bb-red); background: rgba(255,23,68,0.1); }
+        .op-mode-neutral { color: var(--bb-amber); background: rgba(255,171,0,0.1); }
+        .op-mode-breakout { color: var(--bb-cyan); background: rgba(0,229,255,0.1); }
+        .op-mode-reason { font-size: 0.6rem; color: var(--bb-text-muted); margin-left: 6px; }
+        .op-section { margin-bottom: 14px; }
+        .op-section-title { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid var(--bb-border); padding-bottom: 4px; }
+        .op-dots { margin-bottom: 8px; }
+        .op-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+        .op-badge { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 3px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; }
+        .op-badge.pass { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25); }
+        .op-badge.fail { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.25); }
+        .op-badge-name { font-weight: 500; }
+        .op-badge-val { color: var(--bb-text-dim); }
+        .op-badge-target { color: var(--bb-text-muted); font-size: 0.55rem; }
+        .op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 12px; }
+        .op-row { display: flex; justify-content: space-between; padding: 2px 0; font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; }
+        .op-lbl { color: var(--bb-text-muted); }
+        .op-val { color: var(--bb-text); text-align: right; }
+        .op-dist { color: var(--bb-text-muted); font-size: 0.6rem; }
+
+        /* ── Signal Table (rendered by JS) ── */
+        .sig-row { background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 6px; margin-bottom: 4px; overflow: hidden; }
+        .sig-row-main { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
+        .sig-row-main:hover { background: var(--bb-header); }
+        .sig-dir-pill { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; min-width: 48px; text-align: center; }
+        .sig-pill-bull { color: var(--bb-green); background: rgba(0,230,118,0.12); border: 1px solid rgba(0,230,118,0.3); }
+        .sig-pill-bear { color: var(--bb-red); background: rgba(255,23,68,0.12); border: 1px solid rgba(255,23,68,0.3); }
+        .sig-sym { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--bb-text); min-width: 60px; }
+        .sig-price { font-family: 'JetBrains Mono',monospace; font-size: 0.75rem; color: var(--bb-text-dim); }
+        .sig-conf-dots { font-size: 0.65rem; }
+        .sig-type { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-purple); background: rgba(179,136,255,0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(179,136,255,0.25); text-transform: uppercase; letter-spacing: 1px; }
+        .sig-fire { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-amber); background: rgba(255,171,0,0.08); padding: 2px 6px; border-radius: 4px; }
+        .sig-meta-item { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); }
+        .sig-detail { padding: 8px 12px; background: var(--bb-bg); border-top: 1px solid #16162a; display: none; }
+        .sig-detail.open { display: block; }
+        .sig-badges { display: flex; flex-wrap: wrap; gap: 4px; }
+        .conf-badge { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; padding: 2px 6px; border-radius: 4px; }
+        .conf-badge.pass { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); }
+        .conf-badge.fail { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.2); }
+
+        /* ── Squeeze Cards (rendered by JS) ── */
+        .squeeze-card { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 6px; margin-bottom: 4px; }
+        .sq-sym { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--bb-text); min-width: 70px; }
+        .sq-bars { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; color: var(--bb-amber); min-width: 50px; }
+        .squeeze-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; position: relative; }
+        .squeeze-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .sq-ratio { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; color: var(--bb-text-muted); min-width: 40px; }
+        .sq-slope { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; min-width: 30px; }
+        .sq-status { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .sq-info { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); }
+
+        /* ── Fishing Cards (rendered by JS) ── */
+        .fish-card { background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 8px; padding: 12px; margin-bottom: 6px; }
+        .fish-bull { border-left: 3px solid rgba(0,230,118,0.5); }
+        .fish-bear { border-left: 3px solid rgba(255,23,68,0.5); }
+        .fish-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .fish-sym { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--bb-cyan); }
+        .fish-dir { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; }
+        .fish-pill-bull { color: var(--bb-green); background: rgba(0,230,118,0.12); border: 1px solid rgba(0,230,118,0.3); }
+        .fish-pill-bear { color: var(--bb-red); background: rgba(255,23,68,0.12); border: 1px solid rgba(255,23,68,0.3); }
+        .fish-status { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-amber); background: rgba(255,171,0,0.08); padding: 2px 6px; border-radius: 4px; }
+        .fish-prices { display: flex; gap: 12px; flex-wrap: wrap; }
+        .fish-price-item { display: flex; flex-direction: column; }
+        .fish-lbl { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .fish-val { font-family: 'JetBrains Mono',monospace; font-size: 0.8rem; color: var(--bb-text); }
+        .fish-stop { color: var(--bb-red); }
+        .fish-target { color: var(--bb-green); }
+        .fish-time { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); margin-top: 6px; }
+
+        /* ── Stats Summary Cards ── */
+        .sl-summary-card { background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 8px; padding: 14px; text-align: center; }
+        .sl-summary-lbl { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+
+        /* ── Stats Symbol Performance ── */
+        .sp-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--bb-border); }
+        .sp-sym { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.8rem; color: var(--bb-text); min-width: 70px; }
+        .sp-bar { flex: 1; height: 12px; background: rgba(255,255,255,0.03); border-radius: 3px; overflow: hidden; display: flex; }
+        .sp-bar-win { background: rgba(0,230,118,0.5); height: 100%; }
+        .sp-bar-loss { background: rgba(255,23,68,0.4); height: 100%; }
+
+        /* ── Stats Exit Reasons ── */
+        .exit-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+        .exit-reason { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; color: var(--bb-text-dim); min-width: 100px; }
+        .exit-header { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); text-transform: uppercase; letter-spacing: 1px; padding: 4px 0; border-bottom: 1px solid var(--bb-border); margin-bottom: 6px; }
+        .exit-meta { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); }
+        .exit-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.03); border-radius: 4px; overflow: hidden; }
+        .exit-bar-fill { height: 100%; border-radius: 4px; }
+        .exit-count { font-family: 'JetBrains Mono',monospace; font-size: 0.65rem; color: var(--bb-text-muted); min-width: 30px; text-align: right; }
+
+        /* ── Health Strip Items (rendered by JS) ── */
+        .hs-item { display: inline-flex; align-items: center; gap: 4px; font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; }
+        .hs-info { color: var(--bb-text-muted); }
+        .hs-status { font-weight: 500; }
+        .hs-ok { color: var(--bb-green); }
+        .hs-err { color: var(--bb-red); }
+        .hs-connecting { color: var(--bb-amber); }
+
+        /* ── King Trend ── */
+        .king-label { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        .king-direction { font-family: 'Inter',sans-serif; font-weight: 800; font-size: 0.8rem; }
+        .king-desc { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-text-muted); }
+
+        /* ── Empty State ── */
+        .sl-empty { text-align: center; padding: 40px 20px; color: var(--bb-text-muted); font-family: 'JetBrains Mono',monospace; font-size: 0.8rem; }
+
+        /* ── Mobile Overlay ── */
+        @media (max-width: 768px) {
+            .overlay-chart { height: 45vh; min-height: 250px; }
+            .overlay-panel-inner { padding: 16px 0 80px; }
+            .op-grid { grid-template-columns: 1fr; }
+            .squeeze-card { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--green)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Status</span>
+                    <span class="ssl-popup-value green">VALID</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Protocol</span>
+                    <span class="ssl-popup-value">TLS 1.3</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Issuer</span>
+                    <span class="ssl-popup-value">Let's Encrypt (E8)</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Domain</span>
+                    <span class="ssl-popup-value">freedomcore.io</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Issued</span>
+                    <span class="ssl-popup-value">9 Apr 2026</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Expires</span>
+                    <span class="ssl-popup-value green">8 Jul 2026</span>
+                </div>
+                <div class="ssl-popup-row">
+                    <span class="ssl-popup-label">Encryption</span>
+                    <span class="ssl-popup-value">256-bit AES</span>
+                </div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <a href="https://ntfy.sh/maverick_apex_9381?auth=0128" target="_blank" rel="noopener noreferrer" class="ntfy-badge" title="Live Push Alerts">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                ALERTS
+            </a>
+            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- Logo expand overlay -->
+    <div class="logo-expand-overlay" id="logo-expand">
+        <img src="/img/maverick-logo.jpg" alt="MAVERICK Globe" class="logo-expand-img">
+    </div>
+
+    <!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         STREAMLINE MISSION CONTROL
+         ════════════════════════════════════════════════════════════ -->
+
+    <!-- 1. INTRO SECTION -->
+    <div class="sl-intro">
+        <div class="sl-intro-inner">
+            <div class="sl-intro-badge">LIVE DATA FEED</div>
+            <h1 class="sl-intro-title">STREAMLINE</h1>
+            <p class="sl-intro-desc">
+                Streamline is the data backbone behind every decision MAVERICK makes. It continuously records and processes
+                98 technical indicators across 88 crypto futures symbols, updating every 60 seconds. Think of it as the nervous
+                system. Every squeeze compression, every trend shift, every equilibrium distance, every ADX reading, every
+                structure level. All of it logged, computed, and fed into the trading engines in real time.
+            </p>
+            <div class="sl-intro-stats">
+                <div class="sl-intro-stat">
+                    <span class="sl-intro-stat-val">88</span>
+                    <span class="sl-intro-stat-lbl">Symbols Tracked</span>
+                </div>
+                <div class="sl-intro-stat">
+                    <span class="sl-intro-stat-val">98</span>
+                    <span class="sl-intro-stat-lbl">Indicators Per Symbol</span>
+                </div>
+                <div class="sl-intro-stat">
+                    <span class="sl-intro-stat-val">272</span>
+                    <span class="sl-intro-stat-lbl">Database Tables</span>
+                </div>
+                <div class="sl-intro-stat">
+                    <span class="sl-intro-stat-val">1.3GB</span>
+                    <span class="sl-intro-stat-lbl">Live Database</span>
+                </div>
+            </div>
+            <p class="sl-intro-sub">
+                Every symbol below is clickable. Tap any card to see the full data sheet with a live TradingView chart,
+                confluence breakdown, structure levels, swing distances, and equilibrium positions. This is the raw
+                intelligence layer. For active trade signals, explosions, and fishing lines, head to the
+                <a href="/pages/signals.html" class="sl-intro-link">Signal Feed</a>.
+            </p>
+        </div>
+    </div>
+
+    <!-- 2. STICKY HEADER BAR -->
+    <div class="sl-header">
+        <div class="sl-header-left">
+            <span class="sl-header-title">STREAMLINE</span>
+            <span class="sl-header-version">v4.2</span>
+            <div id="king-trend-display" style="display:inline-flex;align-items:center;gap:6px;margin-left:12px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;"></div>
+        </div>
+        <div class="sl-header-right">
+            <div class="sl-header-stat">
+                <span class="sl-live-dot"></span>
+                <span class="label">Signals</span>
+                <span class="val" id="header-sig-count">--</span>
+            </div>
+            <div class="sl-header-divider"></div>
+            <div class="sl-header-stat">
+                <span class="label">Symbols</span>
+                <span class="val" id="header-sym-count">88</span>
+            </div>
+            <div class="sl-header-divider"></div>
+            <div class="sl-header-stat">
+                <span class="label">DB</span>
+                <span class="val" id="header-db-size">--</span>
+            </div>
+            <div class="sl-header-divider"></div>
+            <div class="sl-header-stat">
+                <span class="label">Age</span>
+                <span class="val" id="header-data-age">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NAVIGATION TABS -->
+    <div class="sl-tabs">
+        <button class="sl-tab active" data-tab="symbols">
+            All Symbols <span class="sl-tab-count" id="tab-count-symbols">88</span>
+        </button>
+        <button class="sl-tab" data-tab="squeeze">
+            Squeeze Monitor <span class="sl-tab-count" id="tab-count-squeeze">--</span>
+        </button>
+        <button class="sl-tab" data-tab="movers">
+            Market Movers
+        </button>
+        <button class="sl-tab" data-tab="volume">
+            Volume Leaders
+        </button>
+    </div>
+
+    <div class="sl-main">
+
+        <!-- ═══════════════════════════════════════
+             ALL SYMBOLS SECTION
+             ═══════════════════════════════════════ -->
+        <div class="sl-section active" id="section-symbols">
+            <div class="sl-section-header">
+                <div class="sl-section-title">Market Overview</div>
+                <div class="sl-section-meta">88 symbols tracked across all timeframes. Tap any symbol for full data sheet.</div>
+            </div>
+            <div class="symbols-grid" id="symbols-grid">
+                <div class="sl-loading">
+                    <div class="sl-loading-spinner"></div>
+                    Loading symbol data...
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════
+             SQUEEZE SECTION
+             ═══════════════════════════════════════ -->
+        <div class="sl-section" id="section-squeeze">
+            <div class="sl-section-header">
+                <div class="sl-section-title">Squeeze Monitor</div>
+                <div class="sl-section-meta">Bollinger Bands compressing inside Keltner Channels. When the squeeze fires, volatility explodes.</div>
+            </div>
+            <div class="squeeze-list" id="squeeze-display">
+                <div class="sl-loading">
+                    <div class="sl-loading-spinner"></div>
+                    Loading squeeze data...
+                </div>
+            </div>
+        </div>
+
+        <!-- MARKET MOVERS SECTION -->
+        <div class="sl-section" id="section-movers">
+            <div class="sl-section-header">
+                <div class="sl-section-title">Market Movers</div>
+                <div class="sl-section-meta">Symbols sorted by 15-minute price change. The biggest moves right now.</div>
+            </div>
+            <div class="squeeze-list" id="movers-display">
+                <div class="sl-loading"><div class="sl-loading-spinner"></div>Loading...</div>
+            </div>
+        </div>
+
+        <!-- VOLUME LEADERS SECTION -->
+        <div class="sl-section" id="section-volume">
+            <div class="sl-section-header">
+                <div class="sl-section-title">Volume Leaders</div>
+                <div class="sl-section-meta">Symbols with the highest volume ratio. Where the action is concentrated.</div>
+            </div>
+            <div class="squeeze-list" id="volume-display">
+                <div class="sl-loading"><div class="sl-loading-spinner"></div>Loading...</div>
+            </div>
+        </div>
+
+        <div class="sl-bottom-spacer"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SYMBOL DETAIL OVERLAY
+         ═══════════════════════════════════════ -->
+    <div class="symbol-detail-overlay" id="symbol-detail-overlay">
+        <div class="symbol-detail-chart" id="symbol-detail-chart">
+            <!-- TradingView iframe injected by streamline.js -->
+        </div>
+        <button class="symbol-detail-close" id="symbol-detail-close" aria-label="Close detail overlay">&#10005;</button>
+        <div class="symbol-detail-panel" id="symbol-detail-panel">
+            <div class="detail-symbol-name" id="detail-symbol-name">--</div>
+
+            <!-- Confluence Checks -->
+            <div class="detail-section">
+                <div class="detail-section-title">Confluence Checks (8)</div>
+                <div class="detail-confluence-grid" id="detail-confluence-checks">
+                    <div class="detail-confluence-item">
+                        <span class="check-label">ADX Trend</span>
+                        <span class="detail-badge" id="check-adx-trend">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">DI Alignment</span>
+                        <span class="detail-badge" id="check-di-align">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">Squeeze Fire</span>
+                        <span class="detail-badge" id="check-squeeze">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">KC Breakout</span>
+                        <span class="detail-badge" id="check-kc-break">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">Structure</span>
+                        <span class="detail-badge" id="check-structure">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">Momentum</span>
+                        <span class="detail-badge" id="check-momentum">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">Sweep</span>
+                        <span class="detail-badge" id="check-sweep">--</span>
+                    </div>
+                    <div class="detail-confluence-item">
+                        <span class="check-label">Multi-TF</span>
+                        <span class="detail-badge" id="check-multi-tf">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADX Suite -->
+            <div class="detail-section">
+                <div class="detail-section-title">ADX Suite</div>
+                <div class="detail-row">
+                    <span class="label">ADX 15m</span>
+                    <span class="val" id="detail-adx-15m">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">ADX 4h</span>
+                    <span class="val" id="detail-adx-4h">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">ADX 8h</span>
+                    <span class="val" id="detail-adx-8h">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">DI+</span>
+                    <span class="val" id="detail-di-plus" style="color: var(--bb-green)">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">DI-</span>
+                    <span class="val" id="detail-di-minus" style="color: var(--bb-red)">--</span>
+                </div>
+            </div>
+
+            <!-- Sweep Data -->
+            <div class="detail-section">
+                <div class="detail-section-title">Sweep Data</div>
+                <div class="detail-row">
+                    <span class="label">Type</span>
+                    <span class="val" id="detail-sweep-type">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Level</span>
+                    <span class="val" id="detail-sweep-level">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Direction</span>
+                    <span class="val" id="detail-sweep-dir">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Strength</span>
+                    <span class="val" id="detail-sweep-strength">--</span>
+                </div>
+            </div>
+
+            <!-- Structure Levels -->
+            <div class="detail-section">
+                <div class="detail-section-title">Structure Levels</div>
+                <div class="detail-row">
+                    <span class="label">PDH</span>
+                    <span class="val" id="detail-pdh">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PDL</span>
+                    <span class="val" id="detail-pdl">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PWH</span>
+                    <span class="val" id="detail-pwh">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PWL</span>
+                    <span class="val" id="detail-pwl">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PMH</span>
+                    <span class="val" id="detail-pmh">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">PML</span>
+                    <span class="val" id="detail-pml">--</span>
+                </div>
+            </div>
+
+            <!-- Swing Distances -->
+            <div class="detail-section">
+                <div class="detail-section-title">Swing Distances</div>
+                <div id="detail-swing-distances">
+                    <div class="detail-row">
+                        <span class="label">15m</span>
+                        <span class="val" id="detail-swing-15m">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">1h</span>
+                        <span class="val" id="detail-swing-1h">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">4h</span>
+                        <span class="val" id="detail-swing-4h">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">8h</span>
+                        <span class="val" id="detail-swing-8h">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">1D</span>
+                        <span class="val" id="detail-swing-1d">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oscillators -->
+            <div class="detail-section">
+                <div class="detail-section-title">Oscillators</div>
+                <div class="detail-row">
+                    <span class="label">RSI</span>
+                    <span class="val" id="detail-rsi">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Stochastic</span>
+                    <span class="val" id="detail-stoch">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">MACD</span>
+                    <span class="val" id="detail-macd">--</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Choppiness</span>
+                    <span class="val" id="detail-chop">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         9. SYSTEM HEALTH STRIP
+         ═══════════════════════════════════════ -->
+    <div class="health-strip" id="health-strip">
+        <div class="health-item">
+            <span class="label">Features</span>
+            <span class="val ok" id="health-features">OK</span>
+        </div>
+        <div class="health-divider"></div>
+        <div class="health-item">
+            <span class="label">OHLCV</span>
+            <span class="val ok" id="health-ohlcv">OK</span>
+        </div>
+        <div class="health-divider"></div>
+        <div class="health-item">
+            <span class="label">Disconnects</span>
+            <span class="val ok" id="health-disconnects">0</span>
+        </div>
+        <div class="health-divider"></div>
+        <div class="health-item">
+            <span class="label">Squeezes</span>
+            <span class="val" id="health-squeezes">--</span>
+        </div>
+        <div class="health-divider"></div>
+        <div class="health-item">
+            <span class="label">Fires</span>
+            <span class="val" id="health-fires">--</span>
+        </div>
+        <div class="health-divider"></div>
+        <div class="health-item">
+            <span class="label">Compressing</span>
+            <span class="val" id="health-compressing">--</span>
+        </div>
+    </div>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/streamline.js"></script>
+    <script src="/js/tracker.js" defer></script>
+</body>
+</html>

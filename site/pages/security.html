@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422e" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <meta name="description" content="MAVERICK security — A+ grade TLS 1.3, HSTS preloaded, strict CSP, no inline scripts. Thirteen months hardened. Independently verified.">
+    <title>Security | MAVERICK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .sec-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        .sec-hero {
+            text-align: center; padding: 48px 16px 30px;
+        }
+        .sec-badge {
+            display: inline-block; padding: 6px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.64rem; letter-spacing: 2.5px; text-transform: uppercase;
+            color: #ffd700; border: 1px solid #ffd700;
+            border-radius: 20px; margin-bottom: 16px;
+        }
+        .sec-title {
+            font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 900; letter-spacing: -1.5px;
+            line-height: 1.05; margin-bottom: 14px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffb700 60%, #ff9500 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .sec-intro {
+            color: var(--text-dim); max-width: 680px; margin: 0 auto; font-size: 1rem; line-height: 1.7;
+        }
+        .sec-grade-card {
+            margin-top: 40px; padding: 28px 26px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02));
+            border: 1px solid rgba(255,215,0,0.35); border-radius: 18px;
+            display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center;
+            box-shadow: 0 0 40px rgba(255,215,0,0.1);
+        }
+        .sec-padlock {
+            color: #ffd700; filter: drop-shadow(0 0 16px rgba(255,215,0,0.5));
+        }
+        .sec-grade-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: #ffd700; letter-spacing: 2.5px; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .sec-grade-value {
+            font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900;
+            color: #ffd700; line-height: 1.1; letter-spacing: -0.5px;
+        }
+        .sec-grade-desc {
+            color: var(--text-dim); font-size: 0.88rem; line-height: 1.6;
+            margin-top: 8px;
+        }
+        .sec-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px; margin-top: 20px;
+        }
+        .sec-stat {
+            padding: 14px 12px; text-align: center;
+            background: rgba(0,0,0,0.25); border-radius: 10px;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        .sec-stat-val {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 800; color: #ffd700;
+        }
+        .sec-stat-lbl {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px;
+        }
+
+        .sec-section {
+            margin-top: 64px;
+        }
+        .sec-section-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+        }
+        .sec-section-title {
+            font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
+            letter-spacing: -0.5px; margin-bottom: 18px;
+        }
+        .sec-text {
+            color: var(--text-dim); font-size: 0.96rem; line-height: 1.8; margin-bottom: 16px;
+        }
+        .sec-text b { color: var(--text); }
+
+        .sec-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px; margin-top: 24px;
+        }
+        .sec-card {
+            padding: 22px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; transition: border-color 0.2s;
+        }
+        .sec-card:hover { border-color: var(--accent); }
+        .sec-icon { margin-bottom: 12px; }
+        .sec-card-title {
+            font-size: 1.05rem; font-weight: 800; margin-bottom: 6px;
+        }
+        .sec-card-desc { color: var(--text-dim); font-size: 0.85rem; line-height: 1.65; margin-bottom: 12px; }
+        .sec-status {
+            display: inline-block; padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.56rem;
+            letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px;
+            background: rgba(78,205,196,0.1); color: var(--green);
+            border: 1px solid rgba(78,205,196,0.3);
+        }
+
+        .sec-verify {
+            margin-top: 48px; padding: 26px 24px;
+            background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            text-align: center;
+        }
+        .sec-verify-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 28px; background: #ffd700; color: #000;
+            font-family: 'JetBrains Mono', monospace; font-weight: 800;
+            font-size: 0.76rem; letter-spacing: 2px; text-transform: uppercase;
+            text-decoration: none; border-radius: 10px;
+            box-shadow: 0 0 22px rgba(255,215,0,0.3);
+        }
+        .sec-verify-links {
+            margin-top: 16px; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem; color: var(--text-dim);
+        }
+        .sec-verify-links a { color: var(--accent); text-decoration: none; margin: 0 8px; }
+        .sec-verify-links a:hover { color: var(--green); }
+
+        .sec-timeline {
+            margin-top: 18px;
+        }
+        .sec-timeline-item {
+            display: flex; gap: 14px; padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .sec-timeline-item:last-child { border-bottom: none; }
+        .sec-timeline-date {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            color: var(--accent); letter-spacing: 1px; min-width: 100px; flex-shrink: 0;
+        }
+        .sec-timeline-body {
+            color: var(--text); font-size: 0.88rem; line-height: 1.55;
+        }
+        .sec-timeline-body b { color: #ffd700; }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo"><span class="nav-logo-text">MAVERICK</span></a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+    <div class="nav-neon-line" aria-hidden="true"></div>
+
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/security.html">Security</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/pages/about.html">About / Docs</a>
+    </div>
+
+    <div class="back-bar"><a href="/">&larr; BACK TO FREEDOMCORE</a></div>
+
+    <div class="sec-wrap">
+        <section class="sec-hero">
+            <div class="sec-badge">🔒 Independently Verified</div>
+            <h1 class="sec-title">SECURITY.</h1>
+            <p class="sec-intro">
+                Every connection encrypted. Every header hardened. Every attack vector locked down.
+                Thirteen months of iterative hardening, zero shortcuts. Your browser doesn't have to
+                trust us because the math does.
+            </p>
+
+            <!-- A+ grade card (moved here from homepage, now the flagship artifact) -->
+            <div class="sec-grade-card">
+                <div class="sec-padlock">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                </div>
+                <div>
+                    <div class="sec-grade-label">Mozilla Observatory · SSL Labs · SecurityHeaders.com</div>
+                    <div class="sec-grade-value">A+ GRADE · 100 / 100</div>
+                    <div class="sec-grade-desc">
+                        TLS 1.3 with AES-256. HSTS preloaded. Strict Content Security Policy. Zero inline scripts.
+                        No third-party JavaScript loaded without a self-hosted copy. Every header audited and scored perfect.
+                    </div>
+                </div>
+            </div>
+
+            <div class="sec-stats">
+                <div class="sec-stat"><div class="sec-stat-val">13</div><div class="sec-stat-lbl">Months Hardening</div></div>
+                <div class="sec-stat"><div class="sec-stat-val">7+</div><div class="sec-stat-lbl">Header Policies</div></div>
+                <div class="sec-stat"><div class="sec-stat-val">0</div><div class="sec-stat-lbl">Breach Incidents</div></div>
+                <div class="sec-stat"><div class="sec-stat-val">100%</div><div class="sec-stat-lbl">CSP Coverage</div></div>
+                <div class="sec-stat"><div class="sec-stat-val">2yr</div><div class="sec-stat-lbl">HSTS Preload</div></div>
+            </div>
+        </section>
+
+        <!-- THE LAYERS -->
+        <section class="sec-section">
+            <div class="sec-section-label">// Defence in depth</div>
+            <h2 class="sec-section-title">Every layer hardened.</h2>
+            <p class="sec-text">
+                Security isn't one thing. It's seven. We take the paranoid option at every layer so
+                that breaking any single control never compromises the rest. Each header below is
+                independently visible via <b>curl -I</b> and independently graded by third-party auditors.
+            </p>
+
+            <div class="sec-grid">
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--green);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    </div>
+                    <div class="sec-card-title">TLS 1.3 / AES-256</div>
+                    <div class="sec-card-desc">Every connection is encrypted with the TLS 1.3 protocol using the AES-256-GCM-SHA384 cipher suite. Same standard used by NATO, banks, and Signal.</div>
+                    <div class="sec-status">ACTIVE</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--accent);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="sec-card-title">HSTS Preload</div>
+                    <div class="sec-card-desc">HTTP Strict Transport Security with two-year enforcement. Your browser is hard-instructed to never connect over unencrypted HTTP. Preload-ready for every major browser.</div>
+                    <div class="sec-status">ENFORCED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--purple);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    </div>
+                    <div class="sec-card-title">Content Security Policy</div>
+                    <div class="sec-card-desc">Strict CSP blocks every unauthorised script, frame, data URI, and cross-origin request. Only self-hosted scripts plus Google Fonts are permitted. XSS neutralised at the browser level.</div>
+                    <div class="sec-status">LOCKED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:#f5a623;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                    </div>
+                    <div class="sec-card-title">Clickjack &amp; Frame Block</div>
+                    <div class="sec-card-desc">X-Frame-Options DENY and frame-ancestors 'none' prevent any external site from embedding or overlaying FreedomCore. Zero clickjacking risk on any device.</div>
+                    <div class="sec-status">BLOCKED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--green);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                    </div>
+                    <div class="sec-card-title">API Rate Limiting</div>
+                    <div class="sec-card-desc">Every API endpoint is rate-limited to 10 requests/sec per IP with burst protection. Read-only GETs by default. Write endpoints gated by a second layer of session auth.</div>
+                    <div class="sec-status">PROTECTED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--accent);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <div class="sec-card-title">Privacy Headers</div>
+                    <div class="sec-card-desc">Referrer-Policy controls data leakage. Permissions-Policy blocks camera, microphone, geolocation, payment, USB and sensor access by default. Cross-Origin policies isolate every resource.</div>
+                    <div class="sec-status">SEALED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:#ffd700;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7z"/></svg>
+                    </div>
+                    <div class="sec-card-title">No Inline JavaScript</div>
+                    <div class="sec-card-desc">Every script on every page is an external file. No <code>&lt;script&gt;alert()&lt;/script&gt;</code> lurking in HTML. No eval. No new Function. Attackers can't inject payloads that execute.</div>
+                    <div class="sec-status">ENFORCED</div>
+                </div>
+
+                <div class="sec-card">
+                    <div class="sec-icon" style="color:var(--green);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="sec-card-title">Nothing Custodial</div>
+                    <div class="sec-card-desc">We never hold user funds. Token gate reads on-chain balance directly, subscription gate is billed by Stripe. Your keys and money never touch our servers. Can't lose what we never held.</div>
+                    <div class="sec-status">BY DESIGN</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HARDENING TIMELINE -->
+        <section class="sec-section">
+            <div class="sec-section-label">// Thirteen months, every incident logged</div>
+            <h2 class="sec-section-title">The hardening timeline.</h2>
+            <p class="sec-text">
+                Security isn't a launch feature. It's a thirteen-month running scorecard. Every improvement
+                shipped, every header added, every gap discovered and patched. No incident in any month.
+            </p>
+
+            <div class="sec-timeline">
+                <div class="sec-timeline-item"><div class="sec-timeline-date">May 2025</div><div class="sec-timeline-body">Server spun up. <b>TLS auto-provisioned</b> via Let's Encrypt. HTTPS-only from day one.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Jul 2025</div><div class="sec-timeline-body">Added <b>HSTS</b> with 6-month enforcement. All HTTP requests permanently redirect.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Sep 2025</div><div class="sec-timeline-body">Introduced <b>Content Security Policy</b> in report-only mode. Audited every violation.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Nov 2025</div><div class="sec-timeline-body">Promoted CSP to enforce mode. <b>Removed all inline scripts.</b> Zero regressions.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Jan 2026</div><div class="sec-timeline-body">X-Frame-Options + frame-ancestors. <b>Anti-clickjack</b> hardened to grade A.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Feb 2026</div><div class="sec-timeline-body">Permissions-Policy added. Camera / mic / geolocation / USB / payment API blocked by default.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Mar 2026</div><div class="sec-timeline-body">Cross-Origin policies added (COOP / CORP). <b>Isolated every resource.</b></div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Apr 2026</div><div class="sec-timeline-body">HSTS extended to <b>2-year preload</b>. Rate limiting added at nginx. API key required on every /api/ route.</div></div>
+                <div class="sec-timeline-item"><div class="sec-timeline-date">Apr 2026</div><div class="sec-timeline-body">Self-hosted every third-party JS (ethers.js, etc.). <b>No external code loads at all.</b> A+ across all three auditors.</div></div>
+            </div>
+        </section>
+
+        <!-- VERIFY YOURSELF -->
+        <section class="sec-verify">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:2.5px; color:#ffd700; text-transform:uppercase; margin-bottom:12px;">🔍 Verify Independently</div>
+            <p style="color:var(--text-dim); font-size:0.92rem; line-height:1.6; margin-bottom:16px;">Don't take my word for any of this. Click through to three independent third-party auditors and see the A+ grade for yourself. Every button below checks freedomcore.io live.</p>
+            <a class="sec-verify-btn" href="https://securityheaders.com/?q=freedomcore.io&followRedirects=on" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Verify Headers Live
+            </a>
+            <div class="sec-verify-links">
+                <a href="https://www.ssllabs.com/ssltest/analyze.html?d=freedomcore.io" target="_blank" rel="noopener noreferrer">SSL Labs</a>·
+                <a href="https://observatory.mozilla.org/analyze/freedomcore.io" target="_blank" rel="noopener noreferrer">Mozilla Observatory</a>·
+                <a href="https://hstspreload.org/?domain=freedomcore.io" target="_blank" rel="noopener noreferrer">HSTS Preload</a>
+            </div>
+        </section>
+
+        <div style="height:80px;"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">@freedomcoreai</a>
+            <a href="mailto:freedomcoreai@gmail.com">freedomcoreai@gmail.com</a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422e"></script>
+</body>
+</html>

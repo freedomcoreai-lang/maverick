@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Market News | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .news-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px; margin-top: 32px;
+        }
+        .news-card {
+            padding: 24px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 12px;
+            transition: all 0.3s; cursor: pointer;
+        }
+        .news-card:hover { border-color: rgba(62,168,245,0.3); transform: translateY(-2px); }
+        .news-meta {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+        }
+        .news-source {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px;
+            color: var(--accent);
+        }
+        .news-time {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); letter-spacing: 0.5px;
+        }
+        .news-title {
+            font-size: 1rem; font-weight: 600; line-height: 1.4; margin-bottom: 8px;
+            color: var(--text);
+        }
+        .news-summary { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+        .news-tags { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+        .news-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            padding: 2px 8px; border: 1px solid var(--border); border-radius: 3px;
+            color: var(--text-dim); letter-spacing: 0.5px;
+        }
+        .news-tag.bullish { color: var(--green); border-color: rgba(78,205,196,0.3); }
+        .news-tag.bearish { color: var(--red); border-color: rgba(239,68,68,0.3); }
+
+        /* Sentinel broadcast feed */
+        .sentinel-feed {
+            margin-top: 32px; display: flex; flex-direction: column; gap: 12px;
+        }
+        .sentinel-card {
+            padding: 20px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+        .sentinel-header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+        }
+        .sentinel-badge {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 3px 8px; border-radius: 4px;
+            background: var(--blue-dim); color: var(--accent); border: 1px solid rgba(62,168,245,0.3);
+        }
+        .sentinel-time {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim);
+        }
+        .sentinel-body {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            line-height: 1.8; color: var(--text-dim); white-space: pre-wrap;
+            max-height: 300px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+        }
+
+        /* Market sentiment bar */
+        .sentiment-bar {
+            display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap;
+        }
+        .sentiment-item {
+            flex: 1; min-width: 200px; padding: 20px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 10px; text-align: center;
+        }
+        .sentiment-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .sentiment-value {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .sentiment-value.bullish { color: var(--green); }
+        .sentiment-value.bearish { color: var(--red); }
+        .sentiment-value.neutral { color: var(--text-dim); }
+
+        .back-bar {
+            position: relative; z-index: 2;
+            padding: 10px 24px;
+            background: rgba(62,168,245,0.03);
+            border-bottom: 1px solid var(--border);
+            margin-top: 56px;
+        }
+        .back-bar a {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); text-decoration: none; letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+        .back-bar a:hover { opacity: 0.7; }
+
+        @media (max-width: 768px) {
+            .news-grid { grid-template-columns: 1fr; }
+            .sentiment-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:60px;margin-top:0;">
+        <div class="hero-glow"></div>
+        <div class="hero-badge">Market Intelligence</div>
+        <h1 style="font-size:clamp(2.5rem,7vw,5rem);background:linear-gradient(135deg,var(--text),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;font-weight:900;">MARKET NEWS</h1>
+        <div class="hero-sub">AI-Curated Intelligence + Global Headlines</div>
+        <p class="hero-desc">
+            Real-time market intelligence from MAVERICK's Sentinel AI agents combined with
+            live geopolitical and macro headlines. The full picture: what the system sees,
+            what the world is doing, and how it all connects.
+        </p>
+    </section>
+
+    <!-- SCROLLING TICKER -->
+    <style>
+        .news-ticker {
+            position: relative;
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 0;
+            margin: 16px 0;
+            white-space: nowrap;
+        }
+        .ticker-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: ticker-scroll 180s linear infinite;
+            will-change: transform;
+        }
+        /* No hover pause - keep ticker always running */
+        .ticker-item {
+            display: inline-block;
+            padding: 0 36px;
+            font-size: 0.85rem;
+            color: var(--text);
+            vertical-align: middle;
+        }
+        .ticker-source {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-right: 10px;
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .ticker-item.crypto .ticker-source { color: var(--amber); border-color: rgba(245,158,11,0.3); }
+        .ticker-item a { color: inherit; text-decoration: none; }
+        .ticker-item a:hover { color: var(--green); }
+        @keyframes ticker-scroll {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-50%, 0, 0); }
+        }
+    </style>
+
+    <!-- KEY HEADLINES TICKER -->
+    <section>
+        <div class="section-inner">
+            <div class="section-label">// Live Headlines Ticker</div>
+            <h2 class="section-title">Geopolitical. Macro. Crypto.</h2>
+            <p class="section-text">Live scrolling headlines from CoinDesk, CoinTelegraph, Decrypt, and Bitcoin Magazine. Tap any headline to open the source.</p>
+
+            <div class="news-ticker" id="news-ticker">
+                <div class="ticker-track" id="ticker-track">
+                    <div class="ticker-item">Loading headlines...</div>
+                </div>
+            </div>
+            <div id="headlines-grid" style="display:none;"></div>
+        </div>
+    </section>
+
+    <!-- SENTINEL INTELLIGENCE (single scrollable card) -->
+    <section>
+        <div class="section-inner">
+            <div class="section-label">// Sentinel Intelligence</div>
+            <h2 class="section-title">Latest AI market brief.</h2>
+            <p class="section-text">Every 6 hours, the Sentinel network scans 88 perpetual futures and produces a comprehensive structural analysis. Regime status, crime scene forensics, shadow matrix, and strategic posture.</p>
+
+            <div id="sentinel-single" style="background:var(--card);border:1px solid var(--border);border-radius:10px;border-left:3px solid var(--green);padding:20px;max-height:500px;overflow-y:auto;margin-top:16px;">
+                <div class="pos-empty">Loading sentinel broadcast...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHADOW MATRIX -->
+    <section class="section-divider">
+        <div class="section-inner">
+            <div class="section-label">// Shadow Matrix</div>
+            <h2 class="section-title">Deep market structure scan.</h2>
+            <p class="section-text">The Shadow Matrix agent scans all 88 symbols for squeeze states, sweep detection, fair value gaps, and regime classification. Updated every 6 hours.</p>
+
+            <div class="sentinel-feed" id="shadow-feed">
+                <div class="pos-empty">Loading shadow matrix...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/tracker.js" defer></script>
+</body>
+</html>

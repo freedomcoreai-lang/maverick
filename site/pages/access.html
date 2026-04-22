@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <meta name="description" content="The best AI in the world, evolving a trading system in real time. Watch it live. $MAV token on Base, or monthly subscription with card. No yield promises.">
+    <title>Access | MAVERICK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .ax-hero-badge {
+            display: inline-block; padding: 8px 18px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+            color: var(--accent); letter-spacing: 2px;
+            border: 1px solid var(--accent); border-radius: 20px;
+            text-transform: uppercase; margin-bottom: 20px;
+        }
+        .ax-h1 {
+            font-size: clamp(2.4rem, 7vw, 4.4rem);
+            background: linear-gradient(135deg, var(--accent), #ffd700 60%, #ff9500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px; font-weight: 900; margin-bottom: 14px;
+            line-height: 1.05;
+        }
+        .ax-sub {
+            color: var(--text); max-width: 720px; margin: 16px auto 0;
+            font-size: 1.05rem; line-height: 1.7;
+        }
+        .ax-sub b { color: var(--accent); }
+
+        .ax-rails {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px; margin-top: 50px;
+        }
+        .ax-rail {
+            padding: 28px 24px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 18px;
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .ax-rail-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.64rem;
+            color: var(--text-dim); letter-spacing: 2.5px;
+            text-transform: uppercase; margin-bottom: 4px;
+        }
+        .ax-rail h2 {
+            font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; margin: 0;
+        }
+        .ax-rail-pitch {
+            color: var(--text-dim); font-size: 0.88rem; line-height: 1.7;
+        }
+        .ax-rail.crypto { border-left: 3px solid var(--accent); }
+        .ax-rail.fiat { border-left: 3px solid #f5a623; }
+        .ax-rail.active { box-shadow: 0 0 30px rgba(62,168,245,0.08); }
+
+        .ax-btn {
+            display: inline-block; padding: 14px 24px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            background: var(--accent); color: #000; border: none; border-radius: 10px;
+            cursor: pointer; text-decoration: none; text-align: center;
+        }
+        .ax-btn:disabled { opacity: 0.55; cursor: wait; }
+        .ax-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .ax-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .ax-btn.amber { background: #f5a623; color: #000; }
+        .ax-btn.block { display: block; width: 100%; }
+
+        .ax-pill {
+            display: inline-block; padding: 6px 14px;
+            font-family: 'JetBrains Mono', monospace; font-weight: 700;
+            font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+            border-radius: 8px; border: 1px solid currentColor;
+        }
+        .ax-balance { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; }
+        .ax-balance-sub { color: var(--text-dim); font-size: 0.68rem; letter-spacing: 1px; }
+
+        .ax-sub-input {
+            width: 100%; padding: 12px 14px;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text); font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .ax-sub-input:focus { outline: none; border-color: var(--accent); }
+
+        .ax-select-row {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 8px; margin: 12px 0;
+        }
+        .ax-tier-choice {
+            padding: 10px 12px; background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border); border-radius: 8px;
+            cursor: pointer; text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .ax-tier-choice:hover { border-color: var(--accent); }
+        .ax-tier-choice.selected { border-color: var(--accent); background: rgba(62,168,245,0.08); }
+        .ax-tier-choice .tc-name {
+            font-family: 'JetBrains Mono', monospace; font-weight: 700;
+            font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--text); margin-bottom: 4px;
+        }
+        .ax-tier-choice .tc-price {
+            color: var(--accent); font-weight: 700; font-size: 0.88rem;
+        }
+
+        .ax-tiers {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 14px; margin-top: 60px;
+        }
+        .ax-tier {
+            padding: 26px 24px; background: var(--card);
+            border: 1px solid var(--border); border-radius: 14px;
+            position: relative; transition: border-color 0.3s;
+        }
+        .ax-tier.unlocked { border-color: var(--green); box-shadow: 0 0 22px rgba(78,205,196,0.08); }
+        .ax-tier.featured { border-top: 3px solid #ffd700; }
+        .ax-tier .tier-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .ax-tier h3 { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.5px; }
+        .ax-tier .req {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.76rem;
+            color: var(--accent); margin-bottom: 6px;
+        }
+        .ax-tier .req-alt {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+            color: #f5a623; margin-bottom: 14px;
+        }
+        .ax-tier ul { list-style: none; padding: 0; margin: 0 0 16px 0; }
+        .ax-tier ul li {
+            padding: 6px 0 6px 20px; position: relative;
+            font-size: 0.84rem; color: var(--text-dim); line-height: 1.55;
+        }
+        .ax-tier ul li::before {
+            content: '▸'; position: absolute; left: 4px;
+            color: var(--green); font-weight: 700;
+        }
+        .ax-tier .status-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px;
+            border-radius: 6px; display: inline-block;
+        }
+        .ax-tier .status-tag.locked { background: rgba(239,68,68,0.08); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+        .ax-tier .status-tag.unlocked { background: rgba(78,205,196,0.1); color: var(--green); border: 1px solid rgba(78,205,196,0.3); }
+        .ax-tier .status-tag.soon { background: rgba(245,166,35,0.08); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+
+        .ax-disclaimer {
+            margin-top: 60px; padding: 22px 24px; background: rgba(245,166,35,0.04);
+            border: 1px solid rgba(245,166,35,0.2); border-radius: 12px;
+            font-size: 0.84rem; line-height: 1.75; color: var(--text-dim);
+        }
+        .ax-disclaimer strong { color: #f5a623; }
+
+        .ax-faq { margin-top: 50px; }
+        .ax-faq h2 {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+            margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border);
+        }
+        .ax-faq-item { padding: 18px 0; border-bottom: 1px solid var(--border); }
+        .ax-faq-item:last-child { border-bottom: none; }
+        .ax-faq-q { font-weight: 700; color: var(--text); margin-bottom: 6px; font-size: 0.96rem; }
+        .ax-faq-a { color: var(--text-dim); font-size: 0.87rem; line-height: 1.7; }
+
+        .ax-note { color: var(--text-dim); font-size: 0.75rem; text-align: center; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo"><span class="nav-logo-text">MAVERICK</span></a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/access.html">Access</a>
+        <a href="/pages/about.html">About / Docs</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <div class="ax-wrap">
+        <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:10px;margin-top:0;">
+            <div class="hero-glow"></div>
+            <div class="ax-hero-badge">Coverage of a live AI experiment</div>
+            <h1 class="ax-h1">THE BEST AI.<br>EVOLVING A TRADING SYSTEM.<br>IN REAL TIME.</h1>
+            <p class="ax-sub">
+                You are not buying yield. You are buying <b>coverage</b>. A front-row seat to watch
+                the best AI in the world rewrite its own trading logic every forty-eight hours,
+                across eighty-eight markets, with real capital on the line.
+            </p>
+            <div style="margin-top:24px; padding:16px 20px; background:rgba(255,215,0,0.04); border:1px solid rgba(255,215,0,0.22); border-radius:12px; max-width:680px; margin-left:auto; margin-right:auto; text-align:left;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:#ffd700; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; text-align:center;">Powered by the frontier</div>
+                <div style="color:var(--text); font-size:0.92rem; line-height:1.7;">
+                    Two of the most capable models ever built are teaming up inside MAVERICK.
+                    <b style="color:#ffd700;">Gemini 3.1</b> invents each candidate strategy. <b style="color:#ffd700;">Claude 4.7</b> audits the architecture before live deployment.
+                    <br><br>
+                    <span style="color:var(--text-dim); font-size:0.84rem;">Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. This is the only experiment of its kind.</span>
+                </div>
+            </div>
+            <p class="ax-sub" style="margin-top:24px;">Two ways in. Pick whichever fits.</p>
+        </section>
+
+        <!-- DUAL RAILS -->
+        <div class="ax-rails">
+
+            <!-- ─── CRYPTO RAIL ─────────────────────────────────────── -->
+            <div class="ax-rail crypto" id="rail-crypto">
+                <div>
+                    <div class="ax-rail-label">Rail 1 &middot; on-chain</div>
+                    <h2>Hold $MAV on Base</h2>
+                </div>
+                <p class="ax-rail-pitch">
+                    Crypto-native path. Hold enough $MAV in your Base wallet and your tier unlocks
+                    automatically. No monthly bill. Sell whenever you want. Token may go up or down -
+                    that's the market's problem, not a promise from us.
+                </p>
+
+                <!-- not connected -->
+                <div id="crypto-not-connected">
+                    <button class="ax-btn block" id="connect-btn">CONNECT WALLET</button>
+                    <div class="ax-note">MetaMask &middot; Coinbase Wallet &middot; Rabby &middot; Trust &middot; WalletConnect</div>
+                </div>
+
+                <!-- connected -->
+                <div id="crypto-connected" style="display:none;">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;word-break:break-all;color:var(--text);" id="wallet-addr">-</div>
+                    <div><span class="ax-pill" id="tier-pill" style="color:var(--text-dim);">NONE</span></div>
+                    <div class="ax-balance" id="wallet-balance">0 MAV</div>
+                    <div class="ax-balance-sub" id="wallet-balance-sub">Pre-launch grace - Observer free for all connected wallets.</div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                        <a class="ax-btn" id="buy-mav-btn" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">BUY $MAV</a>
+                        <button class="ax-btn ghost" id="disconnect-btn">DISCONNECT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── FIAT RAIL ───────────────────────────────────────── -->
+            <div class="ax-rail fiat" id="rail-fiat">
+                <div>
+                    <div class="ax-rail-label">Rail 2 &middot; monthly subscription</div>
+                    <h2>Pay by card</h2>
+                </div>
+                <p class="ax-rail-pitch">
+                    Zero crypto required. Card or Apple Pay, billed monthly via Stripe. Cancel anytime,
+                    no lock-in. Same tiers, same access. Best for non-crypto people who just want to
+                    watch the experiment or follow the signals.
+                </p>
+
+                <!-- not subscribed -->
+                <div id="fiat-not-subscribed">
+                    <div class="ax-select-row">
+                        <div class="ax-tier-choice selected" data-tier="observer"><div class="tc-name">Observer</div><div class="tc-price" id="price-observer">$29/mo</div></div>
+                        <div class="ax-tier-choice" data-tier="signal"><div class="tc-name">Signal</div><div class="tc-price" id="price-signal">$99/mo</div></div>
+                        <div class="ax-tier-choice" data-tier="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$499/mo</div></div>
+                    </div>
+                    <input class="ax-sub-input" type="email" id="sub-email" placeholder="your@email.com" autocomplete="email">
+                    <button class="ax-btn amber block" id="subscribe-btn" style="margin-top:10px;">SUBSCRIBE &amp; WATCH</button>
+                    <div class="ax-note">Already a subscriber? <a href="#" id="magic-link" style="color:var(--accent);">Send me a sign-in link</a></div>
+                </div>
+
+                <!-- subscribed -->
+                <div id="fiat-subscribed" style="display:none;">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text);" id="sub-email-display">-</div>
+                    <div><span class="ax-pill" id="sub-tier-pill" style="color:var(--text-dim);">NONE</span></div>
+                    <div class="ax-balance-sub" id="sub-status-sub">Active</div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                        <button class="ax-btn ghost" id="portal-btn">MANAGE BILLING</button>
+                        <button class="ax-btn ghost" id="sub-logout-btn">SIGN OUT</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TIER CARDS (each links to the tier's flagship page) -->
+        <div class="ax-tiers">
+            <a class="ax-tier" data-tier="observer" href="/pages/today.html" style="text-decoration:none; color:inherit; display:block;">
+                <div class="tier-label">Tier 1 &middot; OBSERVER</div>
+                <h3>Observer</h3>
+                <div class="req">Hold 1,000 $MAV</div>
+                <div class="req-alt">or $29 / month</div>
+                <ul>
+                    <li>Live swarm evolution feed (full detail)</li>
+                    <li>AI agent intelligence chain terminal</li>
+                    <li>Weekly DNA mutation reports</li>
+                    <li>Hall of Fame breakdown archive</li>
+                    <li>Full performance dashboard</li>
+                </ul>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
+                    <span class="status-tag soon" id="status-observer">Pre-launch Grace</span>
+                    <span style="color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN TODAY PAGE &rarr;</span>
+                </div>
+            </a>
+
+            <a class="ax-tier featured" data-tier="signal" href="/pages/signals.html" style="text-decoration:none; color:inherit; display:block;">
+                <div class="tier-label">Tier 2 &middot; SIGNAL</div>
+                <h3>Signal</h3>
+                <div class="req">Hold 10,000 $MAV</div>
+                <div class="req-alt">or $99 / month</div>
+                <ul>
+                    <li>Everything in Observer</li>
+                    <li>Real-time trade signals to ntfy channel</li>
+                    <li>Entry, exit, stop, and trail alerts</li>
+                    <li>Engine &amp; symbol-specific filtering</li>
+                    <li>Vote on weekly swarm prompt</li>
+                </ul>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
+                    <span class="status-tag locked" id="status-signal">Locked</span>
+                    <span style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SIGNAL FEED &rarr;</span>
+                </div>
+            </a>
+
+            <a class="ax-tier" data-tier="sovereign" href="/pages/swarm.html" style="text-decoration:none; color:inherit; display:block;">
+                <div class="tier-label">Tier 3 &middot; SOVEREIGN</div>
+                <h3>Sovereign</h3>
+                <div class="req">Hold 100,000 $MAV</div>
+                <div class="req-alt">or $499 / month</div>
+                <ul>
+                    <li>Everything in Signal</li>
+                    <li>Copy-trading webhook endpoint</li>
+                    <li>Custom risk parameter overrides</li>
+                    <li>Direct REST API access</li>
+                    <li>Weighted vote on swarm architecture</li>
+                </ul>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:6px;">
+                    <span class="status-tag locked" id="status-sovereign">Locked</span>
+                    <span style="color:#b9c5ff; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:1.5px;">OPEN SWARM TERMINALS &rarr;</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="ax-disclaimer">
+            <strong>&#9888; This is not financial advice.</strong> MAVERICK is an experimental AI
+            system. It may lose money. It may crash. It may be switched off. You are paying for
+            coverage of the experiment &mdash; nothing else. Holding $MAV or subscribing grants you
+            access to a software service. You receive no equity, no dividends, no share of trading
+            profits, no guaranteed return. Crypto is volatile; $MAV can go to zero. Card subscribers
+            are billed monthly by Stripe and may cancel anytime with one click. Only participate with
+            money you can afford to lose entirely. Geoblocked where required by local law.
+        </div>
+
+        <!-- FAQ -->
+        <div class="ax-faq">
+            <h2>// Frequently Asked</h2>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">Is this a security? Am I buying a share in MAVERICK?</div>
+                <div class="ax-faq-a">No. Both rails grant access to a software service. You receive no equity, no dividends, no share of trading profits, no promise of returns. You are paying for coverage of the experiment.</div>
+            </div>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">Crypto or subscription - which should I pick?</div>
+                <div class="ax-faq-a">If you already have a Base wallet, $MAV is simpler long-term. If you don't touch crypto, the $29-$499/mo subscription is identical access, billed by Stripe. Both unlock the same tiers.</div>
+            </div>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">Why Base and not Solana or Ethereum?</div>
+                <div class="ax-faq-a">Base is a Coinbase L2. Fees are fractions of a cent. MetaMask and Coinbase Wallet both support it natively. Ethereum mainnet is too expensive for tier-access tokens. Solana is culturally meme-heavy - we're infrastructure, not memes.</div>
+            </div>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">How does the site know my tier?</div>
+                <div class="ax-faq-a">Crypto rail: you sign a free off-chain message when connecting. The server reads your wallet's $MAV balance directly from Base. Tier auto-updates within 60 seconds of any buy or sell. Fiat rail: your email and active subscription status from Stripe determine tier; updates instantly on webhook events.</div>
+            </div>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">What makes this not a rug?</div>
+                <div class="ax-faq-a">Contract ownership renounced at deploy. Minting permanently disabled at deploy. Liquidity locked 24 months via Team Finance. Team allocation vests 24 months on-chain. Every treasury movement is publicly verifiable on BaseScan. Stripe subscriptions are managed by Stripe, not us - we can't charge you in error.</div>
+            </div>
+
+            <div class="ax-faq-item">
+                <div class="ax-faq-q">Where can I buy $MAV?</div>
+                <div class="ax-faq-a">Once launched, on Aerodrome (Base's native DEX). A direct buy button will appear here when the pool is live. Until then, connect your wallet now to claim free pre-launch Observer access.</div>
+            </div>
+        </div>
+
+        <div style="height:80px;"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">@freedomcoreai</a>
+            <a href="mailto:freedomcoreai@gmail.com">freedomcoreai@gmail.com</a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/access-page.js"></script>
+    <script type="application/json" id="__disabled_inline_block__">
+    /* The inline block below is kept as reference but is blocked by strict CSP.
+       All real handlers now live in /js/access-page.js. */
+    (function () {
+        // --- CRYPTO RAIL ---
+        const cryptoNC = document.getElementById('crypto-not-connected');
+        const cryptoC  = document.getElementById('crypto-connected');
+        const railCrypto = document.getElementById('rail-crypto');
+        const addrEl  = document.getElementById('wallet-addr');
+        const tierPill = document.getElementById('tier-pill');
+        const balEl   = document.getElementById('wallet-balance');
+        const balSub  = document.getElementById('wallet-balance-sub');
+        const buyBtn  = document.getElementById('buy-mav-btn');
+        const connectBtn    = document.getElementById('connect-btn');
+        const disconnectBtn = document.getElementById('disconnect-btn');
+
+        connectBtn.addEventListener('click', async () => {
+            connectBtn.textContent = 'SIGN IN WALLET…';
+            connectBtn.disabled = true;
+            try {
+                await window.mavWallet.connect();
+            } catch (e) {
+                alert('Connect failed: ' + (e.message || e));
+                connectBtn.textContent = 'CONNECT WALLET';
+                connectBtn.disabled = false;
+            }
+        });
+        disconnectBtn.addEventListener('click', async () => {
+            await window.mavWallet.disconnect();
+        });
+
+        window.mavWallet.onChange((s) => {
+            if (!s) return;
+            if (s.authenticated) {
+                cryptoNC.style.display = 'none';
+                cryptoC.style.display = 'flex';
+                cryptoC.style.flexDirection = 'column';
+                cryptoC.style.gap = '10px';
+                railCrypto.classList.add('active');
+                addrEl.textContent = s.address;
+                const tier = (s.tier || 'none').toUpperCase();
+                tierPill.textContent = tier;
+                tierPill.style.color = window.mavWallet.tierColor(s.tier);
+                balEl.textContent = s.balance_mav.toLocaleString(undefined, {maximumFractionDigits:2}) + ' MAV';
+                if (s.token_deployed) {
+                    balSub.textContent = 'Tier auto-updates within 60s of any balance change.';
+                    buyBtn.style.display = 'inline-block';
+                } else {
+                    balSub.textContent = 'Pre-launch grace - Observer tier free. $MAV launches soon.';
+                }
+                updateTierTags(s.tier, s.token_deployed);
+            } else {
+                cryptoNC.style.display = 'block';
+                cryptoC.style.display = 'none';
+                railCrypto.classList.remove('active');
+            }
+        });
+
+        // --- FIAT RAIL ---
+        const fiatNS = document.getElementById('fiat-not-subscribed');
+        const fiatS  = document.getElementById('fiat-subscribed');
+        const railFiat = document.getElementById('rail-fiat');
+        const subEmailEl = document.getElementById('sub-email');
+        const subBtn = document.getElementById('subscribe-btn');
+        const magicLink = document.getElementById('magic-link');
+        const portalBtn = document.getElementById('portal-btn');
+        const subLogoutBtn = document.getElementById('sub-logout-btn');
+
+        let selectedTier = 'observer';
+        document.querySelectorAll('.ax-tier-choice').forEach((el) => {
+            el.addEventListener('click', () => {
+                document.querySelectorAll('.ax-tier-choice').forEach(e => e.classList.remove('selected'));
+                el.classList.add('selected');
+                selectedTier = el.dataset.tier;
+            });
+        });
+
+        const FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key']) || 'fc_live_fa03a80eb6948c7ac11f96bc';
+        const apiFetch = (url, opts) => {
+            const o = Object.assign({credentials:'same-origin'}, opts||{});
+            o.headers = Object.assign({'X-API-Key': FC_API_KEY}, o.headers||{});
+            return fetch(url, o);
+        };
+
+        async function loadPlans() {
+            try {
+                const r = await apiFetch('/api/sub/plans');
+                const d = await r.json();
+                const byT = {};
+                (d.plans || []).forEach(p => byT[p.tier] = p);
+                if (byT.observer)  document.getElementById('price-observer').textContent = byT.observer.display;
+                if (byT.signal)    document.getElementById('price-signal').textContent   = byT.signal.display;
+                if (byT.sovereign) document.getElementById('price-sovereign').textContent = byT.sovereign.display;
+                if (!d.stripe_enabled) {
+                    subBtn.disabled = true;
+                    subBtn.textContent = 'SUBSCRIPTIONS OPENING SOON';
+                }
+            } catch (e) { /* ignore */ }
+        }
+
+        subBtn.addEventListener('click', async () => {
+            const email = subEmailEl.value.trim();
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email.');
+                return;
+            }
+            subBtn.disabled = true;
+            subBtn.textContent = 'OPENING CHECKOUT…';
+            try {
+                const r = await apiFetch('/api/sub/checkout', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({tier: selectedTier, email}),
+                });
+                const d = await r.json();
+                if (d.url) {
+                    window.location.href = d.url;
+                } else {
+                    alert(d.error || 'Checkout failed.');
+                    subBtn.disabled = false;
+                    subBtn.textContent = 'SUBSCRIBE & WATCH';
+                }
+            } catch (e) {
+                alert('Checkout failed: ' + e);
+                subBtn.disabled = false;
+                subBtn.textContent = 'SUBSCRIBE & WATCH';
+            }
+        });
+
+        magicLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = prompt('Enter your subscription email:');
+            if (!email) return;
+            const r = await apiFetch('/api/sub/magic', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: email.trim()}),
+            });
+            const d = await r.json();
+            alert(d.message || 'Check your email.');
+        });
+
+        portalBtn.addEventListener('click', async () => {
+            const r = await apiFetch('/api/sub/portal', {method:'POST'});
+            const d = await r.json();
+            if (d.url) window.location.href = d.url;
+            else alert(d.error || 'Portal failed.');
+        });
+
+        subLogoutBtn.addEventListener('click', async () => {
+            await apiFetch('/api/sub/logout', {method:'POST'});
+            await refreshSubStatus();
+        });
+
+        async function refreshSubStatus() {
+            try {
+                const r = await apiFetch('/api/sub/status');
+                const d = await r.json();
+                if (d.authenticated) {
+                    fiatNS.style.display = 'none';
+                    fiatS.style.display = 'flex';
+                    fiatS.style.flexDirection = 'column';
+                    fiatS.style.gap = '10px';
+                    railFiat.classList.add('active');
+                    document.getElementById('sub-email-display').textContent = d.email;
+                    const tier = (d.tier || 'none').toUpperCase();
+                    const tierPillSub = document.getElementById('sub-tier-pill');
+                    tierPillSub.textContent = tier;
+                    tierPillSub.style.color = window.mavWallet ? window.mavWallet.tierColor(d.tier) : '#f5a623';
+                    updateTierTags(d.tier, true);
+                } else {
+                    fiatNS.style.display = 'block';
+                    fiatS.style.display = 'none';
+                    railFiat.classList.remove('active');
+                }
+            } catch(e) { /* ignore */ }
+        }
+
+        // Tier status tags across the grid
+        function updateTierTags(currentTier, tokenDeployed) {
+            const order = ['none','observer','signal','sovereign'];
+            const myIdx = order.indexOf(currentTier || 'none');
+            const tags = {
+                observer:  document.getElementById('status-observer'),
+                signal:    document.getElementById('status-signal'),
+                sovereign: document.getElementById('status-sovereign'),
+            };
+            Object.entries(tags).forEach(([n, el]) => {
+                const tIdx = order.indexOf(n);
+                const unlocked = tIdx <= myIdx;
+                el.className = 'status-tag ' + (unlocked ? 'unlocked' : (tokenDeployed ? 'locked' : 'soon'));
+                el.textContent = unlocked ? 'Unlocked' : (tokenDeployed ? 'Locked' : 'Pre-launch');
+            });
+        }
+
+        // Handle magic-link callback (?magic=TOKEN)
+        const u = new URL(window.location.href);
+        if (u.searchParams.get('magic')) {
+            const t = u.searchParams.get('magic');
+            apiFetch('/api/sub/verify-magic', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({token: t}),
+            }).then(r => r.json()).then(d => {
+                if (d.ok) { alert('Signed in as ' + d.email); refreshSubStatus(); }
+                else { alert(d.error || 'Link expired.'); }
+                u.searchParams.delete('magic');
+                history.replaceState({}, '', u);
+            });
+        }
+        if (u.searchParams.get('sub') === 'success') {
+            alert('Subscription activated. Welcome.');
+            u.searchParams.delete('sub');
+            u.searchParams.delete('email');
+            history.replaceState({}, '', u);
+        }
+
+        loadPlans();
+        refreshSubStatus();
+        setInterval(refreshSubStatus, 60000);
+    })();
+    </script>
+</body>
+</html>

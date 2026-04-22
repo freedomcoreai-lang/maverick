@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Technical Architecture | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .wp-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+        /* CHAPTER */
+        .chapter { padding: 64px 0; border-top: 1px solid var(--border); }
+        .ch-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            letter-spacing: 4px; color: var(--accent); text-transform: uppercase;
+            margin-bottom: 10px; opacity: 0.7;
+        }
+        .ch-title {
+            font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 32px;
+        }
+        .ch-title .dim { color: var(--text-dim); font-weight: 400; }
+
+        /* PROSE */
+        .prose { font-size: 1rem; color: var(--text-dim); line-height: 2; }
+        .prose p { margin-bottom: 20px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose strong { color: var(--text); font-weight: 600; }
+        .prose .hl { color: var(--green); font-weight: 400; }
+        .prose .amber { color: var(--amber); }
+        .prose .red { color: var(--red); }
+        .prose .blue { color: var(--accent); }
+        .prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); }
+
+        /* PULL QUOTE */
+        .pull-quote {
+            border-left: 2px solid var(--green); padding: 20px 24px;
+            margin: 32px 0; background: rgba(0,255,136,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+        .pull-quote p { font-size: 1.05rem; color: var(--text); line-height: 1.9; font-style: italic; }
+        .pull-quote-attr {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 2px; margin-top: 12px;
+        }
+
+        /* TECH PANEL */
+        .tech-panel {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 24px; margin: 28px 0;
+        }
+        .tp-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            letter-spacing: 3px; color: var(--accent); text-transform: uppercase;
+            margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        }
+        .tp-body { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-dim); line-height: 1.9; }
+        .tp-body p { margin-bottom: 6px; }
+        .tp-body .key { color: var(--text); }
+        .tp-body .val { color: var(--green); }
+
+        /* TABLE */
+        .tech-panel table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .tech-panel th {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase;
+            padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left;
+        }
+        .tech-panel td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
+        .tech-panel tr:hover td { background: rgba(62,168,245,0.03); }
+        .tech-panel .g { color: var(--green); font-family: 'JetBrains Mono', monospace; }
+        .tech-panel .a { color: var(--amber); }
+        .tech-panel .r { color: var(--red); }
+
+        /* STAT ROW */
+        .stat-row { display: flex; flex-wrap: wrap; gap: 1px; margin: 28px 0; background: var(--border); border-radius: 12px; overflow: hidden; }
+        .stat-box { flex: 1; min-width: 100px; background: var(--card); padding: 20px; text-align: center; }
+        .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: var(--green); line-height: 1; }
+        .stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-top: 6px; }
+
+        /* ENGINE BLOCK */
+        .engine-block { margin: 24px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .eb-header { padding: 18px 24px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+        .eb-name { font-family: 'Inter', sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: 2px; }
+        .eb-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+        .eb-body { padding: 24px; }
+        .eb-body p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.85; margin-bottom: 14px; }
+        .eb-body p:last-child { margin-bottom: 0; }
+        .eb-body strong { color: var(--text); font-weight: 600; }
+        .eb-params { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); }
+        .param {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--text-dim);
+            background: var(--card); border: 1px solid var(--border);
+            padding: 4px 10px; border-radius: 4px;
+        }
+
+        /* CALLOUT */
+        .callout {
+            background: rgba(62,168,245,0.04); border: 1px solid rgba(62,168,245,0.15);
+            border-radius: 10px; padding: 20px 24px; margin: 28px 0;
+        }
+        .callout p { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); line-height: 1.9; }
+
+        /* WARNING */
+        .warning {
+            background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15);
+            border-radius: 10px; padding: 20px 24px; margin: 24px 0;
+        }
+        .warning p { font-size: 0.85rem; color: var(--red); line-height: 1.8; }
+
+        /* HERO META */
+        .wp-hero-meta { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+        .wp-hero-meta-item { text-align: left; }
+        .wp-hero-meta-item span {
+            font-family: 'JetBrains Mono', monospace; color: var(--green);
+            font-size: 1.3rem; font-weight: 700; display: block; margin-bottom: 2px;
+        }
+        .wp-hero-meta-item small {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* TABLE OF CONTENTS */
+        .wp-toc { position: relative; z-index: 2; }
+        .toc-part { margin-bottom: 28px; }
+        .toc-part:last-child { margin-bottom: 0; }
+        .toc-part-title {
+            font-family: 'Inter', sans-serif; font-size: 0.7rem;
+            font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--green); margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.15);
+        }
+        .toc-item {
+            display: flex; align-items: baseline; gap: 16px;
+            padding: 10px 0; border-bottom: 1px solid rgba(30, 55, 90, 0.15);
+            text-decoration: none; transition: all 0.2s; position: relative;
+        }
+        .toc-item:last-child { border-bottom: none; }
+        .toc-item:hover { padding-left: 8px; }
+        .toc-item:hover .toc-name { color: var(--green); }
+        .toc-num {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: var(--accent); font-weight: 600; min-width: 22px;
+        }
+        .toc-name {
+            font-family: 'Inter', sans-serif; font-size: 0.95rem;
+            font-weight: 600; color: var(--text); transition: color 0.2s;
+            flex: 1;
+        }
+        .toc-sub {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 1px; white-space: nowrap;
+        }
+        .chapter { scroll-margin-top: 70px; }
+        @media (max-width: 600px) {
+            .toc-sub { display: none; }
+            .toc-name { font-size: 0.85rem; }
+        }
+
+        .back-bar {
+            position: relative; z-index: 2; padding: 10px 24px;
+            background: rgba(62,168,245,0.03); border-bottom: 1px solid var(--border);
+            margin-top: 56px;
+        }
+        .back-bar a {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); text-decoration: none; letter-spacing: 1px;
+        }
+
+        /* LIGHT MODE OVERRIDES */
+        [data-theme="light"] .tech-panel { background: rgba(255,255,255,0.8); }
+        [data-theme="light"] .engine-block { border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] .eb-header { background: rgba(255,255,255,0.8); }
+        [data-theme="light"] .eb-params { background: rgba(0,0,0,0.03); }
+        [data-theme="light"] .stat-box { background: rgba(255,255,255,0.9); }
+        [data-theme="light"] .pull-quote { background: rgba(0,255,136,0.05); }
+        [data-theme="light"] .param { background: rgba(255,255,255,0.9); }
+
+        @media (max-width: 600px) {
+            .wp-wrap { padding: 0 16px; }
+            .wp-hero-meta { gap: 16px; }
+            .stat-row { flex-direction: column; }
+            .eb-header { padding: 14px 16px; }
+            .eb-body { padding: 16px; }
+            .eb-params { padding: 12px 16px; }
+            .tech-panel { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <!-- STORY / TECHNICAL toggle (same bar on both pages, active side highlighted) -->
+    <div style="max-width:820px;margin:18px auto 0;padding:0 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:6px;background:var(--card);border:1px solid var(--border);border-radius:14px;">
+            <a href="/pages/about.html" style="padding:13px 16px;text-align:center;border-radius:10px;background:transparent;border:1px solid var(--border);text-decoration:none;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                📖 The Story
+                <div style="font-size:0.58rem;font-weight:400;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:none;">How MAVERICK was built, by hand, over 13 months</div>
+            </a>
+            <a href="/pages/architecture.html" style="padding:13px 16px;text-align:center;border-radius:10px;background:linear-gradient(135deg,rgba(62,168,245,0.14),rgba(62,168,245,0.06));border:1px solid var(--accent);text-decoration:none;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                🧬 The Architecture
+                <div style="font-size:0.58rem;font-weight:400;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:none;">Engine specs, indicator parameters, deep technical</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="wp-wrap">
+        <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:60px;margin-top:0;">
+            <div class="hero-glow"></div>
+            <div class="hero-badge">The Complete Story of FreedomCore MAVERICK</div>
+            <h1 class="hero-title" style="font-size:clamp(2.5rem,8vw,5rem);">THE MACHINE THAT LEARNED.</h1>
+            <p class="hero-desc" style="font-style:italic;max-width:700px;">
+                Twelve months. 85,000+ lines of Python. Machine learning experiments that failed. Backtests that lied.
+                £500 turned into £3,000, then crashed to £55. Over 128 million parameter evaluations across six months
+                of Bayesian optimisation, genetic algorithms, and colosseum tournament sweeps. And ultimately,
+                a fully autonomous, self evolving trading system that writes its own code overnight and deploys it
+                to the live market by morning.
+            </p>
+            <div class="wp-hero-meta">
+                <div class="wp-hero-meta-item"><span>May 2025</span><small>First Line of Code</small></div>
+                <div class="wp-hero-meta-item"><span>13</span><small>Major Versions</small></div>
+                <div class="wp-hero-meta-item"><span>85K+</span><small>Lines of Live Python</small></div>
+                <div class="wp-hero-meta-item"><span>128M+</span><small>Backtest Evaluations</small></div>
+                <div class="wp-hero-meta-item"><span>88</span><small>Live Instruments</small></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <section class="chapter" style="padding-top:40px;">
+    <div class="wp-wrap">
+        <div class="ch-label">// Contents</div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,4vw,2rem);margin-bottom:24px;">TABLE OF CONTENTS</h2>
+        <nav class="wp-toc">
+            <div class="toc-part">
+                <div class="toc-part-title">Part I . Origins</div>
+                <a href="#ch1" class="toc-item"><span class="toc-num">01</span><span class="toc-name">The Beginning</span><span class="toc-sub">May 2025</span></a>
+                <a href="#ch2" class="toc-item"><span class="toc-num">02</span><span class="toc-name">The Machine Learning Era</span><span class="toc-sub">December 2025</span></a>
+                <a href="#ch3" class="toc-item"><span class="toc-num">03</span><span class="toc-name">Liquidity Sweeps</span><span class="toc-sub">The Real Discovery</span></a>
+                <a href="#ch4" class="toc-item"><span class="toc-num">04</span><span class="toc-name">The Squeeze Fire</span><span class="toc-sub">Finding the Edge</span></a>
+                <a href="#ch5" class="toc-item"><span class="toc-num">05</span><span class="toc-name">The First Proof and The Crisis</span><span class="toc-sub">October 2025</span></a>
+            </div>
+            <div class="toc-part">
+                <div class="toc-part-title">Part II . Evolution</div>
+                <a href="#ch6" class="toc-item"><span class="toc-num">06</span><span class="toc-name">Colossus V12</span><span class="toc-sub">January 2026</span></a>
+                <a href="#ch7" class="toc-item"><span class="toc-num">07</span><span class="toc-name">Stripping It Back</span><span class="toc-sub">January 2026</span></a>
+                <a href="#ch8" class="toc-item"><span class="toc-num">08</span><span class="toc-name">Maverick V13</span><span class="toc-sub">The Architecture</span></a>
+                <a href="#ch9" class="toc-item"><span class="toc-num">09</span><span class="toc-name">Risk Engine</span><span class="toc-sub">Set-and-Forget V3.1</span></a>
+                <a href="#ch10" class="toc-item"><span class="toc-num">10</span><span class="toc-name">Streamline</span><span class="toc-sub">The Data Foundation</span></a>
+            </div>
+            <div class="toc-part">
+                <div class="toc-part-title">Part III . Intelligence</div>
+                <a href="#ch11" class="toc-item"><span class="toc-num">11</span><span class="toc-name">The Organism Swarm</span><span class="toc-sub">The System That Evolves</span></a>
+                <a href="#ch12" class="toc-item"><span class="toc-num">12</span><span class="toc-name">Project Illumination</span><span class="toc-sub">The Parallel Intelligence</span></a>
+                <a href="#ch13" class="toc-item"><span class="toc-num">13</span><span class="toc-name">Trinity Core</span><span class="toc-sub">The Autonomous Intelligence Chain</span></a>
+                <a href="#ch14" class="toc-item"><span class="toc-num">14</span><span class="toc-name">The DNA Evolution Arc</span><span class="toc-sub">April 2026</span></a>
+                <a href="#ch15" class="toc-item"><span class="toc-num">15</span><span class="toc-name">Genesis</span><span class="toc-sub">The Engine That Taught a Lesson</span></a>
+            </div>
+            <div class="toc-part">
+                <div class="toc-part-title">Part IV . The Present</div>
+                <a href="#ch16" class="toc-item"><span class="toc-num">16</span><span class="toc-name">The Living System</span><span class="toc-sub">April 17 2026</span></a>
+                <a href="#ch17" class="toc-item"><span class="toc-num">17</span><span class="toc-name">FreedomCore</span><span class="toc-sub">The Mission</span></a>
+            </div>
+        </nav>
+    </div>
+    </section>
+
+    <!-- CHAPTER 1: ORIGIN -->
+    <section class="chapter" id="ch1">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter One</div>
+        <h2 class="ch-title">THE BEGINNING <span class="dim">// May 2025</span></h2>
+        <div class="prose">
+            <p>There was no grand plan. There was a question: what if a systematic approach to the cryptocurrency markets could generate consistent income without the emotional chaos that destroys most retail traders? And a decision to find out by building something from scratch.</p>
+            <p>The tools available were a smartphone, a cloud VPS subscription, and Python. No IDE, no second monitor, no quiet office. The development environment was a phone screen, voice-to-text dictation for longer prompts, and whatever time could be carved out around a demanding work schedule. Every architectural decision, every debugging session, every breakthrough happened through that four-inch screen.</p>
+            <p>The early versions (V1 through V3) were learning exercises. RSI crossovers. MACD signals. EMA crosses. The standard retail trader starting point that almost every beginner goes through. These systems lost money, which was expected. What they produced was something more valuable than profits: a deep understanding of why simple indicator based approaches don't work. <strong>Every retail trader on Earth is watching the same RSI level.</strong> When RSI crosses 30, the signal has already been arbed out of existence by a thousand bots running the same logic.</p>
+            <p>That lesson took months to fully absorb. The journey from "indicators as signals" to "market structure as context" is the central intellectual arc of the entire FreedomCore development story.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 2: MACHINE LEARNING ERA -->
+    <section class="chapter" id="ch2">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Two</div>
+        <h2 class="ch-title">THE MACHINE LEARNING <span class="dim">ERA // December 2025</span></h2>
+        <div class="prose">
+            <p>The natural next step, once simple indicators proved insufficient, was machine learning. If the market's patterns were too complex for handcrafted rules, perhaps an algorithm could learn them directly from data.</p>
+            <p><strong>XGBoost classifiers</strong> were trained on historical OHLCV data augmented with computed features: RSI, MACD, Bollinger Band width, volume ratios, ADX readings at multiple timeframes. The models showed promising accuracy in backtests. In live markets, they degraded rapidly.</p>
+            <p>The problem is one that every quant eventually confronts: <span class="hl">feature importance in financial time series is non stationary.</span> What predicted winners in a January trending market didn't predict winners in a March choppy market. The models were learning the historical market regime, not a universal signal.</p>
+            <p><strong>LSTM neural networks</strong> were the next attempt. Three separate models were built: a duration prediction model, an exit timing model, and a directional prediction model called TrendHunter. TrendHunter showed 78% classification accuracy in validation. When deployed live, it produced a very different result.</p>
+            <p><span class="hl">TrendHunter was a confirmation system, not a prediction system.</span> It scored high on trend following conditions precisely when those conditions were most obvious. It was confirming momentum after the move had already happened. The accuracy looked good in retrospect. It was useless in practice.</p>
+            <p>The critical learning from this entire era: machine learning in trading is seductive precisely because it is technically impressive. But financial markets are an adversarial environment. The moment a pattern is widely learned, it stops working. The edge in retail algorithmic trading doesn't come from smarter prediction. It comes from better signal quality filtering and better risk management around fundamentally sound market structure principles.</p>
+        </div>
+        <div class="pull-quote">
+            <p>"The XGBoost was learning the market that existed last quarter. By the time we deployed it, that market was gone. We kept training a model to trade a ghost."</p>
+            <div class="pull-quote-attr">// Development log retrospective, early 2026</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 3: LIQUIDITY STRUCTURE -->
+    <section class="chapter" id="ch3">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Three</div>
+        <h2 class="ch-title">LIQUIDITY SWEEPS <span class="dim">// The Real Discovery</span></h2>
+        <div class="prose">
+            <p>The shift that changed everything came from studying institutional order flow and liquidity structure dynamics. Understanding how and why price actually moves, not just reacting to indicator signals after the fact.</p>
+            <p>The core insight: markets move to where liquidity is concentrated. Retail traders place stop losses in predictable locations. Just below previous day's lows, above previous week's highs, at obvious round numbers. These clusters represent pools of liquidity that institutional participants actively seek before moving in their intended direction.</p>
+            <p>When price sweeps below a Previous Day's Low (PDL) and rapidly recovers, it is not a failed breakdown. It is institutional buying filled against the stop loss orders clustered at that level. The wick on the candle is the evidence. The rapid recovery confirms the reversal.</p>
+            <p>Six key liquidity structure levels became the foundation: <strong>PDH/PDL</strong> (Previous Day), <strong>PWH/PWL</strong> (Previous Week), and <strong>PMH/PML</strong> (Previous Month). Over <strong>117,000 historical sweeps</strong> were backtested across four years of data. Long sweeps produced positive expectancy across every tested period. Short sweeps showed negative expectancy.</p>
+            <p>The sweep research produced genuine structural insight. But the backtesting itself was deeply misleading. Across 28 million+ parameter iterations, some configurations showed returns in the billions over four and a half year runs. Fantasy numbers on fantasy fees with zero slippage. The backtester was telling the optimizer exactly what it wanted to hear. Configs that looked untouchable on paper got destroyed the moment they touched a live order book.</p>
+            <p>This was the turning point. <strong>Backtesting is a liar.</strong> Not sometimes. Structurally. It operates in a world where every fill is perfect, every fee is understated, and every spread is zero. The project moved permanently away from historical backtesting as a source of truth and toward live forward-testing with realistic fees, actual slippage, and real market impact. The sweep levels themselves survived this transition. The backtested configurations did not.</p>
+        </div>
+        <div class="tech-panel">
+            <div class="tp-label">// Why Backtesting Lies // Lessons from 28M+ Iterations</div>
+            <table>
+                <tr><th>What Backtests Showed</th><th>What Actually Happened</th></tr>
+                <tr><td class="g">94% win rate, billions in simulated returns</td><td class="r">31.5% win rate live, account crashed 89% from peak</td></tr>
+                <tr><td class="g">Perfect fills at mid-price, zero slippage</td><td class="r">Taker fees 0.06% + slippage 0.02% per side, compounding across 1000+ trades</td></tr>
+                <tr><td class="g">Every sweep entry executed instantly</td><td class="r">Real order books have depth, spread, and latency</td></tr>
+                <tr><td class="g">Configs optimised to historical noise</td><td class="r">Overfitting to past data, zero predictive value forward</td></tr>
+            </table>
+            <div style="padding:12px 16px;font-size:0.75rem;color:var(--text-dim);line-height:1.6;border-top:1px solid var(--border);">The sweep levels (PDH, PDL, PWH, PWL, PMH, PML) are structural and survived the transition to live. The backtested parameter configurations were discarded entirely. The system now evolves exclusively through live forward-testing with the Organism Swarm evaluator running realistic taker fees and directional slippage.</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 4: TTM SQUEEZE -->
+    <section class="chapter" id="ch4">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Four</div>
+        <h2 class="ch-title">THE SQUEEZE FIRE <span class="dim">// Finding the Edge</span></h2>
+        <div class="prose">
+            <p>Parallel to the liquidity sweep research, a separate signal mechanism was being developed: the TTM Squeeze, based on John Carter's volatility compression methodology.</p>
+            <p>Bollinger Bands (a volatility measure based on standard deviation) are plotted alongside Keltner Channels (a volatility measure based on ATR). When the Bollinger Bands contract inside the Keltner Channels, volatility has compressed to an abnormal degree. The market is coiling. This state is the squeeze.</p>
+            <p>The <strong>squeeze fire</strong> is the specific moment when the Bollinger Bands expand back outside the Keltner Channels after compression. This is the moment of ignition. The release of stored energy. The <strong>compression ratio</strong> quantifies tightness: values below 0.75 indicate strong compression, below 0.50 indicate exceptional compression that historically precedes violent directional moves.</p>
+        </div>
+        <div class="tech-panel">
+            <div class="tp-label">// TTM Squeeze // Technical Specification</div>
+            <div class="tp-body">
+                <p><span class="key">Bollinger Bands:</span> <span class="val">SMA(20), 2.0 Standard Deviations</span></p>
+                <p><span class="key">Keltner Channels:</span> <span class="val">EMA(20), 1.5 &times; ATR(20)</span></p>
+                <p><span class="key">Squeeze ON:</span> <span class="val">BB_upper &lt; KC_upper AND BB_lower &gt; KC_lower</span></p>
+                <p><span class="key">Squeeze FIRE:</span> <span class="val">Previous bar squeeze_on=True, current bar squeeze_on=False</span></p>
+                <p><span class="key">Minimum squeeze bars:</span> <span class="val">2 bars (30 minutes minimum compression)</span></p>
+                <p><span class="key">Compression ratio tiers:</span> <span class="val">&lt;0.75 strong | &lt;0.50 extreme | &gt;1.0 no squeeze</span></p>
+            </div>
+        </div>
+        <div class="prose">
+            <p>Bayesian optimisation produced a significant finding. Standard TTM parameters produced a profit factor of ~1.80. A modified parameter set (Bollinger Bands at period 12 with 1.5 standard deviations, Keltner Channels at period 18 with 2.25 ATR) produced a profit factor of <strong>2.92</strong> on the same data. The non standard parameters detect tighter, higher conviction compressions. This finding was validated and locked as a core architectural constant.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 5: V8 LIVE - THE CRISIS -->
+    <section class="chapter" id="ch5">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Five</div>
+        <h2 class="ch-title">THE FIRST PROOF AND THE CRISIS <span class="dim">// October 2025</span></h2>
+        <div class="prose">
+            <p>In October 2025, the V8 Trend Engine went live with &pound;500 of real capital. That first week, the market pumped and the account doubled. Then on a Friday night, a six-hour dump hit while the developer slept. The system had shorted seven positions into it. By morning, the account had made 120% in a single session. &pound;2,200 by Saturday. Kept winning through the weekend. <strong>&pound;3,000 by Monday morning.</strong></p>
+            <p>Then the market changed. The trending conditions that had 6x'd the account disappeared. What followed was weeks of relentless chop. Sideways price action, false breakouts, whipsaws. The trend-only system had no answer for it. Across 111 trades, the win rate collapsed to <strong>31.5%</strong>. The account bled from &pound;3,000 all the way down to <strong>&pound;55</strong>.</p>
+            <p>Forensic analysis identified multiple simultaneous problems. Four bugs operating in parallel: the P20 gate blocking 81% of profitable bullish signals, the cooldown mechanism only activating on winning trades, stop loss not triggering under certain conditions, and micro-cap symbols dragging down aggregate performance with a 28% win rate. Beneath the bugs was a more fundamental problem. The 4-hour ADX directional filter was lagging badly in whipsaw conditions.</p>
+            <p><strong>A single engine cannot trade all market conditions.</strong> A trend following system loses in the 70% of market time that is not trending. Most people who blow a trading account walk away. This one produced a technical specification.</p>
+        </div>
+        <div class="warning">
+            <p>Live test: 31.5% win rate across 111 trades. Account: &pound;500 &rarr; &pound;3,000 &rarr; &pound;55. Trend engine obliterated by choppy market conditions. Four simultaneous bugs confirmed. System paused for full architectural review. The chop problem became the single driving force behind every architectural decision that followed.</p>
+        </div>
+        <div class="pull-quote">
+            <p>"The backtests looked like art. The live trading looked like carnage. The gap between them was four bugs, one broken filter, and twelve months of accumulated assumptions that had never been tested under real market conditions."</p>
+            <div class="pull-quote-attr">// Post-mortem analysis, October 2025</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 6: COLOSSUS V12 -->
+    <section class="chapter" id="ch6">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Six</div>
+        <h2 class="ch-title">COLOSSUS V12 <span class="dim">// January 2026</span></h2>
+        <div class="prose">
+            <p>The architecture consolidated around two complementary signal sources: squeeze fire breakouts and liquidity sweep reversals. Colossus V12 was the result. Over <strong>42,000 lines</strong> across five core components: the trading engine, the Streamline data pipeline, the HYPERION simulation racing platform, a mobile web dashboard with 12,600 lines of Flask code, and the notification system.</p>
+            <p>The <strong>HYPERION simulation racing platform</strong> simultaneously executed up to 17 different parameter configurations across historical data, ranked by performance on a live leaderboard. The "X MEGA COMBO" configuration emerged as the consistent winner.</p>
+            <p>The <strong>ratchet exit system</strong> replaced all previous trailing stop approaches. Rather than a continuous trail, it worked in discrete steps: once a trade reached a profit threshold, a stop was locked. Every additional price increment locked proportional gain. The stop only ever moved in the profitable direction.</p>
+            <p>This is where the backtesting scale exploded. The "Wembley Stadium" genetic optimisation ran populations of <strong>40,000 configurations</strong> across hundreds of generations. The trend sweep alone ran 365 generations (14.6 million evaluations). The chop sweep ran 876 generations (35 million evaluations). A separate Bayesian optimisation pass ran <strong>77 million parameter evaluations</strong> in 12 hours. The Colosseum tournament system pitted champion configurations against each other across the god_protocol Optuna study (142,000+ trials). All told, over <strong>128 million backtest evaluations</strong> shaped the parameters that run in production today.</p>
+        </div>
+        <div class="stat-row">
+            <div class="stat-box"><div class="stat-val">128M+</div><div class="stat-lbl">Backtest Evaluations</div></div>
+            <div class="stat-box"><div class="stat-val">17</div><div class="stat-lbl">Sim Configs Racing</div></div>
+            <div class="stat-box"><div class="stat-val">77M</div><div class="stat-lbl">Bayesian Sweep (12hrs)</div></div>
+            <div class="stat-box"><div class="stat-val">40K</div><div class="stat-lbl">Population Per Gen</div></div>
+            <div class="stat-box"><div class="stat-val">4 Years</div><div class="stat-lbl">Historical Data</div></div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 7: STRIPPING IT BACK -->
+    <section class="chapter" id="ch7">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Seven</div>
+        <h2 class="ch-title">STRIPPING IT BACK <span class="dim">// January 2026</span></h2>
+        <div class="prose">
+            <p>The ML era and the Merlin harness were ripped out entirely at the beginning of January. The XGBoost models, the LSTM networks, the feature importance pipelines, all of it. Gone. Not because the technology was wrong, but because it was solving the wrong problem. The models were learning the past and calling it the future.</p>
+            <p>What replaced it was radical simplification. The system stripped away accumulated complexity: ML gates, FVG requirements, multi-layer confluence scoring, complex tier sizing. What remained was the core signal: squeeze fire breakout on structural calendar levels, with clean risk management. Daily highs and lows. Weekly highs and lows. Monthly highs and lows. Equilibrium midpoints. The institutional levels where real money actually trades.</p>
+            <p>Win rate recovered immediately. <strong>The edge had always been there. It had been buried under broken filters and untested complexity.</strong></p>
+        </div>
+        <div class="pull-quote">
+            <p>"We spent two months building machine learning models that could predict the past with 78% accuracy and the future with 0% accuracy. Then we deleted all of it and went back to price, structure, and compression. The system started working the day we stopped trying to be clever."</p>
+            <div class="pull-quote-attr">// Development retrospective, January 2026</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 8: V13 SOVEREIGN -->
+    <section class="chapter" id="ch8">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Eight</div>
+        <h2 class="ch-title">MAVERICK V13 <span class="dim">// The Architecture</span></h2>
+        <div class="prose">
+            <p>MAVERICK V13 Sovereign is the synthesis of everything that worked and everything that failed. The central innovation is the <strong>Thermodynamic Regime Router</strong>. A classification system that evaluates every signal in under one millisecond and routes it to the execution engine most appropriate for the current market condition.</p>
+            <p>The router computes a single scalar value called <strong>Gamma</strong>, derived from the Choppiness Index (CHOP-14), ADX readings, and volatility ratios. Below ~0.42: choppy, mean reverting regime. Above ~0.52: trending with sufficient momentum. Between 0.42 and 0.52 is the <strong>confidence dead zone</strong>: a transitional state where no trades are taken. This dead zone is one of the most important risk controls in the system.</p>
+        </div>
+
+        <!-- ENGINE: GENESIS -->
+        <div class="engine-block">
+            <div class="eb-header">
+                <span class="eb-name" style="color:var(--accent)">GENESIS ENGINE</span>
+                <span class="eb-tag">// Lifecycle Manager // Birth of Trend Detection</span>
+            </div>
+            <div class="eb-body">
+                <p>Genesis handles the nascent phase of signal development. Entries that don't yet qualify for full Trend or Chop classification but show early signs of directional commitment. It monitors developing squeeze conditions using a VWAP gate and an equilibrium gravity well filter. Genesis manages the critical promotion pathway to MOMENTUM_TREND, where a developing position is reclassified mid flight and handed to the Trend Engine's exit logic for an unlimited trailing run.</p>
+                <p>The Genesis engine exists because the most explosive moves begin before regime confirmation arrives. By the time ADX reaches 25, the entry has often already occurred at a worse price. Genesis catches the ignition. The Trend Engine rides the fire.</p>
+            </div>
+            <div class="eb-params">
+                <span class="param">VWAP Positioning Gate</span>
+                <span class="param">Equilibrium Gravity Well</span>
+                <span class="param">Promotion &rarr; MOMENTUM_TREND</span>
+                <span class="param">NS-KEF Dynamic Target</span>
+            </div>
+        </div>
+
+        <!-- ENGINE: TREND -->
+        <div class="engine-block">
+            <div class="eb-header">
+                <span class="eb-name" style="color:var(--accent)">TREND ENGINE</span>
+                <span class="eb-tag">// Gen 49 Hybrid // Progressive Constriction</span>
+            </div>
+            <div class="eb-body">
+                <p>The Trend Engine activates in confirmed trending regimes. Entry requirements are deliberately strict: ADX-8 &ge; 25, 4-hour Directional Index alignment, RSI confirming momentum without overextension, and a volatility brake preventing entry during abnormal ATR expansion events.</p>
+                <p>The exit mechanism is <strong>progressive constriction</strong>: the trailing stop starts wide enough to absorb normal retracements, then progressively tightens as profit extends. At exceptional levels, a kinetic ripcord triggers on extreme rejection wicks. Uses 8x leverage (highest of all engines) because entry quality and directional confidence are greatest.</p>
+                <p>The Gen 48 breakthrough: loosening the RSI threshold from 70 to 45 and removing the fixed take-profit nearly doubled backtested PnL. The original RSI gate was eliminating entries during strong trends. The fixed target was capping winners. Both were wrong.</p>
+            </div>
+            <div class="eb-params">
+                <span class="param">ADX-8 &ge; 25</span>
+                <span class="param">4H DI Alignment</span>
+                <span class="param">8x Leverage</span>
+                <span class="param">3.5 ATR Initial Stop</span>
+                <span class="param">Progressive Constriction Trail</span>
+                <span class="param">Volatility Brake 1.45</span>
+                <span class="param">Kinetic Ripcord 3.6 ATR</span>
+            </div>
+        </div>
+
+        <!-- ENGINE: TRAP -->
+        <div class="engine-block">
+            <div class="eb-header">
+                <span class="eb-name" style="color:var(--amber)">TRAP ENGINE</span>
+                <span class="eb-tag">// Apex Predator // Wyckoff Effort vs Result</span>
+            </div>
+            <div class="eb-body">
+                <p>The Trap Engine targets a specific institutional pattern: the high-volume breakout candle that fails. When retail traders chase a breakout with maximum volume and the candle produces an extreme rejection wick, institutional distribution is occurring. Institutions have been selling into the retail buying pressure.</p>
+                <p>Entry requirements are mathematically precise: 2.9+ ATR price expansion from open four bars prior, volume at least 2.25x the three-bar average, wick ratio &ge; 0.42 of total candle range, and close against the breakout direction. The 0.28 ATR stop is placed just beyond the wick extreme. The 4.8 ATR target reflects historical mean reversion distance. <strong>Risk to reward ratio of roughly 17:1.</strong></p>
+            </div>
+            <div class="eb-params">
+                <span class="param">2.9 ATR 4-Bar Stretch</span>
+                <span class="param">2.25x Volume Climax</span>
+                <span class="param">0.42 Wick Ratio</span>
+                <span class="param">0.28 ATR Stop</span>
+                <span class="param">4.8 ATR Target</span>
+                <span class="param">5x Leverage</span>
+                <span class="param">Dead Water Exit &gt;20 Bars</span>
+            </div>
+        </div>
+
+        <!-- ENGINE: CHOP -->
+        <div class="engine-block">
+            <div class="eb-header">
+                <span class="eb-name" style="color:var(--green)">CHOP ENGINE</span>
+                <span class="eb-tag">// Gen 46 Champion // Mean Reversion Sniper</span>
+            </div>
+            <div class="eb-body">
+                <p>The Chop Engine is the system's primary alpha generator. In ranging conditions (the majority of market time), squeeze fire signals still occur, but the correct interpretation is the opposite of a breakout. The breakout fails. The correct trade is the fade back to the mean.</p>
+                <p>Rather than entering at market price, it places a <strong>post only limit order</strong> at the extreme of the firing candle's wick. The exact point of maximum retail panic. Guarantees maker rebate rather than paying taker fees.</p>
+                <p>The <strong>Fishing Line protocol</strong> governs order lifecycle. The limit order is monitored on a 10-second poll cycle for 300 seconds. If filled, full position management activates. If unfilled after 300 seconds, it is automatically cancelled with no loss. EMA-20 is the mean reversion target. Dynamic structural stop behind the sweep extreme.</p>
+                <p>Empirically, the Chop Engine generates the majority of system profitability. The entire system's net profit rests disproportionately on Chop Engine fire quality and frequency.</p>
+            </div>
+            <div class="eb-params">
+                <span class="param">Post-Only Limit Orders</span>
+                <span class="param">300s Fishing Line</span>
+                <span class="param">10s Poll Cycle</span>
+                <span class="param">EMA-20 Mean Reversion Target</span>
+                <span class="param">Dynamic Structural Stop</span>
+                <span class="param">Maker Rebate Guaranteed</span>
+                <span class="param">40% Miss Rate Built In</span>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 9: RISK ENGINE -->
+    <section class="chapter" id="ch9">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Nine</div>
+        <h2 class="ch-title">RISK ENGINE <span class="dim">// Set-and-Forget V3.1</span></h2>
+        <div class="prose">
+            <p>Every trade passes through the same deterministic risk calculation. The system targets <strong>1.4% of total equity</strong> as dollar risk per trade. Position size is calculated backwards from stop distance and leverage. The margin clamp enforces a floor of 6% and ceiling of 13% of equity per trade.</p>
+            <p>The <strong>Tiered Handbrake system</strong> applies different trailing tightening gates by asset class: 3.0% for MEGA tier (BTC, ETH, SOL), 4.5% for LARGE tier ($1B&ndash;$10B market cap), and 6.0% for everything else.</p>
+        </div>
+        <div class="tech-panel">
+            <div class="tp-label">// Risk Engine Parameters // Set-and-Forget V3.1</div>
+            <table>
+                <tr><th>Parameter</th><th>Value</th><th>Purpose</th></tr>
+                <tr><td>Risk per trade</td><td class="g">1.4% equity</td><td>Fixed loss target if stop hit</td></tr>
+                <tr><td>Minimum margin</td><td class="g">6% equity</td><td>Ensures meaningful position size</td></tr>
+                <tr><td>Maximum margin</td><td class="g">13% equity</td><td>Caps single trade exposure</td></tr>
+                <tr><td>Maximum positions</td><td class="g">7</td><td>Portfolio-level concentration limit</td></tr>
+                <tr><td>Max catastrophic DD</td><td class="a">9.8%</td><td>7 positions &times; 1.4% simultaneous loss</td></tr>
+                <tr><td>MEGA handbrake</td><td class="g">3.0%</td><td>BTC, ETH, SOL tier</td></tr>
+                <tr><td>LARGE handbrake</td><td class="g">4.5%</td><td>$1B&ndash;$10B market cap</td></tr>
+                <tr><td>OTHER handbrake</td><td class="g">6.0%</td><td>Sub $1B market cap</td></tr>
+            </table>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 10: STREAMLINE -->
+    <section class="chapter" id="ch10">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Ten</div>
+        <h2 class="ch-title">STREAMLINE <span class="dim">// The Data Foundation</span></h2>
+        <div class="prose">
+            <p>The entire system rests on the Streamline data pipeline. A custom real time data processing engine running continuously since late 2025, streaming and processing market data across 88 cryptocurrency perpetual futures symbols simultaneously.</p>
+            <p>A single WebSocket connection receives live candle updates. Every bar update triggers a full computation pass: over 20 indicators calculated, squeeze state tracked, sweep levels updated, features written to SQLite. Subsecond latency between data arrival and record availability across all 88 symbols.</p>
+            <p>ADX is computed at seven different periods (4, 7, 8, 10, 13, 14, 17, 20). Multi timeframe ADX at 1H, 4H, and 8H lookback periods provides macro context. RSI, Stochastic, MACD, Bollinger Bands, Keltner Channels, ATR at three periods, the Choppiness Index at two periods, and VWAP. All computed on every bar.</p>
+            <p>Swing structure detection operates across four timeframes simultaneously: 10-hour, 24-hour, 7-day, and 30-day. Liquidity sweep detection runs on every completed candle for all 88 symbols, tracking PDH/PDL, PWH/PWL, and PMH/PML levels in real time. The EXPLOSION detector runs on every tick during forming bars, producing near zero latency entries on the most violent breakout moves.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 11: THE ORGANISM SWARM -->
+    <section class="chapter" id="ch11">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Eleven</div>
+        <h2 class="ch-title">THE ORGANISM SWARM <span class="dim">// The System That Evolves</span></h2>
+        <div class="prose">
+            <p>Of everything built during this project, the Organism Swarm represents the greatest departure from conventional algorithmic trading. Every other element represents well understood engineering. The Swarm represents something genuinely novel: <span class="hl">a system that autonomously rewrites its own trading logic based on what the market taught it this week.</span></p>
+            <p>The current architecture (V4.1 GOD-MODE, April 2026) is a Gemini 3.1 pipeline. It reads 72 hours of sentinel broadcasts, the weekly strategic digest, 10 losing-trade crime scenes and 10 winning-trade forensics with 25 physics fields each, and persistent evolution memory from every prior cycle. It performs root-cause analysis on every structural defect it finds. Then it generates 50 DNA mutations, each one a complete Python strategy file with pre-filters, regime routing, and promotion logic. Every mutation is assigned one of eleven structural paradigms rotating A through K (Wyckoff Spring, Harmonic XABCD, Order Block Reclaim, FVG Consequent Encroachment, Renko Streak Reversal, Volume Profile, PCA Anomaly, Fibonacci OTE, Asian Range Sweep, Breaker Block Flip, Effort-vs-Result Absorption). Candidates may also invent novel composite features; on crowning, those are AST-extracted and appended to the permanent knowledge base. Every mutation is stress-tested against 6 days of real market data across 88 symbols under the unified engine (same code path the live bot runs) and scored by V9 Portfolio Sim (risk-adjusted dollar return), with V7 Sortino logged in parallel for audit.</p>
+            <p>Mutations are not limited to numeric parameter changes. The Swarm invents entirely new logic. Synthetic Heikin Ashi regime engines. Kaufman Efficiency Ratio calculations. Adaptive RSI ceilings that extend during confirmed trends. Anti wick shields. Swing proximity bridges. MACD direction gates with stochastic rescue paths. These are not preprogrammed options. They emerge from the LLM performing forensic analysis on real trade failures and engineering solutions.</p>
+        </div>
+        <div class="stat-row">
+            <div class="stat-box"><div class="stat-val">279+</div><div class="stat-lbl">Generations</div></div>
+            <div class="stat-box"><div class="stat-val">448K</div><div class="stat-lbl">Apex Fitness</div></div>
+            <div class="stat-box"><div class="stat-val">$32K</div><div class="stat-lbl">Apex Backtest PnL</div></div>
+            <div class="stat-box"><div class="stat-val">2.53</div><div class="stat-lbl">Payoff Ratio</div></div>
+            <div class="stat-box"><div class="stat-val">590</div><div class="stat-lbl">Trade Promotions</div></div>
+        </div>
+        <div class="prose">
+            <p>The daily evolution cycle operates through a structured decision tree. A minimum of 10 trades must occur before any evolutionary decision. If 72 hour win rate is above 35% and equity is positive, hold current configuration. If win rate falls below 35%, equity drops more than 5%, or seven consecutive stop losses occur, the system enters RED state and triggers a full evolution cycle.</p>
+            <p>What makes this genuinely novel is the closed feedback loop. The market trades. Results are logged with full thermodynamic context. The evolution cycle reads forensic data. Mutations target specific weaknesses. Winners are deployed. The market trades again. The loop closes.</p>
+        </div>
+        <div class="pull-quote">
+            <p>"By Generation 279, the swarm had independently invented stop hunting detection, Efficiency Ratio filtering, and ADX acceleration vetoes. None of these were suggested. The system diagnosed the reasons for its own losses and designed the corrective logic."</p>
+            <div class="pull-quote-attr">// Swarm evolution analysis, March 2026</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 12: PROJECT ILLUMINATION -->
+    <section class="chapter" id="ch12">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Twelve</div>
+        <h2 class="ch-title">PROJECT ILLUMINATION <span class="dim">// The Parallel Intelligence</span></h2>
+        <div class="prose">
+            <p>A separate evolutionary framework called Project ILLUMINATION. A MAP-Elites quality diversity optimisation system that explores the strategy space not just for the single best configuration, but for the best configuration in each distinct niche of the market regime landscape.</p>
+            <p>MAP-Elites maintains an archive of elite solutions across a two-dimensional grid defined by frequency and risk. A high frequency, high risk configuration for volatile trending markets might exist in one cell while a low frequency, low risk configuration for quiet ranging markets exists in another.</p>
+            <p>After 80 iterations, ILLUMINATION discovered <strong>8 distinct strategy niches</strong> with 7 elitism replacement events. The vision: a library of regime specific configurations that the Organism Swarm can select from based on detected market conditions.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 13: TRINITY CORE -->
+    <section class="chapter" id="ch13">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Thirteen</div>
+        <h2 class="ch-title">TRINITY CORE <span class="dim">// The Autonomous Intelligence Chain</span></h2>
+        <div class="prose">
+            <p>By April 2026, the system had evolved beyond a trading bot into an autonomous intelligence organisation. The Trinity Core is a chain of 7 specialised AI agents that monitor performance, conduct forensic analysis on every trade, compress intelligence into weekly digests, and evolve the trading DNA every Sunday. All running on systemd timers. No human intervention.</p>
+        </div>
+        <div class="tech-panel">
+            <div class="tp-label">// Trinity Core // Full Intelligence Chain</div>
+            <table>
+                <tr><th>Agent</th><th>Trigger</th><th>Function</th></tr>
+                <tr><td class="g">Shadow Matrix</td><td>Every 6 hours (:50)</td><td>Scans all 88 symbols for missed alpha, squeeze states, sweep detection, regime classification</td></tr>
+                <tr><td class="g">Sentinel Broadcaster</td><td>Every 6 hours (:00)</td><td>Claude 4.7 LLM reads Shadow output + trade data. Produces forensic broadcast with crime scene analysis on every loss</td></tr>
+                <tr><td class="g">Sentinel Watchdog</td><td>Every 6 hours (:05)</td><td>Tracks real equity, drawdown from peak. Push alerts at 10%. Emergency swarm trigger at 15%</td></tr>
+                <tr><td class="g">Flagship Intelligence</td><td>Daily (07:15)</td><td>Absorbs all 4 sentinel broadcasts. Produces daily intelligence briefing via Claude 4.7</td></tr>
+                <tr><td class="g">Performance Snapshot</td><td>Daily (19:00)</td><td>Captures 24h/7d win rates, PnL, equity curves, engine breakdown from live trade data</td></tr>
+                <tr><td class="g">Weekly Digest</td><td>Sunday (16:15)</td><td>Compresses entire week of broadcasts into one strategic summary for the Swarm</td></tr>
+                <tr><td class="g">Organism Swarm V5</td><td>Every 48 hours</td><td>Gemini 3.1 (with Claude 4.7 callback) reads 72h broadcasts + weekly digest + crime scenes + success forensics. Generates 50 DNA mutations across God-Mode Autonomy. The LLM has total authority to rewrite the entry trigger, the risk filters, and the exit logic.
+            </table>
+        </div>
+        <div class="prose">
+            <p>The Swarm now consumes the full crime scene matrix: 35 physics fields per trade including ADX variants at 4, 7, 8, and 14 periods, choppiness index, compression ratio, volume ratios, RSI, Hurst exponent, squeeze state, DI alignment, gamma, and more. It reads both losing trades (to diagnose defects) and winning trades (to understand what works). The config_memory.db holds archived configurations with associated market fingerprints so the system can recall known good DNA when similar conditions return.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 14: APRIL DNA EVOLUTION -->
+    <section class="chapter" id="ch14">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Fourteen</div>
+        <h2 class="ch-title">THE DNA EVOLUTION ARC <span class="dim">// April 2026</span></h2>
+        <div class="prose">
+            <p><strong>Phase One: The Anti Hunt Revolution (April 1-3).</strong> Analysis revealed 18 of 26 consecutive losses were EXCHANGE_STOP_HIT. KuCoin was stop hunting the system. The swarm's response: the <strong>Kaufman Efficiency Ratio (KER)</strong>. KER below 0.3 indicates "drunken walk" (stop hunting territory), above 0.6 indicates "laminar flow" (genuine trending). Leverage dropped from 5-8x to 3x. ATR stops widened 40-60%. Body to wick ratio filter introduced.</p>
+            <p><strong>Phase Two: Fractal Intelligence (April 4-7).</strong> The <strong>Path Straightness Index (PSI)</strong> measures net displacement divided by total path length over 12 bars. PSI &gt; 0.62 = trending with institutional commitment. PSI &lt; 0.38 = noise. This single metric proved more reliable than raw ADX or the Choppiness Index. KDA v13.2 scored 10,107 in live evaluation and became the battle tested fallback.</p>
+            <p><strong>Phase Three: The Ghost Town Problem (April 8-9).</strong> The market entered a liquidity vacuum. Volume ratios dropped to 0.01-0.02. Every defensive configuration the swarm generated refused to trade at all. This exposed a structural flaw: the evaluator rewards capital preservation, and in extreme low volume conditions the highest-scoring strategy is mathematical paralysis.</p>
+        </div>
+        <div class="callout">
+            <p>April 9, 2026. Claude Opus deployed KDA v13.2 directly to the live system. Genesis disabled. Rupture Bypass active. DOGE long caught within 60 seconds of deployment at Gamma 0.180, ADX_8 36.8. The system was back.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 15: GENESIS RISE AND FALL -->
+    <section class="chapter" id="ch15">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Fifteen</div>
+        <h2 class="ch-title">GENESIS <span class="dim">// The Engine That Taught a Lesson</span></h2>
+        <div class="prose">
+            <p>Genesis was architecturally elegant. Catch the birth of a trend at the moment of VWAP equilibrium, before the Trend Engine's ADX gates activate. In theory: catch the coil before the spring releases.</p>
+            <p>In practice: the VWAP gate rejected every genuine momentum signal. In a trending market, price is by definition away from VWAP. A 14.44 ATR distance from VWAP is a <em>characteristic</em> of momentum. Genesis classified it as "overextended" and rejected the signal. The compression gate compounded this. IGNITION signals fire during breakouts, but the very expansion that triggers them disqualifies the trade by Genesis's own gates.</p>
+            <p>On April 8, ENJ ripped 46% in one session. The system generated <strong>891 individual rejection logs</strong> on ENJUSDTM. Every IGNITION signal was sent to Genesis. Genesis rejected every single one. The Trend Engine never saw the signals. The move was invisible to the system.</p>
+            <p>Genesis produced no winning trades in 14 consecutive days. The engine applied equilibrium logic to an expansionary signal. These are philosophically incompatible. Genesis was disabled on April 9, 2026. All IGNITION signals now route directly to the Trend Engine via the Rupture Bypass.</p>
+        </div>
+        <div class="pull-quote">
+            <p>"891 rejections on ENJ in one day. A 46% rip, completely invisible to the system. Not because the data wasn't there. Because an engine designed for equilibrium was guarding a breakout signal."</p>
+            <div class="pull-quote-attr">// Phase 7 Forensic Audit, April 9, 2026</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 16: THE LIVING SYSTEM -->
+    <section class="chapter" id="ch16">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Sixteen</div>
+        <h2 class="ch-title">THE LIVING SYSTEM <span class="dim">// April 17, 2026</span></h2>
+        <div class="prose">
+            <p>The 4 engine V13 Sovereign described in chapters 8 through 15 is now history. April 16 was the day the architecture pivoted from "static engine router" to a self mutating organism. Chop, Trap, and Genesis are no longer in the live stack. They were retired because the Swarm evolved past them.</p>
+            <p>The current champion is <strong>GOLIATH_GAMMA_V2</strong>, crowned April 21, 2026. It utilizes the Unified Engine architecture that evolved past the 4-engine router and the later H2H Hybrid split. OBS owns its own entry trigger, stop placement, position sizing, leverage, and exit logic across all 88 perpetual futures. There is no router. There is no regime classifier. The strategy IS the system.</p>
+            <p><strong class="hl">Order Block Detection:</strong> Watches every 1-minute bar across 88 symbols for the last opposing candle before a confirmed break of market structure. These are the footprints of institutional accumulation or distribution, the zones where smart money entered.</p>
+            <p><strong class="hl">Reclaim Trigger:</strong> When price retests an active order block in the correct premium/discount zone and the block's quality score exceeds 0.6, the champion strikes. Stops anchor to the structural invalidation level of the block itself, not an arbitrary ATR multiple.</p>
+            <p><strong class="hl">Laminar Ignition Fallback:</strong> When no clean order-block reclaim is present but momentum alignment is extreme (ADX, volume ratio, directional index spread), a frequency fallback captures high-velocity institutional runs so the champion stays active across regimes.</p>
+            <p>Underneath lives the <strong>Sovereign Live Adapter</strong>. A cache manager auto-refreshes the in-memory state every 5 minutes so the live bot mirrors the backtest exactly. A champion validator gates every new deploy on DNA shape, contract correctness, cache idempotency, and stop-floor compliance. The atomic hot-swap runs a 45-second health check after every deployment and rolls back on failure. The adapter is the bridge that keeps "what scored in eval" identical to "what fires on the exchange right now."</p>
+        </div>
+        <div class="tech-panel">
+            <div class="tp-label">// Live Configuration // GOLIATH_GAMMA_V2 (April 21, 2026)</div>
+            <div class="tp-body">
+                <p><span class="key">Champion:</span> <span class="val">GOLIATH_GAMMA_V2</span></p>
+                <p><span class="key">Architecture:</span> <span class="val">UNIFIED ENGINE. Same code path in backtest and live. Zero divergence on entry layer.</span></p>
+                <p><span class="key">Primary:</span> <span class="val">Order Block Reclaim after confirmed BOS, quality &gt; 0.6, premium/discount zone filter.</span></p>
+                <p><span class="key">Fallback:</span> <span class="val">Laminar Ignition on extreme ADX + volume + DI spread alignment.</span></p>
+                <p><span class="key">Honest Physics:</span> <span class="val">T-60 mandatory. Champions cannot read into the future.</span></p>
+                <p><span class="key">Stop floor:</span> <span class="val">1.2 ATR HARD MIN. No micro stops permitted.</span></p>
+                <p><span class="key">Macro Veto:</span> <span class="val">DI-MTF Gate. Blocks shorts in Bull macro, longs in Bear macro.</span></p>
+                <p><span class="key">Leverage:</span> <span class="val">5x | Risk 1.4% per trade | ADX Gate 30+ on fallback</span></p>
+                <p><span class="key">Scorer:</span> <span class="val">V9 Portfolio Sim canonical (net / max_dd). V7 Sortino audit logged in parallel.</span></p>
+                <p><span class="key">Cache refresh:</span> <span class="val">5 minutes via Cache Manager. Live state mirrors backtest.</span></p>
+                <p><span class="key">Validator:</span> <span class="val">Gates every new champion. Catches lookahead bias, idempotency failures, micro stops, broken contracts.</span></p>
+                <p><span class="key">Hot-swap:</span> <span class="val">45s health check after deploy. Auto-rollback on failure.</span></p>
+            </div>
+        </div>
+        <div class="prose" style="margin-top:24px;">
+            <p>The honesty guarantee matters. On April 16 a champion called the Fibonacci Extension Vortex backtested at 38,153 with 91 percent win rate. Forensic analysis revealed the score was synthetic alpha caused by lookahead bias in the cache. The strategy was buying the start of the same bar it had already cached the close of. The fraudulent champion was discredited and the eval was rebuilt with a mandatory 60 second delay on all signal lookups. Every score on this site since April 16 was generated under that Honest Physics rule.</p>
+            <p><strong class="hl">The strategy that trades tomorrow may not be GOLIATH_GAMMA_V2.</strong> The Swarm runs every 48 hours and produces a new champion only if it strictly beats the reigning one on a fresh 7 day window under Honest Physics, scored by V9 Portfolio Sim. The system is alive. It mutates. The architecture evolves. The website you are reading describes the state as it exists now, with GOLIATH_GAMMA_V2 live.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 17: THE MISSION -->
+    <section class="chapter" id="ch17">
+    <div class="wp-wrap">
+        <div class="ch-label">// Chapter Seventeen</div>
+        <h2 class="ch-title">FREEDOMCORE <span class="dim">// The Mission</span></h2>
+        <div class="prose">
+            <p>FreedomCore is proof that financial independence through autonomous machine intelligence is achievable without institutional resources, without a quant team, without years of formal finance education, and without a desk. Just a phone, a VPS, and AI.</p>
+            <p>Everything described in this document was built by one person. A tanker driver from the UK, on a phone, in the gaps between shifts. Every bug was fixed from a phone screen. Every architectural decision was made from a phone screen. 85,000+ lines of Python, 128 million backtest evaluations, 13 major versions, and a self evolving AI trading system that genuinely writes its own code. All built without a computer.</p>
+            <p>The system is live and trading real capital. The Organism Swarm evolves the DNA every Sunday. The Sentinel broadcasts intelligence every 6 hours. The Watchdog monitors equity drawdown and triggers emergency evolution if needed. Signal distribution via push notifications is operational. Access tiers for observers, signal followers, and full automation are coming.</p>
+            <p>What matters most is the machine itself. A system that adapts faster than any human trader can react. A system that diagnoses its own failures and engineers its own corrections. A system that was built from nothing, against every conventional obstacle, and is now running live.</p>
+            <p><strong class="hl">The machine is running. The freedom is being built.</strong></p>
+        </div>
+        <div class="callout">
+            <p>This document was written in April 2026, twelve months after the first line of code. Every system described here is live and operational. The Organism Swarm continues to evolve. The market continues to trade. The loop continues to close.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- RISK DISCLOSURE -->
+    <section class="chapter">
+    <div class="wp-wrap">
+        <div class="warning">
+            <p><strong>Risk Disclosure:</strong> This information is for educational purposes only. It does not constitute financial advice.
+            Leveraged trading carries substantial risk of loss. Cryptocurrency markets are highly volatile.
+            Backtested results include inherent limitations and cannot account for slippage, exchange downtime,
+            or black swan events. Live results will differ from backtested results.
+            <strong>Only trade with capital you can afford to lose entirely.</strong></p>
+        </div>
+    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" class="back-to-top">Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/tracker.js" defer></script>
+</body>
+</html>

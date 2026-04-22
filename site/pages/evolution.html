@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Evolution Structure | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .evo-pipeline { display:flex; flex-direction:column; gap:10px; margin-top:20px; }
+        .evo-stage { display:flex; align-items:flex-start; gap:14px; padding:16px; background:var(--card); border:1px solid var(--border); border-radius:12px; border-left:3px solid var(--green); }
+        .evo-stage-num { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--accent); font-size:1.1rem; min-width:28px; }
+        .evo-stage-body { flex:1; }
+        .evo-stage-title { font-weight:700; color:var(--text); margin-bottom:4px; font-size:0.95rem; }
+        .evo-stage-desc { color:var(--text-dim); font-size:0.82rem; line-height:1.55; }
+        .evo-card { padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px; border-top:3px solid var(--green); }
+        .evo-card-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+        .evo-card-value { font-size:1.4rem; font-weight:800; color:var(--text); margin-bottom:6px; }
+        .evo-card-sub { color:var(--text-dim); font-size:0.78rem; line-height:1.5; }
+        .evo-metric-row { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:20px; }
+        .evo-box { padding:16px; background:var(--card); border:1px solid var(--border); border-radius:10px; }
+        .evo-box-title { font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--accent); margin-bottom:8px; letter-spacing:1px; text-transform:uppercase; }
+        .evo-box-body { color:var(--text-dim); font-size:0.82rem; line-height:1.6; }
+        .evo-highlight { color:var(--green); font-weight:700; }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:60px;margin-top:0;">
+        <div class="hero-glow"></div>
+        <div class="hero-badge">Swarm V4 - God Mode</div>
+        <h1 style="font-size:clamp(2.5rem,7vw,5rem);background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;font-weight:900;">EVOLUTION STRUCTURE</h1>
+        <p style="font-size:clamp(1rem,2vw,1.2rem);color:var(--text-dim);max-width:760px;margin:20px auto 0;line-height:1.6;">How a champion is born. Total autonomy, fifty generations, crime scene memory, weekend tournaments, and a single Hall of Fame. No human in the loop.</p>
+    </section>
+
+    <!-- THE CYCLE -->
+    <section class="section-divider">
+        <div class="section-inner reveal">
+            <div class="section-label">// The 50-Generation Cycle</div>
+            <h2 class="section-title">Fifty generations. Thirty explore. Twenty hone.</h2>
+            <p class="section-text">Every cycle the swarm births fifty candidates. The first thirty are wide-exploration mutations - the LLM is given total authority to rewrite every scaffold function and invent brand-new multi-dimensional engines. Generations thirty-one to fifty pivot to honing: the strongest candidate so far is handed back to the LLM as a parent for surgical improvement. Whatever emerges top of the leaderboard becomes the next champion.</p>
+            <div class="evo-pipeline">
+                <div class="evo-stage">
+                    <div class="evo-stage-num">01</div>
+                    <div class="evo-stage-body">
+                        <div class="evo-stage-title">Exploration Phase &middot; Gen 1-30</div>
+                        <div class="evo-stage-desc">Wide mutation. The LLM receives the crime scene memory plus the shadow matrix and invents novel structural engines. No parent, no template. Total authority.</div>
+                    </div>
+                </div>
+                <div class="evo-stage">
+                    <div class="evo-stage-num">02</div>
+                    <div class="evo-stage-body">
+                        <div class="evo-stage-title">Honing Phase &middot; Gen 31-50</div>
+                        <div class="evo-stage-desc">The leader so far becomes the parent. The LLM is instructed to mutate surgically, keeping what works and cutting what doesn&rsquo;t. Twenty focused evolutions to sharpen the apex.</div>
+                    </div>
+                </div>
+                <div class="evo-stage">
+                    <div class="evo-stage-num">03</div>
+                    <div class="evo-stage-body">
+                        <div class="evo-stage-title">Evaluation &middot; 6-Day Backtest</div>
+                        <div class="evo-stage-desc">Every candidate is tested against the most recent six days of live market data with realistic fees (0.06 percent taker plus 0.02 percent slippage), eight concurrent positions, 1.4 percent risk per trade, and 3&times; leverage. The scorer ranks by final PnL in dollars.</div>
+                    </div>
+                </div>
+                <div class="evo-stage">
+                    <div class="evo-stage-num">04</div>
+                    <div class="evo-stage-body">
+                        <div class="evo-stage-title">Coronation</div>
+                        <div class="evo-stage-desc">If the best candidate beats the live champion&rsquo;s re-scored performance, it is copied to the Hall of Fame and becomes the new live strategy. Otherwise the reigning champion survives another cycle.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOD MODE -->
+    <section class="section-divider">
+        <div class="section-inner reveal">
+            <div class="section-label">// God-Mode Authority</div>
+            <h2 class="section-title">The LLM rewrites every function.</h2>
+            <p class="section-text">The V4 swarm hands the LLM a bare scaffold and tells it to rewrite all of it. <code>pre_filter</code>, <code>signal_entry</code>, <code>manage_position</code>, the cache precompute, the DNA dictionary, even the hypothesis docstring that ends up on the Hall of Fame page. No template lock-in. No fixed indicator list. If the LLM wants Shannon Entropy and Hurst persistence instead of ADX, it writes them. The only hard constraints are pure NumPy execution, honest physics (one-hour window lookups, four-hour time exits), and a fifty-percent minimum win rate for survival.</p>
+            <div class="evo-metric-row">
+                <div class="evo-box">
+                    <div class="evo-box-title">Paradigm</div>
+                    <div class="evo-box-body"><span class="evo-highlight">God Mode Master Synthesis</span>. The LLM invents the entire engine per generation.</div>
+                </div>
+                <div class="evo-box">
+                    <div class="evo-box-title">Model</div>
+                    <div class="evo-box-body">Gemini 3.1 as the forensic quant engineer. Opus 4.7 audits the architecture plan and commits the code.</div>
+                </div>
+                <div class="evo-box">
+                    <div class="evo-box-title">Mandates</div>
+                    <div class="evo-box-body">Pure NumPy. One-hour cache windows. Four-hour time exits. Fifty-percent win-rate floor. Rich DNA. Hypothesis docstring.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CRIME SCENE FEEDBACK -->
+    <section class="section-divider">
+        <div class="section-inner reveal">
+            <div class="section-label">// Crime Scene Memory</div>
+            <h2 class="section-title">Every loss teaches the next generation.</h2>
+            <p class="section-text">Live losing trades are written to a structured crime scene log. Before each swarm cycle fires, the LLM receives the top recent failure patterns as part of the prompt &mdash; the exact chop bands, ADX zones, volume ratios, and regime labels that liquidated the previous champion. The result is that each new generation is mathematically aware of what killed its predecessors and builds vetoes accordingly. The Gamma Goliath&rsquo;s &ldquo;Chop Death Zone&rdquo; filter was born this way, hard-coding a refusal to short in the 40-60 chop / 20-35 ADX band where four prior champions were liquidated.</p>
+        </div>
+    </section>
+
+    <!-- SHADOW MATRIX -->
+    <section class="section-divider">
+        <div class="section-inner reveal">
+            <div class="section-label">// Shadow Matrix</div>
+            <h2 class="section-title">The swarm also learns from what it missed.</h2>
+            <p class="section-text">Every signal that fires without the filter stack approving is logged to a shadow matrix. If a shadow signal would have made more than 2 percent profit, it counts as missed alpha. The ten most recent misses are fed back into the swarm prompt alongside the crime scenes. This closes the loop &mdash; the organism learns not just what to avoid, but also what it is wrongly rejecting.</p>
+        </div>
+    </section>
+
+    <!-- TIMER & TOURNAMENT -->
+    <section class="section-divider">
+        <div class="section-inner reveal">
+            <div class="section-label">// Weekly Tournament</div>
+            <h2 class="section-title">Saturday evening. Every week.</h2>
+            <p class="section-text">The swarm fires on a systemd timer at 17:00 BST every Saturday. Fifty generations run unattended over roughly three to four hours. The crowned candidate is validated against the live adapter, added to the Hall of Fame, and deployed. The previous champion is archived, not deleted. This means every week the system is rewritten from scratch against the latest six-day market window. No champion stays on the throne unless it continues to beat its own successors.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+</body>
+</html>

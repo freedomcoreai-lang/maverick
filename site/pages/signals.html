@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <meta name="description" content="Live trading signals from MAVERICK's reigning AI champion. Full reasoning, indicator stack, DNA snapshot, and outcome tracking on every signal.">
+    <title>Champion Signals | MAVERICK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .sg-wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+        .sg-hero { padding: 40px 0 24px; }
+        .sg-badge {
+            display: inline-block; padding: 6px 14px; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem; color: #ffd700; letter-spacing: 2px; text-transform: uppercase;
+            border: 1px solid #ffd700; border-radius: 20px; margin-bottom: 14px;
+        }
+        .sg-title {
+            font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 900; letter-spacing: -1.5px;
+            line-height: 1.05; margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--text), var(--green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .sg-champ-card {
+            padding: 20px 22px; background: var(--card);
+            border: 1px solid var(--border); border-left: 4px solid #ffd700;
+            border-radius: 14px; margin-top: 22px;
+        }
+        .sg-stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px; margin-top: 18px;
+        }
+        .sg-stat {
+            padding: 12px; background: var(--card); border: 1px solid var(--border);
+            border-radius: 10px; text-align: center;
+        }
+        .sg-stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 4px; }
+        .sg-stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; color: var(--text); }
+        .sg-filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 24px 0 14px; }
+        .sg-filter {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 1.5px; padding: 7px 14px; border-radius: 6px;
+            border: 1px solid var(--border); background: transparent;
+            color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .sg-filter.active { border-color: var(--accent); color: var(--accent); background: rgba(62,168,245,0.08); }
+        .sg-filter:hover { border-color: var(--accent); }
+        .champ-sig:hover { border-color: var(--accent) !important; }
+
+        .sg-explainer {
+            padding: 16px 18px; background: rgba(62,168,245,0.04);
+            border: 1px solid rgba(62,168,245,0.18); border-radius: 12px;
+            color: var(--text-dim); font-size: 0.82rem; line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .sg-explainer b { color: var(--accent); }
+
+        .sg-section-sep {
+            margin-top: 36px; padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            letter-spacing: 2.5px; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo"><span class="nav-logo-text">MAVERICK</span></a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/pages/about.html">About / Docs</a>
+    </div>
+
+    <div class="back-bar"><a href="/">&larr; BACK TO FREEDOMCORE</a></div>
+
+    <div class="sg-wrap">
+        <div class="sg-hero">
+            <div class="sg-badge">Live Champion · Self-Updating</div>
+            <h1 class="sg-title">CHAMPION SIGNALS</h1>
+            <p style="color:var(--text-dim); max-width:720px; font-size:0.96rem; line-height:1.7; margin-top:16px;">
+                Every signal the reigning champion fires is captured here in real time with the full evidence: the exact indicator values at firing time, the DNA thresholds that consented, the entry price, the stop, the leverage. Tap any row to see the full breakdown. When the champion changes, this feed rewrites itself. The page is built around whichever strategy holds the throne.
+            </p>
+        </div>
+
+        <div class="sg-champ-card" id="champ-head">Loading champion...</div>
+
+        <div class="sg-stats-row" id="champ-stats">
+            <div class="sg-stat"><div class="sg-stat-lbl">Total</div><div class="sg-stat-val" id="sig-total">-</div></div>
+            <div class="sg-stat"><div class="sg-stat-lbl">Bull</div><div class="sg-stat-val" id="sig-long" style="color:var(--green);">-</div></div>
+            <div class="sg-stat"><div class="sg-stat-lbl">Bear</div><div class="sg-stat-val" id="sig-short" style="color:var(--red);">-</div></div>
+            <div class="sg-stat"><div class="sg-stat-lbl">Live</div><div class="sg-stat-val" id="sig-live" style="color:var(--accent);">-</div></div>
+            <div class="sg-stat"><div class="sg-stat-lbl">Archive WR</div><div class="sg-stat-val" id="sig-wr" style="color:#ffd700;">-</div></div>
+            <div class="sg-stat"><div class="sg-stat-lbl">Archive PnL</div><div class="sg-stat-val" id="sig-totpnl" style="color:#ffd700;">-</div></div>
+        </div>
+
+        <div class="sg-filter-row">
+            <button class="sg-filter active" data-sigfilter="all">All</button>
+            <button class="sg-filter" data-sigfilter="live">Live / Fired</button>
+            <button class="sg-filter" data-sigfilter="long">Bull</button>
+            <button class="sg-filter" data-sigfilter="short">Bear</button>
+            <button class="sg-filter" data-sigfilter="closed">Archive (closed)</button>
+            <button class="sg-filter" data-sigfilter="winners">Winners</button>
+            <button class="sg-filter" data-sigfilter="losers">Losers</button>
+        </div>
+
+        <div class="sg-explainer">
+            <b>How to read a signal.</b> Each row shows the champion's verdict (Bull or Bear), symbol, reason label, entry price, stop, leverage, and status. Tap a row header to reveal evidence. Signals pass through states: <span style="color:#f5a623;">FIRED</span> (detected), <span style="color:#3ea8f5;">FILLED</span> (order placed), <span style="color:var(--green);">CLOSED</span> (outcome locked). The archive keeps every past signal with its final profit or loss so you can judge the champion over time.
+        </div>
+
+        <div id="champ-signal-feed">
+            <div style="padding:40px 20px;text-align:center;color:var(--text-dim);background:var(--card);border:1px dashed var(--border);border-radius:12px;">
+                Loading signals from the live champion...
+            </div>
+        </div>
+
+        <div style="height:80px;"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">@freedomcoreai</a>
+            <a href="mailto:freedomcoreai@gmail.com">freedomcoreai@gmail.com</a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/signals-page.js?v=20260422b"></script>
+</body>
+</html>

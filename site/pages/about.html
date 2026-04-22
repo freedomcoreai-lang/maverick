@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Code For Freedom | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        .wp-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+        .chapter { padding: 64px 0; border-top: 1px solid var(--border); scroll-margin-top: 70px; }
+        .ch-label {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            letter-spacing: 4px; color: var(--accent); text-transform: uppercase;
+            margin-bottom: 10px; opacity: 0.7;
+        }
+        .ch-title {
+            font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 32px;
+        }
+        .ch-title .dim { color: var(--text-dim); font-weight: 400; }
+        .prose { font-size: 1rem; color: var(--text-dim); line-height: 2; }
+        .prose p { margin-bottom: 20px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose strong { color: var(--text); font-weight: 600; }
+        .pull-quote {
+            border-left: 2px solid var(--green); padding: 20px 24px;
+            margin: 32px 0; background: rgba(0,255,136,0.03);
+            border-radius: 0 8px 8px 0;
+        }
+        .pull-quote p { font-size: 1.05rem; color: var(--text); line-height: 1.9; font-style: italic; }
+        .pull-quote-attr {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 2px; margin-top: 12px;
+        }
+        .warning {
+            background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15);
+            border-radius: 10px; padding: 20px 24px; margin: 24px 0;
+        }
+        .warning p { font-size: 0.85rem; color: var(--red); line-height: 1.8; }
+        .wp-hero-meta { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+        .wp-hero-meta-item { text-align: left; }
+        .wp-hero-meta-item span {
+            font-family: 'JetBrains Mono', monospace; color: var(--green);
+            font-size: 1.3rem; font-weight: 700; display: block; margin-bottom: 2px;
+        }
+        .wp-hero-meta-item small {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase;
+        }
+        .wp-toc { position: relative; z-index: 2; }
+        .toc-part { margin-bottom: 28px; }
+        .toc-part:last-child { margin-bottom: 0; }
+        .toc-part-title {
+            font-family: 'Inter', sans-serif; font-size: 0.7rem;
+            font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+            color: var(--green); margin-bottom: 12px; padding-bottom: 8px;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.15);
+        }
+        .toc-item {
+            display: flex; align-items: baseline; gap: 16px;
+            padding: 10px 0; border-bottom: 1px solid rgba(30, 55, 90, 0.15);
+            text-decoration: none; transition: all 0.2s; position: relative;
+        }
+        .toc-item:last-child { border-bottom: none; }
+        .toc-item:hover { padding-left: 8px; }
+        .toc-item:hover .toc-name { color: var(--green); }
+        .toc-num {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+            color: var(--accent); font-weight: 600; min-width: 22px;
+        }
+        .toc-name {
+            font-family: 'Inter', sans-serif; font-size: 0.95rem;
+            font-weight: 600; color: var(--text); transition: color 0.2s; flex: 1;
+        }
+        .toc-sub {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
+            color: var(--text-dim); letter-spacing: 1px; white-space: nowrap;
+        }
+        .back-bar {
+            position: relative; z-index: 2; padding: 10px 24px;
+            background: rgba(62,168,245,0.03); border-bottom: 1px solid var(--border);
+            margin-top: 56px;
+        }
+        .back-bar a {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); text-decoration: none; letter-spacing: 1px;
+        }
+        .callout {
+            background: rgba(62,168,245,0.04); border: 1px solid rgba(62,168,245,0.15);
+            border-radius: 10px; padding: 20px 24px; margin: 28px 0;
+        }
+        .callout p { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); line-height: 1.9; }
+        [data-theme="light"] .pull-quote { background: rgba(0,255,136,0.05); }
+        @media (max-width: 600px) {
+            .wp-wrap { padding: 0 16px; }
+            .wp-hero-meta { gap: 16px; }
+            .toc-sub { display: none; }
+            .toc-name { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo"><span class="nav-logo-text">MAVERICK</span></a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar"><a href="/">&larr; BACK TO FREEDOMCORE</a></div>
+
+    <!-- STORY / TECHNICAL toggle -->
+    <div style="max-width:820px;margin:18px auto 0;padding:0 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:6px;background:var(--card);border:1px solid var(--border);border-radius:14px;">
+            <a href="/pages/about.html" style="padding:13px 16px;text-align:center;border-radius:10px;background:linear-gradient(135deg,rgba(78,205,196,0.14),rgba(78,205,196,0.06));border:1px solid var(--green);text-decoration:none;color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                📖 The Story
+                <div style="font-size:0.58rem;font-weight:400;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:none;">How MAVERICK was built, by hand, over 13 months</div>
+            </a>
+            <a href="/pages/architecture.html" style="padding:13px 16px;text-align:center;border-radius:10px;background:transparent;border:1px solid var(--border);text-decoration:none;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                🧬 The Architecture
+                <div style="font-size:0.58rem;font-weight:400;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:none;">Engine specs, indicator parameters, deep technical</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="wp-wrap">
+        <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:60px;margin-top:0;">
+            <div class="hero-glow"></div>
+            <div class="hero-badge">Code For Freedom</div>
+            <h1 class="hero-title" style="font-size:clamp(2.5rem,8vw,5rem);">THE MACHINE THAT LEARNED.</h1>
+            <p class="hero-desc" style="font-style:italic;max-width:700px;">
+                How I built an autonomous trading machine from the cab of a chemical tanker.
+                Twelve months. A phone screen. Two AI agents. And the particular stubbornness
+                of a man who had already lost everything the conventional way.
+            </p>
+            <div class="wp-hero-meta">
+                <div class="wp-hero-meta-item"><span>May 2025</span><small>First Line of Code</small></div>
+                <div class="wp-hero-meta-item"><span>12</span><small>Months Building</small></div>
+                <div class="wp-hero-meta-item"><span>85K+</span><small>Lines of Python</small></div>
+                <div class="wp-hero-meta-item"><span>88</span><small>Live Instruments</small></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="wp-wrap">
+        <section class="chapter" style="padding-top:32px;">
+            <div class="ch-label">// Contents</div>
+            <nav class="wp-toc">
+                <div class="toc-part">
+                    <div class="toc-part-title">The Education</div>
+                    <a href="#prologue" class="toc-item"><span class="toc-num">00</span><span class="toc-name">Prologue</span><span class="toc-sub">The Quiet Before</span></a>
+                    <a href="#ch1" class="toc-item"><span class="toc-num">01</span><span class="toc-name">The Price of Learning</span><span class="toc-sub">2015 to 2024</span></a>
+                    <a href="#ch2" class="toc-item"><span class="toc-num">02</span><span class="toc-name">The Decision</span><span class="toc-sub">2024</span></a>
+                </div>
+                <div class="toc-part">
+                    <div class="toc-part-title">Building</div>
+                    <a href="#ch3" class="toc-item"><span class="toc-num">03</span><span class="toc-name">Building in the Gaps</span><span class="toc-sub">May 2025</span></a>
+                    <a href="#ch4" class="toc-item"><span class="toc-num">04</span><span class="toc-name">The First Edge</span><span class="toc-sub">Summer 2025</span></a>
+                    <a href="#ch5" class="toc-item"><span class="toc-num">05</span><span class="toc-name">The Liquidity Pivot</span><span class="toc-sub">Summer 2025</span></a>
+                    <a href="#ch6" class="toc-item"><span class="toc-num">06</span><span class="toc-name">The Geometric Rupture and the DNA Spiral</span><span class="toc-sub">Autumn 2025</span></a>
+                    <a href="#ch7" class="toc-item"><span class="toc-num">07</span><span class="toc-name">The Sovereign Breakthrough</span><span class="toc-sub">October 2025</span></a>
+                </div>
+                <div class="toc-part">
+                    <div class="toc-part-title">The Hard Lessons</div>
+                    <a href="#ch8" class="toc-item"><span class="toc-num">08</span><span class="toc-name">The Data Leak Crisis</span><span class="toc-sub">November 2025</span></a>
+                    <a href="#ch9" class="toc-item"><span class="toc-num">09</span><span class="toc-name">The "Honest Physics" Revelation</span><span class="toc-sub">December 2025</span></a>
+                    <a href="#ch10" class="toc-item"><span class="toc-num">10</span><span class="toc-name">The T-60 Mandate</span><span class="toc-sub">December 2025</span></a>
+                    <a href="#ch11" class="toc-item"><span class="toc-num">11</span><span class="toc-name">The Species Split</span><span class="toc-sub">February 2026</span></a>
+                </div>
+                <div class="toc-part">
+                    <div class="toc-part-title">The Living System</div>
+                    <a href="#ch12" class="toc-item"><span class="toc-num">12</span><span class="toc-name">MAVERICK SOVEREIGN</span><span class="toc-sub">March 2026</span></a>
+                    <a href="#ch13" class="toc-item"><span class="toc-num">13</span><span class="toc-name"> Sniper vs Predator</span></a>
+                    <a href="#ch14" class="toc-item"><span class="toc-num">14</span><span class="toc-name">The Autonomous Organism</span></a>
+                    <a href="#ch15" class="toc-item"><span class="toc-num">15</span><span class="toc-name">The Evolutionary Edge</span></a>
+                    <a href="#epilogue" class="toc-item"><span class="toc-num">16</span><span class="toc-name">What Freedom Looks Like</span></a>
+                </div>
+            </nav>
+        </section>
+    </div>
+
+    <!-- PROLOGUE -->
+    <div class="wp-wrap">
+    <section class="chapter" id="prologue">
+        <div class="ch-label">// Prologue</div>
+        <h2 class="ch-title">THE QUIET BEFORE</h2>
+        <div class="prose">
+            <p>There is a particular kind of quiet that settles over a motorway at three in the morning. Not silence exactly. The engine is still running. The tyres are still hissing against wet tarmac. But the world has emptied out enough that a man can hear himself think, and that is either a gift or a punishment depending on what he is thinking about.</p>
+            <p>I was thinking about money. Not in the way most people think about money, which is to say worrying about whether there is enough of it this month. I was thinking about the mechanism of money. How it moves. How markets work. How price travels from one level to another and why most people are standing on the wrong side of that movement when it happens.</p>
+            <p>I am a chemical tanker driver. Father of three boys. Seventy hours a week on the road hauling hazardous materials across the UK motorway network in conditions that range from monotonous to genuinely dangerous. The pay is reasonable. The cost is time. Every hour I spend behind the wheel is an hour I do not spend with my sons, and the arithmetic of that exchange had been bothering me for years.</p>
+            <p>I had tried the conventional paths. Stocks and shares from 2015 onwards, putting money aside when I could, watching it grow at a pace that felt responsible and completely insufficient. I understood markets in theory. I could read a chart, identify a trend, spot momentum building before it released. The theory was never the problem.</p>
+            <p><strong>The problem was me.</strong></p>
+            <p>Every time I sat at a screen with real capital on the line, something shifted in my decision making. A small loss became a catastrophe that demanded immediate recovery. A small win became justification for a bigger, sloppier bet. I had written my own post mortem enough times to recognise the pattern with clinical precision, and I was entirely unable to stop repeating it. I was, and I knew this with the kind of clarity that only comes from honest self assessment, the weakest component in my own trading system.</p>
+            <p>The question that formed in the quiet of a northbound M6 at three in the morning was not how to become a better trader. It was whether I could remove myself from the equation entirely.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 1 -->
+    <section class="chapter" id="ch1">
+        <div class="ch-label">// Part One</div>
+        <h2 class="ch-title">THE PRICE OF LEARNING <span class="dim">// 2015 to 2024</span></h2>
+        <div class="prose">
+            <p>The story does not begin with code. It begins in 2015. I was a young father opening my first investment account and doing what millions of people do: putting money into things I believed would grow and then watching what happened. Some of it grew. Some of it did not. The lessons were slow and undramatic and useful in the way that all slow undramatic lessons are, which is to say I absorbed them without realising I was being taught.</p>
+            <p>I learned that markets reward patience until the exact moment they punish it. I learned that conviction and stubbornness look identical from the outside and feel identical from the inside and produce opposite results. I learned that the gap between understanding a principle and applying it under pressure is the gap where most retail traders lose their money.</p>
+            <p>By the time crypto arrived in my life properly, I had enough market experience to be dangerous. Not enough to be safe. This distinction matters enormously and I would not fully understand it for years.</p>
+        </div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">TELCOIN AND THE HALF MILLION</h2>
+        <div class="prose">
+            <p>In early 2021 I had roughly ten thousand pounds distributed across crypto positions. The market was doing what crypto markets occasionally do, which is to move with a velocity and magnitude that makes every other asset class look stationary by comparison.</p>
+            <p>Telcoin was the position that changed everything. A small cap token focused on remittance payments, trading at fractions of a penny when I first accumulated it. The bull market of early 2021 was not kind to Telcoin. It was violent. The token moved with the sort of exponential trajectory that turns modest positions into life changing sums if you hold through the volatility, and I held through the volatility.</p>
+            <p>By the peak, my portfolio was approaching <strong>half a million pounds</strong>. Not through brilliant analysis. Not through sophisticated strategy. Through being in the right asset at the right time and having the nerve to sit through drawdowns that would have shaken most people out. It felt like skill. It was mostly luck amplified by conviction, and the distinction between those two things is invisible while the portfolio is going up.</p>
+            <p>Half a million pounds. For a tanker driver with three boys, that number represented something more than money. It represented possibility. A house paid off. A business started. Time with his boys that did not need to be traded for a wage. The future had opened up in a way that felt permanent.</p>
+            <p>It was not permanent.</p>
+        </div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">THE CRASH</h2>
+        <div class="prose">
+            <p>May 2021. The crypto market collapsed. Not a correction. Not a healthy pullback. A structural unwinding that turned paper wealth into an abstraction and then into a memory.</p>
+            <p>What had taken months to build came apart in weeks. I lost approximately <strong>three hundred and fifty thousand pounds</strong>. Not in a single trade, not in a single day, but across a sustained period of decisions made in the worst possible mental state. I averaged down when I should have cut. I held when the thesis had already broken. I sold near the bottom when the pain finally became unbearable, then watched the brief recovery that followed and felt the specific self loathing that comes from knowing you did the exact wrong thing at the exact wrong time and that no one forced you to do it.</p>
+            <p>This is the part of the story that nobody in the crypto or trading space wants to talk about honestly. The losses. Not the sanitised "I had some setbacks along the way" version. The real version, which is that I watched half a million pounds evaporate while making decisions that I knew were wrong as I was making them, and then had to get up the next morning and drive a chemical tanker to Manchester because the mortgage still needed paying and my children still needed feeding regardless of what had happened to my portfolio.</p>
+            <p>The years that followed were a slow bleed. Trying to recapture what 2021 had given and then taken. Every approach I tried required me to be at a screen, reacting, deciding, being human. And being human in financial markets is a structural disadvantage. Your emotions cost you money every single time they are involved in a decision.</p>
+            <p>Most people stop at this point. They accept the loss as tuition for a lesson they did not want to learn, and they go back to their regular life, and they do not try again. I did not stop. But what I did next was fundamentally different from what I had done before.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section class="chapter" id="ch2">
+        <div class="ch-label">// Part Two</div>
+        <h2 class="ch-title">THE DECISION <span class="dim">// 2024</span></h2>
+        <div class="prose">
+            <p>Somewhere in 2024, on a night run between loading bays, the shape of a different idea began forming. Not how to trade better. How to build something that traded for me. Something that had no emotions, no fatigue, no ego, no attachment to any individual position. Something that applied rules consistently every single time without deviation, without hesitation, without the specific flavour of human weakness that had cost me half a million pounds.</p>
+            <p>Algorithmic trading. I had read about it. I had watched tutorials on my phone during loading bay waits. I had browsed Stack Overflow answers I barely understood, soaking in concepts and syntax and architectural ideas the way a person learns a foreign language by immersion rather than instruction.</p>
+            <p>I had no formal qualifications in software engineering. No degree in computer science or mathematics or finance. My entire programming experience at that point consisted of fragments absorbed during the dead hours of a working week that left no room for structured learning. What I had was a problem that would not leave me alone, a phone with an internet connection, and the particular stubbornness of a man who has already lost everything the conventional way and has nothing left to lose by trying something unconventional.</p>
+            <p>The plan was simple in the way that all plans are simple before they encounter reality. Build a data pipeline. Build a signal engine. Build an execution layer. Automate the thing. Let it run while I drove.</p>
+            <p>I started in May 2025. On my phone. In the cab. Between drops.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section class="chapter" id="ch3">
+        <div class="ch-label">// Part Three</div>
+        <h2 class="ch-title">BUILDING IN THE GAPS <span class="dim">// May 2025</span></h2>
+        <div class="prose">
+            <p>The majority of the code that would eventually become a four thousand line autonomous trading system was written on a mobile phone. Not a tablet. Not a laptop balanced on the passenger seat. A phone, held in one hand during fifteen minute breaks at service stations, thirty minute waits in loading bays, and the occasional hour of rest in a parking area when the driving hours regulations demanded a stop.</p>
+            <p>This constraint shaped everything. You cannot write sloppy code on a phone because the screen is too small to hold complexity. You cannot debug lazily because scrolling through thousands of lines on a five inch display is physically painful. Every function had to be tight. Every variable name had to be clear. Every architectural decision had to be simple enough to hold in working memory across multiple interrupted sessions because there was never a guarantee of more than fifteen minutes of continuous focus.</p>
+            <p>The first component I built was FreedomCore Streamline. A data ingestion engine that pulled live and historical price data from the KuCoin Futures API and stored everything locally in SQLite. This decision, to own the data rather than rely on broker calculations, would prove foundational. Every backtesting insight, every machine learning experiment, every validation exercise over the following twelve months drew from this same local database. The principle was architectural, not sentimental: if you do not control your data, you do not control your system.</p>
+            <p>I needed help. Not the kind of help that comes from hiring a developer, because I could not afford one. The kind of help that comes from explaining what you want to build to something intelligent enough to translate your thinking into working code. Claude, built by Anthropic, became my architect. An AI that could hold complex technical discussions, review code, design system architecture, spot bugs, and produce the kind of precise engineering language that turned my service station insights into deployable specifications.</p>
+            <p>A second AI agent, a Gemini model, ran on my VPS and handled direct implementation. It took the blueprints Claude produced and turned them into running code on the server. The division of labour was deliberate and it remains in place to this day: Claude designs and audits, Gemini implements, I make every final deployment decision myself.</p>
+            <p>This arrangement, a tanker driver directing two AI agents from my phone to build autonomous trading infrastructure on a rented Linux server, sounds like it should not work. It worked. Not smoothly. Not without setbacks that would fill their own chapter. But it worked.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section class="chapter" id="ch4">
+        <div class="ch-label">// Part Four</div>
+        <h2 class="ch-title">THE FIRST EDGE <span class="dim">// Summer 2025</span></h2>
+        <div class="prose">
+            <p>FreedomPath V1 emerged in May 2025. Rule based at every level. Entry signals combined RSI and Bollinger Bands with a basic confluence requirement. If enough indicators aligned, a trade fired. If they did not, nothing happened. Simple. Mechanical. Honest.</p>
+            <p>The baseline win rate was approximately thirty percent.</p>
+            <p>To a professional quantitative trader, thirty percent looks like a coin flip with transaction costs layered on top. To me it was a starting point. A truthful number, uncontaminated by wishful thinking. Every modification I made from that point forward was measured against it. Did the change improve on thirty percent? By how much? Over how many trades? The discipline of measurement against a known baseline, rather than against a hoped for outcome, would become one of the project's defining characteristics.</p>
+            <p>By July, version six of the core system had added refined entry and exit logic, improved risk management, and the first Telegram alerts that let me monitor trades from my phone while driving. Win rates crept toward thirty five to forty percent. Incremental. Honest. Still not good enough.</p>
+        </div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">THE KELTNER REVELATION</h2>
+        <div class="prose">
+            <p>The first major performance jump came from integrating Keltner Channels alongside the existing Bollinger Band framework. When Bollinger Bands contract inside Keltner Channels, the market is in a state of compression. Energy is accumulating. The system is coiling like a spring. When Bollinger Bands subsequently expand back past the Keltner boundaries, that compression has released. A directional move is underway. John Carter formalised this relationship as the TTM Squeeze, and the first bar after compression releases is the <strong>squeeze fire</strong>.</p>
+            <p>This squeeze dynamic added approximately ten percentage points to the win rate by itself. By late summer the system was operating around forty four percent. More importantly, the nature of the trades was changing. The system was selecting moves with genuine momentum behind them rather than entering on noise and hoping.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 5: LIQUIDITY -->
+    <section class="chapter" id="ch5">
+        <div class="ch-label">// Part Five</div>
+        <h2 class="ch-title">THE LIQUIDITY PIVOT <span class="dim">// Summer 2025</span></h2>
+        <div class="prose">
+            <p>The shift came from studying how institutional order flow and liquidity structure actually drive price. Price does not move randomly. It moves to collect liquidity from retail traders before reversing. Stop losses cluster at obvious levels: previous day highs and lows, previous week highs and lows, previous month highs and lows. Institutions need to absorb large orders. Retail stop losses are where those orders are. The sweep and reverse pattern is not a coincidence. It is a mechanism.</p>
+            <p>One hundred and seventeen thousand sweeps were backtested across four years and seventy one symbols. Long sweeps at previous week lows with structural stops below the previous month low produced five point two four percent expectancy with seventy one percent win rate. Short sweeps, across every configuration tested, produced negative expectancy. The system stopped taking them.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 6: SQUEEZE + RATCHET -->
+    <section class="chapter" id="ch6">
+        <div class="ch-label">// Part Six</div>
+        <h2 class="ch-title">THE SQUEEZE FIRE AND THE RATCHET <span class="dim">// Autumn 2025</span></h2>
+        <div class="prose">
+            <p>The synthesis between the TTM Squeeze and the liquidity sweep was natural. A sweep at a previous week low immediately followed by a squeeze fire in the bullish direction was not a coincidence. The sweep had gathered the liquidity. The squeeze had concentrated the energy. The fire was the release.</p>
+            <p>The ratchet exit system completed the trade management architecture. Rather than a traditional trailing stop, the ratchet locked in profits at specific activation and lock levels. When a trade moved 0.35% raw in the favourable direction, the ratchet activated. The stop was brought up to lock in a minimum gain that cleared transaction fees. Thereafter, for every additional 0.50% raw step, the ratchet locked fifty five percent of that step as guaranteed profit.</p>
+            <p><strong>The ratchet only moved in the favourable direction. It never retreated.</strong> Once activated, every trade that triggered it closed with a profit. One hundred percent of the time. The system became mechanically incapable of turning a winning trade into a losing trade once the ratchet had engaged.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 7: TITAN + CRISIS -->
+    <section class="chapter" id="ch7">
+        <div class="ch-label">// Part Seven</div>
+        <h2 class="ch-title">TITAN AND THE CRISIS <span class="dim">// October 2025</span></h2>
+        <div class="prose">
+            <p>The TITAN era represented a philosophical shift. I was no longer trying to catch price movements. I was trying to understand market structure the way institutional players understand it.</p>
+            <p>The first major TITAN contribution was the eight hour ADX gate. The idea was simple: if the eight hour timeframe lacked trend conviction, no amount of fifteen minute signal alignment was going to produce a clean trade. The higher timeframe had to confirm.</p>
+            <p>The P20 swing structure detection system was the second innovation. The core principle was positional: a bull trade needed to occur within two ATR of significant swing support. Trading against structural levels, even in a trending market, was how retail traders handed their money to institutions. The P20 system codified this insight into a hard filter.</p>
+            <p>November 26th, 2025. Bull mode win rate jumped from approximately forty three percent to <strong>fifty five point four percent</strong> simply by enforcing P20 structure requirements. The system was no longer just identifying direction. It was identifying direction at the right place.</p>
+            <p>Then it went live with &pound;500 of real capital. The first week, the market pumped and the account doubled. A six-hour dump on a Friday night produced +120% in a single session. &pound;2,200 by Saturday. &pound;3,000 by Monday morning. Then the market changed. Weeks of relentless chop. Across 111 trades, the win rate collapsed to <strong>31.5%</strong>. The account bled from &pound;3,000 all the way down to <strong>&pound;55</strong>.</p>
+            <p>Forensic analysis identified four simultaneous bugs: P20 gate bypass, cooldown only applying to wins, stop losses not triggering correctly, and micro cap symbols dragging aggregate performance to 28% win rate. Beneath the bugs was a more fundamental problem: the 4-hour ADX directional filter was lagging badly in whipsaw conditions.</p>
+        </div>
+        <div class="warning">
+            <p>Live test: 31.5% win rate across 111 trades. Account: &pound;500 &rarr; &pound;3,000 &rarr; &pound;55. Trend engine obliterated by choppy market conditions. Four simultaneous bugs confirmed. System paused for full architectural review.</p>
+        </div>
+        <div class="prose">
+            <p>The response was radical simplification. Strip out the ML gates. Remove the FVG requirements. Remove the complex tier sizing. Move to pure squeeze fire detection as the primary signal. The account recovered. The architecture was rebuilt. The win rate returned. But October left its mark on every subsequent design decision. The system today carries the specific scar tissue of every failure that preceded it.</p>
+            <p>Most people who blow a trading account walk away. This one produced a technical specification.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch8">
+        <div class="ch-label">// Part Eight</div>
+        <h2 class="ch-title">THE MACHINE LEARNING DISASTER <span class="dim">// November 2025</span></h2>
+        <div class="prose">
+            <p>The logic seemed sound. The system had a forty nine percent win rate from rule based filtering. Machine learning should push this higher by finding non linear relationships between features that simple threshold rules could not express. I had eighteen thousand historical trades in the database. That was training data.</p>
+            <p>The result was ML Gate V3. Then V4. Then V5. Then V6.</p>
+            <p><strong>All of them were broken.</strong></p>
+            <p>The gates were failing silently. Trade intent count was zero. Signals were being generated, meeting all the rule based criteria, and then disappearing somewhere inside the ML wrapper without explanation. The exec() scope issues were a nightmare.</p>
+            <p>This cost me four days. Not just four days of development time. Four days of Claude AI subscription allowance, burned through trying to fix something that kept breaking in new and interesting ways. When my access ran out I was left sitting with four broken ML implementations, a working baseline I could no longer touch without risking further damage, and a weekend of enforced silence to think about what had gone wrong.</p>
+            <p>The conclusion I reached over those two days of reflection was simple and correct: burn it all down. Return to the proven baseline. Fix the foundation before adding the roof.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch9">
+        <div class="ch-label">// Part Nine</div>
+        <h2 class="ch-title">THE DECEMBER BREAKTHROUGH <span class="dim">// December 2025</span></h2>
+        <div class="prose">
+            <p>When Claude came back online on December 9th, the tone was different. The decision to scrap the broken gates had been made. The only question was what to build instead.</p>
+            <p>The answer arrived from an unexpected direction. The Relative Level Filter had been part of the system since TITAN. It measured where current price sat within a lookback range, expressed as a percentile. The lookback had been hardcoded at one hundred and twenty bars, roughly thirty hours of fifteen minute data. Scaling to thousands of bars made the backtest impossibly slow. Gemini solved this overnight with an elegant fix: precompute the rolling maximum and minimum once at data load time, then do a constant time lookup per bar. Thirty to thirty eight times faster.</p>
+            <p>I spent the morning running systematic tests. RLF at one hundred and twenty bars: fifty one point three percent win rate. RLF at one thousand: fifty one point seven. <strong>RLF at four thousand two hundred and fifty: fifty five point two percent.</strong></p>
+            <p>That last number was not a marginal improvement. It was a step change. In bull mode specifically, the RLF 4250 was producing sixty two point nine percent win rate. The system was looking at whether price sat near support or resistance at the scale of institutional monthly structure.</p>
+        </div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">THE GATE INVERSION</h2>
+        <div class="prose">
+            <p>December 16th produced the most counterintuitive result of the entire project.</p>
+            <p>NEROUN, the signal capture system, had accumulated every signal that ever fired across the full four point eight year dataset. Five hundred and thirty three thousand signals. When I analysed the outcomes, the result was devastating.</p>
+            <p>Trades that had passed the MERLIN gates were winning <strong>forty five percent</strong> of the time. Trades that the gates had blocked were winning <strong>fifty two percent</strong> of the time.</p>
+            <p>The gates were not filtering for quality. They were filtering against it. Seven percentage points of edge was being systematically discarded by a system that was supposed to improve performance.</p>
+            <p>The response was immediate: turn the gates off. All of them. Strip the system back to raw signal generation and train a clean model on the full unfiltered universe. TRENDHUNTER, an XGBoost classifier trained on five hundred and thirty three thousand signals with no manual gates applied, produced sixty six point nine percent win rate at a zero point six five probability threshold. At zero point seven zero, it reached <strong>seventy two point nine percent</strong>.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch10">
+        <div class="ch-label">// Part Ten</div>
+        <h2 class="ch-title">THE DURATION REVELATION <span class="dim">// December 2025</span></h2>
+        <div class="prose">
+            <p>Of all the discoveries made across twelve months of development, one stands above the rest as the most universally true and the most practically important.</p>
+            <p>Trades lasting under two hours had a twenty eight percent win rate. Two to four hours, forty two percent. Four to eight hours, fifty seven percent. <strong>Eight hours and above, sixty six point seven percent.</strong></p>
+            <p>This was not a subtle gradient. It was a cliff edge. Short duration trades were what happened when the system entered on a false signal, got stopped out by a wick, or found itself whipsawed by low conviction structure. Long duration trades were what happened when the system entered at the right place with real momentum behind it.</p>
+            <p>Duration was not a consequence of good entries. It was a diagnostic of them. This finding survived every subsequent pivot. Every architectural rebuild. Every philosophical shift. <strong>Short trades are noise. Long trades are signal.</strong> The entire architecture that exists today is built in service of this one truth.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch11">
+        <div class="ch-label">// Part Eleven</div>
+        <h2 class="ch-title">THE BUG THAT REWROTE HISTORY <span class="dim">// February 2026</span></h2>
+        <div class="prose">
+            <p>Midway through February 2026, a discovery was made that retroactively invalidated almost every backtest result produced before that point.</p>
+            <p>The backtester had been checking the high price before the low price within each fifteen minute bar. In a fifteen minute candle, the data records the open, high, low, and close. But within the bar, the actual sequence of prices is unknown. The backtester had been assuming, on every single bar, that the high was reached first. For take profit logic, this created fictitious trade outcomes.</p>
+            <p>The fix was to check the low before the high for long trades, and the high before the low for short trades. Conservative rather than optimistic. Worst case rather than best case. All results from before the fix were flagged as potentially unreliable.</p>
+            <p>The corrected methodology produced the validated baseline that all current performance claims are drawn from. The bug was painful to discover. But discovering it was profoundly better than deploying capital under results that could not survive contact with real market mechanics.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch12">
+        <div class="ch-label">// Part Twelve</div>
+        <h2 class="ch-title">MAVERICK <span class="dim">// March 2026</span></h2>
+        <div class="prose">
+            <p>By March 2026 the system had reached MAVERICK V13 Sovereign. By April 17 it had pivoted again. The 4 engine V13 with thermodynamic regime routing was retired. The architecture had outgrown it.</p>
+            <p>The data layer is Streamline. Nearly four thousand lines of Python pulling live market data via WebSocket across eighty eight perpetual futures contracts, computing ninety seven technical indicators per symbol per fifteen minute bar, plus a 1 minute structural layer (zigzag pivots, OTE bands, micro break of structure flags, path straightness index) baked into the data pipe so champions do not waste compute reinventing them. Single source of truth at 1.3 gigabytes.</p>
+            <p>The execution layer is <strong>GOLIATH_GAMMA_V2, crowned April 21, 2026. It utilizes the Unified Engine architecture where backtest and live trading run the same code path. OBS watches every 1-minute bar across 88 symbols for institutional order blocks (the last opposing candle before a confirmed break of market structure), enters on retest of those zones with quality validation and premium/discount zone filtering, and falls back to Laminar Ignition on extreme momentum alignment. There is no router. There is no regime classifier. The strategy IS the system.</p>
+        </div>
+        <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">THE SELF EVOLVING SWARM</h2>
+        <div class="prose">
+            <p>The third layer is Trinity Core, where MAVERICK becomes something that no individual trader, regardless of skill or resources, has built before.</p>
+            <p>The organism swarm is a multi-agent system powered by Gemini 3.1 with a Claude 4.7 callback. Every 48 hours it generates 50 DNA mutations across God-Mode Autonomy (Paradigm G). Each generation is assigned one paradigm by the rule <code>gen &#37; 11</code>, preventing the LLM from locking onto any single recipe. Candidates may also invent novel composite features at top-level (<code>feature_*</code>); after a champion crowns, those are AST-extracted and appended to the permanent library. Each candidate is backtested against 7 days of real market data across 88 symbols under <strong>Honest Physics</strong>: a mandatory T-60 delay on every signal lookup so champions cannot read into the future of the bar they are about to trade. Scored by V8 Calmar (risk-adjusted dollar return) with V7 Sortino logged in parallel for audit.</p>
+            <p>Surviving candidates pass through the Champion Validator before they touch live capital. The validator catches lookahead bias, idempotency failures, micro stops below the 1.2 ATR floor, broken contract returns, and silent precompute failures. A winner must strictly beat the reigning champion on the same window. If nothing wins, the throne is held. The decision not to evolve is itself intelligence.</p>
+            <p>The Sovereign Live Adapter ties data, evolution, and execution together. A cache manager auto refreshes the champion's in memory state every 5 minutes so live execution mirrors the backtest exactly. Without it, champions go silent in production within fifteen minutes of deploy because their cache ages out. With it, what scores in evaluation is what fires on the exchange.</p>
+            <p>The system's competitive advantage is not speed or capital. It is that MAVERICK writes the logic rather than tuning weights, and validates the logic under physics that match real exchange execution before risking a pound.</p>
+        </div>
+    </section>
+
+    <section class="chapter" id="ch13">
+        <div class="ch-label">// Part Thirteen</div>
+        <h2 class="ch-title">WHAT IT ACTUALLY COST</h2>
+        <div class="prose">
+            <p>The honest accounting matters. When people present algorithmic trading as a path to passive income, they describe a destination without describing the road. The road is long, expensive, and frequently demoralising.</p>
+            <p>Twelve months of development. Seventy hour working weeks continuing throughout, because the mortgage does not pause while you build a trading system. Three children who needed their dad present even when the project was calling. Approximately three hundred pounds per month on AI subscriptions. VPS hosting at forty pounds per month. Exchange accounts, API access, data infrastructure. Trading capital lost during testing, including a complete account wipe in October 2025.</p>
+            <p>The total financial cost was somewhere between eight and ten thousand pounds. The total hours invested exceeded fifteen hundred. These numbers do not include the invisible costs: the weekends spent debugging instead of being present, the mental energy consumed by technical problems when the mind should have been resting, the accumulated sleep debt from late nights after twelve hour driving shifts.</p>
+            <p>I am not writing this for sympathy. I made these choices willingly and I would make them again. I am writing it because the honest accounting is part of the story. The losses are part of the story. The wipes are part of the story. The bugs and the crises and the months where nothing worked are as much a part of what this system is as the sessions where it performs beautifully.</p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 15 -->
+    <section class="chapter" id="ch14">
+        <div class="ch-label">// Part Fourteen</div>
+        <h2 class="ch-title">THE MACHINE</h2>
+        <div class="prose">
+            <p>The original V13 architecture was built around four major components running continuously on a Linux VPS.</p>
+            <p>V12 Colossus Streamline handled data ingestion. Every fifteen minutes it processed fresh market data across eighty-eight perpetual futures contracts from KuCoin and computed the full feature matrix: squeeze state, squeeze fire detection, Bollinger and Keltner Channel relationships, ADX across eight different lookback periods, VWAP, compression ratios, multi-timeframe swing levels, previous day, week, and month highs and lows.</p>
+            <p>MAVERICK V13 was the execution engine. It queried Streamline's output, evaluated conditions, and when all criteria were met, executed trades via the KuCoin API. The ratchet logic ran continuously against all open positions.</p>
+            <p>The mobile web dashboard provided visual monitoring from the phone. Equity curve, open positions, recent trades, regime state, squeeze monitor, trade journal. Everything I needed to see from the cab of a tanker at a motorway services.</p>
+            <p>Telegram alerts narrated every action in real time. Every entry, every exit, every ratchet activation, every hard stop. The system documented its own behaviour in plain English.</p>
+            <p>The architecture satisfied the original vision exactly. It ran twenty-four hours a day, seven days a week, without requiring a human to make decisions. It sent alerts rather than demanding attention. It never got tired. It never gets emotional. It never revenge trades after a loss. <strong>It was the thing I sat alone on a motorway at three in the morning thinking about, brought fully into existence.</strong></p>
+        </div>
+    </section>
+
+    <!-- CHAPTER 16 -->
+    <section class="chapter" id="ch15">
+        <div class="ch-label">// Part Fifteen</div>
+        <h2 class="ch-title">THE HARD TRUTHS</h2>
+        <div class="prose">
+            <p>The system is technically sophisticated, architecturally novel, and demonstrably capable of identifying and executing trades with a validated edge.</p>
+            <p>The validation discipline is deliberate. My operating principle, applied rigorously and without exception, is that no configuration conclusion is meaningful below approximately one hundred trades. No capital is scaled until the trade history supports it. The system must prove itself in live conditions, not in backtests, before it earns the right to manage real money.</p>
+            <p>The hard truths used to be these: Genesis was fundamentally broken at VWAP equilibrium and had been disabled. Chop and Trap engines bled capital in trending macros. The Swarm sometimes optimised so defensively it produced zero trades for hours. Regime misclassification was the dominant failure mode.</p>
+            <p>April 16 was the day those problems were resolved by deleting their cause. The 4 engine architecture was retired. Genesis was annihilated at the router. Chop and Trap were hard disabled. The H2H Sovereign Hybrid replaced regime classification with two evolved strategies running in parallel. April 17 collapsed even that into a single unified champion: Geometric Velocity Predator V5.0, which owns its own routing, sizing, leverage, and exit logic. The 4 engines now live in the swarm's Knowledge Base as Sacred Geometry, reference material the LLM can study but is no longer bound by. The same week, the Champion Validator was built to catch the most insidious failure mode of all: lookahead bias in the backtest. A champion called the Fibonacci Extension Vortex was caught scoring a fraudulent 38,153 by buying the open of the same bar it had already cached the close of. It was discredited and the eval was rebuilt with mandatory Honest Physics.</p>
+            <p>These were honest engineering problems and they were honestly fixed. The system that trades today is not the system that traded yesterday. It evolved. It learned what killed it. It built something new and validated it under physics that match the exchange.</p>
+        </div>
+    </section>
+
+    <!-- EPILOGUE -->
+    <section class="chapter" id="epilogue">
+        <div class="ch-label">// Epilogue</div>
+        <h2 class="ch-title">WHAT FREEDOM LOOKS LIKE</h2>
+        <div class="prose">
+            <p>The goal has always been stated the same way: financial freedom. Not retirement. Not escape from responsibility. Freedom. The specific kind of freedom that comes from having a system working on your behalf while you work on someone else's behalf. Two income streams. One requiring human presence, one not.</p>
+            <p>The project is not complete. The real machine learning, as it turned out, is the swarm itself. An LLM reading its own failures, diagnosing the physics of each loss, and writing new Python logic that prevents the same failure from recurring. That is learning. Not statistical curve fitting on historical data, but genuine adaptive intelligence that evolves its reasoning in response to what actually happened.</p>
+            <p>But the foundation is solid and proven. The core edge, the thing that makes the system worth building at all, is documented, validated, and running live. The squeeze fire works. The ratchet works. The liquidity sweep methodology works. The self evolving swarm writes novel logic, evaluates it, and deploys the winner automatically. The deployment gap is closed.</p>
+            <p>What started as me trying to stop losing money manually trading has become something considerably more ambitious. A fully autonomous trading system with a validated edge, a coherent theory of why that edge exists, a self evolving intelligence layer that adapts to changing markets, and a clear roadmap for how to extend it.</p>
+            <p>Somewhere on a motorway in the north of England, the man who built all of this is still driving. That man is me. For now.</p>
+        </div>
+        <div class="callout" style="background:linear-gradient(135deg,rgba(62,168,245,0.06),rgba(185,197,255,0.04));border:1px solid rgba(62,168,245,0.22);border-radius:14px;padding:22px 24px;margin-top:32px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">🧬 Keep going - the technical side</div>
+            <p style="margin:0 0 14px;color:var(--text);font-size:0.95rem;line-height:1.6;">Everything you just read from the human angle, now described by the engineer angle. Full engine specifications. Every indicator parameter. Risk engine tables. Streamline pipeline. The build that earns the story.</p>
+            <a href="/pages/architecture.html" style="display:inline-block;padding:12px 24px;background:var(--accent);color:#000;font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:2px;font-size:0.72rem;text-transform:uppercase;text-decoration:none;border-radius:10px;">Read the Architecture &rarr;</a>
+        </div>
+    </section>
+
+    <section class="chapter" style="border-top:none;padding-top:0;">
+        <div class="prose" style="font-size:0.75rem;opacity:0.5;text-align:center;">
+            <p>Written with Claude. April 2026.<br>
+            System: MAVERICK V13 Sovereign. Developer: Maverick @freedomcoreai.<br>
+            <a href="https://freedomcore.io" style="color:var(--accent);">freedomcore.io</a></p>
+        </div>
+    </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" class="back-to-top">Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
+    </footer>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/tracker.js" defer></script>
+</body>
+</html>

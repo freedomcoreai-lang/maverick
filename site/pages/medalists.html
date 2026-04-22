@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <meta name="description" content="The Medalists - top 4 evolved trading champions in MAVERICK's Hall of Fame, ranked Platinum through Bronze with full strategy breakdowns.">
+    <title>The Medalists | MAVERICK Hall of Fame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        /* Medalist page - podium aesthetic */
+        .medal-hero {
+            text-align: center;
+            padding: 80px 24px 40px;
+            position: relative;
+        }
+        .medal-hero h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffd700 0%, #c0c0c0 50%, #cd7f32 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .medal-hero p {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 680px;
+            margin: 0 auto 8px;
+            line-height: 1.6;
+        }
+        .medal-hero .meta-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        .medal-hero .meta-line .live-dot-mini {
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px var(--green);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Medal grid */
+        .medal-grid {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .medal-card {
+            position: relative;
+            padding: 28px 24px;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            background: var(--card);
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .medal-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        .medal-card.platinum::before { background: linear-gradient(90deg, #e8e8ff, #b9c5ff, #8a9fff); }
+        .medal-card.gold::before     { background: linear-gradient(90deg, #ffd700, #ffb700, #ff9700); }
+        .medal-card.silver::before   { background: linear-gradient(90deg, #f0f0f0, #c0c0c0, #999999); }
+        .medal-card.bronze::before   { background: linear-gradient(90deg, #ffaa6b, #cd7f32, #a05a1c); }
+
+        .medal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+        .medal-card.platinum:hover { border-color: #b9c5ff; }
+        .medal-card.gold:hover     { border-color: #ffd700; }
+        .medal-card.silver:hover   { border-color: #c0c0c0; }
+        .medal-card.bronze:hover   { border-color: #cd7f32; }
+
+        .medal-emoji {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+        .medal-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .medal-card.platinum .medal-label { color: #b9c5ff; }
+        .medal-card.platinum .medal-emoji { filter: brightness(1.2) grayscale(1) drop-shadow(0 0 10px rgba(185, 197, 255, 0.5)); }
+        .medal-card.gold .medal-label     { color: #ffd700; }
+        .medal-card.silver .medal-label   { color: #c0c0c0; }
+        .medal-card.bronze .medal-label   { color: #cd7f32; }
+
+        .medal-display-name {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+        }
+        .medal-codename {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+        }
+        .medal-tagline {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.55;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 2px solid var(--accent);
+            opacity: 0.92;
+        }
+
+        .medal-score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 14px;
+        }
+        [data-theme="light"] .medal-score-row {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .medal-score-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .medal-score-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        .medal-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .medal-meta-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--blue-dim);
+            color: var(--accent);
+            border: 1px solid rgba(62, 168, 245, 0.2);
+        }
+        .medal-meta-tag.bull { color: var(--green); background: var(--green-dim); border-color: rgba(78, 205, 196, 0.2); }
+        .medal-meta-tag.bear { color: var(--red); background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
+
+        .medal-thesis-preview {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+        .medal-cta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .medal-cta::after {
+            content: ' →';
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .medal-card:hover .medal-cta::after {
+            transform: translateX(4px);
+        }
+
+        /* Detail modal - full immersive view of a single medalist */
+        .medal-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg);
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .medal-modal.active { display: block; }
+
+        .medal-modal-close {
+            position: fixed;
+            top: 16px; right: 16px;
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            z-index: 2010;
+            transition: all 0.3s;
+        }
+        .medal-modal-close:hover {
+            background: var(--red);
+            color: #fff;
+            border-color: var(--red);
+        }
+
+        .medal-modal-content {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 60px 24px 60px;
+        }
+        .medal-modal-header {
+            text-align: center;
+            padding: 30px 0 40px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        .medal-modal-emoji {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+        .medal-modal-header.platinum .medal-modal-emoji {
+            filter: brightness(1.25) grayscale(1) drop-shadow(0 0 14px rgba(185, 197, 255, 0.55));
+        }
+        .medal-modal-header.platinum .medal-modal-rank  { color: #b9c5ff; }
+        .medal-modal-header.gold .medal-modal-rank      { color: #ffd700; }
+        .medal-modal-header.silver .medal-modal-rank    { color: #c0c0c0; }
+        .medal-modal-header.bronze .medal-modal-rank    { color: #cd7f32; }
+        .medal-modal-rank {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .medal-modal-title {
+            font-size: clamp(1.6rem, 5vw, 2.4rem);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .medal-modal-version {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .medal-modal-tagline {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.6;
+            max-width: 720px;
+            margin: 24px auto 0;
+            padding: 16px 24px;
+            border-left: 3px solid var(--accent);
+            background: var(--card);
+            border-radius: 0 8px 8px 0;
+            text-align: left;
+        }
+        .medal-origin-story {
+            font-size: 1rem;
+            color: var(--text);
+            line-height: 1.85;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.04), rgba(62, 168, 245, 0.04));
+            border-radius: 12px;
+            border-left: 4px solid var(--green);
+        }
+        [data-theme="light"] .medal-origin-story {
+            background: linear-gradient(135deg, rgba(43, 168, 158, 0.06), rgba(37, 128, 200, 0.06));
+        }
+
+        .medal-modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .medal-stat {
+            padding: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .medal-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .medal-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .medal-section {
+            margin-bottom: 40px;
+        }
+        .medal-section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .medal-thesis-full {
+            font-size: 1rem;
+            color: var(--text);
+            line-height: 1.9;
+            white-space: pre-wrap;
+            padding: 24px;
+            background: var(--card);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        .medal-code-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 1.7;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            color: #b3e5fc;
+            border-radius: 10px;
+            border-left: 3px solid var(--green);
+            white-space: pre-wrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        [data-theme="light"] .medal-code-block {
+            background: #f8fafc;
+            color: #1e293b;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--green);
+        }
+
+        .medal-feature-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .medal-feature-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 6px 12px;
+            background: var(--blue-dim);
+            color: var(--accent);
+            border: 1px solid rgba(62, 168, 245, 0.2);
+            border-radius: 16px;
+        }
+        .medal-feature-pill.empty {
+            color: var(--text-dim);
+            background: transparent;
+            border-style: dashed;
+        }
+
+        .medal-dna-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .medal-dna-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+        }
+        .medal-dna-key { color: var(--text-dim); }
+        .medal-dna-val { color: var(--green); font-weight: 700; }
+
+        .medal-empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--text-dim);
+        }
+        .medal-empty-state h2 { font-size: 1.4rem; margin-bottom: 12px; color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV (matches index) -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+    
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN -->
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="medal-hero">
+        <h1>The Medalists</h1>
+        <p>The four highest-scoring strategies our autonomous swarm has ever evolved. Ranked Platinum through Bronze by their best six-day backtest score. The Platinum holder is sometimes the live champion, sometimes a deposed monarch awaiting rebirth.</p>
+        <div class="meta-line"><span class="live-dot-mini"></span><span id="medal-live-meta">Loading podium…</span></div>
+    </section>
+
+    <!-- MEDAL GRID -->
+    <section class="medal-grid" id="medal-grid">
+        <div class="medal-empty-state">
+            <h2>Loading the Hall of Fame…</h2>
+            <p>Reading champion files from the swarm's evolutionary memory.</p>
+        </div>
+    </section>
+
+    <!-- DETAIL MODAL -->
+    <div class="medal-modal" id="medal-modal">
+        <button class="medal-modal-close" id="medal-modal-close">CLOSE [ESC]</button>
+        <div class="medal-modal-content" id="medal-modal-content">
+            <!-- populated dynamically -->
+        </div>
+    </div>
+
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/medalists.js"></script>
+</body>
+</html>

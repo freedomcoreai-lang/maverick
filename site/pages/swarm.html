@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>LLM Swarm Terminals | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=20260422f">
+    <style>
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin-top: 40px;
+            padding-left: 140px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 120px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), var(--green), var(--accent));
+            opacity: 0.4;
+        }
+        .timeline-item {
+            position: relative;
+            padding: 16px 0 16px 32px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 22px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--green);
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 12px rgba(78, 205, 196, 0.4);
+            z-index: 2;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 27px;
+            width: 32px;
+            height: 1px;
+            background: rgba(78, 205, 196, 0.2);
+        }
+        .timeline-time {
+            position: absolute;
+            left: -140px;
+            top: 16px;
+            width: 110px;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        .timeline-agent {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .timeline-repeat {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.5px;
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+
+        /* Agent feed tabs */
+        .agent-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 32px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            flex-wrap: nowrap;
+        }
+        .agent-tabs::-webkit-scrollbar { display: none; }
+        .agent-tab {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .agent-tab.active {
+            border-color: var(--green);
+            color: var(--green);
+            background: var(--green-dim);
+        }
+        .agent-tab:hover { border-color: var(--green); }
+
+        .agent-countdown {
+            font-size: 0.5rem;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+            font-weight: 400;
+            color: var(--accent) !important;
+        }
+
+        /* Agent feed panels */
+        .agent-panel {
+            display: none;
+            margin-top: 16px;
+        }
+        .agent-panel.active { display: block; }
+
+        /* Full Page Immersive Terminal - theme-aware */
+        .terminal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-primary, #000);
+            z-index: 2000;
+            flex-direction: column;
+            padding: 0;
+            animation: terminal-zoom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        [data-theme="light"] .terminal-overlay { background: #f5f7fa; }
+        .terminal-overlay.active { display: flex; }
+
+        @keyframes terminal-zoom {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .terminal-overlay-header {
+            background: var(--bg-secondary, #0a0a0f);
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        [data-theme="light"] .terminal-overlay-header {
+            background: #ffffff;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.4);
+        }
+
+        .terminal-overlay-body {
+            flex: 1;
+            padding: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.8;
+            color: var(--green);
+            background: var(--bg-primary, #000);
+            overflow-y: auto;
+            white-space: pre-wrap;
+            position: relative;
+        }
+        [data-theme="light"] .terminal-overlay-body {
+            background: #ffffff;
+            color: #1d6fd8;
+        }
+        /* Scanlines removed - they were absolute-positioned inside a scroll container
+           which made the top of the terminal look blurred while content below the fold
+           rendered clean. The CRT effect wasn't worth the readability hit. */
+
+        .terminal-close-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .terminal-close-btn:hover { background: #ef4444; color: #fff; }
+
+        .fullscreen-trigger {
+            background: none; border: 1px solid var(--border);
+            color: var(--text-dim); padding: 4px 8px; border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+            cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .fullscreen-trigger:hover { border-color: var(--green); color: var(--green); }
+
+        .agent-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .agent-card:hover { border-color: var(--green); }
+        [data-theme="light"] .agent-card { background: rgba(6, 10, 16, 0.04); }
+
+        .agent-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+        }
+        .agent-card-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .agent-card-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            margin-left: 8px;
+        }
+        .agent-card-live {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .agent-card-body {
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.8;
+            color: var(--green);
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        [data-theme="light"] .agent-card-body { color: #1a7a72; }
+        .agent-card-body::-webkit-scrollbar { width: 6px; }
+        .agent-card-body::-webkit-scrollbar-track { background: transparent; }
+        .agent-card-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        .back-bar {
+            position: relative; z-index: 2;
+            padding: 10px 24px;
+            background: rgba(62,168,245,0.03);
+            border-bottom: 1px solid var(--border);
+            margin-top: 56px;
+        }
+        .back-bar a {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            color: var(--accent); text-decoration: none; letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+        .back-bar a:hover { opacity: 0.7; }
+
+        /* Cycle labels */
+        .cycle-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: 32px;
+            margin-bottom: 8px;
+            padding-left: 32px;
+        }
+        .cycle-label:first-of-type { margin-top: 0; }
+
+        /* Divider inside timeline */
+        .timeline-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 20px 0;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 768px) {
+            .timeline {
+                padding-left: 24px;
+            }
+            .timeline::before {
+                left: 4px;
+            }
+            .timeline-item {
+                padding-left: 24px;
+            }
+            .timeline-item::before {
+                left: -1px;
+            }
+            .timeline-item::after {
+                left: 4px;
+                width: 16px;
+            }
+            .timeline-time {
+                position: relative;
+                left: 0;
+                top: 0;
+                width: auto;
+                text-align: left;
+                margin-bottom: 4px;
+            }
+            .agent-tabs {
+                gap: 6px;
+            }
+            .agent-tab {
+                padding: 6px 12px;
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+    <div class="grid-bg"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-center">
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/signals.html">Signals</a>
+            <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/swarm.html">Terminals</a>
+            <a href="/pages/evolution.html">Evolution</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Architecture</a>
+            <a href="/pages/news.html">News</a>
+            <a href="/pages/about.html">About</a>
+            <a href="/pages/access.html" style="color:#ffd700; font-weight:800;">Access &rarr;</a>
+        </div>
+        <div class="nav-right">
+            <div class="ssl-badge" title="SSL Certificate Verified">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                <span>SSL SECURED</span>
+            </div>
+            <div class="ssl-popup" id="ssl-popup">
+                <div class="ssl-popup-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd700"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    CONNECTION SECURE
+                </div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">STRICT</span></div>
+                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+                    <a href="/pages/security.html" style="color:#ffd700; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid #ffd700; border-radius:5px;">Learn More &rarr;</a>
+                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                </div>
+            </div>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+        </div>
+    </nav>
+
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+<!-- MOBILE DROPDOWN MENU -->
+    <div class="mobile-dropdown" id="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+        <a href="/pages/evolution.html">Evolution Structure</a>
+        <a href="/pages/signals.html">Signal Feed</a>
+        <a href="/pages/streamline.html">Streamline</a>
+        <a href="/pages/architecture.html">Technical Architecture</a>
+        <a href="/pages/news.html">Market News</a>
+        <a href="/pages/about.html">About / Docs</a>
+        <a href="/pages/access.html">Access Tiers</a>
+        <a href="/#positions">Positions</a>
+        <a href="/#security">Security</a>
+        <a href="/#system">System Status</a>
+    </div>
+
+    <div class="back-bar">
+        <a href="/">&larr; BACK TO FREEDOMCORE</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:60px;margin-top:0;">
+        <div class="hero-glow"></div>
+        <div class="hero-badge">Autonomous AI Terminals</div>
+        <h1 style="font-size:clamp(2.5rem,7vw,5rem);background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;font-weight:900;">LLM SWARM TERMINALS</h1>
+        <div class="hero-sub">Watch artificial intelligence evolve in real time.</div>
+        <p class="hero-desc">
+            7 autonomous AI agents working in concert. Each agent fires on a precise schedule,
+            scanning 88 markets, producing intelligence, and evolving the system DNA.
+            This is the full operational timeline and live feed from every agent in the network.
+        </p>
+    </section>
+
+    <!-- AGENT TIMELINE -->
+    <section>
+        <div class="section-inner">
+            <div class="section-label">// Agent Timeline</div>
+            <h2 class="section-title">When each agent fires.</h2>
+            <p class="section-text">The Swarm operates on a 6-hour intelligence cycle. Four times per day, the full chain executes in sequence. Specialist agents run on their own schedules.</p>
+
+            <div class="timeline">
+                <div class="cycle-label">6-Hour Intelligence Cycle</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">05:50 BST</div>
+                    <div class="timeline-agent">Shadow Matrix</div>
+                    <div class="timeline-desc">Missed alpha scanner. Analyses every signal the system rejected in the past 24 hours, calculates how much profit was left on the table, and feeds the forensics directly to the Swarm for filter correction.</div>
+                    <div class="timeline-repeat">Repeats 11:50 . 17:50 . 23:50</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">06:00 BST</div>
+                    <div class="timeline-agent">Sentinel Broadcaster</div>
+                    <div class="timeline-desc">Full 9-point clinical intelligence broadcast via Claude 4.7. Reads 97 indicators across 88 symbols, dissects every trade from the past 6 hours, analyses crime scenes with full physics snapshots, and produces a comprehensive market observation. 4 broadcasts per day build the intelligence chain the Swarm reads before evolving.</div>
+                    <div class="timeline-repeat">Repeats 12:00 . 18:00 . 00:00</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">06:05 BST</div>
+                    <div class="timeline-agent">Watchdog</div>
+                    <div class="timeline-desc">Account health guardian. Tracks equity drawdown from peak, monitors 20-trade rolling win rate. Push alerts at 10% drawdown. Emergency swarm injection triggered at 15% to force immediate DNA evolution.</div>
+                    <div class="timeline-repeat">Repeats 12:05 . 18:05 . 00:05</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">06:10 BST</div>
+                    <div class="timeline-agent">Performance Snapshot</div>
+                    <div class="timeline-desc">Captures full system state. Win rates, PnL percentages, equity curve data points, open positions with unrealised returns, and engine breakdown across all 4 trading engines.</div>
+                    <div class="timeline-repeat">Repeats 12:10 . 18:10 . 00:10</div>
+                </div>
+
+                <hr class="timeline-divider">
+                <div class="cycle-label">Strategic Agents</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">Every 48h, 2h prior</div>
+                    <div class="timeline-agent">Weekly Digest</div>
+                    <div class="timeline-desc">Compresses the prior days of sentinel broadcasts, trade data, and swarm evolution into a single strategic summary. Identifies recurring failure patterns, regime cycles, and evolution priorities. Runs 2 hours before each swarm cycle so the full intelligence is fresh and ready.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">Every 48h</div>
+                    <div class="timeline-agent">Organism Swarm</div>
+                    <div class="timeline-desc">50-generation evolution cycle. Paradigm rotation is phase-based: gens 1-10 MOMENTUM_SQUEEZE, 11-20 STRUCTURE (Order Block / PDL-PDH Sweep / Break of Structure), 21-30 GEOMETRIC (Wyckoff Spring / Fibonacci OTE), 31-50 HONE_BEST which mutates the top-scoring candidate from phases 1-3. Gemini 3.1 (primary) with 2.5 Flash, Flash-Lite, and Claude 4.7 fallback chain ingests sentinel broadcasts, the weekly digest, the shadow matrix of missed trades, persistent cross-cycle memory, and pure-numpy reference code for every structural primitive. Each paradigm ships a working numpy template the LLM mutates rather than reinventing from scratch. Every generation is backtested against 7 days of real data across 88 symbols with realistic fees, walk-forward validated across 3 rolling 2-day sub-windows. A peer-reviewer statically vets each candidate before evaluation runs; the post-mortem agent writes lessons to persistent memory; a meta-learner rewrites directive rules every 5 generations based on what is and isn't working. Scored by V9 Calmar + WR-50 Floor + TC-264 Ceiling + Drawdown Penalty + Per-Symbol Quality + Walk-Forward Floor. Only a candidate that strictly beats the live system on the same 7-day window takes the throne. If nothing beats it, the system holds. The decision not to evolve is itself intelligence.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LLM INTELLIGENCE -->
+    <section class="section-divider">
+        <div class="section-inner">
+            <div class="section-label">// LLM Intelligence</div>
+            <h2 class="section-title">50 generation evolution. 4 phases. Natural selection.</h2>
+            <p class="section-text">Every cycle runs 50 generations through four phases: 10 MOMENTUM_SQUEEZE, 10 STRUCTURE, 10 GEOMETRIC, then 20 HONE_BEST that mutates the top-scoring candidate from the first three phases. Powered by Gemini 3.1 with a 2.5 Flash, Flash-Lite, and Claude 4.7 fallback chain. It ingests sentinel broadcasts, the strategic digest, the shadow matrix of missed trades, the full indicator physics from every recent win and loss, and persistent cross-cycle memory - past failures, paradigm performance stats, and meta-rules derived from what has gone wrong. Armed with 97 pre-computed indicator columns and a pure-numpy market-structure library (swing detection, BOS/CHoCH, order blocks, FVG consequent encroachment, volume profile, squeeze confluence). Candidates mutate a working paradigm template rather than reinventing from scratch. Successful candidates that compute synthetic indicators on-the-fly generate recommendations to add them to Streamline permanently. Then it evolves.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:32px;">
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--purple);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 1 &middot; MOMENTUM / SQUEEZE</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">F <span style="opacity:0.5;font-size:0.7rem;">SQUEEZE FIRE CONFLUENCE</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Squeeze release as trigger, quality-filtered on 6+ bar coil duration and compression ratio below 0.5, then confluence-gated by ADX &gt; 22 and DI spread direction. Only high-quality coils fire - dud squeezes are suppressed.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--amber);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 2 &middot; STRUCTURE</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">B <span style="opacity:0.5;font-size:0.7rem;">ORDER BLOCK RECLAIM</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Pure numpy detection: last opposing candle before a 1%+ displacement swing. Enter on retest of the OB zone in the correct premium/discount half of the range, with volume expansion &gt; 1.2&times; the 20-bar average.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--amber);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 2 &middot; STRUCTURE</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">C <span style="opacity:0.5;font-size:0.7rem;">PDL/PDH SWEEP RECLAIM</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Previous Day Low or High sweep-and-reclaim using pre-computed calendar pivots. Low-ADX ranging filter (ADX_14 &lt; 25) prevents firing in trends where sweeps rarely reclaim. Ranging regime specialist.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--amber);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 2 &middot; STRUCTURE</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">E <span style="opacity:0.5;font-size:0.7rem;">BREAK OF STRUCTURE</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Close above the last 50-bar swing high (or below swing low) as the BOS trigger, confluence-gated by ADX &gt; 22 and volume expansion &gt; 1.3&times;. Classic trend-continuation entry on confirmed structural break.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--green);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 3 &middot; GEOMETRIC</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">A <span style="opacity:0.5;font-size:0.7rem;">WYCKOFF SPRING</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Price wicks below a 200-bar range low then closes back above it - the classic Wyckoff accumulation spring. Confluence-gated by RSI_14 &lt; 35 (oversold). Longs only; shorts suppressed in ranging regime.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--green);">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 3 &middot; GEOMETRIC</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">D <span style="opacity:0.5;font-size:0.7rem;">FIBONACCI OTE</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">Optimal Trade Entry zone: 61.8-78.6 percent retracement of the dominant 100-bar swing. Confluence-gated by ADX &gt; 20 and DI spread &gt; 5 in the entry direction. Institutional re-accumulation window.</div>
+                </div>
+                <div style="padding:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--accent);grid-column:1/-1;">
+                    <div style="font-size:0.75rem;letter-spacing:1px;opacity:0.6;margin-bottom:4px;">PHASE 4 &middot; HONE BEST (gens 31-50)</div>
+                    <div style="font-size:1.2rem;margin-bottom:6px;">★ <span style="opacity:0.5;font-size:0.7rem;">MUTATE THE TOP SCORER</span></div>
+                    <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;">After the first 30 generations across MOMENTUM_SQUEEZE, STRUCTURE, and GEOMETRIC phases, the top-scoring candidate becomes the HONE parent. Gens 31-50 take the parent's full source and tighten one threshold, swap one filter, or add one confluence check per generation. Architecture preserved, edges sharpened. This is where the swarm stops exploring and starts converging.</div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px;">
+                <div style="padding:20px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--green);">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;letter-spacing:1px;margin-bottom:6px;">THE EVALUATOR</div>
+                    <div style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">7-day walk-forward evaluation across 88 perpetual futures symbols with realistic taker fees (0.06%) and slippage (0.02% per side). Every generation is scored on overall performance AND on each of 3 rolling 2-day sub-windows - a strategy that is profitable overall but breaks on any sub-window gets halved. Honest Physics enforced: T-120 lookups with a 120-second delay so lookahead bias is impossible. Hard 1.2 ATR stop floor. 4-hour maximum hold time. Target 50-264 trades per cycle; above the ceiling a multiplicative over-trading penalty applies. Absolute PnL floor - negative net equals score zero regardless of win rate. Drawdown penalty - above 8% max drawdown deducts $2,000, above 15% deducts $5,000. Per-symbol quality - if fewer than 30% of symbols are profitable, score is halved. A peer-reviewer statically vets every candidate before eval time is spent. Operator-set safety rails. Non-negotiable.</div>
+                </div>
+                <div style="padding:20px;background:var(--card);border:1px solid var(--border);border-radius:10px;border-top:2px solid var(--green);">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;letter-spacing:1px;margin-bottom:6px;">STRICT BEAT OR HOLD</div>
+                    <div style="font-size:0.8rem;color:var(--text-dim);line-height:1.6;">A new candidate must strictly beat the reigning champion on the same fresh 7-day window or the throne stays. Champion and runner-up both saved to the Hall of Fame, so every surviving strategy remains available for analysis. If nothing beats the live config, the system holds. No change for the sake of change. The swarm evolves only when evolution produces something genuinely superior - and proves it holds up across every walk-forward sub-window.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGENT FEEDS -->
+    <section class="section-divider">
+        <div class="section-inner">
+            <div class="section-label">// Live Agent Feeds</div>
+            <h2 class="section-title">Direct feed from every agent.</h2>
+            <p class="section-text">Select an agent to view its latest output. Each feed loads live data from the Swarm API.</p>
+
+            <!-- Tab buttons -->
+            <div class="agent-tabs" id="swarm-tabs">
+                <button class="agent-tab active" data-agent="swarm">SWARM</button>
+                <button class="agent-tab" data-agent="sentinel">SENTINEL</button>
+                <button class="agent-tab" data-agent="shadow">SHADOW</button>
+                <button class="agent-tab" data-agent="flagship">FLAGSHIP</button>
+                <button class="agent-tab" data-agent="watchdog">WATCHDOG</button>
+                <button class="agent-tab" data-agent="forensics">FORENSICS</button>
+                <button class="agent-tab" data-agent="digest">WEEKLY DIGEST</button>
+                <button class="agent-tab" data-agent="traffic">TRAFFIC</button>
+            </div>
+
+            <!-- Swarm Feed -->
+            <div class="agent-panel active" id="swarm-panel-swarm">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">SWARM EVOLUTION FEED</div>
+                        <div class="agent-card-live">
+                            <button class="fullscreen-trigger" data-terminal="swarm">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live" style="margin-left:12px;"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-swarm">Loading swarm feed...</div>
+                </div>
+            </div>
+
+            <!-- Sentinel Feed -->
+            <div class="agent-panel" id="swarm-panel-sentinel">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">SENTINEL INTELLIGENCE BROADCAST</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-sentinel">Loading sentinel feed...</div>
+                </div>
+            </div>
+
+            <!-- Shadow Matrix Feed -->
+            <div class="agent-panel" id="swarm-panel-shadow">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">SHADOW MATRIX DEEP SCAN</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-shadow">Loading shadow matrix...</div>
+                </div>
+            </div>
+
+            <!-- Flagship Feed -->
+            <div class="agent-panel" id="swarm-panel-flagship">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">FLAGSHIP DAILY INTELLIGENCE</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-flagship">Loading flagship intelligence...</div>
+                </div>
+            </div>
+
+            <!-- Watchdog Status -->
+            <div class="agent-panel" id="swarm-panel-watchdog">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">WATCHDOG STATUS</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-watchdog">Loading watchdog status...</div>
+                </div>
+            </div>
+
+
+            <!-- Crime Scene Forensics -->
+            <div class="agent-panel" id="swarm-panel-forensics">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">CRIME SCENE MATRIX</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-forensics">Loading forensic data...</div>
+                </div>
+            </div>
+
+            <!-- Weekly Digest -->
+            <div class="agent-panel" id="swarm-panel-digest">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">WEEKLY STRATEGIC DIGEST</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-digest">Loading weekly digest...</div>
+                </div>
+            </div>
+
+            <!-- Traffic Monitor -->
+            <div class="agent-panel" id="swarm-panel-traffic">
+                <div class="agent-card">
+                    <div class="agent-card-header">
+                        <div class="agent-card-dot" style="background:var(--red);"></div>
+                        <div class="agent-card-dot" style="background:var(--amber);"></div>
+                        <div class="agent-card-dot" style="background:var(--green);"></div>
+                        <div class="agent-card-title">SITE TRAFFIC MONITOR</div>
+                        <div class="agent-card-live"><button class="fullscreen-trigger">FULLSCREEN &nbsp; [F]</button>
+                            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
+                        </div>
+                    </div>
+                    <div class="agent-card-body" id="swarm-page-feed-traffic">Loading traffic data...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-links">
+            <a href="/" style="color:var(--accent);">&larr; Back to Home</a>
+            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                @freedomcoreai
+            </a>
+            <a href="mailto:freedomcoreai@gmail.com">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                freedomcoreai@gmail.com
+            </a>
+        </div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
+    </footer>
+
+    <!-- JS in app.js - needs: swarm page tab switching (data-swarm-tab) and feed loading into swarm-page-feed-* elements -->
+    <script src="/js/ethers.umd.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/mav-wallet.js?v=20260422b"></script>
+    <script src="/js/tracker.js" defer></script>
+<div class="terminal-overlay" id="terminal-overlay"><div class="terminal-overlay-header"><div id="terminal-overlay-title" style="font-family:JetBrains Mono,monospace;font-size:0.7rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;"></div><button class="terminal-close-btn" id="terminal-close">CLOSE TERMINAL [ESC]</button></div><div class="terminal-overlay-body" id="terminal-overlay-content"></div></div></body>
+</html>

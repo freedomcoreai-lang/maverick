@@ -1,0 +1,33 @@
+# Never commit secrets or server state
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+.flask_secret
+.mav-deployer-key
+~/.mav-deployer-key
+token_gate_config.py
+subscription_gate_config.py
+
+# Server-only runtime state
+/site/api_data/
+*.db
+*.db-journal
+*.log
+*.pyc
+__pycache__/
+.DS_Store
+node_modules/
+.cache/
+
+# Backup artifacts
+*_backup_*.tar.gz
+archive_purge_*/
+
+# IDE noise
+.idea/
+.vscode/
+*.swp
+*.swo
