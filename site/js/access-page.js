@@ -207,11 +207,12 @@
     }
 
     function updateTierTags(currentTier, tokenDeployed) {
-        const order = ['none', 'observer', 'signal', 'sovereign'];
+        const order = ['none', 'observer', 'signal', 'pro', 'sovereign'];
         const myIdx = order.indexOf(currentTier || 'none');
         const tags = {
             observer:  document.getElementById('status-observer'),
             signal:    document.getElementById('status-signal'),
+            pro:       document.getElementById('status-pro'),
             sovereign: document.getElementById('status-sovereign'),
         };
         Object.entries(tags).forEach(([n, el]) => {
