@@ -1524,3 +1524,19 @@ body { padding-top: 22px !important; }
 @media (prefers-reduced-motion: reduce) {
     .family-switcher__dot { animation: none; }
 }
+
+/* Phase G: brand-interlude section.
+   Houses the relocated Maverick lightning video that used to sit in the
+   hero. It now lives below the fold as a standalone brand moment. */
+.brand-interlude {
+    max-width: 880px;
+    margin: var(--sp-64) auto 0;
+    padding: 0 var(--sp-24);
+    text-align: center;
+}
+.brand-interlude .hero-logo-img {
+    margin-top: var(--sp-16);
+}
+@media (max-width: 780px) {
+    .brand-interlude { padding: 0 var(--sp-16); }
+}

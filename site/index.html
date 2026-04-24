@@ -13,7 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/tokens.css?v=20260424b">
     <link rel="stylesheet" href="/css/components.css?v=20260424b">
-    <link rel="stylesheet" href="/css/style.css?v=20260424b">
+    <link rel="stylesheet" href="/css/style.css?v=20260424c">
+    <link rel="stylesheet" href="/css/dna-helix.css?v=20260424c">
 </head>
 <body data-site="maverick">
 
@@ -131,12 +132,41 @@
         </div>
     </aside>
 
-    <!-- HERO (primitive .hero : Orbitron title + Inter sub + ONE primary + ONE secondary CTA) -->
+    <!-- HERO (primitive .hero) -- Phase G: DNA helix signature moment,
+         headline + CTAs sit BELOW the helix, not overlaid on it. -->
     <section class="hero">
         <div class="hero-glow"></div>
-        <div class="hero-badge">The best AI in the world, evolving a trading system in real time</div>
 
-        <!-- Dark mode hero video -->
+        <!-- DNA helix scene (WebGL with SVG fallback) -->
+        <div class="dna-helix" id="dna-helix-container" aria-label="Living DNA helix representing the active trading champion configuration">
+            <div class="dna-helix__fallback" id="dna-helix-fallback">
+                <img src="/img/dna-helix-fallback.svg" alt="DNA double helix" width="400" height="600">
+            </div>
+        </div>
+
+        <!-- Mutation caption (flashes when champion changes) -->
+        <div class="mutation-caption" id="mutation-caption" aria-live="polite"></div>
+
+        <!-- LIVE CHAMPION block -->
+        <div class="eyebrow eyebrow--accent">// Live champion</div>
+        <h1 class="hero__title" id="live-champion-name">MAVERICK</h1>
+        <p class="hero__sub">
+            Every 7 days, an AI tears up its own trading logic and writes a new one.
+            88 markets. Real capital. No human hand on the wheel.
+        </p>
+
+        <!-- HERO ACTIONS : ONE primary + ONE secondary -->
+        <div class="hero__actions">
+            <a href="/live" class="cta-primary">Watch the bot trade live &rarr;</a>
+            <a href="/pages/architecture.html" class="cta-secondary">Read the architecture</a>
+        </div>
+    </section>
+
+    <!-- BRAND INTERLUDE (the original lightning Maverick video, relocated
+         below the fold per Phase G spec: the helix is the hero; the brand
+         moment gets its own section). -->
+    <section class="section brand-interlude">
+        <div class="eyebrow eyebrow--accent">// The brand</div>
         <div class="hero-logo-img hero-logo-dark">
             <video id="mav-hero-video"
                    src="/img/maverick-hero.mp4?v=3"
@@ -144,12 +174,11 @@
                    preload="auto"
                    autoplay muted loop playsinline webkit-playsinline
                    class="hero-video hero-video--dark"
-                   aria-label="MAVERICK -- Powered by FreedomCore"></video>
+                   aria-label="MAVERICK brand reel"></video>
             <button type="button" id="mav-hero-sound" aria-label="Unmute" aria-pressed="false" class="hero-sound-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>
             </button>
         </div>
-        <!-- Light mode hero video -->
         <div class="hero-logo-img hero-logo-light">
             <video id="mav-hero-video-light"
                    src="/img/maverick-hero-light.mp4?v=3"
@@ -157,7 +186,7 @@
                    preload="auto"
                    autoplay muted loop playsinline webkit-playsinline
                    class="hero-video hero-video--light"
-                   aria-label="MAVERICK -- Powered by FreedomCore"></video>
+                   aria-label="MAVERICK brand reel (light)"></video>
         </div>
         <script>
         (function lightHeroVid(){
@@ -199,20 +228,6 @@
             upd();
         })();
         </script>
-
-        <p class="hero-desc">
-            Every 7 days, an AI tears up its own trading logic and writes a new one. 88 markets. Real capital.
-            No human hand on the wheel. We don&rsquo;t forecast. We mutate faster than conditions change.
-            <br><br>
-            This isn&rsquo;t yield. It&rsquo;s a ringside ticket to an AI trying to solve markets in the open.
-            It might compound into something extraordinary. It might crater on camera. You see every move.
-        </p>
-
-        <!-- HERO ACTIONS : ONE primary + ONE secondary (spec) -->
-        <div class="hero__actions">
-            <a href="/live" class="cta-primary">Watch the bot trade live &rarr;</a>
-            <a href="/pages/architecture.html" class="cta-secondary">Read the architecture</a>
-        </div>
     </section>
 
     <!-- TICKER (primitive .ticker) -->
@@ -744,6 +759,7 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260424"></script>
     <script src="/js/motion.js?v=20260424b" defer></script>
+    <script type="module" src="/js/dna-helix.js?v=20260424c" defer></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
