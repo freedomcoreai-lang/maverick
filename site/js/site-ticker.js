@@ -38,27 +38,41 @@
         track.innerHTML = html;
     }
 
+    /* Hide the whole ticker bar rather than leaving it stuck on
+       "Headlines connecting..." when /api/news isn't routed on a given
+       subdomain (QUANTUM, SHADOW, ARENA share this ticker but only
+       MAVERICK proxies /api/news). Fixes the "hanging connecting
+       indicator" phone-verification bug. */
+    function hideTicker() {
+        var bar = document.getElementById('site-ticker');
+        if (bar) bar.style.display = 'none';
+    }
+
     function fetchAndRender() {
         try {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', ENDPOINT, true);
             xhr.setRequestHeader('X-API-Key', API_KEY);
+            xhr.timeout = 5000;
+            xhr.ontimeout = hideTicker;
+            xhr.onerror = hideTicker;
             xhr.onreadystatechange = function () {
                 if (xhr.readyState !== 4) return;
                 if (xhr.status === 200) {
                     try {
                         var data = JSON.parse(xhr.responseText);
-                        render(data.items || []);
+                        if (!data || !data.items || !data.items.length) { hideTicker(); return; }
+                        render(data.items);
                     } catch (e) {
-                        track.innerHTML = '<div class="ticker-item">Headlines format error.</div>';
+                        hideTicker();
                     }
                 } else {
-                    track.innerHTML = '<div class="ticker-item">Headlines connecting... (HTTP ' + xhr.status + ')</div>';
+                    hideTicker();
                 }
             };
             xhr.send();
         } catch (e) {
-            track.innerHTML = '<div class="ticker-item">Headlines offline.</div>';
+            hideTicker();
         }
     }
 
