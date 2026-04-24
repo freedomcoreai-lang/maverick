@@ -1,60 +1,78 @@
-/* FreedomCore Modular CSS — v3.0 ELITE BRANDING */
+@import url('./tokens.css');
+
+/* ============================================================================
+   FreedomCore Modular CSS — v3.0
+   Palette + type + spacing + motion tokens live in /css/tokens.css.
+   This file is legacy component styles + a transitional alias layer
+   that maps old var names (--bg, --green, etc.) onto the new tokens.
+
+   DO NOT add new hex literals here. Reference tokens only.
+   The alias block below is eliminated in the component-library PR.
+   ============================================================================ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ─── TRANSITIONAL ALIAS LAYER ──────────────────────────────────────────────
+   Legacy names used by the 1000+ rules in this file. Each resolves to a
+   tokens.css primitive so the old selectors keep working while the new
+   design system is the authority. Do not introduce new aliases here;
+   refactor callers to tokens directly as they are rebuilt per-component.
+   ─────────────────────────────────────────────────────────────────────────── */
 :root {
-    --bg: #060a10;
-    --bg2: #0a0f18;
-    --card: rgba(8, 14, 24, 0.92);
-    --border: rgba(30, 55, 90, 0.4);
-    --text: #e4e8f0;
-    --text-dim: #5a6a82;
-    --green: #4ecdc4;
-    --green-dim: rgba(78, 205, 196, 0.10);
-    --blue: #3ea8f5;
-    --blue-dim: rgba(62, 168, 245, 0.10);
-    --amber: #f5a623;
-    --purple: #8b5cf6;
-    --red: #ef4444;
-    --cyan: #4ecdc4;
-    --accent: #3ea8f5;
-    --scanline: rgba(0,0,0,0.02);
-    --glow-primary: rgba(62, 168, 245, 0.15);
-    --glow-secondary: rgba(78, 205, 196, 0.10);
-    --gold: #ffd700;
-    --gold-bg: rgba(255, 215, 0, 0.10);
-    --gold-border: rgba(255, 215, 0, 0.28);
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-    --champion: #fbbf24;
-    --champion-bg: rgba(251, 191, 36, 0.12);
+    --bg:           var(--bg-primary);
+    --bg2:          var(--bg-elevated);
+    --text:         var(--text-primary);
+    --text-dim:     var(--text-muted);
+
+    --gold:         var(--accent-gold);
+    --purple:       var(--accent-violet);
+    --blue:         var(--accent-cyan);
+    --cyan:         var(--accent-cyan);
+    --accent:       var(--accent-cyan);
+    --silver:       var(--accent-silver);
+
+    /* --green was #4ecdc4 teal; all callers now resolve to --accent-cyan.
+       Status-positive semantics will be site-derived in the component PR. */
+    --green:        var(--accent-cyan);
+
+    /* DEPRECATED — status + warning colors outside the locked palette.
+       Retained as hex for this PR; eliminated when status derives per-site. */
+    --amber:        #f5a623;
+    --red:          #ef4444;
+    --bronze:       #cd7f32;
+    --champion:     #fbbf24;
+
+    /* Derived alpha surfaces (rgba of token hexes, so token-driven) */
+    --card:              rgba(20, 20, 28, 0.92);        /* from --bg-elevated */
+    --border:            rgba(245, 245, 250, 0.10);     /* from --text-primary */
+    --green-dim:         rgba(62, 168, 245, 0.10);
+    --blue-dim:          rgba(62, 168, 245, 0.10);
+    --glow-primary:      rgba(62, 168, 245, 0.15);
+    --glow-secondary:    rgba(62, 168, 245, 0.10);
+    --gold-bg:           rgba(255, 215, 0, 0.10);
+    --gold-border:       rgba(255, 215, 0, 0.28);
+    --champion-bg:       rgba(251, 191, 36, 0.12);
+    --scanline:          rgba(0, 0, 0, 0.02);
 }
+
 [data-theme="light"] {
-    --bg: #f0f4f8;
-    --bg2: #e6ecf2;
-    --card: rgba(255, 255, 255, 0.95);
-    --border: rgba(6, 10, 16, 0.10);
-    --text: #060a10;
-    --text-dim: #2c3a4d;
-    --green: #2ba89e;
-    --green-dim: rgba(43, 168, 158, 0.08);
-    --blue: #2580c8;
-    --blue-dim: rgba(37, 128, 200, 0.08);
-    --amber: #b8740a;
-    --purple: #6d3bcc;
-    --red: #d42020;
-    --cyan: #2ba89e;
-    --accent: #2580c8;
-    --scanline: rgba(0,0,0,0.008);
-    --glow-primary: rgba(37, 128, 200, 0.10);
-    --glow-secondary: rgba(43, 168, 158, 0.06);
-    --gold: #b8740a;
-    --gold-bg: rgba(184, 116, 10, 0.08);
-    --gold-border: rgba(184, 116, 10, 0.35);
-    --silver: #5a6a7a;
-    --bronze: #8b4513;
-    --champion: #b8740a;
-    --champion-bg: rgba(184, 116, 10, 0.10);
+    /* Dark aliases already point at tokens; tokens flip under [data-theme="light"].
+       Here we only override the derived alpha surfaces + deprecated status hexes. */
+    --card:              rgba(255, 255, 255, 0.95);
+    --border:            rgba(10, 10, 15, 0.12);
+    --green-dim:         rgba(30, 127, 196, 0.08);
+    --blue-dim:          rgba(30, 127, 196, 0.08);
+    --glow-primary:      rgba(30, 127, 196, 0.10);
+    --glow-secondary:    rgba(30, 127, 196, 0.06);
+    --gold-bg:           rgba(200, 155, 0, 0.10);
+    --gold-border:       rgba(200, 155, 0, 0.35);
+    --champion-bg:       rgba(200, 155, 0, 0.12);
+    --scanline:          rgba(0, 0, 0, 0.008);
+
+    --amber:             #b8740a;
+    --red:               #d42020;
+    --bronze:            #8b4513;
+    --champion:          #b8740a;
 }
 
 html { scroll-behavior: smooth; }
@@ -95,7 +113,7 @@ body::after {
     display: flex; align-items: center;
     /* Deliberately NOT space-between — the logo's position must be hard-docked
        next to the hamburger. nav-right pushes itself to the right via margin-left:auto. */
-    background: #0a1628;
+    background: var(--bg2);
     backdrop-filter: blur(24px);
     border-bottom: none;
     transition: background 0.3s;
@@ -127,7 +145,7 @@ body::after {
 @media (max-width: 768px) {
     .nav-neon-line { top: 70px; }  /* ticker (18px) + slimmer mobile nav (~52px) */
 }
-[data-theme="light"] .nav { background: #f0f4f8; }
+[data-theme="light"] .nav { background: var(--bg); }
 .nav-logo {
     display: flex; align-items: center; gap: 10px;
     text-decoration: none;
@@ -158,12 +176,12 @@ body::after {
     font-family: 'Inter', sans-serif;
     font-weight: 800; font-size: 1.05rem;
     letter-spacing: 5px; text-transform: uppercase;
-    color: #e4e8f0;
+    color: var(--text);
     text-shadow: 0 0 20px rgba(78, 205, 196, 0.2);
     transition: color 0.4s, text-shadow 0.4s;
 }
 .nav-logo:hover .nav-logo-text {
-    color: #4ecdc4;
+    color: var(--green);
     text-shadow: 0 0 24px rgba(78, 205, 196, 0.35);
 }
 .nav-center { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; max-width: 100%; }
@@ -252,11 +270,11 @@ body::after {
     text-shadow: none;
 }
 [data-theme="light"] .nav-logo-text {
-    color: #0a1628;
+    color: var(--text);
     text-shadow: 0 0 16px rgba(43, 168, 158, 0.1);
 }
 [data-theme="light"] .nav-logo:hover .nav-logo-text {
-    color: #1a9e92;
+    color: var(--blue);
 }
 .hero-badge {
     font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
@@ -314,7 +332,7 @@ body::after {
 .btn-primary {
     font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600;
     letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px;
-    background: var(--green); color: #0b0b0f; border: none; border-radius: 6px;
+    background: var(--green); color: var(--bg-primary); border: none; border-radius: 6px;
     cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-block;
 }
 .btn-primary:hover { filter: brightness(1.2); box-shadow: 0 0 30px rgba(62,207,142,0.3); }
@@ -450,13 +468,13 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: all 0.15s; width: 28px; height: 28px;
     display: flex; align-items: center; justify-content: center;
 }
-.tv-fullscreen-btn:hover { color: #fff; background: rgba(19,23,34,0.95); }
+.tv-fullscreen-btn:hover { color: var(--text-primary); background: rgba(19,23,34,0.95); }
 .tv-fullscreen-btn svg { display: block; }
 
 /* Fullscreen overlay - appended to body, not nested in card */
 .tv-fullscreen-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: 9999; background: #000; display: flex; flex-direction: column;
+    z-index: 9999; background: var(--bg-primary); display: flex; flex-direction: column;
 }
 .tv-fullscreen-overlay iframe {
     flex: 1; width: 100% !important; height: 100% !important;
@@ -465,7 +483,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 .tv-fullscreen-close {
     position: absolute; top: 12px; right: 12px; z-index: 10000;
     background: rgba(19,23,34,0.9); border: none; border-radius: 4px;
-    color: #fff; cursor: pointer; padding: 6px; line-height: 0;
+    color: var(--text-primary); cursor: pointer; padding: 6px; line-height: 0;
     width: 32px; height: 32px;
     display: flex; align-items: center; justify-content: center;
 }
@@ -632,7 +650,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     line-height: 1.8; color: var(--green); min-height: 300px; max-height: 500px;
     overflow-y: auto; -webkit-overflow-scrolling: touch; white-space: pre-wrap; word-break: break-word;
 }
-[data-theme="light"] .swarm-terminal-body { color: #1a7a72; }
+[data-theme="light"] .swarm-terminal-body { color: var(--blue); }
 .swarm-terminal-body::-webkit-scrollbar { width: 6px; }
 .swarm-terminal-body::-webkit-scrollbar-track { background: transparent; }
 .swarm-terminal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -735,6 +753,14 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* === HERO LOGO — theme-swapped pair === */
+/* Dark-mode default: show dark variant, hide light. Flip on light theme. */
+[data-theme="dark"] .hero-logo-light { display: none !important; }
+[data-theme="dark"] .hero-logo-dark  { display: block !important; }
+[data-theme="light"] .hero-logo-dark  { display: none !important; }
+[data-theme="light"] .hero-logo-light { display: block !important; margin: 0 auto 22px; }
+
 
 /* === HERO BANNER IMAGE === */
 .hero-banner {
@@ -929,7 +955,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     position: fixed !important;
     top: 0 !important; left: 0; right: 0;
     overflow: hidden;
-    background: #0a1628;  /* matches the nav navy-blue */
+    background: var(--bg2);
     border-bottom: 1px solid rgba(255,215,0,0.22);
     padding: 0;
     z-index: 210 !important;
@@ -937,12 +963,12 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: background 0.3s, border-color 0.3s;
 }
 [data-theme="light"] .site-ticker {
-    background: #f0f4f8;
+    background: var(--bg);
     border-bottom: 1px solid rgba(184, 116, 10, 0.35);
 }
 [data-theme="light"] .site-ticker .ticker-item { color: var(--text); }
 [data-theme="light"] .site-ticker .ticker-source {
-    color: #b8740a !important;
+    color: var(--amber) !important;
     border: 1px solid rgba(184,116,10,0.35);
     background: rgba(184,116,10,0.06);
 }
@@ -957,13 +983,13 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     display: inline-block !important;
     padding: 0 18px !important;
     font-size: 0.64rem !important;
-    color: var(--text, #e4e8f0);
+    color: var(--text);
     vertical-align: middle;
 }
 .site-ticker .ticker-source {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.5rem !important;
-    color: #ffd700 !important;
+    color: var(--gold) !important;
     letter-spacing: 0.8px;
     margin-right: 6px !important;
     padding: 1px 5px !important;
@@ -973,7 +999,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     background: rgba(255,215,0,0.04);
 }
 .site-ticker .ticker-item a { color: inherit; text-decoration: none; }
-.site-ticker .ticker-item a:hover { color: var(--green, #4ecdc4); }
+.site-ticker .ticker-item a:hover { color: var(--green); }
 
 .nav { top: 22px !important; }
 body { padding-top: 22px !important; }
@@ -996,23 +1022,23 @@ body { padding-top: 22px !important; }
     display: inline-block;
     padding: 0 28px;
     font-size: 0.72rem;
-    color: var(--text, #e4e8f0);
+    color: var(--text);
     vertical-align: middle;
 }
 .site-ticker .ticker-source {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.55rem;
-    color: var(--accent, #3ea8f5);
+    color: var(--accent);
     letter-spacing: 1px;
     margin-right: 8px;
     padding: 2px 6px;
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border);
     border-radius: 3px;
     display: inline-block;
 }
-.site-ticker .ticker-item.crypto .ticker-source { color: #f5a623; border-color: rgba(245,166,35,0.3); }
+.site-ticker .ticker-item.crypto .ticker-source { color: var(--amber); border-color: rgba(245,166,35,0.3); }
 .site-ticker .ticker-item a { color: inherit; text-decoration: none; }
-.site-ticker .ticker-item a:hover { color: var(--green, #4ecdc4); }
+.site-ticker .ticker-item a:hover { color: var(--green); }
 @keyframes site-ticker-scroll {
     from { transform: translate3d(0,0,0); }
     to   { transform: translate3d(-50%,0,0); }

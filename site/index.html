@@ -23,7 +23,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo">
-            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img">
+            <img src="/img/maverick-shield-nav-128.png" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img" style="mix-blend-mode:screen;">
             <span class="nav-logo-text">MAVERICK</span>
         </a>
         <div class="nav-center">
@@ -37,6 +37,9 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
+            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
+            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
+            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
             <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
@@ -115,6 +118,9 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
+        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;">SHADOW &#8599; (Sister System)</a>
+        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber);">QUANTUM &#8599; (Web Design)</a>
+    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver);">ARENA &#8599; (Leaderboard)</a>
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
@@ -126,8 +132,75 @@
         <div class="hero-glow"></div>
         <div class="hero-badge">The best AI in the world, evolving a trading system in real time</div>
 
-        <div class="hero-title">MAVERICK</div>
-        <div class="hero-subtitle-brand">FreedomCore</div>
+        <!-- Dark mode: animated MAVERICK hero video (poster = static for instant paint) -->
+        <div class="hero-logo-img hero-logo-dark" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
+            <video id="mav-hero-video"
+                   src="/img/maverick-hero.mp4?v=3"
+                   poster="/img/maverick-hero-wide.png"
+                   preload="auto"
+                   autoplay muted loop playsinline webkit-playsinline
+                   style="width:100%; height:auto; display:block; mix-blend-mode:screen; filter: drop-shadow(0 0 60px rgba(62, 168, 245, 0.22));"
+                   aria-label="MAVERICK · Powered by FreedomCore"></video>
+            <button type="button" id="mav-hero-sound" aria-label="Unmute" aria-pressed="false"
+                    style="position:absolute; bottom:14px; right:14px; width:40px; height:40px; border-radius:50%; background:rgba(10,15,24,0.78); color:#4ecdc4; border:1px solid rgba(78,205,196,0.5); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; box-shadow:0 2px 14px rgba(0,0,0,0.3); z-index:3;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>
+            </button>
+        </div>
+        <!-- Light mode: bright day-render animated hero, same centred layout as dark mode -->
+        <div class="hero-logo-img hero-logo-light" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
+            <video id="mav-hero-video-light"
+                   src="/img/maverick-hero-light.mp4?v=3"
+                   poster="/img/maverick-hero-wide-light.png"
+                   preload="auto"
+                   autoplay muted loop playsinline webkit-playsinline
+                   style="width:100%; height:auto; display:block; filter: drop-shadow(0 0 40px rgba(62, 168, 245, 0.20));"
+                   aria-label="MAVERICK · Powered by FreedomCore"></video>
+        </div>
+        <script>
+        // Light-mode backdrop video — autoplay silent, pause offscreen.
+        (function lightHeroVid(){
+            var lv = document.getElementById('mav-hero-video-light');
+            if (!lv) return;
+            lv.play().catch(function(){});
+            var io = new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? lv.play().catch(function(){}) : lv.pause(); }); }, { threshold: 0.1 });
+            io.observe(lv);
+            // Retry play when theme toggles to light (element may have been display:none'd and now shown)
+            var obs = new MutationObserver(function(){
+                if (document.documentElement.getAttribute('data-theme') === 'light') {
+                    lv.play().catch(function(){});
+                }
+            });
+            obs.observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
+        })();
+        (function heroVid(){
+            var v = document.getElementById('mav-hero-video');
+            var btn = document.getElementById('mav-hero-sound');
+            if (!v || !btn) return;
+            var STORE = 'mav-hero-unmuted';
+            try { if (localStorage.getItem(STORE) === '1') v.muted = false; } catch(e) {}
+            function upd(){
+                btn.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
+                btn.innerHTML = v.muted
+                    ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>'
+                    : '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+            }
+            btn.addEventListener('click', function(e){
+                e.preventDefault(); e.stopPropagation();
+                v.muted = !v.muted;
+                try { localStorage.setItem(STORE, v.muted ? '0' : '1'); } catch(e) {}
+                if (v.paused) v.play().catch(function(){});
+                upd();
+            });
+            v.play().catch(function(){});
+            var io = new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? v.play().catch(function(){}) : v.pause(); }); }, { threshold: 0.15 });
+            io.observe(v);
+            v.addEventListener('volumechange', upd);
+            upd();
+        })();
+        </script>
+
+        <div class="hero-title" style="display:none">MAVERICK</div>
+        <div class="hero-subtitle-brand" style="display:none">FreedomCore</div>
 
         <p class="hero-desc">
             Every 7 days, an AI tears up its own trading logic and writes a new one. 88 markets. Real capital.
@@ -138,15 +211,15 @@
         </p>
 
         <!-- POWERED BY - the two frontier models teaming up -->
-        <div style="margin-top:22px; padding:18px 22px; background:var(--gold-bg); border:1px solid var(--gold-border); border-radius:14px; max-width:760px; display:inline-block; text-align:left;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:12px; text-align:center;">Gemini 3.1 + Claude Opus 4.7</div>
+        <div style="margin-top:22px; padding:18px 22px; background:var(--green-dim); border:1px solid var(--green); border-radius:14px; max-width:760px; display:inline-block; text-align:left;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--green); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:12px; text-align:center;">Gemini 3.1 + Claude Opus 4.7</div>
             <div style="color:var(--text); font-size:0.98rem; line-height:1.6; font-weight:600; margin-bottom:10px;">
-                Two of the most capable models ever built are teaming up inside MAVERICK. <b style="color:var(--gold);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--gold);">Claude Opus 4.7</b> audits the architecture before live deployment.
+                Two of the most capable models ever built are teaming up inside MAVERICK. <b style="color:var(--blue);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--blue);">Claude Opus 4.7</b> audits the architecture before live deployment.
             </div>
             <div style="color:var(--text-dim); font-size:0.86rem; line-height:1.7;">
-                Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. <span style="color:var(--gold); font-weight:700;">This is the only experiment of its kind.</span>
+                Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. <span style="color:var(--green); font-weight:700;">This is the only experiment of its kind.</span>
             </div>
-            <a href="/pages/access.html" class="frontier-cta" style="display:block; margin-top:14px; padding-top:12px; border-top:1px solid var(--gold-border); font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; text-align:center; text-decoration:none; font-weight:700;">Two ways in. Pick whichever fits. &rarr;</a>
+            <a href="/pages/access.html" class="frontier-cta" style="display:block; margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; text-align:center; text-decoration:none; font-weight:700;">Two ways in. Pick whichever fits. &rarr;</a>
         </div>
 
         <div class="hero-actions" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:26px;">
@@ -226,6 +299,10 @@
                 <a href="/pages/signals.html" class="status-item status-link">
                     <div class="status-value blue" id="stat-freshness">--</div>
                     <div class="status-label">Data Age</div>
+                </a>
+                <a href="/pages/medalists.html" class="status-item status-link" title="Currently live trading strategy">
+                    <div class="status-value" id="stat-champion" style="font-size:0.7rem;color:var(--green,#4ecdc4);line-height:1.2;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:120px;">--</div>
+                    <div class="status-label">Live Champion</div>
                 </a>
             </div>
         </div>
@@ -682,21 +759,38 @@
         </div>
     </section>
 
-    <!-- BANNER -->
-    <div style="max-width:900px;margin:0 auto;padding:0 24px 40px;">
-        <div class="hero-banner">
-            <img src="/img/maverick-banner.jpg" alt="MAVERICK FreedomCore Banner">
+    <!-- CLOSING BANNER — framed section with context + video -->
+    <section style="padding:70px 24px 50px; position:relative; z-index:2;">
+        <div style="max-width:900px; margin:0 auto; text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--green); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">// One AI. Real capital. Live.</div>
+            <h2 style="font-size:clamp(1.6rem, 4vw, 2.4rem); font-weight:800; letter-spacing:-1px; margin-bottom:16px; line-height:1.1;">The experiment in motion.</h2>
+            <p style="font-size:0.95rem; line-height:1.7; color:var(--text-dim); max-width:640px; margin:0 auto 30px;">
+                No staged renders, no stock footage. Every move you see — your move. The AI self-audits, rewrites, fires. You hold the seat.
+            </p>
+            <div class="hero-banner" data-video="1" style="position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 60px rgba(62,168,245,0.10);">
+                <video
+                    src="/img/grok-banner.mp4"
+                    poster="/img/maverick-banner.jpg"
+                    preload="metadata" muted loop playsinline webkit-playsinline
+                    style="width:100%;height:auto;display:block;"
+                    aria-label="FreedomCore animated banner"></video>
+                <button type="button" class="video-sound-btn" aria-label="Unmute banner audio" aria-pressed="false"
+                    style="position:absolute;bottom:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(10,15,24,0.78);color:#4ecdc4;border:1px solid rgba(78,205,196,0.5);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 14px rgba(0,0,0,0.3);z-index:3;"></button>
+            </div>
+            <div style="display:flex; gap:14px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
+                <a href="/pages/access.html" class="btn-primary">Watch it live &rarr;</a>
+                <a href="/pages/architecture.html" class="btn-outline">How it works</a>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-logo">FREEDOMCORE</div>
-        <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--text-dim); margin-bottom:20px; letter-spacing:1px;">
-            DESIGN BY <span style="color:var(--accent);">QUANTUM SPARK</span><br>
-            <a href="mailto:quantumspark80@gmail.com" style="color:var(--green); text-decoration:none;">quantumspark80@gmail.com</a>
-        </div>
         <div class="footer-links">
+            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--purple); font-weight:700;">SHADOW &#8599;</a>
+            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--green); font-weight:700;">QUANTUM &#8599;</a>
+            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA &#8599;</a>
             <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 @freedomcoreai
@@ -705,17 +799,24 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
                 freedomcoreai@gmail.com
             </a>
-            <a href="#" class="back-to-top">
+            <a href="#top" class="back-to-top">
                 &uarr; Back to Top
             </a>
+        </div>
+        <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin:28px 0 16px; padding-top:22px; border-top:1px solid var(--border); max-width:600px; margin-left:auto; margin-right:auto;">
+            <span>Designed by</span>
+            <a href="mailto:quantumspark80@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:800; letter-spacing:2.5px;">QUANTUM SPARK</a>
+            <span style="opacity:0.5;">&middot;</span>
+            <a href="mailto:quantumspark80@gmail.com" style="color:var(--text-dim); text-decoration:none;">quantumspark80@gmail.com</a>
         </div>
         <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="/js/app.js?v=20260423d"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
+    <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script>
     // Live champion card sync — pulls current champion from /api/swarm_champion
     // and updates the "Live Champion" card on every page load + every 60s.
@@ -723,7 +824,15 @@
     (function() {
         async function refreshLiveChampion() {
             try {
-                const res = await fetch('/api/swarm_champion', { cache: 'no-store' });
+                // Use fcFetch (adds X-API-Key header) — plain fetch hits
+                // nginx's 401 gate and the card stays stuck on "loading...".
+                // Fixed 2026-04-23.
+                const res = typeof fcFetch === 'function'
+                    ? await fcFetch('/api/swarm_champion', { cache: 'no-store' })
+                    : await fetch('/api/swarm_champion', {
+                        cache: 'no-store',
+                        headers: { 'X-API-Key': 'fcweb_60fd94aa2d910f38a9f3e0557076791a' }
+                      });
                 if (!res.ok) return;
                 const d = await res.json();
                 if (!d.found) return;

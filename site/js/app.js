@@ -13,11 +13,11 @@ function toggleTheme() {
     if (html.getAttribute('data-theme') === 'dark') {
         html.setAttribute('data-theme', 'light');
         btn.innerHTML = '&#9788;';
-        localStorage.setItem('fc-theme', 'light');
+        localStorage.setItem('freedomcore-theme', 'light');
     } else {
         html.setAttribute('data-theme', 'dark');
         btn.innerHTML = '&#9790;';
-        localStorage.setItem('fc-theme', 'dark');
+        localStorage.setItem('freedomcore-theme', 'dark');
     }
     // Sync TradingView iframes with new theme
     var newTheme = html.getAttribute('data-theme');
@@ -29,15 +29,11 @@ function toggleTheme() {
     });
 }
 (function() {
-    var saved = localStorage.getItem('fc-theme');
-    var theme = 'dark';
-    if (saved) {
-        theme = saved;
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        theme = 'light';
-    }
+    // theme-init.js (loaded in <head>) has already applied data-theme and
+    // migrated any legacy key. Here we only sync the button icon so it
+    // matches whatever the <html> element now says.
+    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
     if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
         var btn = document.getElementById('theme-btn');
         if (btn) btn.innerHTML = '&#9788;';
     }
@@ -73,6 +69,17 @@ async function fetchStatus() {
         set('stat-db', d.database?.size_mb?.toFixed(0) || '--');
         set('stat-uptime', d.maverick?.uptime || '--');
         set('stat-freshness', (d.database?.freshness_mins || '--') + 'm');
+        // 2026-04-23: Live champion card — show currently-running strategy name.
+        // Pulls from /api/swarm_champion so it reflects the live bot's loaded
+        // config, not any swarm-side state.
+        try {
+            const cr = await fcFetch('/api/swarm_champion');
+            const cd = await cr.json();
+            const name = (cd.strategy_name || cd.name || 'LOADING').replace(/_v?1\.0$/i,'').replace(/_/g,' ');
+            set('stat-champion', name.length > 18 ? name.substring(0,18) + '…' : name);
+        } catch(_){
+            set('stat-champion', '--');
+        }
     } catch(e) {
         const el = document.getElementById('stat-status');
         if (el) { el.textContent = 'OFFLINE'; el.style.color = 'var(--red)'; }
@@ -1562,10 +1569,13 @@ function renderSignals(signals) {
                 bar.style.background = isMega
                     ? 'linear-gradient(90deg, var(--champion), var(--accent), var(--champion))'
                     : 'linear-gradient(90deg, var(--green, #10b981), var(--accent, #3ea8f5))';
-                if (d.champion_score > 0 && d.champion_gen !== lastChampGen) {
-                    lastChampGen = d.champion_gen;
-                    fetchChampion();
-                }
+                // 2026-04-23: refresh champion info on EVERY poll (10s) so the
+                // live bot's currently-loaded strategy always shows fresh trades
+                // / WR / PnL. Previously only refreshed when swarm crowned a
+                // new gen — but live bot and swarm champion can diverge (hot-
+                // swap case). Cheap endpoint, worth the constant refresh.
+                fetchChampion();
+                lastChampGen = d.champion_gen;
             } else {
                 dot.style.background = 'var(--text-muted, #6b7280)';
                 dot.style.boxShadow = 'none';
