@@ -857,62 +857,120 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 .nav-hamburger:hover { color: var(--green); border-color: var(--green); }
 .nav-hamburger svg { display: block; }
 
+/* Slide-from-right drawer. Covers < 85vw and leaves a scrim behind so the
+   home page underneath stays visible -- fixes the "burger navigates to a
+   stripped page" bug (the old full-width top-drop made visitors think the
+   page had changed). */
 .mobile-dropdown {
-    position: fixed; top: 78px;   /* ticker (22px) + desktop nav (~56px) */
-    left: 0; right: 0;
-    background: rgba(6, 10, 16, 0.98);
-    backdrop-filter: blur(24px);
-    /* border-bottom only when open -- was creating a 2px ghost line right
-       below the neon line when dropdown is closed (max-height:0 collapses
-       the box but the border still renders as a strip). */
-    z-index: 150;
-    display: flex; flex-direction: column;
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(320px, 85vw);
+    z-index: 250;
+    background: var(--bg-elevated);
+    border-left: 1px solid var(--border);
+    box-shadow: -12px 0 48px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform var(--duration-ui) var(--ease-out);
     pointer-events: none;
+    visibility: hidden;
 }
-@media (max-width: 768px) {
-    .mobile-dropdown { top: 74px; }  /* ticker (18px) + mobile nav (~56px) */
+.mobile-dropdown.open {
+    transform: translateX(0);
+    pointer-events: auto;
+    visibility: visible;
 }
-.mobile-dropdown.open { max-height: calc(100vh - 80px); overflow-y: auto; pointer-events: auto; border-bottom: 2px solid var(--green); }
-[data-theme="light"] .mobile-dropdown {
-    background: rgba(240, 244, 248, 0.98);
-    border-bottom-color: var(--green);
+.mobile-dropdown__scrim {
+    position: fixed; inset: 0;
+    z-index: 249;
+    background: color-mix(in srgb, var(--bg-primary) 60%, transparent);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-ui) var(--ease-out);
 }
-[data-theme="light"] .mobile-dropdown a { border-bottom-color: rgba(0,0,0,0.06); }
-[data-theme="light"] .mobile-dropdown a:hover { background: rgba(43, 168, 158, 0.08); }
-.mobile-dropdown a {
+.mobile-dropdown__scrim.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* Drawer header: brand + close X */
+.mobile-dropdown__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-16) var(--sp-24);
+    border-bottom: 1px solid var(--border);
+}
+.mobile-dropdown__brand {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: var(--fs-16);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+.mobile-dropdown__close {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    color: var(--text-muted);
+    font-size: var(--fs-20);
+    line-height: 1;
+    width: 32px; height: 32px;
+    cursor: pointer;
+    transition: color var(--duration-ui) var(--ease-out), border-color var(--duration-ui) var(--ease-out);
+}
+.mobile-dropdown__close:hover { color: var(--text-primary); border-color: var(--text-primary); }
+/* Primary nav block in drawer */
+.mobile-dropdown__nav {
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-8) 0;
+}
+.mobile-dropdown__nav a {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem; color: var(--text); font-weight: 600;
-    text-decoration: none; letter-spacing: 2px; text-transform: uppercase;
-    padding: 14px 24px;
-    border-bottom: 1px solid rgba(30, 55, 90, 0.3);
-    transition: all 0.3s;
-    opacity: 0; transform: translateY(-8px);
+    font-size: var(--fs-14);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: var(--sp-16) var(--sp-24);
+    border-bottom: 1px solid var(--border);
+    transition: color var(--duration-ui) var(--ease-out), background var(--duration-ui) var(--ease-out);
 }
-.mobile-dropdown.open a {
-    opacity: 1; transform: translateY(0);
-    animation: menu-stair 0.3s ease forwards;
+.mobile-dropdown__nav a:hover { color: var(--site-accent); background: var(--site-accent-dim); }
+/* Family block at the bottom of the drawer */
+.mobile-dropdown__family {
+    margin-top: auto;
+    padding: var(--sp-24);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
 }
-.mobile-dropdown a:nth-child(1) { animation-delay: 0.03s; }
-.mobile-dropdown a:nth-child(2) { animation-delay: 0.06s; }
-.mobile-dropdown a:nth-child(3) { animation-delay: 0.09s; }
-.mobile-dropdown a:nth-child(4) { animation-delay: 0.12s; }
-.mobile-dropdown a:nth-child(5) { animation-delay: 0.15s; }
-.mobile-dropdown a:nth-child(6) { animation-delay: 0.18s; }
-.mobile-dropdown a:nth-child(7) { animation-delay: 0.21s; }
-.mobile-dropdown a:nth-child(8) { animation-delay: 0.24s; }
-.mobile-dropdown a:nth-child(9) { animation-delay: 0.27s; }
-.mobile-dropdown a:nth-child(10) { animation-delay: 0.30s; }
-.mobile-dropdown a:nth-child(11) { animation-delay: 0.33s; }
-.mobile-dropdown a:hover, .mobile-dropdown a:active {
-    color: var(--green); background: rgba(78, 205, 196, 0.05);
-    padding-left: 32px;
+.mobile-dropdown__family-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: var(--sp-8);
 }
-@keyframes menu-stair {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.mobile-dropdown__sibling {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-14);
+    text-decoration: none;
+    padding: var(--sp-8) 0;
 }
+body.menu-open { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) {
+    .mobile-dropdown, .mobile-dropdown__scrim { transition: none; }
+}
+/* Legacy stair-in animation + link-padding hover removed with the
+   drawer rewrite. Nav link styling is now in .mobile-dropdown__nav a. */
 
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
@@ -1081,7 +1139,9 @@ body { padding-top: 22px !important; }
 
 /* --- live status grid cta --- */
 .stat-grid-cta { max-width: 1120px; margin: var(--sp-32) auto 0; padding: 0 var(--sp-24); display: flex; justify-content: center; }
-.stat-card__value--champion { font-size: var(--fs-14); color: var(--pos); line-height: 1.2; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* champion-label variant is just a size/truncate constraint. Color stays at
+   --text-primary per single-accent-per-page rule (spec review 2026-04-24). */
+.stat-card__value--champion { font-size: var(--fs-20); line-height: 1.2; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* --- powered-by card (Gemini + Claude box) --- */
 .powered-by-card {
@@ -1320,4 +1380,76 @@ body { padding-top: 22px !important; }
     background: var(--site-accent);
     border-radius: var(--radius-pill);
     transition: width var(--duration-hero) var(--ease-out);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUGFIX (2026-04-24): /live heartbeat section. Makes the page feel alive
+   even when 0 positions are open -- scanning indicator + recent-trade line
+   + mutation countdown. Pulse respects prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.heartbeat {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: var(--sp-24);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: var(--bg-elevated);
+}
+.heartbeat__row {
+    display: flex;
+    gap: var(--sp-32);
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.heartbeat__cell {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+}
+.heartbeat__dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--pos);
+    box-shadow: 0 0 10px var(--pos);
+    animation: heartbeat-pulse 2000ms ease-in-out infinite;
+    flex-shrink: 0;
+}
+.heartbeat__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.heartbeat__value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-14);
+    color: var(--text-primary);
+}
+.heartbeat__trade.pos-pnl--up   { color: var(--pos); }
+.heartbeat__trade.pos-pnl--down { color: var(--neg); }
+.heartbeat__sep { opacity: 0.4; margin: 0 var(--sp-8); }
+.heartbeat__caption {
+    margin-top: var(--sp-16);
+    padding-top: var(--sp-16);
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+}
+@keyframes heartbeat-pulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.35; transform: scale(1.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .heartbeat__dot { animation: none; }
+}
+@media (max-width: 780px) {
+    .heartbeat__row { flex-direction: column; align-items: flex-start; gap: var(--sp-16); }
 }

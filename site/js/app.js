@@ -440,12 +440,31 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// ===== MOBILE MENU =====
+// ===== MOBILE DRAWER =====
+// Slide-in from right with scrim. Body scroll lock, aria-hidden, escape key.
+// Replaces the legacy top-drop that looked like full-page navigation.
 function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('open');
+    var menu  = document.getElementById('mobile-menu');
+    var scrim = document.getElementById('mobile-menu-scrim');
+    var burger = document.querySelector('.nav-hamburger');
+    if (!menu) return;
+    var opening = !menu.classList.contains('open');
+    menu.classList.toggle('open', opening);
+    if (scrim) scrim.classList.toggle('open', opening);
+    menu.setAttribute('aria-hidden', opening ? 'false' : 'true');
+    if (burger) burger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    document.body.classList.toggle('menu-open', opening);
 }
 function closeMobileMenu() {
-    document.getElementById('mobile-menu').classList.remove('open');
+    var menu  = document.getElementById('mobile-menu');
+    var scrim = document.getElementById('mobile-menu-scrim');
+    var burger = document.querySelector('.nav-hamburger');
+    if (!menu) return;
+    menu.classList.remove('open');
+    if (scrim) scrim.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true');
+    if (burger) burger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
 }
 
 // ===== EVENT LISTENERS (replaces inline onclick) =====
@@ -463,9 +482,23 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.remove('open');
     });
 
-    // Hamburger menu
+    // Hamburger menu + scrim tap + close X + escape
     var hamburger = document.querySelector('.nav-hamburger');
-    if (hamburger) hamburger.addEventListener('click', toggleMobileMenu);
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMobileMenu);
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-controls', 'mobile-menu');
+    }
+    var mobileScrim = document.getElementById('mobile-menu-scrim');
+    if (mobileScrim) mobileScrim.addEventListener('click', closeMobileMenu);
+    var mobileCloseBtn = document.querySelector('.mobile-dropdown__close');
+    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            var menu = document.getElementById('mobile-menu');
+            if (menu && menu.classList.contains('open')) closeMobileMenu();
+        }
+    });
 
     // SSL badge popup
     var sslBadge = document.querySelector('.ssl-badge');

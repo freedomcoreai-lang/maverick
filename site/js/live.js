@@ -113,6 +113,40 @@
         } catch (e) { /* silent */ }
     }
 
+    /* heartbeat ticker -- increment the "last scan Xs ago" /
+       "last trade X min ago" clocks locally between polls so the page
+       always feels alive even when nothing new has arrived yet. */
+    var heartbeatSeedTs = Date.now();
+    var heartbeatScanBaseSecs = null;
+    var heartbeatTradeBaseSecs = null;
+    function heartbeatSeed() {
+        var scanEl  = document.getElementById('heartbeat-scan-age');
+        var tradeEl = document.getElementById('heartbeat-last-trade-age');
+        if (scanEl)  heartbeatScanBaseSecs  = parseAge(scanEl.textContent);
+        if (tradeEl) heartbeatTradeBaseSecs = parseAge(tradeEl.textContent);
+    }
+    function parseAge(str) {
+        var m = /([0-9]+)([smhd])/.exec((str || '').trim());
+        if (!m) return null;
+        var n = parseInt(m[1], 10);
+        var unit = m[2];
+        return unit === 's' ? n : unit === 'm' ? n * 60 : unit === 'h' ? n * 3600 : n * 86400;
+    }
+    function humanAge(secs) {
+        if (secs == null || secs < 0) return '--';
+        if (secs < 60)   return secs + 's ago';
+        if (secs < 3600) return Math.floor(secs / 60) + 'm ago';
+        if (secs < 86400) return Math.floor(secs / 3600) + 'h ago';
+        return Math.floor(secs / 86400) + 'd ago';
+    }
+    function heartbeatClock() {
+        var elapsed = Math.floor((Date.now() - heartbeatSeedTs) / 1000);
+        var scanEl  = document.getElementById('heartbeat-scan-age');
+        var tradeEl = document.getElementById('heartbeat-last-trade-age');
+        if (scanEl  && heartbeatScanBaseSecs  != null) scanEl.textContent  = humanAge(heartbeatScanBaseSecs  + elapsed);
+        if (tradeEl && heartbeatTradeBaseSecs != null) tradeEl.textContent = humanAge(heartbeatTradeBaseSecs + elapsed);
+    }
+
     function tick() {
         pollChampion();
         pollPositions();
@@ -131,8 +165,10 @@
 
     function boot() {
         hydrateServerValues();
+        heartbeatSeed();
         tick();
         setInterval(tick, POLL_MS);
+        setInterval(heartbeatClock, 1000);
     }
 
     if (document.readyState === 'loading') {

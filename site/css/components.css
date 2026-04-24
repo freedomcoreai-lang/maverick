@@ -260,14 +260,26 @@
     text-transform: uppercase;
     color: var(--text-muted);
     margin-bottom: var(--sp-8);
+    /* No underline-on-text decoration here. The accent surface on
+       .stat-card:hover is the only place site-accent appears on cards. */
+    text-decoration: none;
+    border-bottom: 0;
 }
 .stat-card__value {
     font-family: 'Orbitron', sans-serif;
     font-weight: 800;
-    font-size: var(--fs-40);
-    line-height: 1;
+    /* clamp() scales down on 360 px phones; prevents right-edge clipping on
+       long values like "VAL FLOW SOLO" or "06:58:..." */
+    font-size: clamp(1.5rem, 4vw, var(--fs-40));
+    line-height: 1.1;
     color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+/* --accent variant retained for rare manual highlights, but the default is
+   always --text-primary per tokens.css single-accent-per-page discipline.
+   Status semantics use --pos / --neg (trade direction), NOT site accent. */
 .stat-card__value--accent { color: var(--site-accent); }
 .stat-card__trend {
     margin-top: var(--sp-8);

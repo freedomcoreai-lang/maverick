@@ -98,28 +98,38 @@
         <img src="/img/maverick-logo.jpg" alt="MAVERICK Globe" class="logo-expand-img">
     </div>
 
-    <!-- MOBILE DROPDOWN MENU -->
-    <div class="mobile-dropdown" id="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/live">Live</a>
-        <a href="/pages/today.html">Today</a>
-        <a href="/pages/performance.html">Performance</a>
-        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
-        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
-        <a href="/pages/evolution.html">Evolution Structure</a>
-        <a href="/pages/signals.html">Signal Feed</a>
-        <a href="/pages/streamline.html">Streamline</a>
-        <a href="/pages/architecture.html">Technical Architecture</a>
-        <a href="/pages/news.html">Market News</a>
-        <a href="/pages/about.html">About / Docs</a>
-        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--shadow">SHADOW &#8599; (Sister System)</a>
-        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--quantum">QUANTUM &#8599; (Web Design)</a>
-        <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--arena">ARENA &#8599; (Leaderboard)</a>
-        <a href="/pages/access.html">Access Tiers</a>
-        <a href="/#positions">Positions</a>
-        <a href="/#security">Security</a>
-        <a href="/#system">System Status</a>
-    </div>
+    <!-- MOBILE DRAWER (slide-from-right nav; scrim closes on tap) -->
+    <div class="mobile-dropdown__scrim" id="mobile-menu-scrim" aria-hidden="true"></div>
+    <aside class="mobile-dropdown" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+        <div class="mobile-dropdown__head">
+            <span class="mobile-dropdown__brand">MAVERICK</span>
+            <button class="mobile-dropdown__close" aria-label="Close menu" type="button">&times;</button>
+        </div>
+        <nav class="mobile-dropdown__nav">
+            <a href="/">Home</a>
+            <a href="/live">Live</a>
+            <a href="/pages/today.html">Today</a>
+            <a href="/pages/performance.html">Performance</a>
+            <a href="/pages/medalists.html">Hall of Fame Medalists</a>
+            <a href="/pages/swarm.html">LLM Swarm Terminals</a>
+            <a href="/pages/evolution.html">Evolution Structure</a>
+            <a href="/pages/signals.html">Signal Feed</a>
+            <a href="/pages/streamline.html">Streamline</a>
+            <a href="/pages/architecture.html">Technical Architecture</a>
+            <a href="/pages/news.html">Market News</a>
+            <a href="/pages/about.html">About / Docs</a>
+            <a href="/pages/access.html">Access Tiers</a>
+            <a href="/#positions">Positions</a>
+            <a href="/#security">Security</a>
+            <a href="/#system">System Status</a>
+        </nav>
+        <div class="mobile-dropdown__family">
+            <div class="mobile-dropdown__family-title">Family</div>
+            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--shadow">SHADOW &#8599;</a>
+            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--quantum">QUANTUM &#8599;</a>
+            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--arena">ARENA &#8599;</a>
+        </div>
+    </aside>
 
     <!-- HERO (primitive .hero : Orbitron title + Inter sub + ONE primary + ONE secondary CTA) -->
     <section class="hero">
@@ -239,7 +249,7 @@
         </a>
         <a href="#positions" class="stat-card">
             <div class="stat-card__label">Open Positions</div>
-            <div class="stat-card__value stat-card__value--accent" id="stat-positions">--</div>
+            <div class="stat-card__value" id="stat-positions">--</div>
         </a>
         <a href="/pages/streamline.html" class="stat-card">
             <div class="stat-card__label">Symbols</div>
@@ -255,7 +265,7 @@
         </a>
         <a href="/pages/signals.html" class="stat-card">
             <div class="stat-card__label">Data Age</div>
-            <div class="stat-card__value stat-card__value--accent" id="stat-freshness">--</div>
+            <div class="stat-card__value" id="stat-freshness">--</div>
         </a>
         <a href="/pages/medalists.html" class="stat-card" title="Currently live trading strategy">
             <div class="stat-card__label">Live Champion</div>
