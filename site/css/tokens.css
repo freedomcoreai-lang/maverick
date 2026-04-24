@@ -1,10 +1,10 @@
 /* ============================================================================
-   FreedomCore Family — Design Tokens
+   FreedomCore Family -- Design Tokens
    Single source of truth for the four-site franchise:
      MAVERICK (gold) · SHADOW (violet) · QUANTUM (cyan) · ARENA (silver)
 
    Imported by /css/style.css at the top of the file. Any sibling stylesheet
-   that redefines a token below is a bug — fix the source, not the fork.
+   that redefines a token below is a bug -- fix the source, not the fork.
 
    Scale discipline:
      - 6 palette colors + 4 site accents (one per site, one active per page)
@@ -51,6 +51,19 @@
     --ease-out:       cubic-bezier(0.4, 0, 0.2, 1);
     --duration-ui:    240ms;
     --duration-hero:  800ms;
+
+    /* ─── BORDER + RADIUS (moved in from style.css / components.css) ─────── */
+    --border:         rgba(245, 245, 250, 0.10);  /* derived from --text-primary */
+    --radius-card:    12px;
+    --radius-pill:    999px;
+    --radius-button:  8px;
+
+    /* ─── SEMANTIC STATUS (universal, does NOT flip per site) ────────────
+       PnL, trade direction, execution health. Green = up, red = down.
+       These are INTENTIONALLY not site-accent-derived -- a trader reading
+       a loss in gold because MAVERICK's accent is gold would be a bug. */
+    --pos:            #22c55e;   /* positive / profit / up */
+    --neg:            #ef4444;   /* negative / loss / down */
 }
 
 /* ─── LIGHT THEME OVERRIDES ─────────────────────────────────────────────────
@@ -67,4 +80,9 @@
     --accent-violet:  #6d3bcc;
     --accent-cyan:    #1e7fc4;
     --accent-silver:  #5a6270;
+
+    --border:         rgba(10, 10, 15, 0.12);
+
+    --pos:            #15803d;   /* darker green for light bg contrast */
+    --neg:            #dc2626;
 }

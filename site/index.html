@@ -6,24 +6,28 @@
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0b0b0f">
-    <meta name="description" content="FreedomCore - MAVERICK Autonomous AI Trading System. 7 AI agents. 88 markets. Self evolving DNA.">
+    <meta name="description" content="FreedomCore MAVERICK -- Autonomous AI Trading System. 7 AI agents. 88 markets. Self-evolving DNA.">
     <title>FreedomCore | MAVERICK Autonomous Trading</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260423c">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tokens.css?v=20260424">
+    <link rel="stylesheet" href="/css/components.css?v=20260424">
+    <link rel="stylesheet" href="/css/style.css?v=20260424">
 </head>
-<body>
+<body data-site="maverick">
+
+    <!-- SITE TICKER (top headlines rail) -->
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
-    <!-- NAV -->
+    <!-- NAV (primitive .nav, accent swapped by body[data-site="maverick"]) -->
     <nav class="nav">
         <button class="nav-hamburger" aria-label="Menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo">
-            <img src="/img/maverick-shield-nav-128.png" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img" style="mix-blend-mode:screen;">
+            <img src="/img/maverick-shield-nav-128.png" alt="MAVERICK" class="nav-logo-img nav-logo-img--screen" id="nav-logo-img">
             <span class="nav-logo-text">MAVERICK</span>
         </a>
         <div class="nav-center">
@@ -37,70 +41,59 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
-            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
+            <a href="/pages/access.html" class="nav-access">Access &rarr;</a>
         </div>
         <div class="nav-right">
             <div class="ssl-badge" title="SSL Certificate Verified">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                 <span>SSL SECURED</span>
             </div>
-            <!-- SSL Certificate Popup -->
+            <!-- SSL Certificate Popup (class-driven) -->
             <div class="ssl-popup" id="ssl-popup">
                 <div class="ssl-popup-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--green)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="svg-pos"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
                     CONNECTION SECURE
                 </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Status</span>
-                    <span class="ssl-popup-value green">VALID</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Protocol</span>
-                    <span class="ssl-popup-value">TLS 1.3</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Issuer</span>
-                    <span class="ssl-popup-value">Let's Encrypt (E8)</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Domain</span>
-                    <span class="ssl-popup-value">freedomcore.io</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Issued</span>
-                    <span class="ssl-popup-value">9 Apr 2026</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Expires</span>
-                    <span class="ssl-popup-value green">8 Jul 2026</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Encryption</span>
-                    <span class="ssl-popup-value">256-bit AES</span>
-                </div>
-                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
-                    <a href="/pages/security.html" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
-                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value ssl-popup-value--pos">VALID</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Issued</span><span class="ssl-popup-value">9 Apr 2026</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Expires</span><span class="ssl-popup-value ssl-popup-value--pos">8 Jul 2026</span></div>
+                <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+                <div class="ssl-popup-footer">
+                    <a href="/pages/security.html" class="ssl-popup-learn">Learn More &rarr;</a>
+                    <span class="ssl-popup-hint">Tap outside to close</span>
                 </div>
             </div>
-                <a href="https://ntfy.sh/maverick_apex_9381?auth=0128" target="_blank" rel="noopener noreferrer" class="ntfy-badge" title="Live Push Alerts">
+            <a href="https://ntfy.sh/maverick_apex_9381?auth=0128" target="_blank" rel="noopener noreferrer" class="ntfy-badge" title="Live Push Alerts">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                 ALERTS
             </a>
-            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
+            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" class="icon-btn">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             </a>
             <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
             <div class="nav-live"><div class="live-dot"></div> LIVE</div>
         </div>
     </nav>
-
-    
     <div class="nav-neon-line" aria-hidden="true"></div>
-<!-- Logo expand overlay (outside nav to avoid fixed-inside-fixed clipping on mobile) -->
+
+    <!-- FAMILY-SWITCHER CHIP (shows OTHER three siblings, self auto-hidden) -->
+    <div class="family-switcher">
+        <span class="family-switcher__label">Family</span>
+        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" data-site="shadow" title="Switch to SHADOW">
+            <span class="family-switcher__dot" data-site="shadow"></span><span>SHADOW</span>
+        </a>
+        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" data-site="quantum" title="Switch to QUANTUM">
+            <span class="family-switcher__dot" data-site="quantum"></span><span>QUANTUM</span>
+        </a>
+        <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" data-site="arena" title="Switch to ARENA">
+            <span class="family-switcher__dot" data-site="arena"></span><span>ARENA</span>
+        </a>
+    </div>
+
+    <!-- Logo expand overlay (outside nav to avoid fixed-inside-fixed clipping on mobile) -->
     <div class="logo-expand-overlay" id="logo-expand">
         <img src="/img/maverick-logo.jpg" alt="MAVERICK Globe" class="logo-expand-img">
     </div>
@@ -108,6 +101,7 @@
     <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
         <a href="/">Home</a>
+        <a href="/live">Live</a>
         <a href="/pages/today.html">Today</a>
         <a href="/pages/performance.html">Performance</a>
         <a href="/pages/medalists.html">Hall of Fame Medalists</a>
@@ -118,53 +112,50 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
-        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;">SHADOW &#8599; (Sister System)</a>
-        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber);">QUANTUM &#8599; (Web Design)</a>
-    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver);">ARENA &#8599; (Leaderboard)</a>
+        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--shadow">SHADOW &#8599; (Sister System)</a>
+        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--quantum">QUANTUM &#8599; (Web Design)</a>
+        <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="mobile-dropdown__sibling mobile-dropdown__sibling--arena">ARENA &#8599; (Leaderboard)</a>
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
         <a href="/#system">System Status</a>
     </div>
 
-    <!-- HERO -->
+    <!-- HERO (primitive .hero : Orbitron title + Inter sub + ONE primary + ONE secondary CTA) -->
     <section class="hero">
         <div class="hero-glow"></div>
         <div class="hero-badge">The best AI in the world, evolving a trading system in real time</div>
 
-        <!-- Dark mode: animated MAVERICK hero video (poster = static for instant paint) -->
-        <div class="hero-logo-img hero-logo-dark" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
+        <!-- Dark mode hero video -->
+        <div class="hero-logo-img hero-logo-dark">
             <video id="mav-hero-video"
                    src="/img/maverick-hero.mp4?v=3"
                    poster="/img/maverick-hero-wide.png"
                    preload="auto"
                    autoplay muted loop playsinline webkit-playsinline
-                   style="width:100%; height:auto; display:block; mix-blend-mode:screen; filter: drop-shadow(0 0 60px rgba(62, 168, 245, 0.22));"
-                   aria-label="MAVERICK · Powered by FreedomCore"></video>
-            <button type="button" id="mav-hero-sound" aria-label="Unmute" aria-pressed="false"
-                    style="position:absolute; bottom:14px; right:14px; width:40px; height:40px; border-radius:50%; background:rgba(10,15,24,0.78); color:#4ecdc4; border:1px solid rgba(78,205,196,0.5); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; box-shadow:0 2px 14px rgba(0,0,0,0.3); z-index:3;">
+                   class="hero-video hero-video--dark"
+                   aria-label="MAVERICK -- Powered by FreedomCore"></video>
+            <button type="button" id="mav-hero-sound" aria-label="Unmute" aria-pressed="false" class="hero-sound-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>
             </button>
         </div>
-        <!-- Light mode: bright day-render animated hero, same centred layout as dark mode -->
-        <div class="hero-logo-img hero-logo-light" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
+        <!-- Light mode hero video -->
+        <div class="hero-logo-img hero-logo-light">
             <video id="mav-hero-video-light"
                    src="/img/maverick-hero-light.mp4?v=3"
                    poster="/img/maverick-hero-wide-light.png"
                    preload="auto"
                    autoplay muted loop playsinline webkit-playsinline
-                   style="width:100%; height:auto; display:block; filter: drop-shadow(0 0 40px rgba(62, 168, 245, 0.20));"
-                   aria-label="MAVERICK · Powered by FreedomCore"></video>
+                   class="hero-video hero-video--light"
+                   aria-label="MAVERICK -- Powered by FreedomCore"></video>
         </div>
         <script>
-        // Light-mode backdrop video — autoplay silent, pause offscreen.
         (function lightHeroVid(){
             var lv = document.getElementById('mav-hero-video-light');
             if (!lv) return;
             lv.play().catch(function(){});
             var io = new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? lv.play().catch(function(){}) : lv.pause(); }); }, { threshold: 0.1 });
             io.observe(lv);
-            // Retry play when theme toggles to light (element may have been display:none'd and now shown)
             var obs = new MutationObserver(function(){
                 if (document.documentElement.getAttribute('data-theme') === 'light') {
                     lv.play().catch(function(){});
@@ -199,9 +190,6 @@
         })();
         </script>
 
-        <div class="hero-title" style="display:none">MAVERICK</div>
-        <div class="hero-subtitle-brand" style="display:none">FreedomCore</div>
-
         <p class="hero-desc">
             Every 7 days, an AI tears up its own trading logic and writes a new one. 88 markets. Real capital.
             No human hand on the wheel. We don&rsquo;t forecast. We mutate faster than conditions change.
@@ -210,101 +198,89 @@
             It might compound into something extraordinary. It might crater on camera. You see every move.
         </p>
 
-        <!-- POWERED BY - the two frontier models teaming up -->
-        <div style="margin-top:22px; padding:18px 22px; background:var(--green-dim); border:1px solid var(--green); border-radius:14px; max-width:760px; display:inline-block; text-align:left;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--green); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:12px; text-align:center;">Gemini 3.1 + Claude Opus 4.7</div>
-            <div style="color:var(--text); font-size:0.98rem; line-height:1.6; font-weight:600; margin-bottom:10px;">
-                Two of the most capable models ever built are teaming up inside MAVERICK. <b style="color:var(--blue);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--blue);">Claude Opus 4.7</b> audits the architecture before live deployment.
-            </div>
-            <div style="color:var(--text-dim); font-size:0.86rem; line-height:1.7;">
-                Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. <span style="color:var(--green); font-weight:700;">This is the only experiment of its kind.</span>
-            </div>
-            <a href="/pages/access.html" class="frontier-cta" style="display:block; margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--gold); letter-spacing:1.5px; text-transform:uppercase; text-align:center; text-decoration:none; font-weight:700;">Two ways in. Pick whichever fits. &rarr;</a>
+        <!-- HERO ACTIONS : ONE primary + ONE secondary (spec) -->
+        <div class="hero__actions">
+            <a href="/live" class="cta-primary">Watch the bot trade live &rarr;</a>
+            <a href="/pages/architecture.html" class="cta-secondary">Read the architecture</a>
         </div>
+    </section>
 
-        <div class="hero-actions" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:26px;">
-            <a href="/pages/access.html" class="btn-outline" style="background:var(--accent); color:#000; border-color:var(--accent); font-weight:800;">WATCH THE EXPERIMENT &rarr;</a>
-            <a href="#system" class="btn-outline">How It Works</a>
+    <!-- TICKER (primitive .ticker) -->
+    <div class="ticker">
+        <div class="ticker__track">
+            <div class="ticker__item">STRATEGIES <b>2 EVOLVED</b></div>
+            <div class="ticker__item">AI AGENTS <b>7 LIVE</b></div>
+            <div class="ticker__item">SYMBOLS <b>88 UNIVERSAL</b></div>
+            <div class="ticker__item">INDICATORS/BAR <b>97</b></div>
+            <div class="ticker__item">MUTATIONS/CYCLE <b>1000</b></div>
+            <div class="ticker__item">PIPELINE <b>1-MIN</b></div>
+            <div class="ticker__item">CRIME SCENE <b>160 FIELDS</b></div>
+            <div class="ticker__item">CODEBASE <b>85,000+ LINES</b></div>
+            <div class="ticker__item">STRATEGIES <b>2 EVOLVED</b></div>
+            <div class="ticker__item">AI AGENTS <b>7 LIVE</b></div>
+            <div class="ticker__item">SYMBOLS <b>88 UNIVERSAL</b></div>
+            <div class="ticker__item">INDICATORS/BAR <b>97</b></div>
+            <div class="ticker__item">MUTATIONS/CYCLE <b>1000</b></div>
+            <div class="ticker__item">PIPELINE <b>1-MIN</b></div>
+            <div class="ticker__item">CRIME SCENE <b>160 FIELDS</b></div>
+            <div class="ticker__item">CODEBASE <b>85,000+ LINES</b></div>
         </div>
-        <div class="social-bar">
-            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer" class="social-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @freedomcoreai
-            </a>
-        </div>
+    </div>
 
-        <!-- SWARM EVOLUTION MODULE (unified: status + champion + link to terminals) -->
-        <div id="swarm-hero-banner" class="swarm-module" style="display:none; width:100%; max-width:900px; margin-top:24px; border-radius:10px; font-family:'JetBrains Mono',monospace; position:relative; z-index:2; overflow:hidden; border:1px solid var(--border, rgba(255,255,255,0.08)); background:var(--card-bg, rgba(255,255,255,0.03));">
+    <!-- LIVE STATUS (moved out of hero -- spec) : 7 .stat-cards in .stat-grid -->
+    <section class="section">
+        <div class="eyebrow eyebrow--accent">// Live Status</div>
+        <h2 class="section-title">Right now, the machine.</h2>
+    </section>
+    <div class="stat-grid">
+        <a href="/pages/swarm.html" class="stat-card">
+            <div class="stat-card__label">System</div>
+            <div class="stat-card__value" id="stat-status">--</div>
+        </a>
+        <a href="#positions" class="stat-card">
+            <div class="stat-card__label">Open Positions</div>
+            <div class="stat-card__value stat-card__value--accent" id="stat-positions">--</div>
+        </a>
+        <a href="/pages/streamline.html" class="stat-card">
+            <div class="stat-card__label">Symbols</div>
+            <div class="stat-card__value" id="stat-symbols">--</div>
+        </a>
+        <a href="/pages/swarm.html" class="stat-card">
+            <div class="stat-card__label">Database MB</div>
+            <div class="stat-card__value" id="stat-db">--</div>
+        </a>
+        <a href="/pages/swarm.html" class="stat-card">
+            <div class="stat-card__label">Uptime</div>
+            <div class="stat-card__value" id="stat-uptime">--</div>
+        </a>
+        <a href="/pages/signals.html" class="stat-card">
+            <div class="stat-card__label">Data Age</div>
+            <div class="stat-card__value stat-card__value--accent" id="stat-freshness">--</div>
+        </a>
+        <a href="/pages/medalists.html" class="stat-card" title="Currently live trading strategy">
+            <div class="stat-card__label">Live Champion</div>
+            <div class="stat-card__value stat-card__value--champion" id="stat-champion">--</div>
+        </a>
+    </div>
+    <div class="stat-grid-cta">
+        <a href="/live" class="cta-secondary">Open the live view &rarr;</a>
+    </div>
 
-            <!-- Status header -->
-            <a href="/pages/swarm.html" style="display:block; padding:16px 20px; text-decoration:none; color:inherit;">
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span id="sh-dot" style="width:10px; height:10px; border-radius:50%; display:inline-block;"></span>
-                        <span id="sh-label" style="font-size:0.7rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;"></span>
-                    </div>
-                    <span id="sh-detail" style="font-size:0.62rem; letter-spacing:0.5px; opacity:0.85;"></span>
-                </div>
-                <div style="margin-top:10px; height:3px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden;">
-                    <div id="sh-bar" style="height:100%; border-radius:3px; transition:width 0.8s ease;"></div>
-                </div>
-                <div style="margin-top:6px; text-align:right;">
-                    <span style="font-size:0.55rem; letter-spacing:1px; text-transform:uppercase; opacity:0.45;">View Swarm Terminals &rarr;</span>
-                </div>
-            </a>
-
-            <!-- Champion section (always visible when data exists) -->
-            <div id="sh-champion" style="display:none; border-top:1px solid var(--border, rgba(255,255,255,0.06));">
-                <!-- Champion header - click to expand -->
-                <div id="sh-champ-toggle" style="cursor:pointer; padding:14px 20px; display:flex; align-items:center; justify-content:space-between;">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span style="font-size:0.58rem; color:var(--champion); font-weight:800; letter-spacing:1px; background:var(--champion-bg); padding:3px 10px; border-radius:4px;">CHAMPION</span>
-                        <span id="sh-champ-name" style="font-size:0.65rem; color:var(--text,#e5e7eb); font-weight:600;"></span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span id="sh-champ-score" style="font-size:0.65rem; color:var(--green, #10b981); font-weight:700;"></span>
-                        <span id="sh-champ-arrow" style="font-size:0.7rem; opacity:0.4; transition:transform 0.3s;">&#9660;</span>
-                    </div>
-                </div>
-
-                <!-- Expandable champion detail -->
-                <div id="sh-champ-detail" style="display:none; padding:0 20px 18px;">
-                </div>
+    <!-- POWERED BY (Gemini 3.1 + Claude Opus 4.7) -- now .stat-card shaped -->
+    <section class="section">
+        <div class="powered-by-card">
+            <div class="powered-by-card__eyebrow">Gemini 3.1 + Claude Opus 4.7</div>
+            <div class="powered-by-card__lead">
+                Two of the most capable models ever built are teaming up inside MAVERICK.
+                <b>Gemini 3.1</b> invents each candidate strategy. <b>Claude Opus 4.7</b>
+                audits the architecture before live deployment.
             </div>
-        </div>
-
-        <!-- LIVE STATUS BAR (inside hero) -->
-        <div class="status-bar-wrap" style="position:relative;z-index:2;width:100%;max-width:900px;margin-top:40px;">
-            <div class="status-bar">
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value" id="stat-status">--</div>
-                    <div class="status-label">System</div>
-                </a>
-                <a href="#positions" class="status-item status-link">
-                    <div class="status-value blue" id="stat-positions">--</div>
-                    <div class="status-label">Open Positions</div>
-                </a>
-                <a href="/pages/streamline.html" class="status-item status-link">
-                    <div class="status-value" id="stat-symbols">--</div>
-                    <div class="status-label">Symbols</div>
-                </a>
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value amber" id="stat-db">--</div>
-                    <div class="status-label">Database MB</div>
-                </a>
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value" id="stat-uptime">--</div>
-                    <div class="status-label">Uptime</div>
-                </a>
-                <a href="/pages/signals.html" class="status-item status-link">
-                    <div class="status-value blue" id="stat-freshness">--</div>
-                    <div class="status-label">Data Age</div>
-                </a>
-                <a href="/pages/medalists.html" class="status-item status-link" title="Currently live trading strategy">
-                    <div class="status-value" id="stat-champion" style="font-size:0.7rem;color:var(--green,#4ecdc4);line-height:1.2;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:120px;">--</div>
-                    <div class="status-label">Live Champion</div>
-                </a>
+            <div class="powered-by-card__body">
+                Every time Google or Anthropic ships a new model, the swarm auto-upgrades
+                the following cycle. You are always running the best AI available on Earth,
+                not a snapshot. <span class="powered-by-card__emph">This is the only experiment of its kind.</span>
             </div>
+            <a href="/pages/access.html" class="powered-by-card__cta">Two ways in. Pick whichever fits. &rarr;</a>
         </div>
     </section>
 
@@ -316,7 +292,7 @@
             <p class="section-text">
                 Real capital. Real positions. Tap any card to see the full exit architecture,
                 entry reasoning, and live telemetry. Updated every 30 seconds.
-                <span id="pos-total-pnl" class="pos-summary-value" style="margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:1rem;"></span>
+                <span id="pos-total-pnl" class="pos-summary-value"></span>
             </p>
             <div class="gated" id="positions-gate">
                 <div class="gate-lock">
@@ -330,68 +306,46 @@
         </div>
     </section>
 
-    <!-- TICKER -->
-    <div class="ticker-bar">
-        <div class="ticker-track">
-            <div class="ticker-item">STRATEGIES <span>2 EVOLVED</span></div>
-            <div class="ticker-item">AI AGENTS <span>7 LIVE</span></div>
-            <div class="ticker-item">SYMBOLS <span>88 UNIVERSAL</span></div>
-            <div class="ticker-item">INDICATORS/BAR <span>97</span></div>
-            <div class="ticker-item">MUTATIONS/CYCLE <span>1000</span></div>
-            <div class="ticker-item">PIPELINE <span>1-MIN</span></div>
-            <div class="ticker-item">CRIME SCENE <span>160 FIELDS</span></div>
-            <div class="ticker-item">CODEBASE <span>85,000+ LINES</span></div>
-            <div class="ticker-item">STRATEGIES <span>2 EVOLVED</span></div>
-            <div class="ticker-item">AI AGENTS <span>7 LIVE</span></div>
-            <div class="ticker-item">SYMBOLS <span>88 UNIVERSAL</span></div>
-            <div class="ticker-item">INDICATORS/BAR <span>97</span></div>
-            <div class="ticker-item">MUTATIONS/CYCLE <span>1000</span></div>
-            <div class="ticker-item">PIPELINE <span>1-MIN</span></div>
-            <div class="ticker-item">CRIME SCENE <span>160 FIELDS</span></div>
-            <div class="ticker-item">CODEBASE <span>85,000+ LINES</span></div>
-        </div>
-    </div>
-
     <!-- ABOUT / ORIGIN -->
     <section id="about">
         <div class="section-inner reveal">
             <div class="section-label">// About</div>
             <h2 class="section-title">It never sleeps.<br>It never stops mutating.</h2>
-            <p class="section-text" style="font-size:1.05rem;line-height:1.8;">
+            <p class="section-text section-text--prose">
                 MAVERICK is alive. It scans 88 crypto futures markets every sixty seconds, and a single
                 evolved champion owns every decision on the book. Which symbol to enter. How much to risk.
                 Where the stop goes. When to trail. When to exit. No human approves a trade. No human sets
                 a stop. No human picks a symbol. The champion fought its way to the throne, and the
                 champion runs the capital.
             </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
+            <p class="section-text section-text--prose">
                 But the champion is not forever. Every few days an LLM swarm rewrites the DNA from the
                 ground up, using the corpses of losing trades as teaching material. The strategy trading
                 right now has an expiry date. The one that replaces it may look nothing like it.
             </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
+            <p class="section-text section-text--prose">
                 Execution is the easy part. The real machine is what happens between trades.
             </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
+            <p class="section-text section-text--prose">
                 Every loss is dissected. The system watches itself die, studies the tape, and tags the
                 structural defect for the next cycle. Every six hours a Sentinel AI reads the full state of
                 the market and publishes a strategic broadcast. Every forty eight hours Gemini 3.1, with a
                 Claude Opus 4.7 callback shadowing it, runs a fresh Swarm. It performs root cause analysis on
                 every losing pattern, proposes new DNA, validates the candidate against six days of real
                 market data, and only deploys if the challenger strictly beats the sitting champion.
-                <strong style="color:var(--green);">The strategy that trades tomorrow may not be the same
+                <strong class="prose-emph-pos">The strategy that trades tomorrow may not be the same
                 strategy that traded yesterday.</strong> It evolves. It forgets what no longer works. It
                 remembers what killed it.
             </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
+            <p class="section-text section-text--prose">
                 85,000 lines of production Python. 128 million backtest evaluations logged. Seven
                 autonomous AI agents looping forever. A Sovereign Live Adapter refreshing the in memory
                 state every five minutes and gating every candidate through a contract validator before it
                 touches a dollar of live capital. Honest Physics enforced. T minus sixty on every lookup.
                 No lookahead. No theory.
             </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                <strong style="color:var(--gold);">Nothing on this website is simulated.</strong> Every
+            <p class="section-text section-text--prose">
+                <strong class="prose-emph-accent">Nothing on this website is simulated.</strong> Every
                 number you read came from real markets, real trades, and real capital at risk. You are not
                 watching a demo. You are watching an organism hunt.
             </p>
@@ -415,7 +369,7 @@
                 </div>
             </div>
 
-            <a href="/pages/about.html" class="explore-btn" style="margin-top:32px;max-width:360px;justify-content:center;">
+            <a href="/pages/about.html" class="explore-btn explore-btn--wide">
                 <span>Read the Full Story</span>
                 <span class="explore-btn-arrow">&rarr;</span>
             </a>
@@ -432,14 +386,14 @@
                 exits. It runs across all 88 perpetual futures, ticking every second. The swarm evolves
                 new candidates continuously. Only a strategy that strictly beats the live champion on a
                 fresh 6-day honest-physics backtest takes the throne. If nothing beats it, the system holds.
-                No change for the sake of change. The current apex is <strong id="live-champion-name">loading…</strong>,
+                No change for the sake of change. The current apex is <strong id="live-champion-name">loading&hellip;</strong>,
                 and the swarm is actively honing its successor right now.
             </p>
             <div class="engine-grid">
                 <div class="engine-card trend">
                     <div class="engine-icon">&#127919;</div>
                     <div class="engine-name" id="live-champion-card-name">Live Champion</div>
-                    <div class="engine-desc" id="live-champion-card-desc">The reigning live strategy. Reads <span id="live-champion-features">the live feature set</span> and fires entries the moment its conditions line up, across all 88 perpetual futures. A 2.5 ATR initial stop protects capital, a two-stage volatility trail ratchets profits as the move extends, and a 4-hour time-exit closes any position that fails to work. When the swarm evolves a strategy that strictly beats this one on an honest-physics backtest, the atomic hot-swap pipeline replaces it live - and this card updates the moment it does.</div>
+                    <div class="engine-desc" id="live-champion-card-desc">The reigning live strategy. Reads <span id="live-champion-features">the live feature set</span> and fires entries the moment its conditions line up, across all 88 perpetual futures. A 2.5 ATR initial stop protects capital, a two-stage volatility trail ratchets profits as the move extends, and a 4-hour time-exit closes any position that fails to work. When the swarm evolves a strategy that strictly beats this one on an honest-physics backtest, the atomic hot-swap pipeline replaces it live and this card updates the moment it does.</div>
                 </div>
                 <div class="engine-card trap">
                     <div class="engine-icon">&#9881;</div>
@@ -449,12 +403,12 @@
                 <div class="engine-card chop">
                     <div class="engine-icon">&#128274;</div>
                     <div class="engine-name">Sovereign Live Adapter</div>
-                    <div class="engine-desc">Auto-refreshes the champion's in-memory cache every 5 minutes so live state mirrors the evaluator's. Every new candidate passes the Champion Validator - DNA schema check, contract correctness on pre_filter / signal_entry / manage_position, idempotent cache guarantees, and the 2.5 ATR stop-floor. The atomic hot-swap runs a 45-second live health check on every deploy and rolls back on failure. No bifurcation between what evaluation saw and what fires on the exchange.</div>
+                    <div class="engine-desc">Auto-refreshes the champion's in-memory cache every 5 minutes so live state mirrors the evaluator's. Every new candidate passes the Champion Validator, DNA schema check, contract correctness on pre_filter / signal_entry / manage_position, idempotent cache guarantees, and the 2.5 ATR stop-floor. The atomic hot-swap runs a 45-second live health check on every deploy and rolls back on failure. No bifurcation between what evaluation saw and what fires on the exchange.</div>
                 </div>
                 <div class="engine-card genesis">
                     <div class="engine-icon">&#129529;</div>
                     <div class="engine-name">The God-Mode Swarm</div>
-                    <div class="engine-desc">Two of the most capable models ever built are teaming up inside MAVERICK. <strong>Gemini 3.1</strong> writes each candidate strategy - entry logic, pre-filter, position management, DNA - from a blank scaffold, anchored to market structure on every thesis. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. Candidates are rejected if they duplicate a previously-scored thesis, violate the payoff-ratio floor, or crack under honest-physics lookahead detection. Every new Google or Anthropic model release auto-upgrades the pipeline the very next cycle. You are always running the best AI available on Earth.</div>
+                    <div class="engine-desc">Two of the most capable models ever built are teaming up inside MAVERICK. <strong>Gemini 3.1</strong> writes each candidate strategy -- entry logic, pre-filter, position management, DNA -- from a blank scaffold, anchored to market structure on every thesis. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. Candidates are rejected if they duplicate a previously-scored thesis, violate the payoff-ratio floor, or crack under honest-physics lookahead detection. Every new Google or Anthropic model release auto-upgrades the pipeline the very next cycle. You are always running the best AI available on Earth.</div>
                 </div>
             </div>
         </div>
@@ -468,59 +422,23 @@
             <p class="section-text">
                 Everything is transparent. The medalist hall of fame, today's live heartbeat,
                 the LLM swarm terminals, the data pipeline, live trade signals, the evolution
-                architecture. If the system is doing it, you can see it &mdash; subject to your tier.
+                architecture. If the system is doing it, you can see it, subject to your tier.
             </p>
             <div class="explore-grid">
-                <a href="/pages/access.html" class="explore-btn" style="border-color:var(--accent);">
+                <a href="/pages/access.html" class="explore-btn explore-btn--primary">
                     <span class="explore-btn-icon">&#128273;</span>
                     <span>Access &amp; Tiers</span>
                     <span class="explore-btn-arrow">&rarr;</span>
                 </a>
-                <a href="/pages/today.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128293;</span>
-                    <span>Today</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/medalists.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#127942;</span>
-                    <span>Hall of Fame</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/swarm.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#129504;</span>
-                    <span>LLM Swarm Terminals</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/evolution.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#129516;</span>
-                    <span>Evolution Structure</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/signals.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#9889;</span>
-                    <span>Signal Feed</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/performance.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128200;</span>
-                    <span>Performance</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/streamline.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#9881;</span>
-                    <span>Streamline</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/architecture.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128295;</span>
-                    <span>Architecture</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/about.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128209;</span>
-                    <span>Documentation</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
+                <a href="/pages/today.html" class="explore-btn"><span class="explore-btn-icon">&#128293;</span><span>Today</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/medalists.html" class="explore-btn"><span class="explore-btn-icon">&#127942;</span><span>Hall of Fame</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/swarm.html" class="explore-btn"><span class="explore-btn-icon">&#129504;</span><span>LLM Swarm Terminals</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/evolution.html" class="explore-btn"><span class="explore-btn-icon">&#129516;</span><span>Evolution Structure</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/signals.html" class="explore-btn"><span class="explore-btn-icon">&#9889;</span><span>Signal Feed</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/performance.html" class="explore-btn"><span class="explore-btn-icon">&#128200;</span><span>Performance</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/streamline.html" class="explore-btn"><span class="explore-btn-icon">&#9881;</span><span>Streamline</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/architecture.html" class="explore-btn"><span class="explore-btn-icon">&#128295;</span><span>Architecture</span><span class="explore-btn-arrow">&rarr;</span></a>
+                <a href="/pages/about.html" class="explore-btn"><span class="explore-btn-icon">&#128209;</span><span>Documentation</span><span class="explore-btn-arrow">&rarr;</span></a>
             </div>
         </div>
     </section>
@@ -590,18 +508,16 @@
                     </div>
                 </div>
                 <div class="chain-node" data-agent-schedule="swarm">
-                    <div class="chain-dot green" style="box-shadow: 0 0 20px var(--green);"></div>
+                    <div class="chain-dot green chain-dot--glow"></div>
                     <div>
                         <div class="chain-time">SUNDAYS &middot; 17:15 <span class="chain-countdown" data-schedule="swarm"></span></div>
-                        <div class="chain-title" style="color:var(--green);">Organism Swarm</div>
-                        <div class="chain-desc">The apex intelligence. <strong>Gemini 3.1</strong> reads 48 hours of sentinel broadcasts, the weekly digest, crime scene forensics from losses, and success forensics from winners - then writes each new candidate strategy from scratch with total authority over entry logic, pre-filter, position management, and DNA. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. A 1000-generation God-Mode mega hunt is actively running. Every candidate is stress-tested against real market data across all 88 symbols under the unified engine with Honest Physics (60s delay, realistic fees, 2.5 ATR stop floor). Only a strategy that strictly beats the reigning champion takes the throne. Auto-upgrades to every new Gemini and Claude release the cycle after it ships.</div>
+                        <div class="chain-title chain-title--pos">Organism Swarm</div>
+                        <div class="chain-desc">The apex intelligence. <strong>Gemini 3.1</strong> reads 48 hours of sentinel broadcasts, the weekly digest, crime scene forensics from losses, and success forensics from winners, then writes each new candidate strategy from scratch with total authority over entry logic, pre-filter, position management, and DNA. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. A 1000-generation God-Mode mega hunt is actively running. Every candidate is stress-tested against real market data across all 88 symbols under the unified engine with Honest Physics (60s delay, realistic fees, 2.5 ATR stop floor). Only a strategy that strictly beats the reigning champion takes the throne. Auto-upgrades to every new Gemini and Claude release the cycle after it ships.</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- SWARM section moved to /pages/swarm.html -->
 
     <!-- ACCESS TIERS -->
     <section id="access" class="section-divider">
@@ -614,7 +530,7 @@
                 tier below to preview where that access lands you.
             </p>
             <div class="tier-grid">
-                <a class="tier-card" href="/pages/today.html" style="text-decoration:none;color:inherit;display:block;">
+                <a class="tier-card" href="/pages/today.html">
                     <div class="tier-badge">Tier 1 &middot; 1,000 $MAV / $29 mo</div>
                     <div class="tier-name">Observer</div>
                     <div class="tier-price">Watch the machine think</div>
@@ -624,9 +540,9 @@
                         <li>Weekly DNA mutation reports</li>
                         <li>Performance dashboard</li>
                     </ul>
-                    <div class="tier-soon" style="color:var(--accent);">Preview Today page &rarr;</div>
+                    <div class="tier-soon tier-soon--accent">Preview Today page &rarr;</div>
                 </a>
-                <a class="tier-card featured" href="/pages/signals.html" style="text-decoration:none;color:inherit;display:block;">
+                <a class="tier-card featured" href="/pages/signals.html">
                     <div class="tier-badge">Tier 2 &middot; 10,000 $MAV / $99 mo</div>
                     <div class="tier-name">Signal</div>
                     <div class="tier-price">Trade alongside MAVERICK</div>
@@ -636,9 +552,9 @@
                         <li>Entry, exit, and trail alerts</li>
                         <li>Engine specific filtering</li>
                     </ul>
-                    <div class="tier-soon" style="color:var(--gold);">Preview Signal feed &rarr;</div>
+                    <div class="tier-soon tier-soon--gold">Preview Signal feed &rarr;</div>
                 </a>
-                <a class="tier-card" href="/pages/swarm.html" style="text-decoration:none;color:inherit;display:block;">
+                <a class="tier-card" href="/pages/swarm.html">
                     <div class="tier-badge">Tier 3 &middot; 100,000 $MAV / $499 mo</div>
                     <div class="tier-name">Sovereign</div>
                     <div class="tier-price">Full autonomous trading</div>
@@ -648,19 +564,19 @@
                         <li>Custom risk parameters</li>
                         <li>Direct API access</li>
                     </ul>
-                    <div class="tier-soon" style="color:#b9c5ff;">Preview Swarm terminals &rarr;</div>
+                    <div class="tier-soon tier-soon--soft">Preview Swarm terminals &rarr;</div>
                 </a>
             </div>
-            <div style="margin-top:28px;text-align:center;">
-                <a href="/pages/access.html" style="display:inline-block;padding:14px 32px;background:var(--accent);color:#000;font-family:'JetBrains Mono',monospace;font-weight:800;letter-spacing:2px;font-size:0.78rem;text-transform:uppercase;text-decoration:none;border-radius:10px;">Connect Wallet or Subscribe &rarr;</a>
+            <div class="access-cta-wrap">
+                <a href="/pages/access.html" class="cta-primary">Connect Wallet or Subscribe &rarr;</a>
             </div>
         </div>
     </section>
 
-    <!-- SECURITY SHIELD (feature section) -->
+    <!-- SECURITY SHIELD -->
     <section id="security" class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label" style="color:var(--gold);">// Security</div>
+            <div class="section-label section-label--accent">// Security</div>
             <h2 class="section-title">A+ rated security.<br>Thirteen months hardened.</h2>
             <p class="section-text">
                 Every connection is encrypted with TLS 1.3. Every header is hardened. Every
@@ -670,88 +586,64 @@
                 Don't take my word for any of it. Verify the grade yourself below.
             </p>
 
-            <!-- Gold padlock feature hero — the headline credibility signal -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin:36px 0 44px;">
-                <div style="grid-column:1 / -1; background:linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02)); border:1px solid rgba(255,215,0,0.35); border-radius:18px; padding:32px 28px; display:flex; gap:22px; align-items:center; flex-wrap:wrap; box-shadow:0 0 40px rgba(255,215,0,0.08);">
-                    <div style="flex-shrink:0; color:var(--gold); filter:drop-shadow(0 0 16px rgba(255,215,0,0.45));">
-                        <svg width="72" height="72" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                    </div>
-                    <div style="flex:1; min-width:240px;">
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px;">Mozilla Observatory · SSL Labs · SecurityHeaders.com</div>
-                        <div style="font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:900; color:var(--gold); line-height:1.1; margin-bottom:10px; letter-spacing:-0.5px;">A+ GRADE · 100 / 100</div>
-                        <div style="color:var(--text-dim); font-size:0.92rem; line-height:1.6;">TLS 1.3 with AES-256. HSTS preload. Strict Content Security Policy. No inline scripts. No third-party code loaded without a self-hosted copy. Every header independently audited and scored perfect.</div>
-                    </div>
-                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; width:100%;">
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">13</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Months Hardening</div>
-                        </div>
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">7+</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Header Policies</div>
-                        </div>
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">0</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Breach Incidents</div>
-                        </div>
-                    </div>
+            <!-- Gold padlock feature hero -->
+            <div class="security-hero">
+                <div class="security-hero__icon">
+                    <svg width="72" height="72" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+                </div>
+                <div class="security-hero__copy">
+                    <div class="security-hero__eyebrow">Mozilla Observatory &middot; SSL Labs &middot; SecurityHeaders.com</div>
+                    <div class="security-hero__grade">A+ GRADE &middot; 100 / 100</div>
+                    <div class="security-hero__desc">TLS 1.3 with AES-256. HSTS preload. Strict Content Security Policy. No inline scripts. No third-party code loaded without a self-hosted copy. Every header independently audited and scored perfect.</div>
+                </div>
+                <div class="security-hero__stats">
+                    <div class="security-hero__stat"><div class="security-hero__stat-val">13</div><div class="security-hero__stat-label">Months Hardening</div></div>
+                    <div class="security-hero__stat"><div class="security-hero__stat-val">7+</div><div class="security-hero__stat-label">Header Policies</div></div>
+                    <div class="security-hero__stat"><div class="security-hero__stat-val">0</div><div class="security-hero__stat-label">Breach Incidents</div></div>
                 </div>
             </div>
 
             <div class="security-grid">
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--green);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                    </div>
+                    <div class="security-icon security-icon--pos"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg></div>
                     <div class="security-title">TLS 1.3 / AES-256</div>
                     <div class="security-desc">Military-grade encryption on every connection. TLS 1.3 with AES-256-GCM-SHA384 cipher suite. Same standard used by NATO and banking systems.</div>
                     <div class="security-status">ACTIVE</div>
                 </div>
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--accent);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
+                    <div class="security-icon security-icon--accent"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                     <div class="security-title">HSTS Preload</div>
                     <div class="security-desc">HTTP Strict Transport Security with 2-year enforcement. Your browser is instructed to never connect over unencrypted HTTP. Preload-ready for Chrome, Firefox, Safari.</div>
                     <div class="security-status">ENFORCED</div>
                 </div>
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--purple);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                    </div>
+                    <div class="security-icon security-icon--purple"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
                     <div class="security-title">Content Security Policy</div>
                     <div class="security-desc">Strict CSP blocks all unauthorised scripts, frames, and data injection. Only trusted sources (self, Google Fonts) are permitted. XSS attacks neutralised at the browser level.</div>
                     <div class="security-status">LOCKED</div>
                 </div>
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--amber);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-                    </div>
-                    <div class="security-title">Clickjack & Frame Block</div>
+                    <div class="security-icon security-icon--warn"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+                    <div class="security-title">Clickjack &amp; Frame Block</div>
                     <div class="security-desc">X-Frame-Options DENY and frame-ancestors 'none' prevent any external site from embedding or overlaying FreedomCore. Zero clickjacking risk.</div>
                     <div class="security-status">BLOCKED</div>
                 </div>
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--green);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                    </div>
+                    <div class="security-icon security-icon--pos"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
                     <div class="security-title">API Rate Limiting</div>
                     <div class="security-desc">All API endpoints are rate-limited to 10 requests/second per IP with burst protection. GET-only enforcement. All write operations return 403 Forbidden.</div>
                     <div class="security-status">PROTECTED</div>
                 </div>
                 <div class="security-card">
-                    <div class="security-icon" style="color:var(--accent);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </div>
+                    <div class="security-icon security-icon--accent"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
                     <div class="security-title">Privacy Headers</div>
                     <div class="security-desc">Referrer-Policy controls data leakage. Permissions-Policy blocks camera, microphone, geolocation, payment, USB, and sensor access. Cross-Origin policies isolate all resources.</div>
                     <div class="security-status">SEALED</div>
                 </div>
             </div>
 
-            <!-- Live verification button -->
-            <div style="margin-top:32px;text-align:center;">
-                <a href="https://securityheaders.com/?q=freedomcore.io&followRedirects=on" target="_blank" rel="noopener noreferrer" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;">
+            <div class="security-verify-wrap">
+                <a href="https://securityheaders.com/?q=freedomcore.io&amp;followRedirects=on" target="_blank" rel="noopener noreferrer" class="cta-secondary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     VERIFY SECURITY LIVE &rarr;
                 </a>
@@ -759,74 +651,97 @@
         </div>
     </section>
 
-    <!-- CLOSING BANNER — framed section with context + video -->
-    <section style="padding:70px 24px 50px; position:relative; z-index:2;">
-        <div style="max-width:900px; margin:0 auto; text-align:center;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--green); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">// One AI. Real capital. Live.</div>
-            <h2 style="font-size:clamp(1.6rem, 4vw, 2.4rem); font-weight:800; letter-spacing:-1px; margin-bottom:16px; line-height:1.1;">The experiment in motion.</h2>
-            <p style="font-size:0.95rem; line-height:1.7; color:var(--text-dim); max-width:640px; margin:0 auto 30px;">
-                No staged renders, no stock footage. Every move you see — your move. The AI self-audits, rewrites, fires. You hold the seat.
+    <!-- CLOSING BANNER -->
+    <section class="closing-banner">
+        <div class="closing-banner__inner">
+            <div class="eyebrow eyebrow--pos">// One AI. Real capital. Live.</div>
+            <h2 class="closing-banner__title">The experiment in motion.</h2>
+            <p class="closing-banner__lead">
+                No staged renders, no stock footage. Every move you see, your move. The AI self-audits,
+                rewrites, fires. You hold the seat.
             </p>
-            <div class="hero-banner" data-video="1" style="position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 60px rgba(62,168,245,0.10);">
+            <div class="hero-banner" data-video="1">
                 <video
                     src="/img/grok-banner.mp4"
                     poster="/img/maverick-banner.jpg"
                     preload="metadata" muted loop playsinline webkit-playsinline
-                    style="width:100%;height:auto;display:block;"
+                    class="closing-banner__video"
                     aria-label="FreedomCore animated banner"></video>
-                <button type="button" class="video-sound-btn" aria-label="Unmute banner audio" aria-pressed="false"
-                    style="position:absolute;bottom:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(10,15,24,0.78);color:#4ecdc4;border:1px solid rgba(78,205,196,0.5);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 14px rgba(0,0,0,0.3);z-index:3;"></button>
+                <button type="button" class="video-sound-btn" aria-label="Unmute banner audio" aria-pressed="false"></button>
             </div>
-            <div style="display:flex; gap:14px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
-                <a href="/pages/access.html" class="btn-primary">Watch it live &rarr;</a>
-                <a href="/pages/architecture.html" class="btn-outline">How it works</a>
+            <div class="closing-banner__actions">
+                <a href="/live" class="cta-primary">Watch it live &rarr;</a>
+                <a href="/pages/architecture.html" class="cta-secondary">How it works</a>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (primitive .footer, 3-column + family strip) -->
     <footer class="footer">
-        <div class="footer-logo">FREEDOMCORE</div>
-        <div class="footer-links">
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--purple); font-weight:700;">SHADOW &#8599;</a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--green); font-weight:700;">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA &#8599;</a>
-            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @freedomcoreai
-            </a>
-            <a href="mailto:freedomcoreai@gmail.com">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
-                freedomcoreai@gmail.com
-            </a>
-            <a href="#top" class="back-to-top">
-                &uarr; Back to Top
-            </a>
+        <div class="footer__grid">
+            <div class="footer__brand">
+                <div class="footer__logo">FREEDOMCORE</div>
+                <div class="footer__tag">
+                    Autonomous AI trading. 88 markets. One champion. Self-rewriting every cycle.
+                </div>
+            </div>
+            <div class="footer__col">
+                <div class="footer__col-title">Explore</div>
+                <div class="footer__links">
+                    <a href="/live">Live</a>
+                    <a href="/pages/today.html">Today</a>
+                    <a href="/pages/signals.html">Signals</a>
+                    <a href="/pages/performance.html">Performance</a>
+                    <a href="/pages/about.html">About</a>
+                    <a href="/pages/architecture.html">Architecture</a>
+                </div>
+            </div>
+            <div class="footer__col">
+                <div class="footer__col-title">Family</div>
+                <div class="footer__links">
+                    <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="footer__sibling footer__sibling--shadow">SHADOW &#8599;</a>
+                    <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="footer__sibling footer__sibling--quantum">QUANTUM &#8599;</a>
+                    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="footer__sibling footer__sibling--arena">ARENA &#8599;</a>
+                </div>
+            </div>
         </div>
-        <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin:28px 0 16px; padding-top:22px; border-top:1px solid var(--border); max-width:600px; margin-left:auto; margin-right:auto;">
-            <span>Designed by</span>
-            <a href="mailto:quantumspark80@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:800; letter-spacing:2.5px;">QUANTUM SPARK</a>
-            <span style="opacity:0.5;">&middot;</span>
-            <a href="mailto:quantumspark80@gmail.com" style="color:var(--text-dim); text-decoration:none;">quantumspark80@gmail.com</a>
+        <div class="footer__family">
+            <span class="footer__copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</span>
+            <div class="footer__social">
+                <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer" title="@freedomcoreai on X">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    @freedomcoreai
+                </a>
+                <a href="mailto:freedomcoreai@gmail.com">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+                    freedomcoreai@gmail.com
+                </a>
+                <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    GitHub
+                </a>
+                <a href="#top" class="back-to-top">&uarr; Back to Top</a>
+            </div>
         </div>
-        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
+        <div class="footer__credit">
+            Designed by
+            <a href="mailto:quantumspark80@gmail.com" class="footer__credit-name">QUANTUM SPARK</a>
+            <span class="footer__credit-sep">&middot;</span>
+            <a href="mailto:quantumspark80@gmail.com" class="footer__credit-email">quantumspark80@gmail.com</a>
+        </div>
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260423d"></script>
+    <script src="/js/app.js?v=20260424"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script>
-    // Live champion card sync — pulls current champion from /api/swarm_champion
-    // and updates the "Live Champion" card on every page load + every 60s.
-    // No hot-swap ever leaves marketing copy lying about who is live.
+    // Live champion card sync -- pulls current champion from /api/swarm_champion
+    // and updates the "Live Champion" card on page load + every 60s.
     (function() {
         async function refreshLiveChampion() {
             try {
-                // Use fcFetch (adds X-API-Key header) — plain fetch hits
-                // nginx's 401 gate and the card stays stuck on "loading...".
-                // Fixed 2026-04-23.
                 const res = typeof fcFetch === 'function'
                     ? await fcFetch('/api/swarm_champion', { cache: 'no-store' })
                     : await fetch('/api/swarm_champion', {
@@ -845,9 +760,8 @@
                     const feats = d.required_features.map(f => f.toUpperCase()).join(', ');
                     featEl.textContent = feats;
                 }
-            } catch (e) { /* silent — card keeps generic fallback */ }
+            } catch (e) { /* silent -- card keeps generic fallback */ }
         }
-        // On load + every 60s
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', refreshLiveChampion);
         } else {
