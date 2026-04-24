@@ -163,9 +163,49 @@
         }
     }
 
+    function bindNotifyForm() {
+        var form = document.getElementById('notify-form');
+        var msg  = document.getElementById('notify-msg');
+        if (!form || !msg) return;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = (form.email.value || '').trim();
+            if (!email) { msg.textContent = 'Add your email first.'; msg.className = 'notify__msg notify__msg--err'; return; }
+            msg.textContent = 'Sending...'; msg.className = 'notify__msg';
+            var btn = form.querySelector('button[type="submit"]');
+            if (btn) btn.disabled = true;
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'email=' + encodeURIComponent(email),
+            }).then(function (r) {
+                if (btn) btn.disabled = false;
+                if (r.status === 200 || r.status === 201 || r.status === 202) {
+                    form.innerHTML =
+                        '<div class="notify__ok">Locked in. You will get a single email the moment the next champion takes over -- next mutation in ' +
+                        (document.getElementById('swarm-countdown')
+                            ? document.getElementById('swarm-countdown').textContent
+                            : 'a few hours') +
+                        '.</div>';
+                } else if (r.status === 409) {
+                    msg.textContent = 'Already on the list -- nothing else to do.';
+                    msg.className = 'notify__msg notify__msg--ok';
+                } else {
+                    msg.textContent = 'Could not save right now. Try again in a minute.';
+                    msg.className = 'notify__msg notify__msg--err';
+                }
+            }).catch(function () {
+                if (btn) btn.disabled = false;
+                msg.textContent = 'Network hiccup. Try again.';
+                msg.className = 'notify__msg notify__msg--err';
+            });
+        });
+    }
+
     function boot() {
         hydrateServerValues();
         heartbeatSeed();
+        bindNotifyForm();
         tick();
         setInterval(tick, POLL_MS);
         setInterval(heartbeatClock, 1000);

@@ -55,7 +55,7 @@
     function dirStyle(dir) {
         return dir === 'long'
             ? { color: 'var(--green)', bg: 'rgba(78,205,196,0.10)', label: 'BULL' }
-            : { color: 'var(--red)',   bg: 'rgba(239,68,68,0.10)', label: 'BEAR' };
+            : { color: 'var(--neg)',   bg: 'rgba(239,68,68,0.10)', label: 'BEAR' };
     }
     function statusStyle(st) {
         if (st === 'filled') return { color: '#3ea8f5', label: 'FILLED · LIVE' };
@@ -91,7 +91,7 @@
         setTxt('sig-short',  shorts);
         setTxt('sig-live',   open);
         setTxt('sig-wr',     wr);
-        setTxt('sig-totpnl', pnlTxt, totPnl >= 0 ? 'var(--green)' : 'var(--red)');
+        setTxt('sig-totpnl', pnlTxt, totPnl >= 0 ? 'var(--green)' : 'var(--neg)');
     }
 
     function signalMatchesFilter(s) {
@@ -212,7 +212,7 @@
 
     function outcomeBlock(s) {
         if (s.status === 'closed') {
-            const pnlCls = (s.pnl_usd || 0) >= 0 ? 'var(--green)' : 'var(--red)';
+            const pnlCls = (s.pnl_usd || 0) >= 0 ? 'var(--green)' : 'var(--neg)';
             return (
                 '<div style="margin-top:16px;padding:12px 14px;background:rgba(255,255,255,0.02);border-left:3px solid ' + pnlCls + ';border-radius:6px;">' +
                     '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:' + pnlCls + ';text-transform:uppercase;margin-bottom:6px;">🏁 Outcome</div>' +
