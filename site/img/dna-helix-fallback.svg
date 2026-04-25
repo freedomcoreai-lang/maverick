@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  MAVERICK DNA helix -- static SVG fallback.
-  Renders when Three.js can't load (no-WebGL devices, prefers-reduced-motion,
-  hardware gate fails, bundle fetch errors). Also shown briefly at first paint
-  before the WebGL scene takes over. Designed to be visually worthy of the
-  hero position on its own: this is not a loading placeholder.
+  MAVERICK DNA helix : static SVG fallback.
+  Renders when Three.js can not load (no-WebGL devices, reduced motion,
+  hardware gate fails, bundle fetch errors). Also shown briefly at first
+  paint before the WebGL scene takes over. Designed to be visually
+  worthy of the hero position on its own; this is not a loading
+  placeholder.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-label="DNA double helix representing the active trading champion">
     <defs>
