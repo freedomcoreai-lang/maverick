@@ -33,8 +33,8 @@
         .prose p:last-child { margin-bottom: 0; }
         .prose strong { color: var(--text); font-weight: 600; }
         .prose .hl { color: var(--green); font-weight: 400; }
-        .prose .amber { color: var(--site-accent); }
-        .prose .red { color: var(--neg); }
+        .prose .amber { color: var(--amber); }
+        .prose .red { color: var(--red); }
         .prose .blue { color: var(--accent); }
         .prose code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); }
 
@@ -75,8 +75,8 @@
         .tech-panel td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
         .tech-panel tr:hover td { background: rgba(62,168,245,0.03); }
         .tech-panel .g { color: var(--green); font-family: 'JetBrains Mono', monospace; }
-        .tech-panel .a { color: var(--site-accent); }
-        .tech-panel .r { color: var(--neg); }
+        .tech-panel .a { color: var(--amber); }
+        .tech-panel .r { color: var(--red); }
 
         /* STAT ROW */
         .stat-row { display: flex; flex-wrap: wrap; gap: 1px; margin: 28px 0; background: var(--border); border-radius: 12px; overflow: hidden; }
@@ -112,7 +112,7 @@
             background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15);
             border-radius: 10px; padding: 20px 24px; margin: 24px 0;
         }
-        .warning p { font-size: 0.85rem; color: var(--neg); line-height: 1.8; }
+        .warning p { font-size: 0.85rem; color: var(--red); line-height: 1.8; }
 
         /* HERO META */
         .wp-hero-meta { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
@@ -217,9 +217,6 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
             <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
@@ -267,9 +264,6 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
-        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;">SHADOW &#8599; (Sister System)</a>
-        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent);">QUANTUM &#8599; (Web Design)</a>
-    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver);">ARENA &#8599; (Leaderboard)</a>
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
@@ -556,7 +550,7 @@
         <!-- ENGINE: TRAP -->
         <div class="engine-block">
             <div class="eb-header">
-                <span class="eb-name" style="color:var(--site-accent)">TRAP ENGINE</span>
+                <span class="eb-name" style="color:var(--amber)">TRAP ENGINE</span>
                 <span class="eb-tag">// Apex Predator // Wyckoff Effort vs Result</span>
             </div>
             <div class="eb-body">
@@ -827,10 +821,8 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260423d"></script>
+    <script src="/js/app.js"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
-    <script src="/js/video-banner.js?v=20260423e" defer></script>
-    <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>
 </html>

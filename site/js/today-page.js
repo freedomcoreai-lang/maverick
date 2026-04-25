@@ -66,7 +66,7 @@
             var pnlEl = document.getElementById('today-pnl');
             if (pnlEl) {
                 pnlEl.textContent = fmtPct(pnl);
-                pnlEl.style.color = pnl == null ? 'var(--text)' : (pnl > 0 ? 'var(--green)' : pnl < 0 ? 'var(--neg)' : 'var(--text)');
+                pnlEl.style.color = pnl == null ? 'var(--text)' : (pnl > 0 ? 'var(--green)' : pnl < 0 ? 'var(--red)' : 'var(--text)');
             }
             el('today-wr', (s.win_rate !== undefined && s.win_rate !== null ? s.win_rate.toFixed(1) + '%' : '-'));
             el('today-trades', (s.trades || 0) + ' trades today');

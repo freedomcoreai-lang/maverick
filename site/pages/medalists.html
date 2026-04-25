@@ -87,7 +87,7 @@
         .medal-card.platinum::before { background: linear-gradient(90deg, #e8e8ff, #b9c5ff, #8a9fff); }
         .medal-card.gold::before     { background: linear-gradient(90deg, var(--gold), #ffb700, #ff9700); }
         .medal-card.silver::before   { background: linear-gradient(90deg, #f0f0f0, var(--silver), #999999); }
-        .medal-card.bronze::before   { background: linear-gradient(90deg, #ffaa6b, var(--site-accent), #a05a1c); }
+        .medal-card.bronze::before   { background: linear-gradient(90deg, #ffaa6b, var(--bronze), #a05a1c); }
 
         .medal-card:hover {
             transform: translateY(-4px);
@@ -96,7 +96,7 @@
         .medal-card.platinum:hover { border-color: #b9c5ff; }
         .medal-card.gold:hover     { border-color: var(--gold); }
         .medal-card.silver:hover   { border-color: var(--silver); }
-        .medal-card.bronze:hover   { border-color: var(--site-accent); }
+        .medal-card.bronze:hover   { border-color: var(--bronze); }
 
         .medal-emoji {
             font-size: 3.5rem;
@@ -117,7 +117,7 @@
         .medal-card.platinum .medal-emoji { filter: brightness(1.2) grayscale(1) drop-shadow(0 0 10px rgba(185, 197, 255, 0.5)); }
         .medal-card.gold .medal-label     { color: var(--gold); }
         .medal-card.silver .medal-label   { color: var(--silver); }
-        .medal-card.bronze .medal-label   { color: var(--site-accent); }
+        .medal-card.bronze .medal-label   { color: var(--bronze); }
 
         .medal-display-name {
             font-size: 1.7rem;
@@ -190,7 +190,7 @@
             border: 1px solid rgba(62, 168, 245, 0.2);
         }
         .medal-meta-tag.bull { color: var(--green); background: var(--green-dim); border-color: rgba(78, 205, 196, 0.2); }
-        .medal-meta-tag.bear { color: var(--neg); background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
+        .medal-meta-tag.bear { color: var(--red); background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.2); }
 
         .medal-thesis-preview {
             font-size: 0.78rem;
@@ -248,9 +248,9 @@
             transition: all 0.3s;
         }
         .medal-modal-close:hover {
-            background: var(--neg);
+            background: var(--red);
             color: #fff;
-            border-color: var(--neg);
+            border-color: var(--red);
         }
 
         .medal-modal-content {
@@ -275,7 +275,7 @@
         .medal-modal-header.platinum .medal-modal-rank  { color: #b9c5ff; }
         .medal-modal-header.gold .medal-modal-rank      { color: var(--gold); }
         .medal-modal-header.silver .medal-modal-rank    { color: var(--silver); }
-        .medal-modal-header.bronze .medal-modal-rank    { color: var(--site-accent); }
+        .medal-modal-header.bronze .medal-modal-rank    { color: var(--bronze); }
         .medal-modal-rank {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
@@ -468,9 +468,6 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
             <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
@@ -519,9 +516,6 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
-        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;">SHADOW &#8599; (Sister System)</a>
-        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent);">QUANTUM &#8599; (Web Design)</a>
-    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver);">ARENA &#8599; (Leaderboard)</a>
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
@@ -552,10 +546,8 @@
     </div>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260423d"></script>
+    <script src="/js/app.js"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
-    <script src="/js/medalists.js?v=20260423b"></script>
-    <script src="/js/video-banner.js?v=20260423e" defer></script>
-    <script src="/js/closing-banner.js?v=20260424a" defer></script>
+    <script src="/js/medalists.js"></script>
 </body>
 </html>

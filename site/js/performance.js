@@ -121,7 +121,7 @@
 
             var right = document.createElement('div');
             right.className = 'pos-live-roi';
-            right.style.color = p.roi_pct >= 0 ? 'var(--green)' : 'var(--neg)';
+            right.style.color = p.roi_pct >= 0 ? 'var(--green)' : 'var(--red)';
             right.textContent = fmt(p.roi_pct) + '%';
 
             card.appendChild(left);

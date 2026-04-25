@@ -33,7 +33,7 @@
             border: 1px solid var(--border); border-radius: 14px;
             border-top: 3px solid var(--green); text-align: left;
         }
-        .today-stat.red { border-top-color: var(--neg); }
+        .today-stat.red { border-top-color: var(--red); }
         .today-stat.blue { border-top-color: var(--accent); }
         .today-stat.amber { border-top-color: #f5a623; }
         .today-stat-label {
@@ -119,9 +119,9 @@
         }
         .trade-row:hover, .position-row:hover { border-color: var(--accent); }
         .trade-row.pos  { border-left-color: var(--green); }
-        .trade-row.neg  { border-left-color: var(--neg); }
+        .trade-row.neg  { border-left-color: var(--red); }
         .position-row.long  { border-left-color: var(--green); }
-        .position-row.short { border-left-color: var(--neg); }
+        .position-row.short { border-left-color: var(--red); }
 
         .trade-row {
             display: grid;
@@ -164,7 +164,7 @@
             white-space: nowrap;
         }
         .trade-row .tr-pnl.pos, .trade-row .tr-pct.pos { color: var(--green); }
-        .trade-row .tr-pnl.neg, .trade-row .tr-pct.neg { color: var(--neg); }
+        .trade-row .tr-pnl.neg, .trade-row .tr-pct.neg { color: var(--red); }
 
         .position-row {
             display: grid;
@@ -189,7 +189,7 @@
             white-space: nowrap;
         }
         .position-row .pr-dir.long  { color: var(--green); background: rgba(78,205,196,0.10); }
-        .position-row .pr-dir.short { color: var(--neg);   background: rgba(239,68,68,0.10); }
+        .position-row .pr-dir.short { color: var(--red);   background: rgba(239,68,68,0.10); }
         .position-row .pr-meta {
             grid-area: meta;
             font-size: 0.6rem; color: var(--text-dim);
@@ -203,7 +203,7 @@
             white-space: nowrap;
         }
         .position-row .pr-roi.pos { color: var(--green); }
-        .position-row .pr-roi.neg { color: var(--neg); }
+        .position-row .pr-roi.neg { color: var(--red); }
 
         .twitter-embed {
             padding: 20px; background: var(--card);
@@ -250,9 +250,6 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
             <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
@@ -300,9 +297,6 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
-        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;">SHADOW &#8599; (Sister System)</a>
-        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--site-accent);">QUANTUM &#8599; (Web Design)</a>
-    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver);">ARENA &#8599; (Leaderboard)</a>
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
@@ -382,10 +376,8 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260423d"></script>
+    <script src="/js/app.js"></script>
     <script src="/js/mav-wallet.js?v=20260423c"></script>
     <script src="/js/today-page.js?v=20260423c"></script>
-    <script src="/js/video-banner.js?v=20260423e" defer></script>
-    <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>
 </html>

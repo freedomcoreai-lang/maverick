@@ -624,7 +624,7 @@
             var ratio = parseFloat(s.compression) || 0;
             var barWidth = Math.min(100, Math.max(5, (barsVal / maxBars * 100)));
             var mom = parseFloat(s.momentum) || 0;
-            var momColor = mom > 0 ? 'var(--green)' : mom < 0 ? 'var(--neg)' : 'var(--text-dim)';
+            var momColor = mom > 0 ? 'var(--green)' : mom < 0 ? 'var(--red)' : 'var(--text-dim)';
             var barColor = inSq ? 'linear-gradient(90deg, #ffab00, #ff6d00)' : fired ? 'linear-gradient(90deg, #00e676, #00c853)' : 'rgba(255,255,255,0.15)';
 
             html += '<div class="squeeze-card ' + cls + '">';
@@ -948,7 +948,7 @@
             var adx = parseFloat(s.adx_4h) || 0;
             html += '<div class="squeeze-item ' + cls + '" data-symbol="' + (s.symbol || '') + '">';
             html += '<span class="squeeze-symbol">' + cleanSymbol(s.symbol) + '</span>';
-            html += '<span style="font-family:JetBrains Mono,monospace;font-size:0.75rem;font-weight:700;color:' + (pct >= 0 ? 'var(--green)' : 'var(--neg)') + ';">' + arrow + ' ' + pct.toFixed(2) + '%</span>';
+            html += '<span style="font-family:JetBrains Mono,monospace;font-size:0.75rem;font-weight:700;color:' + (pct >= 0 ? 'var(--green)' : 'var(--red)') + ';">' + arrow + ' ' + pct.toFixed(2) + '%</span>';
             html += '<span style="font-size:0.6rem;color:var(--text-dim);margin-left:8px;">ADX ' + adx.toFixed(0) + '</span>';
             html += '<span style="font-size:0.6rem;color:var(--text-dim);margin-left:8px;">' + fmtPrice(s.close) + '</span>';
             html += '</div>';
@@ -982,7 +982,7 @@
             html += '<div class="squeeze-item ' + cls + '" data-symbol="' + (s.symbol || '') + '">';
             html += '<span class="squeeze-symbol">' + cleanSymbol(s.symbol) + '</span>';
             html += '<span style="font-family:JetBrains Mono,monospace;font-size:0.75rem;font-weight:700;color:' + (vr > 1.5 ? 'var(--green)' : 'var(--text-dim)') + ';">' + vr.toFixed(2) + 'x</span>';
-            html += '<span style="font-size:0.6rem;color:' + (pct >= 0 ? 'var(--green)' : 'var(--neg)') + ';margin-left:8px;">' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>';
+            html += '<span style="font-size:0.6rem;color:' + (pct >= 0 ? 'var(--green)' : 'var(--red)') + ';margin-left:8px;">' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>';
             html += '<span style="font-size:0.6rem;color:var(--text-dim);margin-left:8px;">' + fmtPrice(s.close) + '</span>';
             html += '</div>';
         }

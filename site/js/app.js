@@ -13,11 +13,11 @@ function toggleTheme() {
     if (html.getAttribute('data-theme') === 'dark') {
         html.setAttribute('data-theme', 'light');
         btn.innerHTML = '&#9788;';
-        localStorage.setItem('freedomcore-theme', 'light');
+        localStorage.setItem('fc-theme', 'light');
     } else {
         html.setAttribute('data-theme', 'dark');
         btn.innerHTML = '&#9790;';
-        localStorage.setItem('freedomcore-theme', 'dark');
+        localStorage.setItem('fc-theme', 'dark');
     }
     // Sync TradingView iframes with new theme
     var newTheme = html.getAttribute('data-theme');
@@ -29,11 +29,15 @@ function toggleTheme() {
     });
 }
 (function() {
-    // theme-init.js (loaded in <head>) has already applied data-theme and
-    // migrated any legacy key. Here we only sync the button icon so it
-    // matches whatever the <html> element now says.
-    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    var saved = localStorage.getItem('fc-theme');
+    var theme = 'dark';
+    if (saved) {
+        theme = saved;
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        theme = 'light';
+    }
     if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
         var btn = document.getElementById('theme-btn');
         if (btn) btn.innerHTML = '&#9788;';
     }
@@ -63,26 +67,15 @@ async function fetchStatus() {
         const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
         const setColor = (id, color) => { const el = document.getElementById(id); if (el) el.style.color = color; };
         set('stat-status', d.overall === 'ok' ? 'ONLINE' : 'DEGRADED');
-        setColor('stat-status', d.overall === 'ok' ? 'var(--green)' : 'var(--neg)');
+        setColor('stat-status', d.overall === 'ok' ? 'var(--green)' : 'var(--red)');
         set('stat-positions', d.maverick?.positions || 0);
         set('stat-symbols', d.streamline?.symbols_count || '--');
         set('stat-db', d.database?.size_mb?.toFixed(0) || '--');
         set('stat-uptime', d.maverick?.uptime || '--');
         set('stat-freshness', (d.database?.freshness_mins || '--') + 'm');
-        // 2026-04-23: Live champion card — show currently-running strategy name.
-        // Pulls from /api/swarm_champion so it reflects the live bot's loaded
-        // config, not any swarm-side state.
-        try {
-            const cr = await fcFetch('/api/swarm_champion');
-            const cd = await cr.json();
-            const name = (cd.strategy_name || cd.name || 'LOADING').replace(/_v?1\.0$/i,'').replace(/_/g,' ');
-            set('stat-champion', name.length > 18 ? name.substring(0,18) + '…' : name);
-        } catch(_){
-            set('stat-champion', '--');
-        }
     } catch(e) {
         const el = document.getElementById('stat-status');
-        if (el) { el.textContent = 'OFFLINE'; el.style.color = 'var(--neg)'; }
+        if (el) { el.textContent = 'OFFLINE'; el.style.color = 'var(--red)'; }
     }
 }
 fetchStatus();
@@ -167,7 +160,7 @@ async function fetchPositions() {
             const stopStatus = stopLoss > 0 ? 'PROTECTING' : 'PENDING';
             const beStatus = beActive ? 'SECURED' : 'PENDING';
             const trailStatus = trailActive ? 'ACTIVE' : (momentumActive ? 'ARMING' : 'WAITING');
-            const trailColor = trailActive ? 'var(--green)' : (momentumActive ? 'var(--site-accent)' : 'var(--text-dim)');
+            const trailColor = trailActive ? 'var(--green)' : (momentumActive ? 'var(--amber)' : 'var(--text-dim)');
 
             html += `<div class="pos-card ${sideClass}" data-expand data-sym="${sym}">
                 <div class="pos-card-header">
@@ -440,31 +433,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// ===== MOBILE DRAWER =====
-// Slide-in from right with scrim. Body scroll lock, aria-hidden, escape key.
-// Replaces the legacy top-drop that looked like full-page navigation.
+// ===== MOBILE MENU =====
 function toggleMobileMenu() {
-    var menu  = document.getElementById('mobile-menu');
-    var scrim = document.getElementById('mobile-menu-scrim');
-    var burger = document.querySelector('.nav-hamburger');
-    if (!menu) return;
-    var opening = !menu.classList.contains('open');
-    menu.classList.toggle('open', opening);
-    if (scrim) scrim.classList.toggle('open', opening);
-    menu.setAttribute('aria-hidden', opening ? 'false' : 'true');
-    if (burger) burger.setAttribute('aria-expanded', opening ? 'true' : 'false');
-    document.body.classList.toggle('menu-open', opening);
+    document.getElementById('mobile-menu').classList.toggle('open');
 }
 function closeMobileMenu() {
-    var menu  = document.getElementById('mobile-menu');
-    var scrim = document.getElementById('mobile-menu-scrim');
-    var burger = document.querySelector('.nav-hamburger');
-    if (!menu) return;
-    menu.classList.remove('open');
-    if (scrim) scrim.classList.remove('open');
-    menu.setAttribute('aria-hidden', 'true');
-    if (burger) burger.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-open');
+    document.getElementById('mobile-menu').classList.remove('open');
 }
 
 // ===== EVENT LISTENERS (replaces inline onclick) =====
@@ -482,23 +456,9 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.remove('open');
     });
 
-    // Hamburger menu + scrim tap + close X + escape
+    // Hamburger menu
     var hamburger = document.querySelector('.nav-hamburger');
-    if (hamburger) {
-        hamburger.addEventListener('click', toggleMobileMenu);
-        hamburger.setAttribute('aria-expanded', 'false');
-        hamburger.setAttribute('aria-controls', 'mobile-menu');
-    }
-    var mobileScrim = document.getElementById('mobile-menu-scrim');
-    if (mobileScrim) mobileScrim.addEventListener('click', closeMobileMenu);
-    var mobileCloseBtn = document.querySelector('.mobile-dropdown__close');
-    if (mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMobileMenu);
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            var menu = document.getElementById('mobile-menu');
-            if (menu && menu.classList.contains('open')) closeMobileMenu();
-        }
-    });
+    if (hamburger) hamburger.addEventListener('click', toggleMobileMenu);
 
     // SSL badge popup
     var sslBadge = document.querySelector('.ssl-badge');
@@ -771,7 +731,7 @@ function renderSwarmLog(rawLog, badgeColor) {
 
         var border = badgeColor;
         if (isError) border = '#ef4444';
-        else if (isGen || isThesis) border = 'var(--site-accent)';
+        else if (isGen || isThesis) border = 'var(--amber)';
         else if (isScore) border = 'var(--green)';
 
         html += '<div class="sentinel-card" style="border-left-color:' + border + ';margin-bottom:12px;">';
@@ -856,7 +816,7 @@ function renderSwarmLog(rawLog, badgeColor) {
                 var val = kvMatch[2];
                 var valColor = 'var(--text)';
                 if (val.match(/^\+/) || val.match(/bullish|HEALTHY|green|up/i)) valColor = 'var(--green)';
-                if (val.match(/^-/) || val.match(/bearish|CRITICAL|red|down/i)) valColor = 'var(--neg)';
+                if (val.match(/^-/) || val.match(/bearish|CRITICAL|red|down/i)) valColor = 'var(--red)';
                 html += '<span style="color:' + valColor + ';font-family:JetBrains Mono,monospace;font-weight:600;">' + val + '</span>';
                 html += '</div>';
                 continue;
@@ -905,7 +865,7 @@ function renderSwarmLog(rawLog, badgeColor) {
 
 // ===== NEWS PAGE: Global Headlines =====
 (function() {
-    var colorMap = { accent: 'var(--accent)', amber: 'var(--site-accent)', red: 'var(--neg)', green: 'var(--green)' };
+    var colorMap = { accent: 'var(--accent)', amber: 'var(--amber)', red: 'var(--red)', green: 'var(--green)' };
     function timeAgo(dateStr) {
         if (!dateStr) return '';
         var d = new Date(dateStr);
@@ -983,7 +943,7 @@ function renderSignals(signals) {
     if (!feed) return;
     function fmtNum(v, dp) { if (v === undefined || v === null || v === 999) return '--'; return Number(v).toFixed(dp === undefined ? 2 : dp); }
     function fmtPct(v) { if (v === undefined || v === null || v === 999) return '--'; return (v >= 0 ? '+' : '') + Number(v).toFixed(2) + '%'; }
-    function bullBearColor(v, bullLow) { if (v === undefined || v === null) return ''; return bullLow ? (v < 30 ? 'var(--green)' : v > 70 ? 'var(--neg)' : 'var(--text)') : ''; }
+    function bullBearColor(v, bullLow) { if (v === undefined || v === null) return ''; return bullLow ? (v < 30 ? 'var(--green)' : v > 70 ? 'var(--red)' : 'var(--text)') : ''; }
 
     var rows = signals.slice(0, 50).map(function(s, idx) {
         var sym = (s.sym_short || (s.symbol || '').replace('USDTM', ''));
@@ -1013,7 +973,7 @@ function renderSignals(signals) {
         } else {
             narrative = 'Signal fired on <b>' + reason + '</b>. Mode <b>' + (s.mode || '--') + '</b>.';
         }
-        detail += '<div style="padding:8px 10px; margin-bottom:10px; background:var(--card); border-left:3px solid ' + (dirClass === 'long' ? 'var(--green)' : 'var(--neg)') + '; border-radius:6px; color:var(--text); font-size:0.72rem; line-height:1.6; font-family:Inter,sans-serif;">' + narrative + '</div>';
+        detail += '<div style="padding:8px 10px; margin-bottom:10px; background:var(--card); border-left:3px solid ' + (dirClass === 'long' ? 'var(--green)' : 'var(--red)') + '; border-radius:6px; color:var(--text); font-size:0.72rem; line-height:1.6; font-family:Inter,sans-serif;">' + narrative + '</div>';
 
         // --- CONFLUENCE BREAKDOWN ---
         if (s.confluence_breakdown && s.confluence_breakdown.length > 0) {
@@ -1187,11 +1147,11 @@ function renderSignals(signals) {
 
     var agentBadgeColors = {
         swarm: 'var(--green)',
-        sentinel: 'var(--site-accent)',
+        sentinel: 'var(--amber)',
         shadow: 'var(--purple)',
         flagship: 'var(--blue)',
-        watchdog: 'var(--neg)',
-        forensics: 'var(--neg)',
+        watchdog: 'var(--red)',
+        forensics: 'var(--red)',
         digest: '#00e5ff',
         traffic: '#ff6b6b'
     };
@@ -1321,7 +1281,7 @@ function renderSignals(signals) {
                     th += '<span style="padding:6px 12px;background:rgba(255,107,107,0.08);border:1px solid rgba(255,107,107,0.3);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:' + tc + ';">LIVE NOW: ' + td.live + '</span>';
                     th += '<span style="padding:6px 12px;background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:var(--green);">TODAY: ' + td.today.hits + ' hits / ' + td.today.unique + ' unique</span>';
                     th += '<span style="padding:6px 12px;background:rgba(62,168,245,0.08);border:1px solid rgba(62,168,245,0.2);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:var(--accent);">7D: ' + td.last_7d.hits + ' / ' + td.last_7d.unique + ' unique</span>';
-                    th += '<span style="padding:6px 12px;background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.2);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:var(--site-accent);">30D: ' + td.last_30d.hits + ' / ' + td.last_30d.unique + ' unique</span>';
+                    th += '<span style="padding:6px 12px;background:rgba(255,214,0,0.08);border:1px solid rgba(255,214,0,0.2);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:var(--amber);">30D: ' + td.last_30d.hits + ' / ' + td.last_30d.unique + ' unique</span>';
                     th += '<span style="padding:6px 12px;background:rgba(200,200,200,0.08);border:1px solid rgba(200,200,200,0.2);border-radius:4px;font-size:0.65rem;font-family:\'JetBrains Mono\',monospace;color:var(--text-dim);">ALL TIME: ' + td.all_time.hits + ' / ' + td.all_time.unique + ' unique</span>';
                     th += '</div>';
                     // Devices
@@ -1434,7 +1394,7 @@ function renderSignals(signals) {
                         metaHtml += '<span style="padding:4px 10px;background:var(--blue-dim);border:1px solid var(--border);border-radius:4px;font-size:0.6rem;font-family:\'JetBrains Mono\',monospace;color:var(--accent);">GENERATED: ' + genStr + '</span>';
                         metaHtml += '<span style="padding:4px 10px;background:var(--green-dim);border:1px solid var(--border);border-radius:4px;font-size:0.6rem;font-family:\'JetBrains Mono\',monospace;color:var(--green);">BROADCASTS: ' + (meta.broadcast_count || 'N/A') + '</span>';
                         metaHtml += '<span style="padding:4px 10px;background:var(--blue-dim);border:1px solid var(--border);border-radius:4px;font-size:0.6rem;font-family:\'JetBrains Mono\',monospace;color:var(--accent);">TRADES: ' + (meta.total_trades || 0) + ' (' + (meta.total_wins || 0) + 'W/' + (meta.total_losses || 0) + 'L)</span>';
-                        metaHtml += '<span style="padding:4px 10px;background:rgba(255,214,0,0.06);border:1px solid var(--border);border-radius:4px;font-size:0.6rem;font-family:\'JetBrains Mono\',monospace;color:var(--site-accent);">NET EQUITY PNL: ' + (meta.net_pnl || 0).toFixed(4) + '%</span>';
+                        metaHtml += '<span style="padding:4px 10px;background:rgba(255,214,0,0.06);border:1px solid var(--border);border-radius:4px;font-size:0.6rem;font-family:\'JetBrains Mono\',monospace;color:var(--amber);">NET EQUITY PNL: ' + (meta.net_pnl || 0).toFixed(4) + '%</span>';
                         if (meta.generation_time_secs) {
                             var gm = Math.floor(meta.generation_time_secs / 60);
                             var gs = Math.round(meta.generation_time_secs % 60);
@@ -1589,7 +1549,7 @@ function renderSignals(signals) {
             b.style.display = 'block';
             if (d.running) {
                 var isMega = d.mode === 'MEGA HUNT' || (d.phase || '').indexOf('MEGA') >= 0;
-                var megaCol = 'var(--site-accent)';
+                var megaCol = 'var(--champion)';
                 var liveCol = 'var(--green, #10b981)';
                 dot.style.background = isMega ? megaCol : liveCol;
                 dot.style.boxShadow = '0 0 12px ' + (isMega ? megaCol : liveCol);
@@ -1600,15 +1560,12 @@ function renderSignals(signals) {
                 det.textContent = 'Gen ' + d.gen + '/' + d.total + (isMega ? ' · Hunting champion-beater' : ' ' + (d.phase || '') + (d.focus ? ' | ' + d.focus : ''));
                 bar.style.width = (d.total > 0 ? (d.gen / d.total * 100) : 0) + '%';
                 bar.style.background = isMega
-                    ? 'linear-gradient(90deg, var(--site-accent), var(--accent), var(--site-accent))'
+                    ? 'linear-gradient(90deg, var(--champion), var(--accent), var(--champion))'
                     : 'linear-gradient(90deg, var(--green, #10b981), var(--accent, #3ea8f5))';
-                // 2026-04-23: refresh champion info on EVERY poll (10s) so the
-                // live bot's currently-loaded strategy always shows fresh trades
-                // / WR / PnL. Previously only refreshed when swarm crowned a
-                // new gen — but live bot and swarm champion can diverge (hot-
-                // swap case). Cheap endpoint, worth the constant refresh.
-                fetchChampion();
-                lastChampGen = d.champion_gen;
+                if (d.champion_score > 0 && d.champion_gen !== lastChampGen) {
+                    lastChampGen = d.champion_gen;
+                    fetchChampion();
+                }
             } else {
                 dot.style.background = 'var(--text-muted, #6b7280)';
                 dot.style.boxShadow = 'none';
