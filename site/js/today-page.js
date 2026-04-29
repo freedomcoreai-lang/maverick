@@ -129,14 +129,28 @@
         }
     }
 
+    function _fmtAge(secs) {
+        if (secs == null) return '—';
+        var s = Number(secs);
+        if (s < 3600)  return Math.floor(s / 60) + 'm ago';
+        if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+        return Math.floor(s / 86400) + 'd ago';
+    }
     async function loadChampion() {
         try {
             var r = await fetch('/api/live/champion', {cache: 'no-store', headers: _apiHeaders()});
             var c = await r.json();
-            el('champ-label', 'Platinum Champion · ' + (c.live_verified ? 'Live Verified' : 'Live'));
+            var verified = c.live_verified ? 'Live verified' : 'Live';
+            el('champ-label', 'Trinity Cascade · ' + verified);
             el('champ-name', c.fighter_name || 'Unnamed Champion');
             el('champ-codename', (c.name || '') + ' v' + (c.version || '?'));
             el('champ-tagline', c.tagline || 'New species. Awaiting narrative.');
+            // Meta strip
+            var meta = document.getElementById('champ-meta');
+            if (meta) meta.hidden = false;
+            el('champ-score', c.score != null ? Number(c.score).toLocaleString('en-US') : '—');
+            el('champ-crown', _fmtAge(c.crown_age_secs));
+            el('champ-prev',  c.previous_strategy || '—');
         } catch (e) {
             el('champ-name', 'Champion data unreachable');
         }

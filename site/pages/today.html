@@ -11,221 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?v=20260428b">
-    <style>
-        .today-wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-        .today-hero-badge {
-            display: inline-block; padding: 6px 14px;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: var(--accent); letter-spacing: 2px;
-            border: 1px solid var(--accent); border-radius: 20px;
-            text-transform: uppercase; margin-bottom: 20px;
-        }
-        .today-date {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
-            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
-        }
-        .today-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 14px; margin-top: 28px;
-        }
-        .today-stat {
-            padding: 20px 18px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 14px;
-            border-top: 3px solid var(--green); text-align: left;
-        }
-        .today-stat.red { border-top-color: var(--red); }
-        .today-stat.blue { border-top-color: var(--accent); }
-        .today-stat.amber { border-top-color: #f5a623; }
-        .today-stat-label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.58rem;
-            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .today-stat-value {
-            font-family: 'JetBrains Mono', monospace; font-size: 2rem;
-            font-weight: 800; color: var(--text); line-height: 1.1;
-        }
-        .today-stat-sub {
-            font-size: 0.72rem; color: var(--text-dim); margin-top: 8px;
-            line-height: 1.4;
-        }
-        .today-section-title {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
-            margin-top: 60px; margin-bottom: 14px; padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .champion-card {
-            padding: 28px 24px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 16px;
-            border-left: 4px solid #b9c5ff; margin-top: 16px;
-            position: relative; overflow: hidden;
-        }
-        .champion-card::before {
-            content: '🏆'; position: absolute; right: 18px; top: 18px;
-            font-size: 1.6rem; opacity: 0.55;
-            filter: brightness(1.2) grayscale(1);
-        }
-        .champion-label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
-            color: #b9c5ff; letter-spacing: 2px; text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-        .champion-name {
-            font-size: 1.6rem; font-weight: 800; color: var(--text);
-            margin-bottom: 4px; line-height: 1.2;
-        }
-        .champion-codename {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            color: var(--text-dim); letter-spacing: 0.5px;
-            margin-bottom: 14px; text-transform: uppercase;
-        }
-        .champion-tagline {
-            color: var(--text-dim); font-size: 0.88rem;
-            line-height: 1.65; font-style: italic;
-            padding: 12px 14px; border-left: 2px solid var(--border);
-        }
-
-        .countdown-card {
-            padding: 24px 20px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 14px;
-            text-align: center; margin-top: 16px;
-        }
-        .countdown-label {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-        .countdown-timer {
-            font-family: 'JetBrains Mono', monospace; font-size: 2.2rem;
-            font-weight: 700; color: var(--green); letter-spacing: 2px;
-        }
-        .countdown-caption {
-            font-size: 0.8rem; color: var(--text-dim);
-            margin-top: 12px; line-height: 1.5;
-        }
-
-        /* ── Today cards — match the Champion Signals feed visual language ── */
-        .trade-row, .position-row {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 8px;
-            padding: 12px 14px;
-            font-family: 'JetBrains Mono', monospace;
-            transition: border-color 0.2s, transform 0.12s;
-        }
-        .trade-row:hover, .position-row:hover { border-color: var(--accent); }
-        .trade-row.pos  { border-left-color: var(--green); }
-        .trade-row.neg  { border-left-color: var(--red); }
-        .position-row.long  { border-left-color: var(--green); }
-        .position-row.short { border-left-color: var(--red); }
-
-        .trade-row {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            grid-template-areas:
-                "body  pnl"
-                "meta  pct";
-            gap: 4px 10px;
-            align-items: center;
-        }
-        .trade-row .tr-body {
-            grid-area: body;
-            display: flex; align-items: center; gap: 8px; min-width: 0;
-        }
-        .trade-row .tr-time {
-            font-size: 0.62rem; color: var(--text-dim);
-            letter-spacing: 1px; white-space: nowrap;
-            padding: 3px 8px; border: 1px solid var(--border);
-            border-radius: 4px; background: rgba(255,255,255,0.02);
-        }
-        .trade-row .tr-sym {
-            font-size: 0.92rem; font-weight: 800; color: var(--text);
-            letter-spacing: 0.5px;
-        }
-        .trade-row .tr-meta {
-            grid-area: meta;
-            font-size: 0.6rem; color: var(--text-dim);
-            letter-spacing: 1px; text-transform: uppercase;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            min-width: 0;
-        }
-        .trade-row .tr-pnl {
-            grid-area: pnl;
-            font-size: 0.88rem; font-weight: 800; text-align: right;
-            white-space: nowrap;
-        }
-        .trade-row .tr-pct {
-            grid-area: pct;
-            font-size: 0.68rem; font-weight: 700; text-align: right;
-            white-space: nowrap;
-        }
-        .trade-row .tr-pnl.pos, .trade-row .tr-pct.pos { color: var(--green); }
-        .trade-row .tr-pnl.neg, .trade-row .tr-pct.neg { color: var(--red); }
-
-        .position-row {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            grid-template-areas:
-                "body  roi"
-                "meta  meta";
-            gap: 4px 10px;
-            align-items: center;
-        }
-        .position-row .pr-body {
-            grid-area: body;
-            display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0;
-        }
-        .position-row .pr-sym {
-            font-size: 0.92rem; font-weight: 800; color: var(--text);
-            letter-spacing: 0.5px;
-        }
-        .position-row .pr-dir {
-            font-size: 0.58rem; font-weight: 800;
-            letter-spacing: 1.5px; padding: 3px 8px; border-radius: 4px;
-            white-space: nowrap;
-        }
-        .position-row .pr-dir.long  { color: var(--green); background: rgba(78,205,196,0.10); }
-        .position-row .pr-dir.short { color: var(--red);   background: rgba(239,68,68,0.10); }
-        .position-row .pr-meta {
-            grid-area: meta;
-            font-size: 0.6rem; color: var(--text-dim);
-            letter-spacing: 1px; text-transform: uppercase;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-            min-width: 0;
-        }
-        .position-row .pr-roi {
-            grid-area: roi;
-            font-size: 0.98rem; font-weight: 800; text-align: right;
-            white-space: nowrap;
-        }
-        .position-row .pr-roi.pos { color: var(--green); }
-        .position-row .pr-roi.neg { color: var(--red); }
-
-        .twitter-embed {
-            padding: 20px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 14px;
-            margin-top: 16px; text-align: center;
-        }
-        .twitter-btn {
-            display: inline-block; padding: 14px 28px; margin-top: 6px;
-            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
-            color: var(--text); background: var(--accent);
-            border-radius: 8px; text-decoration: none;
-            letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
-        }
-        .twitter-btn:hover { opacity: 0.9; }
-
-        .empty-note {
-            padding: 20px; background: var(--card);
-            border: 1px dashed var(--border); border-radius: 10px;
-            color: var(--text-dim); font-size: 0.8rem; text-align: center;
-            line-height: 1.6;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/today-cockpit.css?v=20260429a">
 </head>
 <body>
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
@@ -408,65 +194,84 @@
     </div>
 
     <div class="today-wrap">
-        <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:30px;margin-top:0;">
-            <div class="hero-glow"></div>
-            <div class="today-hero-badge"><span class="live-dot" style="display:inline-block; width:6px; height:6px; background:var(--green); border-radius:50%; margin-right:6px; vertical-align:middle;"></span>LIVE TODAY</div>
-            <h1 style="font-size:clamp(2.5rem,7vw,4.5rem);background:linear-gradient(135deg,var(--green),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px;font-weight:900;margin-bottom:8px;">TODAY</h1>
-            <div class="today-date" id="today-date">Loading&hellip;</div>
-            <p style="color:var(--text-dim);max-width:640px;margin:20px auto 0;font-size:0.95rem;line-height:1.6;">The live heartbeat of the organism. Today&rsquo;s trades, today&rsquo;s champion, today&rsquo;s countdown to the next swarm cycle. Auto-refreshes every 60 seconds.</p>
+        <section class="today-hero">
+            <div class="today-hero__eyebrow">Live today</div>
+            <h1 class="today-hero__title">Today&rsquo;s heartbeat.</h1>
+            <div class="today-hero__date" id="today-date">Loading&hellip;</div>
+            <p class="today-hero__sub">
+                The live operating window. The reigning cascade, the trades it has fired, the positions it is carrying, and the countdown to the next swarm. Every figure here reads from the running bot. Auto-refreshes every sixty seconds.
+            </p>
+
+            <div class="today-grid" id="today-grid">
+                <div class="today-stat">
+                    <div class="today-stat-label">PnL today</div>
+                    <div class="today-stat-value" id="today-pnl">&mdash;</div>
+                    <div class="today-stat-sub">last 24 hours</div>
+                </div>
+                <div class="today-stat">
+                    <div class="today-stat-label">Win rate</div>
+                    <div class="today-stat-value" id="today-wr">&mdash;</div>
+                    <div class="today-stat-sub" id="today-trades">&mdash; trades</div>
+                </div>
+                <div class="today-stat">
+                    <div class="today-stat-label">Open positions</div>
+                    <div class="today-stat-value" id="today-open">&mdash;</div>
+                    <div class="today-stat-sub">currently held</div>
+                </div>
+                <div class="today-stat">
+                    <div class="today-stat-label">Symbols live</div>
+                    <div class="today-stat-value" id="today-symbols">&mdash;</div>
+                    <div class="today-stat-sub">under watch</div>
+                </div>
+            </div>
         </section>
 
-        <!-- TODAY STATS -->
-        <div class="today-grid" id="today-grid">
-            <div class="today-stat"><div class="today-stat-label">Today&rsquo;s PnL</div><div class="today-stat-value" id="today-pnl">&mdash;</div><div class="today-stat-sub">Realized %</div></div>
-            <div class="today-stat blue"><div class="today-stat-label">Win Rate</div><div class="today-stat-value" id="today-wr">&mdash;</div><div class="today-stat-sub" id="today-trades">&mdash; trades</div></div>
-            <div class="today-stat amber"><div class="today-stat-label">Open Positions</div><div class="today-stat-value" id="today-open">&mdash;</div><div class="today-stat-sub">Currently held</div></div>
-            <div class="today-stat blue"><div class="today-stat-label">Symbols Live</div><div class="today-stat-value" id="today-symbols">&mdash;</div><div class="today-stat-sub">Under watch</div></div>
-        </div>
-
-        <!-- LIVE CHAMPION -->
-        <div class="today-section-title">// Reigning Champion</div>
-        <div class="champion-card" id="champion-card">
-            <div class="champion-label" id="champ-label">Loading throne&hellip;</div>
-            <div class="champion-name" id="champ-name">&mdash;</div>
+        <!-- LIVE CASCADE -->
+        <div class="today-section-title">// Reigning cascade</div>
+        <article class="champion-card">
+            <div class="champion-label" id="champ-label">Loading&hellip;</div>
+            <h2 class="champion-name" id="champ-name">&mdash;</h2>
             <div class="champion-codename" id="champ-codename">&mdash;</div>
-            <div class="champion-tagline" id="champ-tagline">&mdash;</div>
-        </div>
+            <p class="champion-tagline" id="champ-tagline">&mdash;</p>
+            <div class="champion-meta" id="champ-meta" hidden>
+                <span class="champion-meta-item">Score <strong id="champ-score">&mdash;</strong></span>
+                <span class="champion-meta-item">Crowned <strong id="champ-crown">&mdash;</strong></span>
+                <span class="champion-meta-item">Previous <strong id="champ-prev">&mdash;</strong></span>
+            </div>
+        </article>
 
         <!-- COUNTDOWN -->
-        <div class="today-section-title">// Next Swarm Cycle</div>
+        <div class="today-section-title">// Next swarm cycle</div>
         <div class="countdown-card">
-            <div class="countdown-label">Saturday 17:00 BST &middot; 50-Generation Tournament</div>
+            <div class="countdown-label">Saturday 17:00 BST &middot; one hundred-generation cycle</div>
             <div class="countdown-timer" id="countdown-timer">&mdash;</div>
-            <div class="countdown-caption">When the timer hits zero the LLM fires fifty generations across the latest six-day market window. If any candidate beats the reigning champion, it takes the throne and is deployed live.</div>
+            <p class="countdown-caption">When the timer hits zero the LLM swarm fires one hundred generations across a fresh seven-day window. The first thirty explore, the remaining seventy hone the leader. A three-LLM judicial panel reviews the top three challengers. A new strategy must beat the incumbent or the throne stays.</p>
         </div>
 
         <!-- TODAY'S TRADES -->
-        <div class="today-section-title">// Today&rsquo;s Trades</div>
+        <div class="today-section-title">// Today&rsquo;s trades</div>
         <div id="today-trades-list"><div class="empty-note">Loading today&rsquo;s trades&hellip;</div></div>
 
         <!-- LIVE POSITIONS -->
-        <div class="today-section-title">// Live Positions</div>
+        <div class="today-section-title">// Live positions</div>
         <div id="today-positions-list"><div class="empty-note">Loading positions&hellip;</div></div>
 
-        <!-- LATEST TWEET LINK -->
-        <div class="today-section-title">// Today&rsquo;s Broadcast</div>
+        <!-- LATEST BROADCAST -->
+        <div class="today-section-title">// Today&rsquo;s broadcast</div>
         <div class="twitter-embed">
-            <p style="color:var(--text-dim); font-size:0.85rem; margin-bottom:14px;">The Sentinel posts the daily swarm report to X at 18:00 BST every evening. Read today&rsquo;s broadcast straight from the live feed.</p>
-            <a class="twitter-btn" href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">OPEN @freedomcoreai &rarr;</a>
+            <p>The Sentinel posts the daily swarm report to X at 18:00 BST every evening. Read today&rsquo;s broadcast straight from the live feed.</p>
+            <a class="twitter-btn" href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">Open @freedomcoreai &rarr;</a>
         </div>
 
-        <!-- Cross-subdomain context — descriptive anchors -->
-        <div style="margin: 50px 0 30px; padding: 22px 24px; border: 1px solid var(--border); border-radius: 12px; background: rgba(62,168,245,0.04);">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:8px;">// CROSS-CHECK THE FLOW</div>
-            <p style="margin:0; color:var(--text); font-size:0.92rem; line-height:1.65;">
-                Today&rsquo;s entries are validated against the same external signals that feed the <a href="https://shadow.freedomcore.io/" rel="noopener" style="color:#8b5cf6; font-weight:700;">SHADOW Hyperliquid whale-consensus terminal</a>. The wallets behind those signals rank publicly on the <a href="https://arena.freedomcore.io/" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA Hyperliquid trader leaderboard</a> &mdash; sortable by Sharpe, ROI, and Wilson-lower-bound win rate. Saturday&rsquo;s full intelligence digest lives at <a href="/reports/" style="color:var(--blue); font-weight:700;">Weekly Reports</a>.
+        <div class="today-cross">
+            <div class="today-cross__eyebrow">// Cross-check the flow</div>
+            <p>
+                Today&rsquo;s entries are validated against the same external signals that feed the <a href="https://shadow.freedomcore.io/" rel="noopener">SHADOW Hyperliquid whale-consensus terminal</a>. The wallets behind those signals rank publicly on the <a href="https://arena.freedomcore.io/" rel="noopener">ARENA Hyperliquid trader leaderboard</a> &mdash; sortable by Sharpe, ROI, and Wilson-lower-bound win rate. Saturday&rsquo;s full intelligence digest lives at <a href="/reports/">Weekly Reports</a>.
             </p>
         </div>
 
         <div style="height:60px;"></div>
     </div>
-
     <footer class="footer">
         <div class="footer-logo">FREEDOMCORE</div>
         <div class="footer-links">
@@ -486,7 +291,7 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260429g"></script>
     <script src="/js/mav-wallet.js?v=20260423c"></script>
-    <script src="/js/today-page.js?v=20260423c"></script>
+    <script src="/js/today-page.js?v=20260429h"></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>
