@@ -14,39 +14,17 @@
    ============================================================================ */
 
 :root {
-    /* ─── CANONICAL FOUR-TOKEN PALETTE (council 2026-04-29) ──────────────────
-       The franchise speaks in four colours. Identity comes from typography,
-       layout and prose, never from a colour dictionary. Anything that needs
-       state (alert / fired / live / win / lose) earns it through letterform
-       weight and structural emphasis, not a sixth hue.
-       ─────────────────────────────────────────────────────────────────────── */
-    --bg:      #0a0a0f;   /* page ink — deep, canonical */
-    --surface: #14141c;   /* cards, terminals, council picker, raised planes */
-    --text:    #f5f5fa;   /* prose, headings, feeds */
-    --accent:  #ffd700;   /* the only hue — links, focus, brand, alerts */
+    /* ─── CORE PALETTE (locked, 4 neutrals) ──────────────────────────────── */
+    --bg-primary:     #0a0a0f;   /* page background */
+    --bg-elevated:    #14141c;   /* cards, panels, modals, nav */
+    --text-primary:   #f5f5fa;   /* body text, headings */
+    --text-muted:     #6b7280;   /* meta, eyebrows, disabled */
 
-    /* Working text colours derived from --text */
-    --text-strong: var(--text);
-    --text-muted-2: rgba(245, 245, 250, 0.60);
-    --text-faint:   rgba(245, 245, 250, 0.40);
-    --hairline:     rgba(245, 245, 250, 0.08);
-
-    /* ─── LEGACY TOKEN ALIASES (PR1 backward-compat) ─────────────────────────
-       Existing pages reference --bg-primary, --text-primary, --accent-gold etc.
-       PR1 keeps those resolving so nothing breaks. PR2+ migrates each page
-       onto the canonical four-token palette and these aliases are deleted.
-       ─────────────────────────────────────────────────────────────────────── */
-    --bg-primary:     var(--bg);
-    --bg-elevated:    var(--surface);
-    --text-primary:   var(--text);
-    --text-muted:     #6b7280;
-
-    /* Site accents kept for sister-site cross-links only. The MAVERICK
-       surface itself uses --accent (gold) as the single hue. */
-    --accent-gold:    var(--accent);
-    --accent-violet:  #8b5cf6;
-    --accent-cyan:    #3ea8f5;
-    --accent-silver:  #c0c8d4;
+    /* ─── SITE ACCENTS (exactly one active per page) ─────────────────────── */
+    --accent-gold:    #ffd700;   /* MAVERICK identity */
+    --accent-violet:  #8b5cf6;   /* SHADOW identity */
+    --accent-cyan:    #3ea8f5;   /* QUANTUM identity */
+    --accent-silver:  #c0c8d4;   /* ARENA identity */
 
     /* ─── TYPE SCALE (px → rem at 16px base) ─────────────────────────────── */
     --fs-12:  0.75rem;
@@ -87,22 +65,12 @@
    are shifted slightly darker for contrast on light backgrounds.
    ─────────────────────────────────────────────────────────────────────────── */
 [data-theme="light"] {
-    --bg:      #f5f5fa;
-    --surface: #ffffff;
-    --text:    #0a0a0f;
-    --accent:  #c89b00;
-
-    --text-strong: var(--text);
-    --text-muted-2: rgba(10, 10, 15, 0.62);
-    --text-faint:   rgba(10, 10, 15, 0.42);
-    --hairline:     rgba(10, 10, 15, 0.10);
-
-    --bg-primary:     var(--bg);
-    --bg-elevated:    var(--surface);
-    --text-primary:   var(--text);
+    --bg-primary:     #f5f5fa;
+    --bg-elevated:    #ffffff;
+    --text-primary:   #0a0a0f;
     --text-muted:     #4b5563;
 
-    --accent-gold:    var(--accent);
+    --accent-gold:    #c89b00;
     --accent-violet:  #6d3bcc;
     --accent-cyan:    #1e7fc4;
     --accent-silver:  #5a6270;
