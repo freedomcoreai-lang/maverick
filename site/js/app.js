@@ -13,11 +13,11 @@ function toggleTheme() {
     if (html.getAttribute('data-theme') === 'dark') {
         html.setAttribute('data-theme', 'light');
         btn.innerHTML = '&#9788;';
-        localStorage.setItem('fc-theme', 'light');
+        localStorage.setItem('freedomcore-theme', 'light');
     } else {
         html.setAttribute('data-theme', 'dark');
         btn.innerHTML = '&#9790;';
-        localStorage.setItem('fc-theme', 'dark');
+        localStorage.setItem('freedomcore-theme', 'dark');
     }
     // Sync TradingView iframes with new theme
     var newTheme = html.getAttribute('data-theme');
@@ -29,15 +29,11 @@ function toggleTheme() {
     });
 }
 (function() {
-    var saved = localStorage.getItem('fc-theme');
-    var theme = 'dark';
-    if (saved) {
-        theme = saved;
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        theme = 'light';
-    }
+    // theme-init.js (loaded in <head>) has already applied data-theme and
+    // migrated any legacy key. Here we only sync the button icon so it
+    // matches whatever the <html> element now says.
+    var theme = document.documentElement.getAttribute('data-theme') || 'dark';
     if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
         var btn = document.getElementById('theme-btn');
         if (btn) btn.innerHTML = '&#9788;';
     }
@@ -73,6 +69,17 @@ async function fetchStatus() {
         set('stat-db', d.database?.size_mb?.toFixed(0) || '--');
         set('stat-uptime', d.maverick?.uptime || '--');
         set('stat-freshness', (d.database?.freshness_mins || '--') + 'm');
+        // 2026-04-23: Live champion card — show currently-running strategy name.
+        // Pulls from /api/swarm_champion so it reflects the live bot's loaded
+        // config, not any swarm-side state.
+        try {
+            const cr = await fcFetch('/api/swarm_champion');
+            const cd = await cr.json();
+            const name = (cd.strategy_name || cd.name || 'LOADING').replace(/_v?1\.0$/i,'').replace(/_/g,' ');
+            set('stat-champion', name.length > 18 ? name.substring(0,18) + '…' : name);
+        } catch(_){
+            set('stat-champion', '--');
+        }
     } catch(e) {
         const el = document.getElementById('stat-status');
         if (el) { el.textContent = 'OFFLINE'; el.style.color = 'var(--red)'; }
@@ -929,7 +936,11 @@ function renderSwarmLog(rawLog, badgeColor) {
             if (ticker) ticker.innerHTML = '<div class="ticker-item">Connecting…</div>';
         }
     }
-    if (document.getElementById('headlines-grid') || document.getElementById('ticker-track')) {
+    // Only fire headline fetch on MAV homepage. Sister sites (shadow / arena /
+    // quantum) carry their own purpose-specific tickers — running this on
+    // them produces "Connecting…" because /api/news is MAV-domain only.
+    var dsite = document.body && document.body.dataset && document.body.dataset.site;
+    if (!dsite && (document.getElementById('headlines-grid') || document.getElementById('ticker-track'))) {
         fetchHeadlines();
         setInterval(fetchHeadlines, 300000);
     }
@@ -1142,11 +1153,12 @@ function renderSignals(signals) {
     var swarmTabs = document.getElementById('swarm-tabs');
     if (!swarmTabs) return;
 
-    var swarmAgents = ['swarm', 'sentinel', 'shadow', 'flagship', 'watchdog', 'forensics', 'digest', 'traffic'];
+    var swarmAgents = ['swarm', 'council', 'sentinel', 'shadow', 'flagship', 'watchdog', 'forensics', 'digest', 'traffic'];
     var activeSwarmAgent = 'swarm';
 
     var agentBadgeColors = {
         swarm: 'var(--green)',
+        council: '#4dd2ff',
         sentinel: 'var(--amber)',
         shadow: 'var(--purple)',
         flagship: 'var(--blue)',
@@ -1159,6 +1171,7 @@ function renderSignals(signals) {
     // Map agent names to API agent params
     var agentApiMap = {
         swarm: 'swarm',
+        council: 'council',
         sentinel: 'sentinel',
         shadow: 'shadow',
         flagship: 'twitter',
@@ -1271,6 +1284,10 @@ function renderSignals(signals) {
         var apiAgent = agentApiMap[agent] || agent;
         (async function() {
             try {
+                // Council deliberations use their own endpoint + selector
+                if (agent === 'council') {
+                    return fetchCouncilFeed();
+                }
                 // Traffic monitor uses its own endpoint
                 if (agent === 'traffic') {
                     var tres = await fcFetch('/api/traffic');
@@ -1488,6 +1505,217 @@ function renderSignals(signals) {
     // when the fullscreen terminal is open. Without this, fullscreen shows stale data
     // until the user closes and re-opens.
     window.fetchSwarmPageFeed = fetchSwarmPageFeed;
+
+    // ===== COUNCIL DELIBERATIONS — multi-LLM arena viewer =====
+    var _councilCache = { list: null, listMtime: 0, body: {} };
+    function _esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function _renderCouncilMarkdown(md) {
+        // Lightweight markdown rendering tuned for council arena files.
+        // Headings (#, ##, ###) → styled blocks. Bold/italic. Code fences.
+        // Links. Horizontal rules. Bullet lists. Tables passed through as <pre>.
+        var lines = md.split('\n');
+        var out = [];
+        var inCode = false;
+        var codeBuf = [];
+        var inTable = false;
+        var tableBuf = [];
+        for (var i = 0; i < lines.length; i++) {
+            var ln = lines[i];
+            // Code fences
+            if (ln.startsWith('```')) {
+                if (!inCode) {
+                    inCode = true; codeBuf = [];
+                } else {
+                    inCode = false;
+                    out.push('<pre style="background:#070b13; border:1px solid var(--border); border-radius:6px; padding:14px 16px; overflow-x:auto; margin:14px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; line-height:1.55; color:#cfd5dc;"><code>' + _esc(codeBuf.join('\n')) + '</code></pre>');
+                }
+                continue;
+            }
+            if (inCode) { codeBuf.push(ln); continue; }
+            // Tables (pipe-delimited): pass through with mono font
+            if (ln.indexOf('|') >= 0 && (i+1 < lines.length && /^\s*\|?\s*[-: ]+\|/.test(lines[i+1]))) {
+                inTable = true; tableBuf = [ln];
+                continue;
+            }
+            if (inTable) {
+                if (ln.indexOf('|') >= 0 && ln.trim()) {
+                    tableBuf.push(ln);
+                    continue;
+                }
+                inTable = false;
+                out.push('<pre style="background:#070b13; border:1px solid var(--border); border-radius:6px; padding:10px 14px; overflow-x:auto; margin:12px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.7rem; line-height:1.6; color:#cfd5dc;">' + _esc(tableBuf.join('\n')) + '</pre>');
+                tableBuf = [];
+            }
+            // Round headings — coloured tab
+            if (ln.startsWith('## ROUND ')) {
+                out.push('<div style="margin:34px 0 14px; padding:10px 14px; background:rgba(77,210,255,0.10); border-left:3px solid #4dd2ff; border-radius:4px; font-family:\'Orbitron\',sans-serif; font-size:0.95rem; font-weight:700; letter-spacing:0.05em; color:#4dd2ff;">' + _esc(ln.slice(3)) + '</div>');
+                continue;
+            }
+            // Speaker headings — coloured by speaker
+            if (ln.startsWith('### ')) {
+                var speaker = ln.slice(4).trim();
+                var col = speaker.indexOf('CLAUDE') >= 0 ? '#d97757'
+                        : speaker.indexOf('GEMINI') >= 0 ? '#669df6'
+                        : speaker.indexOf('GPT')    >= 0 ? '#10a37f'
+                        : 'var(--text-dim)';
+                out.push('<div style="margin:18px 0 8px; padding:6px 12px; border-left:3px solid ' + col + '; font-family:\'JetBrains Mono\',monospace; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; color:' + col + '; text-transform:uppercase;">' + _esc(speaker) + '</div>');
+                continue;
+            }
+            if (ln.startsWith('# ')) {
+                out.push('<h2 style="font-family:\'Orbitron\',sans-serif; font-size:1.2rem; color:var(--text); margin:18px 0 12px;">' + _esc(ln.slice(2)) + '</h2>');
+                continue;
+            }
+            if (ln.startsWith('---')) {
+                out.push('<hr style="border:none; border-top:1px solid var(--border); margin:22px 0;">');
+                continue;
+            }
+            if (/^- /.test(ln) || /^\* /.test(ln)) {
+                var item = ln.slice(2);
+                item = _renderInline(item);
+                out.push('<div style="margin:4px 0 4px 18px; position:relative;"><span style="position:absolute; left:-14px; color:var(--blue);">→</span>' + item + '</div>');
+                continue;
+            }
+            if (ln.trim() === '') { out.push(''); continue; }
+            out.push('<p style="margin:8px 0;">' + _renderInline(ln) + '</p>');
+        }
+        return out.join('\n');
+    }
+    function _renderInline(s) {
+        // **bold**, *italic*, `code`, [text](url)
+        s = _esc(s);
+        s = s.replace(/`([^`]+)`/g, '<code style="background:rgba(77,210,255,0.10); padding:1px 5px; border-radius:3px; font-family:\'JetBrains Mono\',monospace; font-size:0.85em; color:#4dd2ff;">$1</code>');
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<b style="color:var(--text);">$1</b>');
+        s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--blue);">$1</a>');
+        return s;
+    }
+    function fetchCouncilFeed(intent) {
+        intent = intent || 'user';
+        var sel = document.getElementById('council-selector');
+        var bodyEl = document.getElementById('council-body');
+        var metaEl = document.getElementById('council-meta');
+        if (!sel || !bodyEl) return;
+        // Load council list (cache for 30s)
+        var now = Date.now();
+        if (!_councilCache.list || (now - _councilCache.listMtime) > 30000) {
+            return fcFetch('/api/council_arena').then(function(r) { return r.json(); }).then(function(data) {
+                _councilCache.list = data.councils || [];
+                _councilCache.listMtime = now;
+                _renderCouncilSelector();
+                _loadSelectedCouncil(intent);
+            }).catch(function() {
+                if (intent === 'user') {
+                    bodyEl.innerHTML = '<div style="color:var(--red);">Failed to load council list.</div>';
+                }
+            });
+        } else {
+            _renderCouncilSelector();
+            _loadSelectedCouncil(intent);
+        }
+    }
+    function _renderCouncilSelector() {
+        var sel = document.getElementById('council-selector');
+        if (!sel) return;
+        var prev = sel.value;
+        if (!_councilCache.list || _councilCache.list.length === 0) {
+            sel.innerHTML = '<option value="">No councils found</option>';
+            return;
+        }
+        var html = '';
+        _councilCache.list.forEach(function(c) {
+            var d = new Date(c.mtime * 1000);
+            var when = d.toISOString().slice(0, 16).replace('T', ' ');
+            var rounds = c.rounds || 0;
+            html += '<option value="' + _esc(c.file) + '">' + _esc(c.title) + '  · ' + rounds + ' rounds · ' + when + ' UTC</option>';
+        });
+        sel.innerHTML = html;
+        if (prev) {
+            for (var i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].value === prev) { sel.selectedIndex = i; break; }
+            }
+        }
+    }
+    // Council viewer rules (council 2026-04-29):
+    //   - 'user' intent (click / first mount) → render body, scroll to top
+    //     so the deliberation opens at page one, like a book
+    //   - 'poll'  intent (30s tick)            → render only when the file
+    //     fingerprint or raw body has changed; preserve scroll position
+    //     unless the reader is already pinned to the bottom (tailing live)
+    function _loadSelectedCouncil(intent) {
+        intent = intent || 'user';
+        var sel = document.getElementById('council-selector');
+        var bodyEl = document.getElementById('council-body');
+        var metaEl = document.getElementById('council-meta');
+        if (!sel || !sel.value || !bodyEl) return;
+        var fname = sel.value;
+        var meta = (_councilCache.list || []).find(function(c) { return c.file === fname; });
+        if (metaEl && meta) {
+            metaEl.textContent = (meta.size_bytes / 1024).toFixed(1) + ' KB';
+        }
+        var fingerprint = (meta && (meta.size_bytes || 0)) + ':' + (meta && (meta.mtime || 0));
+        var cached = _councilCache.body[fname];
+        // Polling tick AND the file looks identical to what we already
+        // rendered: do nothing. No DOM churn, no scroll jump.
+        if (intent === 'poll' && cached && cached._fp === fingerprint) {
+            return;
+        }
+        if (intent === 'user') {
+            bodyEl.innerHTML = '<div style="color:var(--text-dim); font-style:italic;">Loading deliberation…</div>';
+        }
+        fcFetch('/api/council_arena?file=' + encodeURIComponent(fname)).then(function(r) { return r.json(); }).then(function(data) {
+            if (data.error) {
+                bodyEl.innerHTML = '<div style="color:var(--red);">Error: ' + _esc(data.error) + '</div>';
+                return;
+            }
+            // Hard equality guard: same body text → no repaint, no scroll loss
+            if (intent === 'poll' && cached && cached._raw === data.body) {
+                cached._fp = fingerprint;
+                return;
+            }
+            // Capture scroll anchor BEFORE we mutate the DOM
+            var prevTop    = bodyEl.scrollTop;
+            var prevBottom = bodyEl.scrollHeight - bodyEl.clientHeight - prevTop;
+            var wasPinned  = prevBottom <= 80;
+            // Cache with markers so future polls can short-circuit
+            data._raw = data.body;
+            data._fp  = fingerprint;
+            _councilCache.body[fname] = data;
+            bodyEl.innerHTML = _renderCouncilMarkdown(data.body || '');
+            // Intent-aware scroll restoration
+            if (intent === 'user') {
+                // Open the book at page one
+                bodyEl.scrollTop = 0;
+            } else if (wasPinned) {
+                // Reader is tailing live — keep them at the bottom
+                bodyEl.scrollTop = bodyEl.scrollHeight;
+            } else {
+                // Preserve the reader's exact position (clamped if content shrank)
+                bodyEl.scrollTop = Math.min(prevTop, bodyEl.scrollHeight);
+            }
+        }).catch(function(e) {
+            if (intent === 'user') {
+                bodyEl.innerHTML = '<div style="color:var(--red);">Failed to load council body.</div>';
+            }
+        });
+    }
+    document.addEventListener('change', function(e) {
+        if (e.target && e.target.id === 'council-selector') {
+            _loadSelectedCouncil('user');
+        }
+    });
+    // Auto-refresh while the council tab is active. Body re-render only fires
+    // when the file fingerprint actually moved, so the reader's scroll
+    // position survives between ticks.
+    setInterval(function() {
+        if (activeSwarmAgent === 'council') {
+            // Cheap list pull (mtime check on the directory)
+            _councilCache.listMtime = 0;
+            fetchCouncilFeed('poll');
+        }
+    }, 30000);
 })();
 
 // ===== SWARM EVOLUTION MODULE (homepage) =====
@@ -1562,10 +1790,13 @@ function renderSignals(signals) {
                 bar.style.background = isMega
                     ? 'linear-gradient(90deg, var(--champion), var(--accent), var(--champion))'
                     : 'linear-gradient(90deg, var(--green, #10b981), var(--accent, #3ea8f5))';
-                if (d.champion_score > 0 && d.champion_gen !== lastChampGen) {
-                    lastChampGen = d.champion_gen;
-                    fetchChampion();
-                }
+                // 2026-04-23: refresh champion info on EVERY poll (10s) so the
+                // live bot's currently-loaded strategy always shows fresh trades
+                // / WR / PnL. Previously only refreshed when swarm crowned a
+                // new gen — but live bot and swarm champion can diverge (hot-
+                // swap case). Cheap endpoint, worth the constant refresh.
+                fetchChampion();
+                lastChampGen = d.champion_gen;
             } else {
                 dot.style.background = 'var(--text-muted, #6b7280)';
                 dot.style.boxShadow = 'none';
