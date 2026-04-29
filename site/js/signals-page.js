@@ -589,7 +589,7 @@
     makePollster('/api/live/arms',       5_000, renderArms);
     makePollster('/api/live/hunt_feed', 10_000, renderHuntFeed);
 
-    makePollster('/api/champion_signals?limit=100', 30_000, (d) => {
+    makePollster('/api/champion_signals?limit=100&since_cascade=true', 30_000, (d) => {
         allSignals = (d && d.signals) || [];
         renderStats(allSignals);
         renderArchive();

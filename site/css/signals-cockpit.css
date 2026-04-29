@@ -20,12 +20,13 @@
 
 /* ─── 1. LAYOUT SHELL ─────────────────────────────────────────────────────── */
 .cockpit {
-    max-width: 1180px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: var(--sp-32) var(--sp-16) var(--sp-24);
     display: flex;
     flex-direction: column;
     gap: var(--sp-48);
+    text-align: center;
 }
 
 .section-eyebrow {
@@ -36,19 +37,22 @@
     color: var(--accent-cyan);
     margin-bottom: var(--sp-8);
     opacity: 0.95;
+    text-align: center;
 }
 .section-lede {
     color: var(--text-muted);
     font-size: var(--fs-14);
     line-height: 1.7;
     max-width: 720px;
-    margin: 0 0 var(--sp-24);
+    margin: 0 auto var(--sp-24);
+    text-align: center;
 }
 
 /* ─── 2. HUNT HERO ────────────────────────────────────────────────────────── */
 .hunt-hero {
     padding: var(--sp-32) 0 var(--sp-16);
     border-bottom: 1px solid var(--border);
+    text-align: center;
 }
 .hunt-eyebrow {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -65,8 +69,8 @@
     line-height: 1.05;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin: 0 0 var(--sp-16);
-    max-width: 18ch;
+    margin: 0 auto var(--sp-16);
+    max-width: 22ch;
 }
 .hunt-headline #hunt-hours {
     color: var(--accent-gold);
@@ -77,8 +81,8 @@
     font-size: var(--fs-20);
     line-height: 1.45;
     color: var(--text-primary);
-    margin: 0 0 var(--sp-8);
-    max-width: 36ch;
+    margin: 0 auto var(--sp-8);
+    max-width: 42ch;
     font-weight: 500;
 }
 .hunt-subhead #hunt-bars {
@@ -89,7 +93,7 @@
 .hunt-tagline {
     font-size: var(--fs-14);
     color: var(--text-muted);
-    margin: 0 0 var(--sp-32);
+    margin: 0 auto var(--sp-32);
     font-style: italic;
     letter-spacing: 0.01em;
 }
@@ -144,6 +148,8 @@
 
 /* ─── 4. TRINITY COCKPIT ──────────────────────────────────────────────────── */
 .cockpit-section { display: flex; flex-direction: column; }
+.cockpit-section .section-eyebrow,
+.cockpit-section .section-lede { text-align: center; }
 .monitors {
     display: grid;
     grid-template-columns: 1fr;
@@ -164,6 +170,7 @@
     gap: var(--sp-16);
     position: relative;
     transition: border-color var(--duration-ui) var(--ease-out);
+    text-align: left;
 }
 .monitor::before {
     content: "";
@@ -416,7 +423,10 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
     padding: var(--sp-24);
+    text-align: left;
 }
+.pressure .section-eyebrow,
+.pressure .section-lede { text-align: center; }
 .pressure-body {
     display: grid;
     grid-template-columns: 1fr;
@@ -441,7 +451,11 @@
 .pressure-row .p-pct  { text-align: right; color: var(--text-muted); }
 
 /* ─── 6. ARCHIVE ──────────────────────────────────────────────────────────── */
-.archive { display: flex; flex-direction: column; }
+.archive { display: flex; flex-direction: column; text-align: left; }
+.archive .section-eyebrow,
+.archive .section-lede { text-align: center; }
+.archive-filters { justify-content: center; }
+#champ-signal-feed { text-align: left; }
 .archive-stats {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -593,7 +607,9 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
     padding: var(--sp-24);
+    text-align: center;
 }
+.protocol-card { text-align: center; }
 .protocol-grid {
     display: grid;
     grid-template-columns: 1fr;
