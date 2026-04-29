@@ -282,27 +282,41 @@
                     </div>
                 </article>
 
-                <h3 class="swarm-timeline__group">Strategic Agents</h3>
+                <h3 class="swarm-timeline__group">Weekly Cycle</h3>
 
                 <article class="swarm-timeline__item">
                     <div class="swarm-timeline__time">
-                        <time>Every 48 h, &minus;2 h</time>
+                        <time>Saturday 15:00 BST</time>
+                        <span>Two hours before the swarm</span>
                     </div>
                     <div class="swarm-timeline__rail" aria-hidden="true"></div>
                     <div class="swarm-timeline__body">
                         <h4>Weekly Digest</h4>
-                        <p>Compresses recent broadcasts, trade data, missed signals, and prior evolution results into a single strategic brief. It runs two hours before each Swarm cycle so the intelligence is fresh and ready.</p>
+                        <p>Compresses the prior seven days of sentinel broadcasts, trade data and missed signals into a single strategic brief. It writes to the broadcast database and disk so the swarm can read fresh intelligence the moment it wakes.</p>
                     </div>
                 </article>
 
                 <article class="swarm-timeline__item">
                     <div class="swarm-timeline__time">
-                        <time>Every 48 h</time>
+                        <time>Saturday 17:00 BST</time>
+                        <span>Conditional gatekeeper</span>
                     </div>
                     <div class="swarm-timeline__rail" aria-hidden="true"></div>
                     <div class="swarm-timeline__body">
                         <h4>AI Swarm</h4>
-                        <p>Fifty-generation evolution cycle led by Gemini 3.1 with a 2.5 Flash, Flash-Lite, and Claude Opus 4.7 fallback chain. It ingests the sentinel broadcasts, the digest, the shadow matrix of missed trades, persistent cross-cycle memory, and the pure-numpy reference code for every structural primitive. Each candidate is backtested across 88 symbols with realistic fees and walk-forward validated. Only a strategy that strictly beats the live champion takes the throne.</p>
+                        <p>Fifty-generation evolution cycle led by Gemini 3.1 with a 2.5 Flash, Flash-Lite and Claude Opus 4.7 fallback chain. It ingests the sentinel broadcasts, the digest, the shadow matrix of missed trades, persistent cross-cycle memory and a pure-numpy reference library for every structural primitive. Each candidate is backtested across 88 symbols under realistic fees and slippage, walk-forward validated across three rolling sub-windows, and screened for look-ahead bias. Only a candidate that strictly beats the live champion on the same fresh window takes the throne.</p>
+                    </div>
+                </article>
+
+                <article class="swarm-timeline__item">
+                    <div class="swarm-timeline__time">
+                        <time>Inside the swarm</time>
+                        <span>Top-three review</span>
+                    </div>
+                    <div class="swarm-timeline__rail" aria-hidden="true"></div>
+                    <div class="swarm-timeline__body">
+                        <h4>Multi-LLM Council</h4>
+                        <p>A three-LLM judicial panel — Claude, Gemini and OpenAI Codex — debates the top three candidates after evaluation ranking. Each speaker reads the candidate DNA, score, regime, family and code summary alongside the incumbent, then votes to crown or veto. Disagreement defaults to the incumbent. Deliberation transcripts are saved verbatim and surfaced in the Council terminal below.</p>
                     </div>
                 </article>
             </div>
@@ -313,74 +327,42 @@
     <section class="swarm-section" aria-labelledby="llm-intelligence-title">
         <div class="section-inner">
             <div class="section-label">// LLM Intelligence</div>
-            <h2 class="section-title" id="llm-intelligence-title">Fifty generations. Four phases. Strict survival.</h2>
+            <h2 class="section-title" id="llm-intelligence-title">Fifty generations. One cycle. Strict survival.</h2>
             <p class="section-text">
-                The Swarm mutates working numpy strategy templates through a fixed four-phase cycle. It explores momentum, structure and geometry first, then spends the final twenty generations sharpening the strongest survivor.
+                The Swarm runs a single fifty-generation cycle each Saturday. The first thirty generations explore freely across the physics primitives. The final twenty hone the leading candidate one change at a time. A new strategy must strictly beat the live champion or the throne stays.
             </p>
 
             <div class="llm-phases">
                 <article class="llm-phase">
                     <header class="llm-phase__header">
-                        <span>Phase 1</span>
-                        <strong>Momentum / Squeeze</strong>
-                        <em>Gens 1&ndash;10</em>
+                        <span>Stage 1</span>
+                        <strong>Free Exploration</strong>
+                        <em>Gens 1&ndash;30</em>
                     </header>
-                    <div class="llm-phase__cards">
-                        <div class="llm-method">
-                            <h3>Squeeze Fire Confluence</h3>
-                            <p>Squeeze release becomes the trigger only after coil duration, compression ratio, ADX and directional spread confirm the move has quality. Dud squeezes are suppressed before they fire.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="llm-phase">
-                    <header class="llm-phase__header">
-                        <span>Phase 2</span>
-                        <strong>Structure</strong>
-                        <em>Gens 11&ndash;20</em>
-                    </header>
-                    <div class="llm-phase__cards">
-                        <div class="llm-method">
-                            <h3>Order Block Reclaim</h3>
-                            <p>Pure numpy detection of the last opposing candle before a one-percent displacement swing. Entry comes on retest of the order-block zone in the correct premium or discount half of the range, with volume above the twenty-bar average.</p>
-                        </div>
-                        <div class="llm-method">
-                            <h3>PDL / PDH Sweep Reclaim</h3>
-                            <p>Previous day low or high sweep-and-reclaim using pre-computed pivots. A low-ADX ranging filter prevents firing in trends where sweeps rarely reclaim. Ranging-regime specialist.</p>
-                        </div>
-                        <div class="llm-method">
-                            <h3>Break Of Structure</h3>
-                            <p>A close beyond the fifty-bar swing high or low becomes the trigger, gated by ADX strength and a volume expansion check. Classic trend-continuation entry on a confirmed structural break.</p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="llm-phase">
-                    <header class="llm-phase__header">
-                        <span>Phase 3</span>
-                        <strong>Geometric</strong>
-                        <em>Gens 21&ndash;30</em>
-                    </header>
-                    <div class="llm-phase__cards">
-                        <div class="llm-method">
-                            <h3>Wyckoff Spring</h3>
-                            <p>Price wicks below a two-hundred-bar range low and closes back above it. The classic accumulation spring, confirmed by oversold pressure and gated to longs only in ranging regime.</p>
-                        </div>
-                        <div class="llm-method">
-                            <h3>Fibonacci OTE</h3>
-                            <p>Optimal Trade Entry zone between sixty-one and seventy-eight percent retracement of the dominant hundred-bar swing. Confluence-gated by trend strength and directional spread. Institutional re-accumulation window.</p>
-                        </div>
-                    </div>
+                    <p class="llm-phase__summary">
+                        Each generation produces a fresh candidate. The LLM chain reads the latest sentinel broadcasts, the missed-alpha shadow matrix, the weekly digest and persistent cross-cycle memory, then writes new entry, exit and risk logic. Candidates draw from a pure-numpy primitive library: ICT sweeps, swing distances, multi-timeframe ADX, squeeze fire, momentum slope, volume ratio, order-block displacement, range geometry. No paradigm is enforced; the swarm chooses.
+                    </p>
                 </article>
 
                 <article class="llm-phase llm-phase--primary">
                     <header class="llm-phase__header">
-                        <span>Phase 4</span>
+                        <span>Stage 2</span>
                         <strong>Hone Best</strong>
                         <em>Gens 31&ndash;50</em>
                     </header>
                     <p class="llm-phase__summary">
-                        After the first thirty generations, the top-scoring candidate becomes the parent. Each remaining generation changes one meaningful thing — a threshold tightened, a filter swapped, a confluence check added. Architecture preserved, edges sharpened. Exploration stops; convergence begins.
+                        The top-scoring survivor from the first thirty becomes the parent. Each remaining generation changes one meaningful thing — a threshold tightened, a filter swapped, a confluence check added. Architecture preserved, edges sharpened. Exploration stops; convergence begins.
+                    </p>
+                </article>
+
+                <article class="llm-phase">
+                    <header class="llm-phase__header">
+                        <span>Verdict</span>
+                        <strong>Three-LLM Council</strong>
+                        <em>After scoring</em>
+                    </header>
+                    <p class="llm-phase__summary">
+                        The top three candidates go to a three-LLM judicial panel. Claude, Gemini and OpenAI Codex each read the same DNA, score, regime, family and code summary alongside the incumbent. Each votes to crown or veto. Disagreement defaults to the incumbent. The full deliberation is saved verbatim and surfaced in the Council terminal below.
                     </p>
                 </article>
             </div>
@@ -552,9 +534,9 @@
         <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System.</div>
     </footer>
 
-    <!-- JS in app.js?v=20260429e - needs: swarm page tab switching (data-swarm-tab) and feed loading into swarm-page-feed-* elements -->
+    <!-- JS in app.js?v=20260429g - needs: swarm page tab switching (data-swarm-tab) and feed loading into swarm-page-feed-* elements -->
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260429e"></script>
+    <script src="/js/app.js?v=20260429g"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/tracker.js" defer></script>
 <div class="terminal-overlay" id="terminal-overlay"><div class="terminal-overlay-header"><div id="terminal-overlay-title" style="font-family:JetBrains Mono,monospace;font-size:0.7rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;"></div><button class="terminal-close-btn" id="terminal-close">CLOSE TERMINAL [ESC]</button></div><div class="terminal-overlay-body" id="terminal-overlay-content"></div></div>    <script src="/js/video-banner.js?v=20260423e" defer></script>

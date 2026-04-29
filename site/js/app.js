@@ -1172,15 +1172,19 @@ function renderSignals(signals) {
         traffic: 'traffic'
     };
 
-    // Agent schedules in UTC hours:minutes - used for countdown timers
+    // Agent schedules in UTC hours:minutes — countdown timers in the tab strip.
+    // Verified 2026-04-29 against systemd timers and crontab. Forensics is an
+    // on-demand backend query, not a scheduled agent. Council runs inside the
+    // weekly swarm cycle, so it inherits the swarm timer.
     var agentSchedules = {
-        swarm:     { type: 'weekly', day: 0, hours: [17, 15] },         // Sunday 17:15
+        swarm:     { type: 'weekly', day: 6, hours: [16, 0] },          // Saturday 16:00 UTC
+        council:   { type: 'weekly', day: 6, hours: [16, 0] },          // inside the swarm
         sentinel:  { type: 'recurring', times: [[5,0],[11,0],[17,0],[23,0]] },
         shadow:    { type: 'recurring', times: [[4,50],[10,50],[16,50],[22,50]] },
         flagship:  { type: 'daily', times: [[7,30]] },
         watchdog:  { type: 'recurring', times: [[5,5],[11,5],[17,5],[23,5]] },
-        forensics: { type: 'recurring', times: [[5,0],[11,0],[17,0],[23,0]] },
-        digest:    { type: 'weekly', day: 0, hours: [16, 15] },         // Sunday 16:15
+        forensics: { type: 'none' },                                    // on-demand API query
+        digest:    { type: 'weekly', day: 6, hours: [14, 0] },          // Saturday 14:00 UTC
         traffic:   { type: 'none' }
     };
 
@@ -1222,6 +1226,136 @@ function renderSignals(signals) {
         if (d > 0) return d + 'd ' + h + 'h ' + m + 'm';
         if (h > 0) return h + 'h ' + m + 'm ' + s + 's';
         return m + 'm ' + s + 's';
+    }
+
+    /* ── Prose-quality terminal renderer (council 2026-04-29 R7+R9) ────────
+       Every non-council, non-traffic, non-forensics, non-digest agent feed
+       gets rendered as an English-prose entry stack that matches the council
+       deliberation viewer's chassis. Identity comes from the agent label and
+       the role copy, never from a per-agent hue. */
+
+    function _escFeed(s) {
+        if (s === null || s === undefined) return '';
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var AGENT_ROLES = {
+        swarm:    { name: 'Swarm',     role: 'Generation log from the live evolution cycle.' },
+        sentinel: { name: 'Sentinel',  role: 'Six-hourly clinical broadcast across 88 symbols and 97 indicators.' },
+        shadow:   { name: 'Shadow',    role: 'Missed-alpha scanner. Audits every parabolic move the bot did not catch.' },
+        flagship: { name: 'Flagship',  role: 'Daily intelligence briefing. Currently archived; the timer still surfaces the latest broadcast for context.' },
+        watchdog: { name: 'Watchdog',  role: 'Account health. Drawdown, win rate, peak equity. Alerts at ten percent, emergency rebuild at fifteen.' },
+        forensics:{ name: 'Forensics', role: 'Crime-scene matrix. Every recent loss with full physics snapshot at fire time.' },
+        digest:   { name: 'Digest',    role: 'Weekly compression of seven days of broadcasts into one strategic brief.' },
+        traffic:  { name: 'Traffic',   role: 'Live site analytics.' }
+    };
+
+    /* Strip leading bracket-timestamp + emoji decoration so the body reads
+       as prose. Returns {ts, body}. */
+    function _splitTimestampPrefix(line) {
+        var m = line.match(/^\s*\[(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2})?)\]\s*/);
+        var ts = m ? m[1].replace('T', ' ') : '';
+        var rest = m ? line.slice(m[0].length) : line;
+        // Strip leading emoji + symbol decoration that the agents prepend.
+        rest = rest.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]+\s*/u, '');
+        return { ts: ts, body: rest.trim() };
+    }
+
+    /* True for lines that are decoration / dividers / ALL-CAPS section banners.
+       These come from logger output and have no prose value. */
+    function _isLogDecoration(line) {
+        var t = line.trim();
+        if (!t) return true;
+        if (/^[=\-_*]{3,}$/.test(t)) return true;          // ====, ----, ____
+        if (t.length < 4) return true;
+        // Lines that are entirely emoji + caps + punctuation, no lowercase.
+        if (!/[a-z]/.test(t) && !/\d{2,}/.test(t)) return true;
+        return false;
+    }
+
+    /* Reframe one shadow-matrix line into a single English sentence.
+       Raw shape: "MISSED 8.2% LONG on ETHUSDTM | Reason: P20_BLOCKED | <forensic>"
+                  or already a paragraph with similar fields. */
+    function _proseShadow(body) {
+        var m = body.match(/MISSED\s+([+-]?[\d.]+%)\s+(LONG|SHORT)\s+on\s+([A-Z]+)/i);
+        if (!m) return body;
+        var pct = m[1], dir = m[2].toLowerCase(), sym = m[3].replace(/USDTM$/, '');
+        var reason = (body.match(/Reason:\s*([A-Z0-9_]+)/i) || [])[1];
+        var rest   = body.split('|').slice(2).join(' ').trim();
+        var out = 'Shadow Matrix watched ' + sym + ' move ' + pct + ' ' + dir + '.';
+        if (reason) {
+            var human = reason.toLowerCase().replace(/_/g, ' ');
+            out += ' The bot did not enter because ' + human + '.';
+        }
+        if (rest) out += ' ' + rest;
+        return out;
+    }
+
+    /* Compose one .feed-entry card from a parsed block. */
+    function _renderEntry(agentLabel, ts, bodyHtml) {
+        var head = '<header><span class="feed-pill">' + _escFeed(agentLabel) + '</span>' +
+                   (ts ? '<time>' + _escFeed(ts) + '</time>' : '') +
+                   '</header>';
+        return '<article class="feed-entry">' + head +
+               '<div class="feed-entry__body">' + bodyHtml + '</div></article>';
+    }
+
+    /* Convert raw multi-paragraph log text into a stack of prose entries,
+       newest first. Splits on blank-line boundaries, strips bracket-time
+       prefixes, applies any agent-specific reframer, then wraps each in a
+       feed-entry card. */
+    function renderProseFeed(agent, raw) {
+        if (!raw) return '<div class="feed-empty">No ' + _escFeed(agent) + ' activity yet.</div>';
+        var role = AGENT_ROLES[agent] || { name: agent, role: '' };
+
+        // Step 1: split into per-event blocks. The /api/swarm_logs endpoint
+        // returns sentinel/shadow/etc. as multi-line text; events are separated
+        // by blank lines. Keep blocks that contain at least one prose line.
+        var blocks = String(raw).split(/\n\s*\n/)
+            .map(function(b){ return b.trim(); })
+            .filter(function(b){
+                if (b.length < 6) return false;
+                // Drop blocks that are 100% decoration (banner-only events).
+                var lines = b.split(/\n+/);
+                return lines.some(function(l){ return !_isLogDecoration(l); });
+            });
+        if (!blocks.length) return '<div class="feed-empty">No ' + _escFeed(agent) + ' activity yet.</div>';
+
+        var out = '';
+        if (role.role) {
+            out += '<p style="margin:0 0 var(--sp-16); color:var(--text-dim); font-family:\'Inter\',sans-serif; font-size:var(--fs-14); line-height:1.65;">' +
+                   _escFeed(role.role) + '</p>';
+        }
+        // Cap recent count for readability — the council viewer also caps.
+        var recent = blocks.slice(-12).reverse();
+        recent.forEach(function(block) {
+            // Take the timestamp from the first timestamped line in the block.
+            var firstLine = block.split(/\n/)[0];
+            var ts = (_splitTimestampPrefix(firstLine).ts) || '';
+            // Reduce block to the prose-bearing lines (drop dividers, emoji
+            // banners, repeated timestamps). Strip the bracket-time prefix
+            // from each surviving line.
+            var lines = block.split(/\n+/).map(function(l) {
+                return _splitTimestampPrefix(l).body;
+            }).filter(function(l) {
+                return l && !_isLogDecoration(l);
+            });
+            if (!lines.length) return;
+            var body;
+            if (agent === 'shadow') {
+                body = lines.map(function(line) {
+                    return _proseShadow(line);
+                }).map(function(line) {
+                    return '<p>' + _escFeed(line) + '</p>';
+                }).join('');
+            } else {
+                body = lines.map(function(p) {
+                    return '<p>' + _escFeed(p) + '</p>';
+                }).join('');
+            }
+            out += _renderEntry(role.name, ts, body);
+        });
+        return out;
     }
 
     function updateCountdowns() {
@@ -1427,49 +1561,20 @@ function renderSignals(signals) {
                 var res = await fcFetch('/api/swarm_logs?agent=' + apiAgent);
                 var d = await res.json();
                 if (d.logs && d.logs.length > 50) {
-                    var html;
                     if (agent === 'swarm') {
-                        html = renderSwarmLog(d.logs, agentBadgeColors[agent] || 'var(--accent)');
+                        feedEl.innerHTML = renderSwarmLog(d.logs, 'var(--accent)');
                     } else {
-                        var blocks = d.logs.split('\n\n').filter(function(b) { return b.trim().length > 10; });
-                        var entries = blocks.reverse();
-                        html = '';
-                        entries.forEach(function(block) {
-                            var tsMatch = block.match(/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]/);
-                            var ts = tsMatch ? tsMatch[1] : '';
-                            var badgeColor = agentBadgeColors[agent] || 'var(--accent)';
-                            html += '<div class="sentinel-card" style="border-left-color:' + badgeColor + ';">';
-                            html += '<div class="sentinel-header">';
-                            html += '<div class="sentinel-badge" style="color:' + badgeColor + ';border-color:' + badgeColor + ';">' + agent.toUpperCase() + '</div>';
-                            html += '<div class="sentinel-time">' + ts + '</div>';
-                            html += '</div>';
-                            html += '<div class="sentinel-body">' + block + '</div>';
-                            html += '</div>';
-                        });
+                        feedEl.innerHTML = renderProseFeed(agent, d.logs);
                     }
-                    feedEl.innerHTML = html;
                 } else if (d.entries && d.entries.length > 0) {
-                    var lines = d.entries.reverse();
-                    var html2 = '';
-                    lines.forEach(function(entry) {
-                        var content = entry.content || entry;
-                        var tsMatch2 = content.match(/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\]/);
-                        var ts2 = tsMatch2 ? tsMatch2[1] : '';
-                        var badgeColor2 = agentBadgeColors[agent] || 'var(--accent)';
-                        html2 += '<div class="sentinel-card" style="border-left-color:' + badgeColor2 + ';">';
-                        html2 += '<div class="sentinel-header">';
-                        html2 += '<div class="sentinel-badge" style="color:' + badgeColor2 + ';border-color:' + badgeColor2 + ';">' + agent.toUpperCase() + '</div>';
-                        html2 += '<div class="sentinel-time">' + ts2 + '</div>';
-                        html2 += '</div>';
-                        html2 += '<div class="sentinel-body">' + content + '</div>';
-                        html2 += '</div>';
-                    });
-                    feedEl.innerHTML = html2;
+                    feedEl.innerHTML = renderProseFeed(agent, d.entries.map(function(e){
+                        return (e && e.content) ? e.content : String(e);
+                    }).join('\n\n'));
                 } else {
-                    feedEl.innerHTML = '<div class="pos-empty">No ' + agent + ' data available yet.</div>';
+                    feedEl.innerHTML = '<div class="feed-empty">No ' + _escFeed(agent) + ' activity recorded in the current window.</div>';
                 }
             } catch(err) {
-                feedEl.innerHTML = '<div class="pos-empty">' + agent.toUpperCase() + ' feed connecting...</div>';
+                feedEl.innerHTML = '<div class="feed-empty">' + _escFeed(agent) + ' feed connecting&hellip;</div>';
             }
         })();
     }

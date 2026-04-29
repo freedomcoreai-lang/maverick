@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260423c">
+    <link rel="stylesheet" href="/css/style.css?v=20260428b">
     <style>
         /* ═══════════════════════════════════════════════════════════════
            STREAMLINE MISSION CONTROL. BLACKBOX DASHBOARD
@@ -1404,6 +1404,9 @@
             <a href="/pages/architecture.html">Architecture</a>
             <a href="/pages/news.html">News</a>
             <a href="/pages/about.html">About</a>
+            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599;</a>
+            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
+            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599;</a>
             <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
         </div>
         <div class="nav-right">
@@ -1470,6 +1473,101 @@
 
     <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
+                <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
+        <style>
+          /* === FREEDOMCORE FAMILY HEADING === */
+          .fc-fam-head {
+            display: block; text-align: center; color: #4dd2ff;
+            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
+            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
+            padding: 12px 0 8px; pointer-events: none;
+          }
+          /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
+          .fc-fam-link {
+            display: flex !important; align-items: center; gap: 10px;
+            padding: 9px 2px !important; text-decoration: none !important;
+            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
+            font-weight: 700; letter-spacing: 0.06em;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+          }
+          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
+          .fc-fam-link .fc-fam-desc {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
+            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
+          }
+          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
+          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
+          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
+          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
+          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
+          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
+          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
+          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
+          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
+          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
+          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
+          .fc-fam-divider {
+            height: 1px; background: rgba(255,255,255,0.10);
+            margin: 10px 0 6px; pointer-events: none;
+          }
+          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
+
+          /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
+          .mobile-dropdown > * {
+            opacity: 0;
+            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
+            will-change: transform, opacity;
+          }
+          .mobile-dropdown.open > * {
+            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+          }
+          @keyframes fc-menu-drop {
+            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
+            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
+          }
+          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
+          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
+          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
+          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
+          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
+          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
+          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
+          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
+          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
+          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
+          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
+          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
+          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
+          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
+          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
+          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
+          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
+          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
+          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
+          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
+          .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
+          .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
+          .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
+          .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
+          .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
+          /* The inline <style> block itself is a child but renders as display:none, so it
+             consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
+          @media (prefers-reduced-motion: reduce) {
+            .mobile-dropdown > *,
+            .mobile-dropdown.open > * {
+              opacity: 1 !important; transform: none !important; animation: none !important;
+            }
+          }
+        </style>
+        <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+        <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
+        <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
+        <a class="fc-fam-link" data-fc="shadow"   href="https://shadow.freedomcore.io/"   rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
+        <a class="fc-fam-link" data-fc="arena"    href="https://arena.freedomcore.io/"    rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
+        <a class="fc-fam-link" data-fc="quantum"  href="https://quantum.freedomcore.io/"  rel="noopener">QUANTUM <span class="fc-fam-desc">Web Design</span></a>
+        <div class="fc-fam-divider"></div>
+        <!-- FC-FAMILY-NAV-END -->
         <a href="/">Home</a>
         <a href="/pages/today.html">Today</a>
         <a href="/pages/performance.html">Performance</a>
@@ -1481,6 +1579,8 @@
         <a href="/pages/architecture.html">Technical Architecture</a>
         <a href="/pages/news.html">Market News</a>
         <a href="/pages/about.html">About / Docs</a>
+
+    
         <a href="/pages/access.html">Access Tiers</a>
         <a href="/#positions">Positions</a>
         <a href="/#security">Security</a>
@@ -1846,9 +1946,11 @@
     </div>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="/js/app.js?v=20260428c"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/streamline.js"></script>
     <script src="/js/tracker.js" defer></script>
+    <script src="/js/video-banner.js?v=20260423e" defer></script>
+    <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>
 </html>
