@@ -132,8 +132,44 @@
     }
 
     /* ────────────────────────────────────────────────────────────────────
-       3 · Hunt hero (/api/hunt/state)
+       3 · Hunt hero (/api/hunt/state) + strike alert
        ──────────────────────────────────────────────────────────────────── */
+    const STRIKE_HEADLINES = [
+        'The cascade has fired.',
+        'Strike confirmed. The hunt landed.',
+        'Capital is moving.',
+        'A medalist just struck.',
+        'The pattern broke. The cascade caught it.',
+    ];
+
+    function pickStrikeHeadline(strike) {
+        // Deterministic pick keyed on the strike id so it stays stable per fire.
+        const seed = (strike && (strike.ts_unix || 0)) % STRIKE_HEADLINES.length;
+        return STRIKE_HEADLINES[seed];
+    }
+
+    function renderStrikeAlert(strike, secondsAgo) {
+        const banner = $('strike-alert');
+        if (!banner) return;
+        const FRESH_WINDOW = 4 * 60 * 60;  // 4 hours
+        if (!strike || secondsAgo === null || secondsAgo === undefined || secondsAgo > FRESH_WINDOW) {
+            banner.hidden = true;
+            return;
+        }
+        banner.hidden = false;
+        setText($('strike-headline'), pickStrikeHeadline(strike));
+
+        const dir   = (strike.direction === 'long' ? 'BULL' : 'BEAR');
+        const sym   = strike.symbol || '—';
+        const tag   = (strike.strategy_name || 'CASCADE').toUpperCase();
+        const px    = (strike.entry_price ? '@ ' + fmtPrice(strike.entry_price) : '');
+        const when  = secondsAgo < 60      ? 'just now'
+                    : secondsAgo < 3600    ? Math.floor(secondsAgo / 60) + 'm ago'
+                    :                        Math.floor(secondsAgo / 3600) + 'h ago';
+        setText($('strike-meta'),
+            `${dir} · ${sym} ${px} · ${tag} · ${when}`);
+    }
+
     function renderHunt(state) {
         if (!state) return;
         const last = state.last_strike_seconds_ago;
@@ -162,12 +198,37 @@
         if (last !== null && last !== undefined) {
             setText($('pulse-discipline'), Math.floor(last / 86400));
         }
+
+        renderStrikeAlert(state.last_strike, last);
+        setRecentStrike(state.last_strike, last);
     }
 
     /* ────────────────────────────────────────────────────────────────────
        4 · Trinity monitors (/api/live/arms)
        ──────────────────────────────────────────────────────────────────── */
-    function stateFromCounts(passed, total, armed, triggered) {
+    /* Tracks which medalist (if any) recently fired so its monitor can wear
+       the cinematic STRIKE state. Updated every time renderHunt runs. */
+    const STRATEGY_TAG = {
+        'FVG_CE_DISPLACEMENT_THRUST':  'SILVER',
+        'POC_DISPLACEMENT_LAMINAR':    'GOLD',
+        'SOVEREIGN_POC_REVERSION_MU':  'PLATINUM',
+    };
+    let recentStrike = null;
+    const RECENT_STRIKE_WINDOW = 30 * 60;  // 30 minutes wears STRIKE state
+
+    function setRecentStrike(strike, secondsAgo) {
+        if (strike && secondsAgo !== null && secondsAgo !== undefined && secondsAgo <= RECENT_STRIKE_WINDOW) {
+            recentStrike = {
+                tag: STRATEGY_TAG[strike.strategy_name] || null,
+                ago: secondsAgo,
+            };
+        } else {
+            recentStrike = null;
+        }
+    }
+
+    function stateFromCounts(passed, total, armed, triggered, tag) {
+        if (recentStrike && recentStrike.tag === tag) return 'STRIKE';
         if (triggered) return 'TRIGGERED';
         if (armed)     return 'ARMED';
         if (total > 0 && passed / total >= 0.5) return 'FORMING';
@@ -188,7 +249,8 @@
             m.gates_passed_max || 0,
             m.gates_total || 0,
             !!m.armed_count,
-            !!m.triggered_count
+            !!m.triggered_count,
+            m.tag
         );
         const stateEl = monitorEl.querySelector('[data-field="state"]');
         if (stateEl) {
