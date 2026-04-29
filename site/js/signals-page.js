@@ -170,15 +170,36 @@
             `${dir} · ${sym} ${px} · ${tag} · ${when}`);
     }
 
+    /* Trinity Cascade activation: 2026-04-27 19:29 UTC. Used for the
+       "no strike yet" fallback so the hero is honest about how long the
+       cascade has been hunting. */
+    const CASCADE_ACTIVATED_TS = 1777354140;
+
     function renderHunt(state) {
         if (!state) return;
-        const last = state.last_strike_seconds_ago;
-        let hours = '—';
-        if (last !== null && last !== undefined) {
-            hours = Math.floor(last / 3600);
+        const last  = state.last_strike_seconds_ago;
+        const hasStrike = last !== null && last !== undefined;
+        const sinceCascade = Math.max(0, Math.floor(Date.now() / 1000) - CASCADE_ACTIVATED_TS);
+
+        // Hero copy adapts to whether a cascade-era strike has happened yet.
+        const headlineEl = $('hunt-headline');
+        const subheadEl  = $('hunt-subhead');
+        const taglineEl  = $('hunt-tagline');
+        const barsTxt    = fmtInt(state.bars_evaluated);
+
+        if (hasStrike) {
+            const hours = Math.floor(last / 3600);
+            const unit  = hours === 1 ? 'hour' : 'hours';
+            headlineEl.textContent = `${hours} ${unit} since the last strike.`;
+            subheadEl.innerHTML    = `${barsTxt} symbol-bars evaluated since. Capital intact.`;
+            taglineEl.textContent  = 'The cascade is not silent. It is unconvinced.';
+        } else {
+            const days = Math.floor(sinceCascade / 86400);
+            const dayUnit = days === 1 ? 'day' : 'days';
+            headlineEl.textContent = 'The cascade is hunting.';
+            subheadEl.innerHTML    = `${barsTxt} symbol-bars evaluated in ${days} ${dayUnit} of live hunting. Capital intact.`;
+            taglineEl.textContent  = 'Every gate watched. Nothing chased.';
         }
-        setText($('hunt-hours'), hours);
-        setText($('hunt-bars'), fmtInt(state.bars_evaluated));
 
         setText($('pulse-symbols'), state.symbols_in_universe || '—');
         setText($('pulse-champs'),  state.champions_active   || '—');
@@ -195,8 +216,20 @@
         if (state.last_scan_iso) {
             setText($('pulse-scan-iso'), state.last_scan_iso.replace('T', ' ').slice(0, 16) + ' UTC');
         }
-        if (last !== null && last !== undefined) {
-            setText($('pulse-discipline'), Math.floor(last / 86400));
+
+        // Discipline pulse: days since strike (post-strike) or days hunting (pre-first-strike).
+        const discLbl = $('pulse-discipline-lbl');
+        const discVal = $('pulse-discipline');
+        const discSub = $('pulse-discipline-sub');
+        if (hasStrike) {
+            if (discLbl) discLbl.textContent = 'Discipline';
+            if (discVal) discVal.textContent = String(Math.floor(last / 86400));
+            if (discSub) discSub.textContent = 'days capital intact';
+        } else {
+            const days = Math.floor(sinceCascade / 86400);
+            if (discLbl) discLbl.textContent = 'Hunting';
+            if (discVal) discVal.textContent = String(days);
+            if (discSub) discSub.textContent = days === 1 ? 'day live' : 'days live';
         }
 
         renderStrikeAlert(state.last_strike, last);

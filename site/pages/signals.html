@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?v=20260428b">
-    <link rel="stylesheet" href="/css/signals-cockpit.css?v=20260429b">
+    <link rel="stylesheet" href="/css/signals-cockpit.css?v=20260429c">
 </head>
 <body>
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
@@ -196,14 +196,11 @@
              ============================================================ -->
         <section class="hunt-hero" id="hunt-hero" aria-live="polite">
             <div class="hunt-eyebrow">// CHAMPION SIGNALS &middot; CASCADE LIVE</div>
-            <h1 class="hunt-headline" id="hunt-headline">
-                <span id="hunt-hours">&mdash;</span> hours since the last confirmed strike.
-            </h1>
+            <h1 class="hunt-headline" id="hunt-headline">The cascade is hunting.</h1>
             <p class="hunt-subhead" id="hunt-subhead">
-                <span id="hunt-bars">&mdash;</span> symbol-bars evaluated.
-                Every one rejected. Capital intact.
+                <span id="hunt-bars">&mdash;</span> symbol-bars evaluated. Capital intact.
             </p>
-            <p class="hunt-tagline">The cascade is not silent. It is unconvinced.</p>
+            <p class="hunt-tagline" id="hunt-tagline">Every gate watched. Nothing chased.</p>
 
             <div class="hunt-pulse">
                 <div class="pulse-card">
@@ -222,9 +219,9 @@
                     <div class="pulse-sub" id="pulse-scan-iso">awaiting bar close</div>
                 </div>
                 <div class="pulse-card">
-                    <div class="pulse-lbl">Discipline</div>
+                    <div class="pulse-lbl" id="pulse-discipline-lbl">Discipline</div>
                     <div class="pulse-val" id="pulse-discipline">&mdash;</div>
-                    <div class="pulse-sub">days capital intact</div>
+                    <div class="pulse-sub" id="pulse-discipline-sub">days hunting</div>
                 </div>
             </div>
         </section>
@@ -406,7 +403,7 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260428c"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
-    <script src="/js/signals-page.js?v=20260429b"></script>
+    <script src="/js/signals-page.js?v=20260429c"></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>
