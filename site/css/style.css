@@ -1,60 +1,73 @@
-/* FreedomCore Modular CSS — v3.0 ELITE BRANDING */
+@import url('./tokens.css');
+
+/* ============================================================================
+   FreedomCore Modular CSS — v3.0
+   Palette + type + spacing + motion tokens live in /css/tokens.css.
+   This file is legacy component styles + a transitional alias layer
+   that maps old var names (--bg, --green, etc.) onto the new tokens.
+
+   DO NOT add new hex literals here. Reference tokens only.
+   The alias block below is eliminated in the component-library PR.
+   ============================================================================ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ─── TRANSITIONAL ALIAS LAYER ──────────────────────────────────────────────
+   Legacy names used by the 1000+ rules in this file. Each resolves to a
+   tokens.css primitive so the old selectors keep working while the new
+   design system is the authority. Do not introduce new aliases here;
+   refactor callers to tokens directly as they are rebuilt per-component.
+   ─────────────────────────────────────────────────────────────────────────── */
 :root {
-    --bg: #060a10;
-    --bg2: #0a0f18;
-    --card: rgba(8, 14, 24, 0.92);
-    --border: rgba(30, 55, 90, 0.4);
-    --text: #e4e8f0;
-    --text-dim: #5a6a82;
-    --green: #4ecdc4;
-    --green-dim: rgba(78, 205, 196, 0.10);
-    --blue: #3ea8f5;
-    --blue-dim: rgba(62, 168, 245, 0.10);
-    --amber: #f5a623;
-    --purple: #8b5cf6;
-    --red: #ef4444;
-    --cyan: #4ecdc4;
-    --accent: #3ea8f5;
-    --scanline: rgba(0,0,0,0.02);
-    --glow-primary: rgba(62, 168, 245, 0.15);
-    --glow-secondary: rgba(78, 205, 196, 0.10);
-    --gold: #ffd700;
-    --gold-bg: rgba(255, 215, 0, 0.10);
-    --gold-border: rgba(255, 215, 0, 0.28);
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-    --champion: #fbbf24;
-    --champion-bg: rgba(251, 191, 36, 0.12);
+    /* Canonical four-token surface — all body colour derives from these. */
+    --bg:           var(--bg-primary);
+    --surface:      var(--bg-elevated);
+    --text:         var(--text-primary);
+    --text-dim:     var(--text-muted);
+    --accent:       var(--accent-gold);
+
+    /* Legacy alias collapse — every former hue resolves into the four. */
+    --bg2:          var(--surface);
+    --card:         var(--surface);
+    --gold:         var(--accent);
+    --green:        var(--accent);
+    --blue:         var(--accent);
+    --cyan:         var(--accent);
+    --amber:        var(--accent);
+    --purple:       var(--accent);
+    --champion:     var(--accent);
+    --red:          var(--text-dim);
+    --silver:       var(--text-dim);
+    --bronze:       var(--text-dim);
+
+    /* Derived alpha surfaces — locked to the accent (gold). */
+    --green-dim:         rgba(255, 215, 0, 0.10);
+    --blue-dim:          rgba(255, 215, 0, 0.10);
+    --gold-bg:           rgba(255, 215, 0, 0.10);
+    --gold-border:       rgba(255, 215, 0, 0.28);
+    --glow-primary:      rgba(255, 215, 0, 0.15);
+    --glow-secondary:    rgba(255, 215, 0, 0.08);
+    --champion-bg:       rgba(255, 215, 0, 0.12);
+    --scanline:          rgba(0, 0, 0, 0.02);
 }
+
 [data-theme="light"] {
-    --bg: #f0f4f8;
-    --bg2: #e6ecf2;
-    --card: rgba(255, 255, 255, 0.95);
-    --border: rgba(6, 10, 16, 0.10);
-    --text: #060a10;
-    --text-dim: #2c3a4d;
-    --green: #2ba89e;
-    --green-dim: rgba(43, 168, 158, 0.08);
-    --blue: #2580c8;
-    --blue-dim: rgba(37, 128, 200, 0.08);
-    --amber: #b8740a;
-    --purple: #6d3bcc;
-    --red: #d42020;
-    --cyan: #2ba89e;
-    --accent: #2580c8;
-    --scanline: rgba(0,0,0,0.008);
-    --glow-primary: rgba(37, 128, 200, 0.10);
-    --glow-secondary: rgba(43, 168, 158, 0.06);
-    --gold: #b8740a;
-    --gold-bg: rgba(184, 116, 10, 0.08);
-    --gold-border: rgba(184, 116, 10, 0.35);
-    --silver: #5a6a7a;
-    --bronze: #8b4513;
-    --champion: #b8740a;
-    --champion-bg: rgba(184, 116, 10, 0.10);
+    /* Tokens flip in tokens.css; here we re-derive the alpha surfaces and
+       collapse the legacy hue aliases the same way they collapse in dark. */
+    --card:              var(--surface);
+    --green-dim:         rgba(200, 155, 0, 0.10);
+    --blue-dim:          rgba(200, 155, 0, 0.10);
+    --gold-bg:           rgba(200, 155, 0, 0.10);
+    --gold-border:       rgba(200, 155, 0, 0.35);
+    --glow-primary:      rgba(200, 155, 0, 0.12);
+    --glow-secondary:    rgba(200, 155, 0, 0.06);
+    --champion-bg:       rgba(200, 155, 0, 0.12);
+    --scanline:          rgba(0, 0, 0, 0.008);
+
+    --amber:             var(--accent);
+    --red:               var(--text-dim);
+    --bronze:            var(--text-dim);
+    --champion:          var(--accent);
 }
 
 html { scroll-behavior: smooth; }
@@ -95,7 +108,7 @@ body::after {
     display: flex; align-items: center;
     /* Deliberately NOT space-between — the logo's position must be hard-docked
        next to the hamburger. nav-right pushes itself to the right via margin-left:auto. */
-    background: #0a1628;
+    background: var(--bg2);
     backdrop-filter: blur(24px);
     border-bottom: none;
     transition: background 0.3s;
@@ -105,11 +118,17 @@ body::after {
 .nav-logo      { flex-shrink: 0; order: 2; }
 .nav-center    { order: 3; flex: 1 1 auto; justify-content: center; }
 .nav-right     { order: 4; margin-left: auto; flex-shrink: 0; }
-/* Neon cyan/blue underline — full viewport width, sits right below the nav */
-.nav-neon-line {
-    position: fixed;
-    top: 78px;      /* ticker (22px) + nav (~56px) on desktop */
-    left: 0; right: 0; width: 100vw;
+/* Neon cyan/blue underline — anchored to the nav's actual bottom edge via
+   pseudo-element so it always sits flush regardless of nav height variance.
+   Replaced 2026-04-27 (was using fixed-pixel `top` which guessed wrong on
+   different layouts and either blocked info bars or floated below the nav). */
+.nav-neon-line { display: none !important; }
+.nav::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
     height: 1px;
     background: linear-gradient(90deg,
         rgba(78, 205, 196, 0.6) 0%,
@@ -124,10 +143,7 @@ body::after {
     pointer-events: none;
     z-index: 201;
 }
-@media (max-width: 768px) {
-    .nav-neon-line { top: 70px; }  /* ticker (18px) + slimmer mobile nav (~52px) */
-}
-[data-theme="light"] .nav { background: #f0f4f8; }
+[data-theme="light"] .nav { background: var(--bg); }
 .nav-logo {
     display: flex; align-items: center; gap: 10px;
     text-decoration: none;
@@ -158,12 +174,12 @@ body::after {
     font-family: 'Inter', sans-serif;
     font-weight: 800; font-size: 1.05rem;
     letter-spacing: 5px; text-transform: uppercase;
-    color: #e4e8f0;
+    color: var(--text);
     text-shadow: 0 0 20px rgba(78, 205, 196, 0.2);
     transition: color 0.4s, text-shadow 0.4s;
 }
 .nav-logo:hover .nav-logo-text {
-    color: #4ecdc4;
+    color: var(--green);
     text-shadow: 0 0 24px rgba(78, 205, 196, 0.35);
 }
 .nav-center { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; max-width: 100%; }
@@ -252,11 +268,11 @@ body::after {
     text-shadow: none;
 }
 [data-theme="light"] .nav-logo-text {
-    color: #0a1628;
+    color: var(--text);
     text-shadow: 0 0 16px rgba(43, 168, 158, 0.1);
 }
 [data-theme="light"] .nav-logo:hover .nav-logo-text {
-    color: #1a9e92;
+    color: var(--blue);
 }
 .hero-badge {
     font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
@@ -314,7 +330,7 @@ body::after {
 .btn-primary {
     font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600;
     letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px;
-    background: var(--green); color: #0b0b0f; border: none; border-radius: 6px;
+    background: var(--green); color: var(--bg-primary); border: none; border-radius: 6px;
     cursor: pointer; text-decoration: none; transition: all 0.3s; display: inline-block;
 }
 .btn-primary:hover { filter: brightness(1.2); box-shadow: 0 0 30px rgba(62,207,142,0.3); }
@@ -450,13 +466,13 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: all 0.15s; width: 28px; height: 28px;
     display: flex; align-items: center; justify-content: center;
 }
-.tv-fullscreen-btn:hover { color: #fff; background: rgba(19,23,34,0.95); }
+.tv-fullscreen-btn:hover { color: var(--text-primary); background: rgba(19,23,34,0.95); }
 .tv-fullscreen-btn svg { display: block; }
 
 /* Fullscreen overlay - appended to body, not nested in card */
 .tv-fullscreen-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: 9999; background: #000; display: flex; flex-direction: column;
+    z-index: 9999; background: var(--bg-primary); display: flex; flex-direction: column;
 }
 .tv-fullscreen-overlay iframe {
     flex: 1; width: 100% !important; height: 100% !important;
@@ -465,7 +481,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 .tv-fullscreen-close {
     position: absolute; top: 12px; right: 12px; z-index: 10000;
     background: rgba(19,23,34,0.9); border: none; border-radius: 4px;
-    color: #fff; cursor: pointer; padding: 6px; line-height: 0;
+    color: var(--text-primary); cursor: pointer; padding: 6px; line-height: 0;
     width: 32px; height: 32px;
     display: flex; align-items: center; justify-content: center;
 }
@@ -632,7 +648,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     line-height: 1.8; color: var(--green); min-height: 300px; max-height: 500px;
     overflow-y: auto; -webkit-overflow-scrolling: touch; white-space: pre-wrap; word-break: break-word;
 }
-[data-theme="light"] .swarm-terminal-body { color: #1a7a72; }
+[data-theme="light"] .swarm-terminal-body { color: var(--blue); }
 .swarm-terminal-body::-webkit-scrollbar { width: 6px; }
 .swarm-terminal-body::-webkit-scrollbar-track { background: transparent; }
 .swarm-terminal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -735,6 +751,14 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* === HERO LOGO — theme-swapped pair === */
+/* Dark-mode default: show dark variant, hide light. Flip on light theme. */
+[data-theme="dark"] .hero-logo-light { display: none !important; }
+[data-theme="dark"] .hero-logo-dark  { display: block !important; }
+[data-theme="light"] .hero-logo-dark  { display: none !important; }
+[data-theme="light"] .hero-logo-light { display: block !important; margin: 0 auto 22px; }
+
 
 /* === HERO BANNER IMAGE === */
 .hero-banner {
@@ -848,37 +872,23 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 }
 [data-theme="light"] .mobile-dropdown a { border-bottom-color: rgba(0,0,0,0.06); }
 [data-theme="light"] .mobile-dropdown a:hover { background: rgba(43, 168, 158, 0.08); }
+/* Base styling for dropdown items. Animation is owned by the unified
+   FC-FAMILY-NAV-V3 block (FREEDOMCORE-style 3D drop-in cascade) which
+   ships inline with every page — see /tmp/unify_nav_v3.py for the canonical
+   source. Opacity / transform / animation rules here would override v3 on
+   <a> elements due to selector specificity, so they are intentionally NOT
+   set in this block. */
 .mobile-dropdown a {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.8rem; color: var(--text); font-weight: 600;
     text-decoration: none; letter-spacing: 2px; text-transform: uppercase;
     padding: 14px 24px;
     border-bottom: 1px solid rgba(30, 55, 90, 0.3);
-    transition: all 0.3s;
-    opacity: 0; transform: translateY(-8px);
+    transition: color 0.3s, background 0.3s, padding-left 0.3s;
 }
-.mobile-dropdown.open a {
-    opacity: 1; transform: translateY(0);
-    animation: menu-stair 0.3s ease forwards;
-}
-.mobile-dropdown a:nth-child(1) { animation-delay: 0.03s; }
-.mobile-dropdown a:nth-child(2) { animation-delay: 0.06s; }
-.mobile-dropdown a:nth-child(3) { animation-delay: 0.09s; }
-.mobile-dropdown a:nth-child(4) { animation-delay: 0.12s; }
-.mobile-dropdown a:nth-child(5) { animation-delay: 0.15s; }
-.mobile-dropdown a:nth-child(6) { animation-delay: 0.18s; }
-.mobile-dropdown a:nth-child(7) { animation-delay: 0.21s; }
-.mobile-dropdown a:nth-child(8) { animation-delay: 0.24s; }
-.mobile-dropdown a:nth-child(9) { animation-delay: 0.27s; }
-.mobile-dropdown a:nth-child(10) { animation-delay: 0.30s; }
-.mobile-dropdown a:nth-child(11) { animation-delay: 0.33s; }
 .mobile-dropdown a:hover, .mobile-dropdown a:active {
     color: var(--green); background: rgba(78, 205, 196, 0.05);
     padding-left: 32px;
-}
-@keyframes menu-stair {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 /* === RESPONSIVE === */
@@ -929,7 +939,7 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     position: fixed !important;
     top: 0 !important; left: 0; right: 0;
     overflow: hidden;
-    background: #0a1628;  /* matches the nav navy-blue */
+    background: var(--bg2);
     border-bottom: 1px solid rgba(255,215,0,0.22);
     padding: 0;
     z-index: 210 !important;
@@ -937,12 +947,12 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     transition: background 0.3s, border-color 0.3s;
 }
 [data-theme="light"] .site-ticker {
-    background: #f0f4f8;
+    background: var(--bg);
     border-bottom: 1px solid rgba(184, 116, 10, 0.35);
 }
 [data-theme="light"] .site-ticker .ticker-item { color: var(--text); }
 [data-theme="light"] .site-ticker .ticker-source {
-    color: #b8740a !important;
+    color: var(--amber) !important;
     border: 1px solid rgba(184,116,10,0.35);
     background: rgba(184,116,10,0.06);
 }
@@ -957,13 +967,13 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     display: inline-block !important;
     padding: 0 18px !important;
     font-size: 0.64rem !important;
-    color: var(--text, #e4e8f0);
+    color: var(--text);
     vertical-align: middle;
 }
 .site-ticker .ticker-source {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.5rem !important;
-    color: #ffd700 !important;
+    color: var(--gold) !important;
     letter-spacing: 0.8px;
     margin-right: 6px !important;
     padding: 1px 5px !important;
@@ -973,9 +983,13 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
     background: rgba(255,215,0,0.04);
 }
 .site-ticker .ticker-item a { color: inherit; text-decoration: none; }
-.site-ticker .ticker-item a:hover { color: var(--green, #4ecdc4); }
+.site-ticker .ticker-item a:hover { color: var(--green); }
 
-.nav { top: 22px !important; }
+/* 1px geometric overlap so the compositor seam between fixed ticker
+   (top:0, h:22) and fixed nav (top:21) cannot expose the page on
+   scroll-up. Body padding stays at the ticker height — the overlap is
+   only inside the bars themselves. */
+.nav { top: 21px !important; }
 body { padding-top: 22px !important; }
 
 @media (max-width: 768px) {
@@ -983,8 +997,109 @@ body { padding-top: 22px !important; }
     .site-ticker .ticker-track { line-height: 18px !important; animation-duration: 140s !important; }
     .site-ticker .ticker-item { padding: 0 10px !important; font-size: 0.52rem !important; }
     .site-ticker .ticker-source { font-size: 0.42rem !important; padding: 0 3px !important; margin-right: 4px !important; }
-    .nav { top: 18px !important; padding: 8px 12px !important; }
+    .nav { top: 17px !important; padding: 8px 12px !important; }
     body { padding-top: 18px !important; }
+}
+
+/* Apr 26 v10 — three sister sites (shadow / quantum / arena) carry a build-phase
+   banner. v9 left it position:static which buried it under the fixed nav.
+   v10 fixes banner at top:0 with z-index:230, then pushes ticker/nav/body
+   padding down to clear it. Banner forced single-line + ellipsis to keep
+   height predictable on mobile so the offsets stay accurate. */
+body[data-site="shadow"] .build-phase-banner,
+body[data-site="quantum"] .build-phase-banner,
+body[data-site="arena"] .build-phase-banner,
+body[data-site="freedomcore"] .build-phase-banner {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0; right: 0;
+    z-index: 230 !important;
+    height: 30px !important;
+    line-height: 14px !important;
+    padding: 8px 16px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+}
+body[data-site="shadow"] .site-ticker,
+body[data-site="quantum"] .site-ticker,
+body[data-site="arena"] .site-ticker,
+body[data-site="freedomcore"] .site-ticker {
+    top: 30px !important;
+}
+body[data-site="shadow"] .nav,
+body[data-site="quantum"] .nav,
+body[data-site="arena"] .nav,
+body[data-site="freedomcore"] .nav {
+    top: 52px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 4px 14px !important;
+}
+/* Body padding-top must equal banner(30) + ticker(22) + nav(48) = 100,
+   otherwise the hero pill underneath gets covered by the nav. */
+body[data-site="shadow"],
+body[data-site="quantum"],
+body[data-site="arena"],
+body[data-site="freedomcore"] {
+    padding-top: 100px !important;
+}
+/* Compact nav-cta + hamburger + logo so they fit inside the 48px nav. */
+body[data-site="shadow"] .nav-cta,
+body[data-site="quantum"] .nav-cta,
+body[data-site="arena"] .nav-cta,
+body[data-site="freedomcore"] .nav-cta {
+    padding: 4px 10px !important;
+    font-size: 0.6rem !important;
+    line-height: 1 !important;
+}
+body[data-site="shadow"] .nav-hamburger,
+body[data-site="quantum"] .nav-hamburger,
+body[data-site="arena"] .nav-hamburger,
+body[data-site="freedomcore"] .nav-hamburger {
+    padding: 5px !important;
+}
+body[data-site="shadow"] .nav-logo-img,
+body[data-site="quantum"] .nav-logo-img,
+body[data-site="arena"] .nav-logo-img,
+body[data-site="freedomcore"] .nav-logo-img {
+    height: 30px !important;
+    width: auto !important;
+}
+@media (max-width: 768px) {
+    body[data-site="shadow"] .build-phase-banner,
+    body[data-site="quantum"] .build-phase-banner,
+    body[data-site="arena"] .build-phase-banner {
+        height: 26px !important;
+        line-height: 12px !important;
+        padding: 7px 12px !important;
+        font-size: 9px !important;
+    }
+    body[data-site="shadow"] .site-ticker,
+    body[data-site="quantum"] .site-ticker,
+    body[data-site="arena"] .site-ticker {
+        top: 26px !important;
+    }
+    body[data-site="shadow"] .nav,
+    body[data-site="quantum"] .nav,
+    body[data-site="arena"] .nav {
+        top: 44px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        padding: 3px 10px !important;
+    }
+    /* mobile body padding = 26 (banner) + 18 (ticker) + 42 (nav) = 86 */
+    body[data-site="shadow"],
+    body[data-site="quantum"],
+    body[data-site="arena"] {
+        padding-top: 86px !important;
+    }
+    body[data-site="shadow"] .nav-logo-img,
+    body[data-site="quantum"] .nav-logo-img,
+    body[data-site="arena"] .nav-logo-img {
+        height: 26px !important;
+    }
 }
 .site-ticker .ticker-track {
     display: inline-block;
@@ -996,24 +1111,178 @@ body { padding-top: 22px !important; }
     display: inline-block;
     padding: 0 28px;
     font-size: 0.72rem;
-    color: var(--text, #e4e8f0);
+    color: var(--text);
     vertical-align: middle;
 }
 .site-ticker .ticker-source {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.55rem;
-    color: var(--accent, #3ea8f5);
+    color: var(--accent);
     letter-spacing: 1px;
     margin-right: 8px;
     padding: 2px 6px;
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border);
     border-radius: 3px;
     display: inline-block;
 }
-.site-ticker .ticker-item.crypto .ticker-source { color: #f5a623; border-color: rgba(245,166,35,0.3); }
+.site-ticker .ticker-item.crypto .ticker-source { color: var(--amber); border-color: rgba(245,166,35,0.3); }
 .site-ticker .ticker-item a { color: inherit; text-decoration: none; }
-.site-ticker .ticker-item a:hover { color: var(--green, #4ecdc4); }
+.site-ticker .ticker-item a:hover { color: var(--green); }
 @keyframes site-ticker-scroll {
     from { transform: translate3d(0,0,0); }
     to   { transform: translate3d(-50%,0,0); }
+}
+
+/* Apr 25 — banner-aware mobile dropdown offset.
+   When the BUILD PHASE banner is sticky at top:0, the existing
+   `.mobile-dropdown { top: 78px; }` falls behind banner+ticker+nav stack.
+   Bump it down by ~30px on the family sites that carry the banner so
+   the dropdown clears the sticky header. */
+body[data-site="shadow"] .mobile-dropdown,
+body[data-site="quantum"] .mobile-dropdown,
+body[data-site="arena"] .mobile-dropdown {
+  top: 108px !important;
+}
+@media (max-width: 768px) {
+  body[data-site="shadow"] .mobile-dropdown,
+  body[data-site="quantum"] .mobile-dropdown,
+  body[data-site="arena"] .mobile-dropdown {
+    top: 104px !important;
+  }
+}
+
+/* Apr 27 — landing-page first-screen tightening.
+   Keeps the live MAVERICK hero asset, but makes the value proposition and
+   proof points scannable before the status modules load. */
+.hero-desc.hero-desc-tight {
+    max-width: 780px;
+    margin-bottom: 22px;
+    color: var(--text);
+    font-size: clamp(1rem, 2vw, 1.22rem);
+    line-height: 1.65;
+}
+.hero-proof-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    width: min(760px, 100%);
+    margin: 0 auto 18px;
+}
+.hero-proof-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 82px;
+    padding: 14px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(62, 168, 245, 0.08), rgba(20, 20, 28, 0.54));
+    text-decoration: none;
+    transition: transform var(--duration-ui), border-color var(--duration-ui), box-shadow var(--duration-ui);
+}
+.hero-proof-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(62, 168, 245, 0.42);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+.hero-proof-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--green);
+    text-transform: uppercase;
+}
+.hero-proof-label {
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.frontier-panel {
+    position: relative;
+    z-index: 2;
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: 16px 20px;
+    border: 1px solid rgba(62, 168, 245, 0.28);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(62, 168, 245, 0.12), rgba(139, 92, 246, 0.06)),
+        rgba(20, 20, 28, 0.74);
+    text-align: left;
+}
+.frontier-panel-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.frontier-panel-copy {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    font-weight: 600;
+}
+.frontier-panel .frontier-cta {
+    display: inline-block;
+    margin-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    color: var(--gold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 800;
+}
+.hero-primary-cta {
+    background: var(--accent) !important;
+    color: #000 !important;
+    border-color: var(--accent) !important;
+    font-weight: 800 !important;
+}
+[data-theme="light"] .hero-proof-item {
+    background:
+        linear-gradient(180deg, rgba(30, 127, 196, 0.08), rgba(255, 255, 255, 0.86));
+}
+[data-theme="light"] .frontier-panel {
+    background:
+        linear-gradient(135deg, rgba(30, 127, 196, 0.10), rgba(109, 63, 192, 0.05)),
+        rgba(255, 255, 255, 0.9);
+}
+@media (max-width: 720px) {
+    .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .hero-badge {
+        font-size: 0.58rem;
+        letter-spacing: 1.8px;
+        padding: 7px 12px;
+        margin-bottom: 20px;
+    }
+    .hero-desc.hero-desc-tight {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin-bottom: 16px;
+    }
+    .hero-proof-grid {
+        grid-template-columns: 1fr;
+    }
+    .hero-proof-item {
+        min-height: 66px;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .frontier-panel {
+        padding: 14px 16px;
+    }
 }

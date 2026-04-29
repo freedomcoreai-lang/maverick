@@ -1,0 +1,562 @@
+/* ============================================================================
+   Swarm Page Cockpit — full rebuild per council 2026-04-29 late.
+   Token-driven. No raw hex. Every selector is theme-aware via tokens.css.
+
+   Sections:
+     1. Hero
+     2. Section chrome
+     3. Timeline
+     4. LLM intelligence panel
+     5. Live agent feeds (tabs + panels + render primitives)
+     6. Reduced motion + light-theme overrides
+   ============================================================================ */
+
+/* ─── 1. HERO ─────────────────────────────────────────────────────────────── */
+.swarm-hero {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: var(--sp-96) var(--sp-24) var(--sp-64);
+}
+.swarm-hero__eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-16);
+}
+.swarm-hero__title {
+    max-width: 16ch;
+    font-size: clamp(var(--fs-40), 5vw, var(--fs-64));
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    margin: 0 0 var(--sp-24);
+}
+.swarm-hero__sub {
+    max-width: 64ch;
+    font-size: var(--fs-20);
+    line-height: 1.5;
+    color: var(--text-dim);
+    margin: 0 0 var(--sp-48);
+}
+.swarm-hero__metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+}
+.swarm-hero__metric {
+    padding: var(--sp-24);
+    border-right: 1px solid var(--border);
+}
+.swarm-hero__metric:last-child { border-right: 0; }
+.swarm-hero__metric-label {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: var(--sp-8);
+}
+.swarm-hero__metric-value {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-20);
+    color: var(--accent);
+    font-weight: 600;
+}
+@media (max-width: 720px) {
+    .swarm-hero { padding: var(--sp-64) var(--sp-16) var(--sp-48); }
+    .swarm-hero__metrics { grid-template-columns: repeat(2, 1fr); }
+    .swarm-hero__metric:nth-child(2n) { border-right: 0; }
+    .swarm-hero__metric:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+}
+
+/* ─── 2. SECTION CHROME ───────────────────────────────────────────────────── */
+.swarm-section { max-width: 1040px; margin: 0 auto; padding: var(--sp-48) var(--sp-24); }
+.swarm-section .section-inner { max-width: none; padding: 0; }
+.swarm-section .section-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-16);
+}
+.swarm-section .section-title {
+    font-size: clamp(var(--fs-28), 3.5vw, var(--fs-40));
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 var(--sp-16);
+}
+.swarm-section .section-text {
+    max-width: 68ch;
+    font-size: var(--fs-16);
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0 0 var(--sp-24);
+}
+@media (max-width: 720px) {
+    .swarm-section { padding: var(--sp-48) var(--sp-16); }
+}
+
+/* ─── 3. TIMELINE ─────────────────────────────────────────────────────────── */
+.swarm-timeline { display: grid; gap: 0; margin-top: var(--sp-32); }
+.swarm-timeline__group {
+    margin: var(--sp-32) 0 var(--sp-8);
+    padding-bottom: var(--sp-8);
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.swarm-timeline__group:first-child { margin-top: 0; }
+.swarm-timeline__item {
+    display: grid;
+    grid-template-columns: minmax(120px, 170px) 24px minmax(0, 1fr);
+    gap: var(--sp-24);
+}
+.swarm-timeline__time,
+.swarm-timeline__body {
+    padding: var(--sp-24) 0;
+    border-bottom: 1px solid var(--border);
+}
+.swarm-timeline__time time {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    font-weight: 600;
+    color: var(--accent);
+}
+.swarm-timeline__time span {
+    display: block;
+    margin-top: var(--sp-8);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    line-height: 1.45;
+    color: var(--text-dim);
+}
+.swarm-timeline__rail { position: relative; border-bottom: 1px solid var(--border); }
+.swarm-timeline__rail::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--border);
+}
+.swarm-timeline__rail::after {
+    content: '';
+    position: absolute;
+    top: var(--sp-32);
+    left: 50%;
+    width: 8px; height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    transform: translate(-50%, -50%);
+}
+.swarm-timeline__body h4 {
+    margin: 0 0 var(--sp-8);
+    font-size: var(--fs-20);
+    font-weight: 600;
+    color: var(--text);
+}
+.swarm-timeline__body p {
+    max-width: 68ch;
+    margin: 0;
+    font-size: var(--fs-14);
+    line-height: 1.65;
+    color: var(--text-dim);
+}
+@media (max-width: 720px) {
+    .swarm-timeline__item {
+        grid-template-columns: 20px minmax(0, 1fr);
+        gap: var(--sp-16);
+    }
+    .swarm-timeline__rail { grid-column: 1; grid-row: 1 / span 2; }
+    .swarm-timeline__time, .swarm-timeline__body { grid-column: 2; }
+    .swarm-timeline__time { padding-bottom: var(--sp-8); border-bottom: 0; }
+    .swarm-timeline__body { padding-top: 0; }
+}
+
+/* ─── 4. LLM INTELLIGENCE PANEL ───────────────────────────────────────────── */
+.llm-phases { display: grid; gap: var(--sp-24); margin-top: var(--sp-32); }
+.llm-phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+}
+.llm-phase--primary {
+    border-color: var(--accent);
+    background: var(--gold-bg);
+}
+.llm-phase__header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--sp-16);
+    align-items: baseline;
+    padding: var(--sp-24);
+    border-bottom: 1px solid var(--border);
+}
+.llm-phase__header span,
+.llm-phase__header em {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-style: normal;
+    font-weight: 600;
+}
+.llm-phase__header strong { font-size: var(--fs-20); color: var(--text); font-weight: 600; }
+.llm-phase__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+}
+.llm-method { background: var(--surface); padding: var(--sp-24); }
+.llm-method h3, .llm-rules h3 {
+    margin: 0 0 var(--sp-8);
+    font-size: var(--fs-20);
+    color: var(--text);
+    font-weight: 600;
+}
+.llm-method p, .llm-phase__summary, .llm-rules p {
+    margin: 0;
+    font-size: var(--fs-14);
+    line-height: 1.65;
+    color: var(--text-dim);
+}
+.llm-phase__summary { padding: var(--sp-24); max-width: 72ch; }
+.llm-rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-24);
+    margin-top: var(--sp-24);
+}
+.llm-rules article {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--sp-24);
+}
+
+/* ─── 5. LIVE AGENT FEEDS ─────────────────────────────────────────────────── */
+.swarm-feed-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    margin-top: var(--sp-32);
+    overflow: hidden;
+}
+.swarm-feed-tab {
+    background: var(--surface);
+    padding: var(--sp-16);
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--duration-ui) var(--ease-out);
+    color: inherit;
+    font-family: inherit;
+}
+.swarm-feed-tab:hover { background: var(--gold-bg); }
+.swarm-feed-tab.is-active { background: var(--gold-bg); }
+.swarm-feed-tab__name {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+.swarm-feed-tab.is-active .swarm-feed-tab__name { color: var(--accent); }
+.swarm-feed-tab__timer {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.625rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+}
+
+.swarm-feed-panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    margin-top: var(--sp-24);
+    overflow: hidden;
+}
+.swarm-feed-panel.is-active { display: block; }
+.swarm-feed-panel__header {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    padding: var(--sp-16) var(--sp-24);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+.swarm-feed-panel__state {
+    width: 8px; height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--text-dim);
+    flex-shrink: 0;
+}
+.swarm-feed-panel__state[data-state="live"] {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--glow-primary);
+}
+.swarm-feed-panel__title {
+    flex: 1 1 auto;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-20);
+    font-weight: 600;
+    color: var(--text);
+    min-width: 0;
+}
+.swarm-feed-panel__tools {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    flex-wrap: wrap;
+}
+.swarm-feed-select {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    border-radius: var(--radius-button);
+    outline: none;
+    min-width: 240px;
+    max-width: 100%;
+}
+.swarm-feed-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--text-dim);
+}
+.swarm-feed-panel__fullscreen {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: var(--radius-button);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color var(--duration-ui) var(--ease-out),
+                border-color var(--duration-ui) var(--ease-out),
+                background var(--duration-ui) var(--ease-out);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.swarm-feed-panel__fullscreen:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--gold-bg);
+}
+.swarm-feed-panel__fullscreen kbd {
+    display: inline-block;
+    padding: 0 4px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-left: 4px;
+    font-family: inherit;
+}
+.swarm-feed-panel__body {
+    padding: var(--sp-24);
+    max-height: 65vh;
+    overflow-y: auto;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    color: var(--text-dim);
+    line-height: 1.7;
+}
+.swarm-feed-panel__body--prose {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-16);
+    line-height: 1.65;
+    color: var(--text);
+}
+.swarm-feed-panel__body--prose p { margin: 0 0 1.25em; }
+
+/* Render primitives — used by app.js renderers, no inline styles. */
+.feed-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-button);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--accent);
+    letter-spacing: 0.04em;
+}
+.feed-pill[data-tone="muted"] {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-dim);
+}
+.feed-pill strong { font-weight: 700; }
+.feed-pillrow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--sp-16); }
+
+.feed-stat {
+    padding: var(--sp-16);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    text-align: center;
+}
+.feed-stat strong {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-20);
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.feed-stat span {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.feed-statrow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--sp-8);
+    margin-bottom: var(--sp-16);
+}
+
+.feed-entry {
+    padding: var(--sp-16);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-button);
+    margin-bottom: var(--sp-16);
+}
+.feed-entry[data-state="loss"] { border-left-color: var(--text-dim); }
+.feed-entry header {
+    display: flex; align-items: center; gap: var(--sp-8);
+    flex-wrap: wrap; margin-bottom: var(--sp-8);
+}
+.feed-entry header time {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--text-dim);
+}
+.feed-entry__body {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-14);
+    line-height: 1.65;
+    color: var(--text);
+}
+.feed-entry__body p { margin: 0 0 0.75em; }
+.feed-entry__body p:last-child { margin-bottom: 0; }
+
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--sp-8);
+    margin-top: var(--sp-8);
+}
+.feed-grid > div {
+    padding: var(--sp-8) var(--sp-16);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+}
+.feed-grid span {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+.feed-grid strong {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    color: var(--text);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.feed-bars {
+    display: flex; align-items: flex-end; gap: 4px;
+    height: 120px; margin-bottom: var(--sp-16);
+}
+.feed-bars__col {
+    flex: 1;
+    background: linear-gradient(180deg, var(--accent), var(--gold-bg));
+    border-radius: 3px 3px 0 0;
+    min-height: 4px;
+}
+.feed-bars__col span {
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.5rem;
+    color: var(--text-dim);
+    text-align: center;
+    transform: translateY(-100%);
+}
+
+.feed-section {
+    margin: var(--sp-24) 0 var(--sp-8);
+    padding-top: var(--sp-24);
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 700;
+}
+.feed-section:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+.feed-empty {
+    padding: var(--sp-32);
+    text-align: center;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-card);
+}
+
+/* ─── 6. REDUCED MOTION + LIGHT-THEME PARITY ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .swarm-feed-tab,
+    .swarm-feed-panel__fullscreen { transition: none !important; }
+}
+
+/* Light theme — surfaces flip via tokens, accents already remap. */
+[data-theme="light"] .swarm-feed-panel__body--prose { color: var(--text); }
+[data-theme="light"] .feed-bars__col {
+    background: linear-gradient(180deg, var(--accent), var(--gold-bg));
+}

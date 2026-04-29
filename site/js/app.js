@@ -1156,17 +1156,8 @@ function renderSignals(signals) {
     var swarmAgents = ['swarm', 'council', 'sentinel', 'shadow', 'flagship', 'watchdog', 'forensics', 'digest', 'traffic'];
     var activeSwarmAgent = 'swarm';
 
-    var agentBadgeColors = {
-        swarm: 'var(--green)',
-        council: '#4dd2ff',
-        sentinel: 'var(--amber)',
-        shadow: 'var(--purple)',
-        flagship: 'var(--blue)',
-        watchdog: 'var(--red)',
-        forensics: 'var(--red)',
-        digest: '#00e5ff',
-        traffic: '#ff6b6b'
-    };
+    // Council 2026-04-29: agent identity comes from typography and prose, not
+    // from a colour dictionary. The old agentBadgeColors map was removed here.
 
     // Map agent names to API agent params
     var agentApiMap = {
@@ -1255,26 +1246,23 @@ function renderSignals(signals) {
 
     function switchSwarmPageTab(agent) {
         activeSwarmAgent = agent;
-        // Update tab button active states
+        // Update tab button active states. Both class names retained so the
+        // legacy .agent-tab and the new .swarm-feed-tab markup both light up.
         swarmTabs.querySelectorAll('[data-agent]').forEach(function(btn) {
-            if (btn.getAttribute('data-agent') === agent) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            var on = btn.getAttribute('data-agent') === agent;
+            btn.classList.toggle('active', on);
+            btn.classList.toggle('is-active', on);
+            btn.setAttribute('aria-selected', on ? 'true' : 'false');
         });
-        // Show matching panel, hide others
+        // Show matching panel, hide others.
         swarmAgents.forEach(function(a) {
             var panel = document.getElementById('swarm-panel-' + a);
             if (panel) {
-                if (a === agent) {
-                    panel.classList.add('active');
-                } else {
-                    panel.classList.remove('active');
-                }
+                var on = (a === agent);
+                panel.classList.toggle('active', on);
+                panel.classList.toggle('is-active', on);
             }
         });
-        // Load feed if not already populated
         fetchSwarmPageFeed(agent);
     }
 
@@ -1530,7 +1518,7 @@ function renderSignals(signals) {
                     inCode = true; codeBuf = [];
                 } else {
                     inCode = false;
-                    out.push('<pre style="background:#070b13; border:1px solid var(--border); border-radius:6px; padding:14px 16px; overflow-x:auto; margin:14px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; line-height:1.55; color:#cfd5dc;"><code>' + _esc(codeBuf.join('\n')) + '</code></pre>');
+                    out.push('<pre style="background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:14px 16px; overflow-x:auto; margin:14px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.72rem; line-height:1.55; color:var(--text);"><code>' + _esc(codeBuf.join('\n')) + '</code></pre>');
                 }
                 continue;
             }
@@ -1546,26 +1534,22 @@ function renderSignals(signals) {
                     continue;
                 }
                 inTable = false;
-                out.push('<pre style="background:#070b13; border:1px solid var(--border); border-radius:6px; padding:10px 14px; overflow-x:auto; margin:12px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.7rem; line-height:1.6; color:#cfd5dc;">' + _esc(tableBuf.join('\n')) + '</pre>');
+                out.push('<pre style="background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:10px 14px; overflow-x:auto; margin:12px 0; font-family:\'JetBrains Mono\',monospace; font-size:0.7rem; line-height:1.6; color:var(--text);">' + _esc(tableBuf.join('\n')) + '</pre>');
                 tableBuf = [];
             }
-            // Round headings — coloured tab
+            // Round headings — single accent rule, Inter prose.
             if (ln.startsWith('## ROUND ')) {
-                out.push('<div style="margin:34px 0 14px; padding:10px 14px; background:rgba(77,210,255,0.10); border-left:3px solid #4dd2ff; border-radius:4px; font-family:\'Orbitron\',sans-serif; font-size:0.95rem; font-weight:700; letter-spacing:0.05em; color:#4dd2ff;">' + _esc(ln.slice(3)) + '</div>');
+                out.push('<div style="margin:34px 0 14px; padding:10px 14px; background:var(--gold-bg); border-left:3px solid var(--accent); border-radius:4px; font-family:\'Inter\',sans-serif; font-size:1rem; font-weight:700; letter-spacing:0.02em; color:var(--accent);">' + _esc(ln.slice(3)) + '</div>');
                 continue;
             }
-            // Speaker headings — coloured by speaker
+            // Speaker headings — typographic identity, no per-speaker hex.
             if (ln.startsWith('### ')) {
                 var speaker = ln.slice(4).trim();
-                var col = speaker.indexOf('CLAUDE') >= 0 ? '#d97757'
-                        : speaker.indexOf('GEMINI') >= 0 ? '#669df6'
-                        : speaker.indexOf('GPT')    >= 0 ? '#10a37f'
-                        : 'var(--text-dim)';
-                out.push('<div style="margin:18px 0 8px; padding:6px 12px; border-left:3px solid ' + col + '; font-family:\'JetBrains Mono\',monospace; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; color:' + col + '; text-transform:uppercase;">' + _esc(speaker) + '</div>');
+                out.push('<div style="margin:18px 0 8px; padding:6px 12px; border-left:3px solid var(--accent); font-family:\'JetBrains Mono\',monospace; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; color:var(--accent); text-transform:uppercase;">' + _esc(speaker) + '</div>');
                 continue;
             }
             if (ln.startsWith('# ')) {
-                out.push('<h2 style="font-family:\'Orbitron\',sans-serif; font-size:1.2rem; color:var(--text); margin:18px 0 12px;">' + _esc(ln.slice(2)) + '</h2>');
+                out.push('<h2 style="font-family:\'Inter\',sans-serif; font-size:1.2rem; font-weight:700; color:var(--text); margin:18px 0 12px;">' + _esc(ln.slice(2)) + '</h2>');
                 continue;
             }
             if (ln.startsWith('---')) {
@@ -1575,7 +1559,7 @@ function renderSignals(signals) {
             if (/^- /.test(ln) || /^\* /.test(ln)) {
                 var item = ln.slice(2);
                 item = _renderInline(item);
-                out.push('<div style="margin:4px 0 4px 18px; position:relative;"><span style="position:absolute; left:-14px; color:var(--blue);">→</span>' + item + '</div>');
+                out.push('<div style="margin:4px 0 4px 18px; position:relative;"><span style="position:absolute; left:-14px; color:var(--accent);">→</span>' + item + '</div>');
                 continue;
             }
             if (ln.trim() === '') { out.push(''); continue; }
@@ -1586,10 +1570,10 @@ function renderSignals(signals) {
     function _renderInline(s) {
         // **bold**, *italic*, `code`, [text](url)
         s = _esc(s);
-        s = s.replace(/`([^`]+)`/g, '<code style="background:rgba(77,210,255,0.10); padding:1px 5px; border-radius:3px; font-family:\'JetBrains Mono\',monospace; font-size:0.85em; color:#4dd2ff;">$1</code>');
+        s = s.replace(/`([^`]+)`/g, '<code style="background:var(--gold-bg); padding:1px 5px; border-radius:3px; font-family:\'JetBrains Mono\',monospace; font-size:0.85em; color:var(--accent);">$1</code>');
         s = s.replace(/\*\*([^*]+)\*\*/g, '<b style="color:var(--text);">$1</b>');
         s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-        s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--blue);">$1</a>');
+        s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--accent);">$1</a>');
         return s;
     }
     function fetchCouncilFeed(intent) {
