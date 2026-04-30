@@ -164,14 +164,17 @@ body {
 }
 /* PR1 follow-up · 2026-04-30 — circular brand orb in the nav.
    Each site shows ITS OWN orb (Maverick/Shadow/Arena/Quantum) so the
-   visual identity is set the moment you see the burger area. */
+   visual identity is set the moment you see the burger area.
+   Bigger sizing per operator 2026-04-30: 36 → 44 px; tap to expand
+   shows full-size artwork in the logo-expand overlay. */
 .nav-logo-img--orb {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 1.5px solid color-mix(in srgb, var(--site-accent) 60%, transparent);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--site-accent) 30%, transparent);
+    width: 44px; height: 44px; border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid color-mix(in srgb, var(--site-accent) 65%, transparent);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--site-accent) 35%, transparent);
 }
 .nav-logo-img--orb:hover {
-    box-shadow: 0 0 20px color-mix(in srgb, var(--site-accent) 60%, transparent);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--site-accent) 65%, transparent);
 }
 .logo-expand-overlay {
     display: none; position: fixed;

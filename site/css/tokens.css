@@ -21,10 +21,11 @@
     --text-muted:     #9ca3af;   /* R4 P3 — was #6b7280 (3.87:1 fails AA on bg-elevated); now ≥4.7:1 */
 
     /* ─── SITE ACCENTS (exactly one active per page) ─────────────────────── */
-    --accent-gold:    #ffd700;   /* MAVERICK identity */
-    --accent-violet:  #8b5cf6;   /* SHADOW identity */
-    --accent-cyan:    #3ea8f5;   /* QUANTUM identity */
-    --accent-silver:  #c0c8d4;   /* ARENA identity */
+    --accent-gold:        #ffd700;   /* MAVERICK identity */
+    --accent-violet:      #8b5cf6;   /* SHADOW identity */
+    --accent-cyan:        #3ea8f5;   /* QUANTUM identity (mid blue) */
+    --accent-silver:      #c0c8d4;   /* ARENA identity */
+    --accent-freedomcore: #4dd2ff;   /* HUB / parent brand — light blue (matches burger menu .fc-fam-head) */
 
     /* ─── TYPE SCALE (px → rem at 16px base) ─────────────────────────────── */
     --fs-12:  0.75rem;
@@ -133,15 +134,14 @@
    one token. One accent active per page; cross-site links resolve via the
    data-fc attribute (set in markup).
    ─────────────────────────────────────────────────────────────────────────── */
-body[data-site="maverick"] { --site-accent: var(--accent-gold);   }
-body[data-site="shadow"]   { --site-accent: var(--accent-violet); }
-body[data-site="quantum"]  { --site-accent: var(--accent-cyan);   }
-body[data-site="arena"]    { --site-accent: var(--accent-silver); }
-/* R5 — apex/Hub binding (was missing in canon; Hub was inheriting accidental gold).
-   Hub's actual markup uses `data-site="freedomcore"` — we bind both names to
-   gold so old + new markup both resolve correctly. */
+body[data-site="maverick"] { --site-accent: var(--accent-gold);        }
+body[data-site="shadow"]   { --site-accent: var(--accent-violet);      }
+body[data-site="quantum"]  { --site-accent: var(--accent-cyan);        }
+body[data-site="arena"]    { --site-accent: var(--accent-silver);      }
+/* PR1 follow-up · 2026-04-30 — Hub gets its OWN identity (light blue), not
+   borrowed Maverick gold. Matches the burger menu .fc-fam-head color. */
 body[data-site="apex"],
-body[data-site="freedomcore"] { --site-accent: var(--accent-gold); }
+body[data-site="freedomcore"] { --site-accent: var(--accent-freedomcore); }
 
 /* R4 P1 — light-mode per-site accent-text rebinding so every site's CTAs/eyebrows
    render at AA contrast on #f5f5fa. Maverick & Quantum need darker variants;
@@ -153,10 +153,12 @@ body[data-site="freedomcore"] { --site-accent: var(--accent-gold); }
 [data-theme="light"] body[data-site="apex"],
 [data-theme="light"] body[data-site="freedomcore"] { --site-accent-text: var(--accent-gold-text); }
 
-[data-fc="maverick"]   { color: var(--accent-gold);   }
-[data-fc="shadow"]     { color: var(--accent-violet); }
-[data-fc="quantum"]    { color: var(--accent-cyan);   }
-[data-fc="arena"]      { color: var(--accent-silver); }
+[data-fc="freedomcore"],
+[data-fc="apex"]       { color: var(--accent-freedomcore); }
+[data-fc="maverick"]   { color: var(--accent-gold);        }
+[data-fc="shadow"]     { color: var(--accent-violet);      }
+[data-fc="quantum"]    { color: var(--accent-cyan);        }
+[data-fc="arena"]      { color: var(--accent-silver);      }
 /* PR1 follow-up · 2026-04-30 — Streamline (data spine, neutral) and Sovereign
    (gated access tier, premium gold). One token change here propagates to every
    place those modules are referenced franchise-wide. */

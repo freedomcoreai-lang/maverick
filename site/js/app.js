@@ -494,9 +494,43 @@ document.addEventListener('click', function(e) {
 document.addEventListener('DOMContentLoaded', function() {
     // Nav logo expand
     var logoImg = document.getElementById('nav-logo-img');
-    if (logoImg) logoImg.addEventListener('click', function(e) {
+    // PR1 follow-up · 2026-04-30 — universal nav-logo tap-to-expand.
+    // Works on every site whether or not an overlay element pre-exists in
+    // markup, and uses the clicked image's actual src so the overlay shows
+    // THIS site's orb (Maverick / Shadow / Arena / Quantum) at full size,
+    // not a hardcoded maverick-logo.jpg.
+    function _ensureLogoExpand() {
+        var ov = document.getElementById('logo-expand');
+        if (ov) return ov;
+        ov = document.createElement('div');
+        ov.id = 'logo-expand';
+        ov.className = 'logo-expand-overlay';
+        var img = document.createElement('img');
+        img.className = 'logo-expand-img';
+        img.alt = '';
+        ov.appendChild(img);
+        ov.addEventListener('click', function() { ov.classList.remove('open'); });
+        document.body.appendChild(ov);
+        return ov;
+    }
+    document.addEventListener('click', function(e) {
+        var clicked = e.target.closest && e.target.closest('.nav-logo-img');
+        if (!clicked) return;
+        // SVG nav-logos have no src — ignore them.
+        if (!clicked.getAttribute || !clicked.getAttribute('src')) return;
         e.preventDefault();
-        document.getElementById('logo-expand').classList.toggle('open');
+        var ov = _ensureLogoExpand();
+        var ovImg = ov.querySelector('img.logo-expand-img, img');
+        if (ovImg) {
+            ovImg.src = clicked.getAttribute('src');
+            ovImg.alt = clicked.getAttribute('alt') || ovImg.alt;
+        }
+        ov.classList.add('open');
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        var ov = document.getElementById('logo-expand');
+        if (ov && ov.classList.contains('open')) ov.classList.remove('open');
     });
 
     // Logo expand overlay close
