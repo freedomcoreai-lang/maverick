@@ -6,65 +6,80 @@
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#06060c">
-    <meta name="description" content="Streamline - 1.3GB live market intelligence database powering MAVERICK. 88 symbols, 98 indicators, 272 tables.">
+    <meta name="description" content="Streamline · live market-intelligence database powering MAVERICK. 88+ symbols, 234+ indicators, 274+ tables. Updated every 60 seconds.">
+    <meta property="og:title" content="STREAMLINE · 234 indicators · 88 symbols · live">
+    <meta property="og:description" content="The data spine behind every Maverick decision. 60-second refresh.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://maverick.freedomcore.io/pages/streamline.html">
+    <meta property="og:image" content="https://freedomcore.io/img/og/streamline.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://freedomcore.io/img/og/streamline.png">
     <title>Streamline | FreedomCore</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260428b">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260430c">
+    <link rel="stylesheet" href="/css/style.css?v=20260430c">
     <style>
         /* ═══════════════════════════════════════════════════════════════
            STREAMLINE MISSION CONTROL. BLACKBOX DASHBOARD
            ═══════════════════════════════════════════════════════════════ */
 
+        /* ─── PALETTE BRIDGE — franchise dark + readable white text + gold ACCENT only.
+           Body text uses --text-primary (#f5f5fa) like the rest of Maverick pages.
+           Gold reserved for accent moments only: dots, pulse glows, chip counts,
+           hover borders. NOT used for body text or titles — that's unreadable.
+           Reds stay muted for danger/down states. */
         :root {
-            --bb-bg: #06060c;
-            --bb-panel: #0b0b14;
-            --bb-header: #0e0e18;
-            --bb-border: #16162a;
-            --bb-green: #00e676;
-            --bb-red: #ff1744;
-            --bb-amber: #ffab00;
-            --bb-cyan: #00e5ff;
-            --bb-purple: #b388ff;
-            --bb-green-bg: rgba(0, 230, 118, 0.08);
-            --bb-red-bg: rgba(255, 23, 68, 0.08);
-            --bb-amber-bg: rgba(255, 171, 0, 0.08);
-            --bb-cyan-bg: rgba(0, 229, 255, 0.08);
-            --bb-purple-bg: rgba(179, 136, 255, 0.08);
-            --bb-green-border: rgba(0, 230, 118, 0.25);
-            --bb-red-border: rgba(255, 23, 68, 0.25);
-            --bb-amber-border: rgba(255, 171, 0, 0.25);
-            --bb-cyan-border: rgba(0, 229, 255, 0.25);
-            --bb-purple-border: rgba(179, 136, 255, 0.25);
-            --bb-text: #e0e0e0;
-            --bb-text-dim: #6a6a8a;
-            --bb-text-muted: #3a3a5a;
+            --bb-bg:           #0a0a0f;
+            --bb-panel:        #14141c;
+            --bb-header:       #14141c;
+            --bb-border:       rgba(245, 245, 250, 0.10);
+            --bb-green:        #f5f5fa;
+            --bb-red:          #c44747;
+            --bb-amber:        #ffd700;
+            --bb-cyan:         #f5f5fa;
+            --bb-purple:       #f5f5fa;
+            --bb-green-bg:     rgba(255, 215, 0, 0.06);
+            --bb-red-bg:       rgba(196, 71, 71, 0.08);
+            --bb-amber-bg:     rgba(255, 215, 0, 0.10);
+            --bb-cyan-bg:      rgba(245, 245, 250, 0.04);
+            --bb-purple-bg:    rgba(245, 245, 250, 0.04);
+            --bb-green-border: rgba(255, 215, 0, 0.22);
+            --bb-red-border:   rgba(196, 71, 71, 0.28);
+            --bb-amber-border: rgba(255, 215, 0, 0.28);
+            --bb-cyan-border:  rgba(245, 245, 250, 0.16);
+            --bb-purple-border:rgba(245, 245, 250, 0.16);
+            --bb-text:         #f5f5fa;
+            --bb-text-dim:     #6b7280;
+            --bb-text-muted:   #4b5563;
         }
 
         [data-theme="light"] {
-            --bb-bg: #f0f4f8;
-            --bb-panel: #ffffff;
-            --bb-header: #f5f7fa;
-            --bb-border: #d8dfe8;
-            --bb-green: #1a9e6e;
-            --bb-red: #d42020;
-            --bb-amber: #b87a00;
-            --bb-cyan: #0a7e9e;
-            --bb-purple: #6d3bcc;
-            --bb-green-bg: rgba(26, 158, 110, 0.06);
-            --bb-red-bg: rgba(212, 32, 32, 0.06);
-            --bb-amber-bg: rgba(184, 122, 0, 0.06);
-            --bb-cyan-bg: rgba(10, 126, 158, 0.06);
-            --bb-purple-bg: rgba(109, 59, 204, 0.06);
-            --bb-green-border: rgba(26, 158, 110, 0.2);
-            --bb-red-border: rgba(212, 32, 32, 0.2);
-            --bb-amber-border: rgba(184, 122, 0, 0.2);
-            --bb-cyan-border: rgba(10, 126, 158, 0.2);
-            --bb-purple-border: rgba(109, 59, 204, 0.2);
-            --bb-text: #1a2a3c;
-            --bb-text-dim: #4a5a6c;
-            --bb-text-muted: #8a96a8;
+            --bb-bg:           #f5f5fa;
+            --bb-panel:        #ffffff;
+            --bb-header:       #ffffff;
+            --bb-border:       rgba(10, 10, 15, 0.12);
+            --bb-green:        #0a0a0f;
+            --bb-red:          #d42020;
+            --bb-amber:        #c89b00;
+            --bb-cyan:         #0a0a0f;
+            --bb-purple:       #0a0a0f;
+            --bb-green-bg:     rgba(200, 155, 0, 0.06);
+            --bb-red-bg:       rgba(212, 32, 32, 0.06);
+            --bb-amber-bg:     rgba(200, 155, 0, 0.10);
+            --bb-cyan-bg:      rgba(10, 10, 15, 0.04);
+            --bb-purple-bg:    rgba(10, 10, 15, 0.04);
+            --bb-green-border: rgba(200, 155, 0, 0.28);
+            --bb-red-border:   rgba(212, 32, 32, 0.20);
+            --bb-amber-border: rgba(200, 155, 0, 0.30);
+            --bb-cyan-border:  rgba(10, 10, 15, 0.14);
+            --bb-purple-border:rgba(10, 10, 15, 0.14);
+            --bb-text:         #0a0a0f;
+            --bb-text-dim:     #4b5563;
+            --bb-text-muted:   #6b7280;
         }
 
         /* ── GLOBAL OVERRIDES ── */
@@ -89,8 +104,8 @@
             50% { opacity: 0.4; }
         }
         @keyframes glow-pulse {
-            0%, 100% { box-shadow: 0 0 8px rgba(0, 230, 118, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(0, 230, 118, 0.6); }
+            0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.55); }
         }
         @keyframes scan-line {
             0% { transform: translateY(-100%); }
@@ -113,8 +128,8 @@
             50% { border-color: rgba(255, 171, 0, 0.6); }
         }
         @keyframes border-glow-green {
-            0%, 100% { border-color: rgba(0, 230, 118, 0.25); }
-            50% { border-color: rgba(0, 230, 118, 0.6); }
+            0%, 100% { border-color: rgba(255, 215, 0, 0.28); }
+            50% { border-color: rgba(255, 215, 0, 0.55); }
         }
 
         /* ═══════════════════════════════════════
@@ -134,9 +149,9 @@
         }
         .sl-intro-title {
             font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 7vw, 4rem);
-            font-weight: 900; letter-spacing: -2px; line-height: 1;
-            background: linear-gradient(135deg, var(--green), var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 900; letter-spacing: -2px; line-height: var(--lh-tight, 1.05);
+            color: var(--text-primary, #f5f5fa);
+            background: none;
             background-clip: text; margin-bottom: 20px;
         }
         .sl-intro-desc {
@@ -164,10 +179,10 @@
             color: var(--bb-text-dim);
         }
         .sl-intro-link {
-            color: var(--bb-cyan); text-decoration: none; border-bottom: 1px solid var(--bb-cyan-border);
+            color: var(--bb-green); text-decoration: none; border-bottom: 1px solid var(--bb-cyan-border);
             transition: border-color 0.2s;
         }
-        .sl-intro-link:hover { border-color: var(--bb-cyan); }
+        .sl-intro-link:hover { border-color: var(--bb-green); }
 
         @media (max-width: 768px) {
             .sl-intro { padding: 80px 16px 32px; }
@@ -184,20 +199,168 @@
         }
 
         /* ═══════════════════════════════════════
-           1. STICKY HEADER BAR
+           2.5  INDICATOR FAMILY GRID (six families · /api/indicators)
+           ═══════════════════════════════════════ */
+        .sl-family-grid {
+            padding: 24px 16px;
+            background: var(--bb-bg);
+            border-bottom: 1px solid var(--bb-border);
+        }
+        .sl-fam-grid-head {
+            display: flex; align-items: baseline; justify-content: space-between;
+            margin-bottom: 16px; gap: 12px; flex-wrap: wrap;
+        }
+        .sl-fam-grid-title {
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--bb-text);
+            letter-spacing: -0.01em;
+        }
+        .sl-fam-grid-meta {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.62rem; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--bb-text-dim);
+        }
+        .sl-fam-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .sl-fam-card {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            min-width: 0;
+        }
+        .sl-fam-head {
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 8px; margin-bottom: 6px;
+        }
+        .sl-fam-name {
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.85rem; font-weight: 700;
+            color: var(--bb-text);
+        }
+        .sl-fam-count {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.62rem; font-weight: 700;
+            color: var(--accent-gold, #ffd700);
+            font-variant-numeric: tabular-nums;
+        }
+        .sl-fam-desc {
+            margin: 0 0 8px;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 0.7rem; line-height: 1.5;
+            color: var(--bb-text-dim);
+        }
+        .sl-fam-list {
+            display: flex; flex-wrap: wrap; gap: 4px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.55rem; letter-spacing: 0.04em;
+        }
+        .sl-fam-list .sl-fam-chip {
+            padding: 3px 6px;
+            background: var(--bb-bg);
+            border: 1px solid var(--bb-border);
+            border-radius: 4px;
+            color: var(--bb-text-dim);
+            white-space: nowrap;
+            text-transform: lowercase;
+        }
+        .sl-fam-list .sl-fam-chip:hover {
+            color: var(--bb-text);
+            border-color: var(--bb-text-dim);
+        }
+        @media (max-width: 759px) {
+            .sl-fam-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        }
+        @media (max-width: 419px) {
+            .sl-fam-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ═══════════════════════════════════════
+           1.5  LIVE PIPELINE STRIP
+           ═══════════════════════════════════════ */
+        .sl-pipeline {
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.04), rgba(255, 215, 0, 0.01));
+            border-top: 1px solid rgba(255, 215, 0, 0.22);
+            border-bottom: 1px solid var(--bb-border);
+            padding: 12px 16px;
+        }
+        .sl-pipe-header {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.62rem; letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--bb-text-dim);
+            margin-bottom: 10px;
+        }
+        .sl-pipe-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--accent-gold);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.55);
+            animation: sl-pipe-pulse 1.6s ease-in-out infinite;
+        }
+        .sl-pipe-title { color: var(--text-primary, #f5f5fa); font-weight: 700; letter-spacing: 0.22em; }
+        .sl-pipe-meta { margin-left: auto; opacity: 0.8; }
+        .sl-pipe-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .sl-pipe-tile {
+            background: var(--bb-panel);
+            border: 1px solid var(--bb-border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            min-width: 0;
+        }
+        .sl-pipe-tile-label {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.54rem; letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bb-text-dim);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sl-pipe-tile-value {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 1rem; font-weight: 700;
+            color: var(--bb-text);
+            font-variant-numeric: tabular-nums;
+        }
+        .sl-pipe-tile-suffix { font-size: 0.7rem; opacity: 0.55; font-weight: 400; }
+        .sl-pipe-tile-fire { color: var(--accent-gold); }
+        @keyframes sl-pipe-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%      { opacity: 0.45; transform: scale(0.85); }
+        }
+        @media (max-width: 759px) {
+            .sl-pipe-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+            .sl-pipe-tile-value { font-size: 0.85rem; }
+        }
+        @media (max-width: 419px) {
+            .sl-pipe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .sl-pipe-dot { animation: none; }
+        }
+
+        /* ═══════════════════════════════════════
+           1. STAT HEADER BAR (no longer sticky — scrolls away cleanly)
            ═══════════════════════════════════════ */
         .sl-header {
-            position: sticky;
-            top: 56px;
-            z-index: 50;
             background: var(--bb-header);
             border-bottom: 1px solid var(--bb-border);
             padding: 8px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
         .sl-header-left {
             display: flex;
@@ -210,7 +373,7 @@
             font-size: 1.1rem;
             letter-spacing: 3px;
             color: var(--bb-green);
-            text-shadow: 0 0 20px rgba(0, 230, 118, 0.4), 0 0 40px rgba(0, 230, 118, 0.15);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.15);
             text-transform: uppercase;
         }
         .sl-header-version {
@@ -272,8 +435,9 @@
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             position: sticky;
-            top: 99px;
+            top: 0;
             z-index: 49;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
         .sl-tabs::-webkit-scrollbar { display: none; }
         .sl-tab {
@@ -650,7 +814,7 @@
             font-size: 0.55rem;
             font-weight: 600;
             background: var(--bb-purple-bg);
-            color: var(--bb-purple);
+            color: var(--bb-green);
             border: 1px solid var(--bb-purple-border);
         }
         .signal-tier-badge {
@@ -668,7 +832,7 @@
         }
         .signal-tier-badge.t2 {
             background: var(--bb-cyan-bg);
-            color: var(--bb-cyan);
+            color: var(--bb-green);
             border: 1px solid var(--bb-cyan-border);
         }
         .signal-tier-badge.t3 {
@@ -771,7 +935,7 @@
             background: linear-gradient(90deg, rgba(255, 171, 0, 0.3), rgba(255, 171, 0, 0.6));
         }
         .squeeze-bar-fill.green {
-            background: linear-gradient(90deg, rgba(0, 230, 118, 0.3), rgba(0, 230, 118, 0.6));
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.55));
         }
         .squeeze-bar-fill.red {
             background: linear-gradient(90deg, rgba(255, 23, 68, 0.3), rgba(255, 23, 68, 0.6));
@@ -894,7 +1058,7 @@
             white-space: nowrap;
         }
         .fishing-symbol {
-            color: var(--bb-cyan);
+            color: var(--bb-green);
             font-weight: 700;
             font-family: 'Inter', sans-serif;
         }
@@ -964,7 +1128,7 @@
         .stats-card-value.green { color: var(--bb-green); }
         .stats-card-value.red { color: var(--bb-red); }
         .stats-card-value.amber { color: var(--bb-amber); }
-        .stats-card-value.cyan { color: var(--bb-cyan); }
+        .stats-card-value.cyan { color: var(--bb-green); }
         .stats-card-label {
             font-size: 0.5rem;
             font-weight: 600;
@@ -1210,7 +1374,7 @@
             padding: 12px; cursor: pointer; transition: all 0.2s;
             position: relative; overflow: hidden;
         }
-        .sym-card:hover { border-color: var(--bb-green); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,230,118,0.1); }
+        .sym-card:hover { border-color: var(--bb-green); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(255,215,0,0.1); }
         .sym-card-name { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--bb-text); margin-bottom: 4px; }
         .sym-card-price { font-family: 'JetBrains Mono',monospace; font-size: 0.8rem; color: var(--bb-text-muted); margin-bottom: 8px; }
         .sym-card-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -1222,20 +1386,20 @@
             display: flex; align-items: center; gap: 6px; margin-top: 6px;
             font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
         }
-        .eq-label { color: var(--bb-purple); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .eq-label { color: var(--bb-green); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
         .eq-val { color: var(--bb-text-muted); padding: 1px 4px; border-radius: 3px; }
-        .eq-hot { color: var(--bb-green); background: rgba(0,230,118,0.1); font-weight: 600; }
+        .eq-hot { color: var(--bb-green); background: rgba(255,215,0,0.1); font-weight: 600; }
         .eq-warm { color: var(--bb-amber); background: rgba(255,171,0,0.08); }
         .eq-far { color: var(--bb-text-muted); }
 
-        .sym-mode-bull { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25); }
+        .sym-mode-bull { color: var(--bb-green); background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.25); }
         .sym-mode-bear { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.25); }
         .sym-mode-neutral { color: var(--bb-amber); background: rgba(255,171,0,0.08); border: 1px solid rgba(255,171,0,0.25); }
-        .sym-mode-breakout { color: var(--bb-cyan); background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.25); }
-        .sym-bull { border-left: 3px solid rgba(0,230,118,0.5); }
+        .sym-mode-breakout { color: var(--bb-green); background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.25); }
+        .sym-bull { border-left: 3px solid rgba(255,215,0,0.5); }
         .sym-bear { border-left: 3px solid rgba(255,23,68,0.5); }
         .sym-neutral { border-left: 3px solid rgba(255,171,0,0.3); }
-        .sym-breakout { border-left: 3px solid rgba(0,229,255,0.4); }
+        .sym-breakout { border-left: 3px solid rgba(255,215,0,0.4); }
 
         /* ── Confluence Dots ── */
         .conf-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin: 0 1px; }
@@ -1265,17 +1429,17 @@
         .op-symbol { font-family: 'Inter',sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--bb-text); }
         .op-price { font-family: 'JetBrains Mono',monospace; font-size: 1rem; color: var(--bb-text-dim); margin: 4px 0; }
         .op-mode { font-family: 'JetBrains Mono',monospace; font-size: 0.7rem; display: inline-block; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; }
-        .op-mode-bull { color: var(--bb-green); background: rgba(0,230,118,0.1); }
+        .op-mode-bull { color: var(--bb-green); background: rgba(255,215,0,0.1); }
         .op-mode-bear { color: var(--bb-red); background: rgba(255,23,68,0.1); }
         .op-mode-neutral { color: var(--bb-amber); background: rgba(255,171,0,0.1); }
-        .op-mode-breakout { color: var(--bb-cyan); background: rgba(0,229,255,0.1); }
+        .op-mode-breakout { color: var(--bb-green); background: rgba(255,215,0,0.1); }
         .op-mode-reason { font-size: 0.6rem; color: var(--bb-text-muted); margin-left: 6px; }
         .op-section { margin-bottom: 14px; }
-        .op-section-title { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid var(--bb-border); padding-bottom: 4px; }
+        .op-section-title { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-green); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; border-bottom: 1px solid var(--bb-border); padding-bottom: 4px; }
         .op-dots { margin-bottom: 8px; }
         .op-badges { display: flex; flex-wrap: wrap; gap: 4px; }
         .op-badge { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 3px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; }
-        .op-badge.pass { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25); }
+        .op-badge.pass { color: var(--bb-green); background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.25); }
         .op-badge.fail { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.25); }
         .op-badge-name { font-weight: 500; }
         .op-badge-val { color: var(--bb-text-dim); }
@@ -1291,19 +1455,19 @@
         .sig-row-main { display: flex; align-items: center; gap: 10px; padding: 8px 12px; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
         .sig-row-main:hover { background: var(--bb-header); }
         .sig-dir-pill { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; min-width: 48px; text-align: center; }
-        .sig-pill-bull { color: var(--bb-green); background: rgba(0,230,118,0.12); border: 1px solid rgba(0,230,118,0.3); }
+        .sig-pill-bull { color: var(--bb-green); background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.3); }
         .sig-pill-bear { color: var(--bb-red); background: rgba(255,23,68,0.12); border: 1px solid rgba(255,23,68,0.3); }
         .sig-sym { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--bb-text); min-width: 60px; }
         .sig-price { font-family: 'JetBrains Mono',monospace; font-size: 0.75rem; color: var(--bb-text-dim); }
         .sig-conf-dots { font-size: 0.65rem; }
-        .sig-type { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-purple); background: rgba(179,136,255,0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(179,136,255,0.25); text-transform: uppercase; letter-spacing: 1px; }
+        .sig-type { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-green); background: rgba(255,215,0,0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.25); text-transform: uppercase; letter-spacing: 1px; }
         .sig-fire { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-amber); background: rgba(255,171,0,0.08); padding: 2px 6px; border-radius: 4px; }
         .sig-meta-item { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; color: var(--bb-text-muted); }
         .sig-detail { padding: 8px 12px; background: var(--bb-bg); border-top: 1px solid #16162a; display: none; }
         .sig-detail.open { display: block; }
         .sig-badges { display: flex; flex-wrap: wrap; gap: 4px; }
         .conf-badge { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; padding: 2px 6px; border-radius: 4px; }
-        .conf-badge.pass { color: var(--bb-green); background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); }
+        .conf-badge.pass { color: var(--bb-green); background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); }
         .conf-badge.fail { color: var(--bb-red); background: rgba(255,23,68,0.08); border: 1px solid rgba(255,23,68,0.2); }
 
         /* ── Squeeze Cards (rendered by JS) ── */
@@ -1319,12 +1483,12 @@
 
         /* ── Fishing Cards (rendered by JS) ── */
         .fish-card { background: var(--bb-panel); border: 1px solid var(--bb-border); border-radius: 8px; padding: 12px; margin-bottom: 6px; }
-        .fish-bull { border-left: 3px solid rgba(0,230,118,0.5); }
+        .fish-bull { border-left: 3px solid rgba(255,215,0,0.5); }
         .fish-bear { border-left: 3px solid rgba(255,23,68,0.5); }
         .fish-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .fish-sym { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--bb-cyan); }
+        .fish-sym { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--bb-green); }
         .fish-dir { font-family: 'JetBrains Mono',monospace; font-size: 0.6rem; padding: 2px 8px; border-radius: 10px; font-weight: 700; letter-spacing: 1px; }
-        .fish-pill-bull { color: var(--bb-green); background: rgba(0,230,118,0.12); border: 1px solid rgba(0,230,118,0.3); }
+        .fish-pill-bull { color: var(--bb-green); background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.3); }
         .fish-pill-bear { color: var(--bb-red); background: rgba(255,23,68,0.12); border: 1px solid rgba(255,23,68,0.3); }
         .fish-status { font-family: 'JetBrains Mono',monospace; font-size: 0.55rem; color: var(--bb-amber); background: rgba(255,171,0,0.08); padding: 2px 6px; border-radius: 4px; }
         .fish-prices { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -1343,7 +1507,7 @@
         .sp-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--bb-border); }
         .sp-sym { font-family: 'Inter',sans-serif; font-weight: 600; font-size: 0.8rem; color: var(--bb-text); min-width: 70px; }
         .sp-bar { flex: 1; height: 12px; background: rgba(255,255,255,0.03); border-radius: 3px; overflow: hidden; display: flex; }
-        .sp-bar-win { background: rgba(0,230,118,0.5); height: 100%; }
+        .sp-bar-win { background: rgba(255,215,0,0.5); height: 100%; }
         .sp-bar-loss { background: rgba(255,23,68,0.4); height: 100%; }
 
         /* ── Stats Exit Reasons ── */
@@ -1380,7 +1544,7 @@
         }
     </style>
 </head>
-<body>
+<body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
@@ -1598,25 +1762,25 @@
             <h1 class="sl-intro-title">STREAMLINE</h1>
             <p class="sl-intro-desc">
                 Streamline is the data backbone behind every decision MAVERICK makes. It continuously records and processes
-                98 technical indicators across 88 crypto futures symbols, updating every 60 seconds. Think of it as the nervous
+                <span data-live-text="indicators">234</span> technical indicators across <span data-live-text="symbols">88</span> crypto futures symbols, updating every 60 seconds. Think of it as the nervous
                 system. Every squeeze compression, every trend shift, every equilibrium distance, every ADX reading, every
                 structure level. All of it logged, computed, and fed into the trading engines in real time.
             </p>
             <div class="sl-intro-stats">
                 <div class="sl-intro-stat">
-                    <span class="sl-intro-stat-val">88</span>
+                    <span class="sl-intro-stat-val" data-live-stat="symbols">88</span>
                     <span class="sl-intro-stat-lbl">Symbols Tracked</span>
                 </div>
                 <div class="sl-intro-stat">
-                    <span class="sl-intro-stat-val">98</span>
+                    <span class="sl-intro-stat-val" data-live-stat="indicators">234</span>
                     <span class="sl-intro-stat-lbl">Indicators Per Symbol</span>
                 </div>
                 <div class="sl-intro-stat">
-                    <span class="sl-intro-stat-val">272</span>
+                    <span class="sl-intro-stat-val" data-live-stat="tables">274</span>
                     <span class="sl-intro-stat-lbl">Database Tables</span>
                 </div>
                 <div class="sl-intro-stat">
-                    <span class="sl-intro-stat-val">1.3GB</span>
+                    <span class="sl-intro-stat-val" data-live-stat="db_pretty">1.6GB</span>
                     <span class="sl-intro-stat-lbl">Live Database</span>
                 </div>
             </div>
@@ -1626,6 +1790,41 @@
                 intelligence layer. For active trade signals, explosions, and fishing lines, head to the
                 <a href="/pages/signals.html" class="sl-intro-link">Signal Feed</a>.
             </p>
+        </div>
+    </div>
+
+    <!-- 1.5 · LIVE PIPELINE STRIP (sourced from /api/streamline/pipeline · 5s ETag/304) -->
+    <div class="sl-pipeline" id="sl-pipeline-strip">
+        <div class="sl-pipe-header">
+            <span class="sl-pipe-dot"></span>
+            <span class="sl-pipe-title">LIVE PIPELINE</span>
+            <span class="sl-pipe-meta" id="sl-pipe-asof">syncing…</span>
+        </div>
+        <div class="sl-pipe-grid">
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">WS subscribers</div>
+                <div class="sl-pipe-tile-value"><span data-pipe="ws.subs_live">—</span><span class="sl-pipe-tile-suffix"> / <span data-pipe="ws.subs_configured">88</span></span></div>
+            </div>
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">ETL lag</div>
+                <div class="sl-pipe-tile-value" data-pipe="etl.lag_ms" data-fmt="lag_s">—</div>
+            </div>
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">Ignition · 24h</div>
+                <div class="sl-pipe-tile-value" data-pipe="gates.t1">—</div>
+            </div>
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">Trigger · 24h</div>
+                <div class="sl-pipe-tile-value" data-pipe="gates.t2">—</div>
+            </div>
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">Fire · 24h</div>
+                <div class="sl-pipe-tile-value" data-pipe="gates.t3">—</div>
+            </div>
+            <div class="sl-pipe-tile">
+                <div class="sl-pipe-tile-label">Fire · last 15m</div>
+                <div class="sl-pipe-tile-value sl-pipe-tile-fire" data-pipe="fire.count_15m">—</div>
+            </div>
         </div>
     </div>
 
@@ -1659,6 +1858,52 @@
             </div>
         </div>
     </div>
+
+    <!-- 2.5 · INDICATOR FAMILY GRID (sourced from /api/indicators · 1h cache) -->
+    <section class="sl-family-grid" id="sl-families" aria-label="Indicator families">
+        <header class="sl-fam-grid-head">
+            <h2 class="sl-fam-grid-title">Indicator families</h2>
+            <span class="sl-fam-grid-meta" id="sl-fam-grid-count">— curated · 229 total columns</span>
+        </header>
+        <div class="sl-fam-grid">
+            <article class="sl-fam-card" data-fam="structural">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">Structural</h3>
+                    <span class="sl-fam-count" data-fam-count="structural">—</span></header>
+                <p class="sl-fam-desc">Swing levels, BOS, FVG, fib OTE, daily/weekly/monthly anchors.</p>
+                <div class="sl-fam-list" data-fam-list="structural"></div>
+            </article>
+            <article class="sl-fam-card" data-fam="momentum">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">Momentum</h3>
+                    <span class="sl-fam-count" data-fam-count="momentum">—</span></header>
+                <p class="sl-fam-desc">RSI, MACD, ADX/DI ladder (1h/4h/8h/24h), Stoch, Hurst, KER, PSI.</p>
+                <div class="sl-fam-list" data-fam-list="momentum"></div>
+            </article>
+            <article class="sl-fam-card" data-fam="volume">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">Volume</h3>
+                    <span class="sl-fam-count" data-fam-count="volume">—</span></header>
+                <p class="sl-fam-desc">VWAP stack (4h/D/W/M), POC/VAH/VAL, OBV slope, VDA, VZS.</p>
+                <div class="sl-fam-list" data-fam-list="volume"></div>
+            </article>
+            <article class="sl-fam-card" data-fam="value">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">Value</h3>
+                    <span class="sl-fam-count" data-fam-count="value">—</span></header>
+                <p class="sl-fam-desc">Bollinger, Keltner, ATR ladder, range percentile (1w/4w), chop.</p>
+                <div class="sl-fam-list" data-fam-list="value"></div>
+            </article>
+            <article class="sl-fam-card" data-fam="heikin">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">Heikin-Ashi</h3>
+                    <span class="sl-fam-count" data-fam-count="heikin">—</span></header>
+                <p class="sl-fam-desc">HA streak/direction across 1m/15m/4h, Ichimoku tenkan/kijun/senkou.</p>
+                <div class="sl-fam-list" data-fam-list="heikin"></div>
+            </article>
+            <article class="sl-fam-card" data-fam="micro">
+                <header class="sl-fam-head"><h3 class="sl-fam-name">1m Micro</h3>
+                    <span class="sl-fam-count" data-fam-count="micro">—</span></header>
+                <p class="sl-fam-desc">Micro BOS, 1m HA, 1m VDA, displacement, sweep wicks.</p>
+                <div class="sl-fam-list" data-fam-list="micro"></div>
+            </article>
+        </div>
+    </section>
 
     <!-- 3. NAVIGATION TABS -->
     <div class="sl-tabs">
@@ -1948,7 +2193,146 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260428c"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
-    <script src="/js/streamline.js"></script>
+    <script src="/js/streamline.js?v=20260430c">
+    <script>
+    /* Hydrate streamline cockpit hero stats from /api/streamline/meta.
+       Uses the same public X-API-Key pattern the rest of the family JS uses. */
+    (function hydrateStreamlineMeta(){
+        var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
+            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+        try {
+            fetch('/api/streamline/meta', {cache: 'no-store', headers: {'X-API-Key': FC_API_KEY}})
+                .then(function(r){ return r.ok ? r.json() : null; })
+                .then(function(d){
+                    if (!d) return;
+                    document.querySelectorAll('[data-live-stat]').forEach(function(el){
+                        var k = el.getAttribute('data-live-stat');
+                        if (d[k] != null) el.textContent = d[k];
+                    });
+                    document.querySelectorAll('[data-live-text]').forEach(function(el){
+                        var k = el.getAttribute('data-live-text');
+                        if (d[k] != null) el.textContent = d[k];
+                    });
+                    var hsc = document.getElementById('header-sym-count');
+                    if (hsc && d.symbols != null) hsc.textContent = d.symbols;
+                })
+                .catch(function(){ /* leave hardcoded fallbacks visible */ });
+        } catch(_) {}
+    })();
+    </script>
+    <script>
+    /* Live pipeline strip — polls /api/streamline/pipeline every 5s with
+       ETag/304 short-circuit. Pauses on document.hidden so the tab doesn't
+       drain battery while backgrounded. Em-dashes stay if any field is null. */
+    (function streamlinePipelineStrip(){
+        try {
+        var strip = document.getElementById('sl-pipeline-strip');
+        if (!strip) return;
+        var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
+            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+        var lastEtag = null;
+        var pollMs = 5000;
+        var timer = null;
+
+        function dig(obj, path){
+            var parts = path.split('.');
+            for (var i = 0; i < parts.length; i++) {
+                if (obj == null) return null;
+                obj = obj[parts[i]];
+            }
+            return obj;
+        }
+        function fmt(value, kind){
+            if (value === null || value === undefined) return '—';
+            if (kind === 'lag_s') {
+                var s = Math.round(Number(value) / 1000);
+                if (s < 60) return s + 's';
+                if (s < 3600) return Math.round(s/60) + 'm';
+                return Math.round(s/3600) + 'h';
+            }
+            return String(value);
+        }
+        function paint(d){
+            strip.querySelectorAll('[data-pipe]').forEach(function(el){
+                var path = el.getAttribute('data-pipe');
+                var kind = el.getAttribute('data-fmt');
+                el.textContent = fmt(dig(d, path), kind);
+            });
+            var asof = document.getElementById('sl-pipe-asof');
+            if (asof && d && d.now) {
+                var dt = new Date(d.now * 1000);
+                asof.textContent = 'live · ' + dt.toUTCString().slice(17, 25) + ' UTC';
+            }
+        }
+        function tick(){
+            var headers = {'X-API-Key': FC_API_KEY};
+            if (lastEtag) headers['If-None-Match'] = lastEtag;
+            fetch('/api/streamline/pipeline', {cache: 'default', headers: headers})
+                .then(function(r){
+                    if (r.status === 304) return null;
+                    if (!r.ok) {
+                        console.warn('[sl-pipeline] HTTP ' + r.status);
+                        return null;
+                    }
+                    lastEtag = r.headers.get('ETag') || lastEtag;
+                    return r.json();
+                })
+                .then(function(d){ if (d) paint(d); })
+                .catch(function(e){ console.warn('[sl-pipeline] fetch failed:', e); });
+        }
+        function start(){
+            if (timer) return;
+            tick();
+            timer = setInterval(tick, pollMs);
+        }
+        function stop(){
+            if (timer) { clearInterval(timer); timer = null; }
+        }
+        document.addEventListener('visibilitychange', function(){
+            if (document.hidden) stop(); else start();
+        });
+        start();
+        } catch(e) { console.warn('[sl-pipeline] init failed:', e); }
+    })();
+    </script>
+    <script>
+    /* Indicator family grid — one-shot fetch /api/indicators (1h server cache),
+       populates the 6 family cards with chip lists + counts. */
+    (function streamlineFamilyGrid(){
+        try {
+        var grid = document.getElementById('sl-families');
+        if (!grid) return;
+        var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
+            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+        fetch('/api/indicators', {cache: 'default', headers: {'X-API-Key': FC_API_KEY}})
+            .then(function(r){ return r.ok ? r.json() : null; })
+            .then(function(d){
+                if (!d || !d.families) return;
+                d.families.forEach(function(fam){
+                    var countEl = grid.querySelector('[data-fam-count="' + fam.key + '"]');
+                    var listEl  = grid.querySelector('[data-fam-list="' + fam.key + '"]');
+                    if (countEl) countEl.textContent = (fam.indicators || []).length;
+                    if (listEl) {
+                        listEl.innerHTML = '';
+                        (fam.indicators || []).forEach(function(ind){
+                            var chip = document.createElement('span');
+                            chip.className = 'sl-fam-chip';
+                            chip.textContent = ind.name;
+                            chip.title = ind.role + ' · ' + ind.frame;
+                            listEl.appendChild(chip);
+                        });
+                    }
+                });
+                var meta = document.getElementById('sl-fam-grid-count');
+                if (meta) {
+                    meta.textContent = (d.indicator_count_curated || 0) + ' curated · '
+                                     + (d.indicator_count_total || 0) + ' total columns';
+                }
+            })
+            .catch(function(e){ console.warn('[sl-families] fetch failed:', e); });
+        } catch(e) { console.warn('[sl-families] init failed:', e); }
+    })();
+    </script>
     <script src="/js/tracker.js" defer></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>

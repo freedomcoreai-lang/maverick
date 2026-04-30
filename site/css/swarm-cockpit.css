@@ -560,3 +560,179 @@
 [data-theme="light"] .feed-bars__col {
     background: linear-gradient(180deg, var(--accent), var(--gold-bg));
 }
+
+/* ─── 7. INLINE COUNCIL READER — bigger by default ──────────────────────────
+   Operator feedback 2026-04-30: "tiny little book" — the prose body was
+   capped at 65vh / fs-16 inside a card column, which on phone left ~400px
+   of reading room and 16px lines. Bumped to fill more vertical space and
+   nudged type up to fs-18 / lh 1.7 with `ch`-based reading column. */
+.swarm-feed-panel__body--prose {
+    max-height: 78vh;
+    font-size: var(--fs-18, 1.125rem);
+    line-height: 1.7;
+    padding: var(--sp-32) clamp(var(--sp-24), 4vw, var(--sp-48));
+}
+.swarm-feed-panel__body--prose > * { max-width: 78ch; margin-left: auto; margin-right: auto; }
+.swarm-feed-panel__body--prose h1,
+.swarm-feed-panel__body--prose h2,
+.swarm-feed-panel__body--prose h3 {
+    font-family: 'Inter', sans-serif;
+    margin: 1.6em auto 0.6em;
+    line-height: 1.25;
+}
+.swarm-feed-panel__body--prose h1 { font-size: var(--fs-28); letter-spacing: 0.01em; }
+.swarm-feed-panel__body--prose h2 {
+    font-size: var(--fs-20);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2em;
+}
+.swarm-feed-panel__body--prose h3 {
+    font-size: var(--fs-16);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    margin-top: 1.4em;
+}
+.swarm-feed-panel__body--prose pre,
+.swarm-feed-panel__body--prose code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.875em;
+}
+.swarm-feed-panel__body--prose pre {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card, 12px);
+    padding: var(--sp-16);
+    overflow-x: auto;
+    line-height: 1.55;
+}
+[data-theme="light"] .swarm-feed-panel__body--prose pre {
+    background: rgba(10, 10, 15, 0.04);
+}
+.swarm-feed-panel__body--prose ul,
+.swarm-feed-panel__body--prose ol { padding-left: 1.5em; }
+.swarm-feed-panel__body--prose li { margin: 0.3em 0; }
+.swarm-feed-panel__body--prose hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 2em auto;
+    max-width: 78ch;
+}
+
+/* ─── 8. FULLSCREEN OVERLAY — actually full-screen this time ────────────────
+   The .terminal-overlay element existed in markup but had no CSS, so the
+   `.active` toggle did nothing visible. Operator described the inline view
+   as "a tiny little book" because hitting fullscreen produced no change. */
+.terminal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg-primary, #0a0a0f);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+.terminal-overlay.active { display: flex; }
+.terminal-overlay-header {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    padding: var(--sp-16) clamp(var(--sp-16), 4vw, var(--sp-32));
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated, #14141c);
+    flex-wrap: wrap;
+}
+.terminal-overlay-header > select {
+    flex: 1 1 220px;
+    max-width: 480px;
+}
+.terminal-overlay-header #terminal-overlay-title {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.terminal-close-btn {
+    margin-left: auto;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button, 8px);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.10em;
+    cursor: pointer;
+    transition: border-color 200ms, color 200ms;
+}
+.terminal-close-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.terminal-overlay-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: clamp(var(--sp-24), 5vw, var(--sp-64)) clamp(var(--sp-16), 6vw, var(--sp-96));
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(var(--fs-16), 2.4vw, var(--fs-20));
+    line-height: 1.75;
+}
+.terminal-overlay--reader .terminal-overlay-body > * {
+    max-width: 80ch;
+    margin-left: auto;
+    margin-right: auto;
+}
+.terminal-overlay--reader .terminal-overlay-body h1 {
+    font-size: clamp(var(--fs-28), 4vw, var(--fs-40));
+    margin: 0.6em auto 0.4em;
+    line-height: 1.2;
+}
+.terminal-overlay--reader .terminal-overlay-body h2 {
+    font-size: clamp(var(--fs-20), 2.6vw, var(--fs-28));
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 1.6em auto 0.6em;
+    border-top: 1px solid var(--border);
+    padding-top: 1.0em;
+}
+.terminal-overlay--reader .terminal-overlay-body h3 {
+    font-size: var(--fs-18, 1.125rem);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--text);
+    margin: 1.8em auto 0.4em;
+}
+.terminal-overlay--reader .terminal-overlay-body pre,
+.terminal-overlay--reader .terminal-overlay-body code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+.terminal-overlay--reader .terminal-overlay-body pre {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card, 12px);
+    padding: var(--sp-16);
+    overflow-x: auto;
+    font-size: 0.85em;
+    line-height: 1.55;
+}
+[data-theme="light"] .terminal-overlay--reader .terminal-overlay-body pre {
+    background: rgba(10, 10, 15, 0.04);
+}
+.terminal-overlay--reader .terminal-overlay-body hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 2.4em auto;
+    max-width: 80ch;
+}
+
+/* On narrow phones the header wraps to two rows: title+selector then close. */
+@media (max-width: 480px) {
+    .terminal-overlay-header { padding: var(--sp-12, 12px) var(--sp-16); }
+    .terminal-overlay-body  { padding: var(--sp-24) var(--sp-16); font-size: var(--fs-16); }
+    .terminal-overlay--reader .terminal-overlay-body > * { max-width: none; }
+}

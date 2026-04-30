@@ -441,12 +441,54 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ===== MOBILE MENU =====
+// PR2 (R5 council 2026-04-30) — a11y polish on top of existing markup:
+// aria-expanded sync, Escape close + return-focus to trigger, click-outside
+// close, body-scroll lock, focus trap on first/last menu link. The markup
+// (.nav-hamburger + .mobile-dropdown) stays unchanged across all 5 sites.
+function _mobileMenuRoot() { return document.getElementById('mobile-menu'); }
+function _mobileMenuTrigger() { return document.querySelector('.nav-hamburger'); }
+function _mobileMenuFocusables() {
+    var m = _mobileMenuRoot(); if (!m) return [];
+    return m.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+}
 function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('open');
+    var m = _mobileMenuRoot(); if (!m) return;
+    var willOpen = !m.classList.contains('open');
+    m.classList.toggle('open', willOpen);
+    var trig = _mobileMenuTrigger();
+    if (trig) trig.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    document.body.style.overflow = willOpen ? 'hidden' : '';
+    if (willOpen) {
+        var focusables = _mobileMenuFocusables();
+        if (focusables.length) setTimeout(function() { focusables[0].focus(); }, 50);
+    }
 }
 function closeMobileMenu() {
-    document.getElementById('mobile-menu').classList.remove('open');
+    var m = _mobileMenuRoot(); if (!m) return;
+    var wasOpen = m.classList.contains('open');
+    m.classList.remove('open');
+    var trig = _mobileMenuTrigger();
+    if (trig) trig.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    if (wasOpen && trig) trig.focus();
 }
+// Escape closes; click-outside closes; focus trap inside while open.
+document.addEventListener('keydown', function(e) {
+    var m = _mobileMenuRoot(); if (!m || !m.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeMobileMenu(); return; }
+    if (e.key === 'Tab') {
+        var f = _mobileMenuFocusables(); if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+        else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+    }
+});
+document.addEventListener('click', function(e) {
+    var m = _mobileMenuRoot(); if (!m || !m.classList.contains('open')) return;
+    var trig = _mobileMenuTrigger();
+    if (m.contains(e.target) || (trig && trig.contains(e.target))) return;
+    closeMobileMenu();
+});
 
 // ===== EVENT LISTENERS (replaces inline onclick) =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -490,21 +532,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openTerminal(agent) {
         if (!overlay) return;
-        const sourceBody = document.getElementById('swarm-page-feed-' + agent);
+        // Council renders into its own dedicated body, not the swarm-page-feed
+        // pattern — special-case it. (Council viewer rules · 2026-04-30:
+        // fullscreen is a comfortable READER, not a terminal — wider column,
+        // larger type, expose the selector so the operator can switch debates
+        // without closing the overlay.)
+        const isCouncil = agent === 'council';
+        const sourceBody = document.getElementById(isCouncil ? 'council-body' : 'swarm-page-feed-' + agent);
         if (!sourceBody) return;
 
-        overlayTitle.textContent = 'MAVERICK AGENT TERMINAL // ' + agent.toUpperCase();
+        overlayTitle.textContent = (isCouncil ? 'COUNCIL READER // ' : 'MAVERICK AGENT TERMINAL // ') + agent.toUpperCase();
+        overlay.classList.toggle('terminal-overlay--reader', isCouncil);
         overlayContent.innerHTML = sourceBody.innerHTML;
+
+        // For the council, clone the selector into the overlay header so the
+        // operator can flip between debates without closing fullscreen.
+        const headerEl = overlay.querySelector('.terminal-overlay-header');
+        let cloneSel = overlay.querySelector('#council-selector-fs');
+        if (cloneSel) cloneSel.remove();
+        if (isCouncil && headerEl) {
+            const realSel = document.getElementById('council-selector');
+            if (realSel) {
+                cloneSel = document.createElement('select');
+                cloneSel.id = 'council-selector-fs';
+                cloneSel.className = realSel.className;
+                cloneSel.innerHTML = realSel.innerHTML;
+                cloneSel.value = realSel.value;
+                cloneSel.addEventListener('change', function() {
+                    realSel.value = this.value;
+                    realSel.dispatchEvent(new Event('change'));
+                });
+                headerEl.insertBefore(cloneSel, headerEl.firstChild);
+            }
+        }
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
 
         // Live refresh: every 10s, re-fetch the source from the API, then mirror to overlay.
         // Without this the fullscreen view stays frozen on the snapshot taken at open time.
         overlay._syncInterval = setInterval(async () => {
-            if (typeof window.fetchSwarmPageFeed === 'function') {
+            if (isCouncil) {
+                // Council body is driven by its own poll loop in this script —
+                // just mirror whatever the inline body is now showing.
+                overlayContent.innerHTML = sourceBody.innerHTML;
+                if (cloneSel) {
+                    const realSel = document.getElementById('council-selector');
+                    if (realSel && realSel.innerHTML !== cloneSel.innerHTML) {
+                        const v = cloneSel.value;
+                        cloneSel.innerHTML = realSel.innerHTML;
+                        cloneSel.value = realSel.value || v;
+                    }
+                }
+            } else if (typeof window.fetchSwarmPageFeed === 'function') {
                 try { await window.fetchSwarmPageFeed(agent); } catch(e) {}
+                overlayContent.innerHTML = sourceBody.innerHTML;
+            } else {
+                overlayContent.innerHTML = sourceBody.innerHTML;
             }
-            overlayContent.innerHTML = sourceBody.innerHTML;
         }, 10000);
     }
 
@@ -518,12 +602,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('.fullscreen-trigger');
         if (btn) {
-            // Find the parent panel to know which agent we're looking at
-            const panel = btn.closest('.agent-panel');
-            if (panel) {
-                const agent = panel.id.replace('swarm-panel-', '');
-                openTerminal(agent);
+            // Prefer the explicit data-terminal hint on the button itself,
+            // else fall back to walking up to a `.swarm-feed-panel` (current
+            // markup) or legacy `.agent-panel`. Previously this only looked
+            // for `.agent-panel` so the council fullscreen button silently
+            // did nothing.
+            let agent = btn.getAttribute('data-terminal');
+            if (!agent) {
+                const panel = btn.closest('.swarm-feed-panel, .agent-panel');
+                if (panel) agent = panel.id.replace('swarm-panel-', '');
             }
+            if (agent) openTerminal(agent);
         }
     });
 

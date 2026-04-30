@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260428b">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260430c">
+    <link rel="stylesheet" href="/css/style.css?v=20260430c">
     <style>
         .perf-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
         .perf-hero { padding: 100px 0 40px; text-align: center; }
@@ -125,7 +126,7 @@
         }
     </style>
 </head>
-<body>
+<body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
@@ -316,7 +317,7 @@
 
         <!-- SUMMARY -->
         <div class="perf-section">
-            <div class="perf-section-head">// Performance Summary</div>
+            <div class="perf-section-head">Performance Summary</div>
             <div class="perf-summary">
                 <div class="perf-period">
                     <div class="perf-period-label">Last 24 Hours</div>
@@ -341,19 +342,19 @@
 
         <!-- EQUITY CURVE -->
         <div class="perf-section">
-            <div class="perf-section-head">// Equity Curve (7 Day)</div>
+            <div class="perf-section-head">Equity Curve (7 Day)</div>
             <div class="equity-bar-chart" id="equity-chart"></div>
         </div>
 
         <!-- LIVE POSITIONS -->
         <div class="perf-section">
-            <div class="perf-section-head">// Live Positions</div>
+            <div class="perf-section-head">Live Positions</div>
             <div id="live-positions"></div>
         </div>
 
         <!-- RECENT TRADES -->
         <div class="perf-section">
-            <div class="perf-section-head">// Recent Trades</div>
+            <div class="perf-section-head">Recent Trades</div>
             <div style="overflow-x:auto;">
                 <table class="trade-table">
                     <thead>
@@ -372,7 +373,7 @@
 
     <!-- Cross-subdomain context — performance benchmarks vs Hyperliquid traders -->
     <div style="margin: 60px auto 50px; padding: 24px 26px; max-width: 820px; border: 1px solid var(--border); border-radius: 12px; background: rgba(62,168,245,0.04);">
-        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:8px;">// BENCHMARK THE EDGE</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--blue); text-transform:uppercase; margin-bottom:8px;">BENCHMARK THE EDGE</div>
         <p style="margin:0; color:var(--text); font-size:0.95rem; line-height:1.65;">
             Want a third-party benchmark for these numbers? The <a href="https://arena.freedomcore.io/" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA Hyperliquid trader leaderboard</a> ranks 64 on-chain wallets by 30-day Sharpe, ROI, and Wilson-lower-bound win rate &mdash; rebuilt every six hours from public Hyperliquid order flow. Several of those wallets feed the consensus signals on the <a href="https://shadow.freedomcore.io/" rel="noopener" style="color:#8b5cf6; font-weight:700;">SHADOW Hyperliquid copy-trading terminal</a>, which trades the same edge with tier-weighted Kelly sizing and your-keys-stay-your-keys execution.
         </p>

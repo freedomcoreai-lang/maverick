@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260428b">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260430c">
+    <link rel="stylesheet" href="/css/style.css?v=20260430c">
     <style>
         .evo-pipeline { display:flex; flex-direction:column; gap:10px; margin-top:20px; }
         .evo-stage { display:flex; align-items:flex-start; gap:14px; padding:16px; background:var(--card); border:1px solid var(--border); border-radius:12px; border-left:3px solid var(--green); }
@@ -29,7 +30,7 @@
         .evo-highlight { color:var(--green); font-weight:700; }
     </style>
 </head>
-<body>
+<body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
@@ -221,7 +222,7 @@
     <!-- THE CYCLE -->
     <section class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label">// The 50-Generation Cycle</div>
+            <div class="section-label">The 50-Generation Cycle</div>
             <h2 class="section-title">Fifty generations. Thirty explore. Twenty hone.</h2>
             <p class="section-text">Every cycle the swarm births fifty candidates. The first thirty are wide-exploration mutations - the LLM is given total authority to rewrite every scaffold function and invent brand-new multi-dimensional engines. Generations thirty-one to fifty pivot to honing: the strongest candidate so far is handed back to the LLM as a parent for surgical improvement. Whatever emerges top of the leaderboard becomes the next champion.</p>
             <div class="evo-pipeline">
@@ -260,7 +261,7 @@
     <!-- GOD MODE -->
     <section class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label">// God-Mode Authority</div>
+            <div class="section-label">God-Mode Authority</div>
             <h2 class="section-title">The LLM rewrites every function.</h2>
             <p class="section-text">The V4 swarm hands the LLM a bare scaffold and tells it to rewrite all of it. <code>pre_filter</code>, <code>signal_entry</code>, <code>manage_position</code>, the cache precompute, the DNA dictionary, even the hypothesis docstring that ends up on the Hall of Fame page. No template lock-in. No fixed indicator list. If the LLM wants Shannon Entropy and Hurst persistence instead of ADX, it writes them. The only hard constraints are pure NumPy execution, honest physics (one-hour window lookups, four-hour time exits), and a fifty-percent minimum win rate for survival.</p>
             <div class="evo-metric-row">
@@ -283,7 +284,7 @@
     <!-- CRIME SCENE FEEDBACK -->
     <section class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label">// Crime Scene Memory</div>
+            <div class="section-label">Crime Scene Memory</div>
             <h2 class="section-title">Every loss teaches the next generation.</h2>
             <p class="section-text">Live losing trades are written to a structured crime scene log. Before each swarm cycle fires, the LLM receives the top recent failure patterns as part of the prompt &mdash; the exact chop bands, ADX zones, volume ratios, and regime labels that liquidated the previous champion. The result is that each new generation is mathematically aware of what killed its predecessors and builds vetoes accordingly. The Gamma Goliath&rsquo;s &ldquo;Chop Death Zone&rdquo; filter was born this way, hard-coding a refusal to short in the 40-60 chop / 20-35 ADX band where four prior champions were liquidated.</p>
         </div>
@@ -292,7 +293,7 @@
     <!-- SHADOW MATRIX -->
     <section class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label">// Shadow Matrix</div>
+            <div class="section-label">Shadow Matrix</div>
             <h2 class="section-title">The swarm also learns from what it missed.</h2>
             <p class="section-text">Every signal that fires without the filter stack approving is logged to a shadow matrix. If a shadow signal would have made more than 2 percent profit, it counts as missed alpha. The ten most recent misses are fed back into the swarm prompt alongside the crime scenes. This closes the loop &mdash; the bot learns not just what to avoid, but also what it is wrongly rejecting.</p>
         </div>
@@ -301,7 +302,7 @@
     <!-- TIMER & TOURNAMENT -->
     <section class="section-divider">
         <div class="section-inner reveal">
-            <div class="section-label">// Weekly Tournament</div>
+            <div class="section-label">Weekly Tournament</div>
             <h2 class="section-title">Saturday evening. Every week.</h2>
             <p class="section-text">The swarm fires on a systemd timer at 17:00 BST every Saturday. Fifty generations run unattended over roughly three to four hours. The crowned candidate is validated against the live adapter, added to the Hall of Fame, and deployed. The previous champion is archived, not deleted. This means every week the system is rewritten from scratch against the latest six-day market window. No champion stays on the throne unless it continues to beat its own successors.</p>
         </div>

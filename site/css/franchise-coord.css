@@ -1,0 +1,221 @@
+/* ============================================================================
+   franchise-coord.css — FreedomCore canonical component primitives
+   Contract: COLOR_COORDINATION_VERDICT_20260430 (5R Supreme Court)
+   Single source of truth for: nav · burger · tabs · cards · type · accent.
+   Imports tokens.css. Together they are sufficient for the franchise.
+   components.css and per-cockpit overlays MUST NOT redefine .fc-* selectors.
+
+   "Skeleton key" rule: --site-accent in tokens.css drives the franchise.
+   Change one var, the whole site repaints — including the symlinked
+   sister sites (hub/arena/quantum/css → freedomcore/css).
+   ============================================================================ */
+@import url("./tokens.css");
+
+/* ─── 1. FOCUS RING (R4 P9, every interactive surface) ────────────────────── */
+:where(a, button, [role="button"], [role="tab"], [tabindex]):focus-visible {
+    outline: 2px solid var(--site-accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--site-accent) 30%, transparent);
+}
+
+/* ─── 2. SKIP LINK (R4 P11 — first focusable element on every page) ───────── */
+.fc-skip-link {
+    position: absolute; left: -9999px; top: var(--sp-8);
+    padding: var(--sp-8) var(--sp-16);
+    background: var(--bg-elevated); color: var(--text-primary);
+    border: 1px solid var(--site-accent); border-radius: var(--radius-button);
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: var(--fs-12);
+    z-index: var(--z-panel);
+}
+.fc-skip-link:focus-visible { left: var(--sp-16); }
+
+/* ─── 3. BURGER (R3 + R4 P7 — 48px tap target, 24px icon, 280px panel) ────── */
+.fc-burger {
+    display: none;                                    /* shown only ≤ --bp-mobile */
+    align-items: center; justify-content: center;
+    width: 48px; height: 48px; padding: 0;
+    background: transparent; border: none; cursor: pointer;
+}
+.fc-burger svg {
+    width: 24px; height: 24px;
+    stroke: var(--text-primary); stroke-width: 2; stroke-linecap: round; fill: none;
+}
+.fc-burger-backdrop {
+    position: fixed; inset: 0; z-index: var(--z-backdrop);
+    background: var(--overlay-bg); backdrop-filter: var(--overlay-blur);
+    opacity: 0; pointer-events: none;
+    transition: opacity var(--duration-ui) var(--ease-out);
+}
+.fc-burger-backdrop[data-open="true"] { opacity: 1; pointer-events: auto; }
+.fc-burger-panel {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 280px;
+    background: var(--bg-elevated); padding: var(--sp-24);
+    z-index: var(--z-panel);
+    transform: translateX(100%);
+    transition: transform var(--duration-ui) var(--ease-spring);
+    display: flex; flex-direction: column; gap: var(--sp-8);
+}
+.fc-burger-panel[data-open="true"] { transform: translateX(0); }
+.fc-burger-close {
+    align-self: flex-end; width: 32px; height: 32px;
+    background: transparent; border: none; color: var(--text-primary);
+    cursor: pointer; font-size: var(--fs-20); line-height: 1;
+}
+
+/* ─── 4. NAV / HEADER ─────────────────────────────────────────────────────── */
+.fc-nav {
+    position: sticky; top: 0; z-index: var(--z-nav);
+    height: var(--nav-h); padding: 0 var(--sp-24);
+    display: flex; align-items: center; gap: var(--sp-16);
+    background: var(--bg-elevated); border-bottom: 1px solid var(--border);
+}
+.fc-nav__logo {
+    font-family: 'Orbitron', sans-serif; font-size: var(--fs-16); font-weight: 900;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--text-primary); text-decoration: none;
+}
+.fc-nav__links { display: flex; gap: var(--sp-16); list-style: none; margin: 0; padding: 0; }
+.fc-nav__link {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12); font-weight: 500;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none;
+    padding: var(--sp-8) 0;
+    border-bottom: 2px solid transparent;
+    transition: color var(--duration-ui) var(--ease-out),
+                border-color var(--duration-ui) var(--ease-out);
+}
+.fc-nav__link:hover { color: var(--text-primary); }
+.fc-nav__link[aria-current="page"] {
+    color: var(--site-accent-text);
+    border-bottom-color: var(--site-accent);
+}
+.fc-nav__actions { margin-left: auto; display: flex; align-items: center; gap: var(--sp-8); }
+
+/* ─── 5. FAMILY SWITCHER (R4 P5 — three siblings, current site hidden) ────── */
+.fc-family-switcher { display: flex; gap: var(--sp-8); align-items: center; }
+.fc-family-switcher__dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--site-accent);
+    transition: transform var(--duration-ui) var(--ease-spring),
+                filter   var(--duration-ui) var(--ease-out);
+}
+.fc-family-switcher__dot:hover {
+    transform: scale(1.35);
+    filter: drop-shadow(0 0 6px var(--site-accent-glow));
+}
+/* Hide the current site's own dot — declarative, no JS, attribute-driven. */
+body[data-site="maverick"] .fc-family-switcher__dot[data-target="maverick"],
+body[data-site="shadow"]   .fc-family-switcher__dot[data-target="shadow"],
+body[data-site="quantum"]  .fc-family-switcher__dot[data-target="quantum"],
+body[data-site="arena"]    .fc-family-switcher__dot[data-target="arena"],
+body[data-site="apex"]     .fc-family-switcher__dot[data-target="apex"]
+    { display: none; }
+
+/* Each sibling dot paints the TARGET site's accent (not the current site's). */
+.fc-family-switcher__dot[data-target="maverick"] { background: var(--accent-gold);   }
+.fc-family-switcher__dot[data-target="shadow"]   { background: var(--accent-violet); }
+.fc-family-switcher__dot[data-target="quantum"]  { background: var(--accent-cyan);   }
+.fc-family-switcher__dot[data-target="arena"]    { background: var(--accent-silver); }
+
+/* ─── 6. TABS (pill primary, underline secondary — both 40px height) ──────── */
+.fc-tabs { display: flex; gap: var(--sp-8); height: 40px; align-items: stretch; }
+.fc-tab {
+    height: 100%; padding: 8px var(--sp-16);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif; font-size: var(--fs-14); font-weight: 500;
+    color: var(--text-muted); background: transparent;
+    border: none; border-radius: var(--radius-pill); cursor: pointer;
+    transition: color var(--duration-ui) var(--ease-out),
+                background var(--duration-ui) var(--ease-out);
+}
+.fc-tab:hover { color: var(--text-primary); background: var(--site-accent-soft); }
+.fc-tab[aria-selected="true"] { color: var(--text-on-accent); background: var(--site-accent); }
+
+/* Underline variant — content tabs (vs cockpit pill primary). */
+.fc-tabs--underline { border-bottom: 1px solid var(--border); gap: var(--sp-16); }
+.fc-tabs--underline .fc-tab {
+    border-radius: 0; border-bottom: 2px solid transparent;
+    margin-bottom: -1px;                               /* overlap parent border */
+    padding: 12px 0;
+}
+.fc-tabs--underline .fc-tab[aria-selected="true"] {
+    background: transparent; color: var(--site-accent-text);
+    border-bottom-color: var(--site-accent);
+}
+
+/* ─── 7. CARDS (skeleton key — change --site-accent, every card border flips) ─── */
+.fc-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--sp-24);
+    transition: transform var(--duration-ui) var(--ease-spring),
+                border-color var(--duration-ui) var(--ease-out);
+}
+.fc-card:hover, .fc-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--site-accent);
+}
+a.fc-card, .fc-card[role="button"] {
+    cursor: pointer; text-decoration: none; color: inherit; display: block;
+}
+
+/* ─── 8. TYPE HIERARCHY (Orbitron headings · Inter body · Mono meta) ──────── */
+.fc-h1 { font-family: 'Orbitron', sans-serif; font-size: var(--fs-96); font-weight: 900; line-height: 1.0;  letter-spacing: 0.02em; color: var(--text-primary); margin: 0; }
+.fc-h2 { font-family: 'Orbitron', sans-serif; font-size: var(--fs-64); font-weight: 700; line-height: 1.05; letter-spacing: 0.03em; color: var(--text-primary); margin: 0; }
+.fc-h3 { font-family: 'Orbitron', sans-serif; font-size: var(--fs-40); font-weight: 600; line-height: 1.1;  letter-spacing: 0.04em; color: var(--text-primary); margin: 0; }
+.fc-h4 { font-family: 'Orbitron', sans-serif; font-size: var(--fs-28); font-weight: 600; line-height: 1.15; letter-spacing: 0.05em; color: var(--text-primary); margin: 0; }
+.fc-body    { font-family: 'Inter', sans-serif; font-size: var(--fs-16); font-weight: 400; line-height: var(--lh-base); color: var(--text-primary); margin: 0; }
+.fc-meta    { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: var(--fs-12); font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; color: var(--text-muted); }
+.fc-numeric { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: var(--fs-40); font-weight: 800; line-height: 1.0; font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.fc-eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: var(--fs-12); font-weight: 500; letter-spacing: 0.20em; text-transform: uppercase; color: var(--site-accent-text); }
+
+/* ─── 9. ACCENT ORB (the small living dot, three states) ──────────────────── */
+.fc-accent-orb {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--site-accent-dim); flex-shrink: 0;
+    transition: transform var(--duration-ui) var(--ease-spring),
+                filter     var(--duration-ui) var(--ease-out),
+                background var(--duration-ui) var(--ease-out);
+}
+.fc-accent-orb[data-state="soft"]   { background: var(--site-accent-soft); }
+.fc-accent-orb[data-state="active"] { background: var(--site-accent);      }
+.fc-accent-orb:hover {
+    transform: scale(1.35);
+    filter: drop-shadow(0 0 6px var(--site-accent-glow));
+}
+
+/* ─── 10. CTA PRIMARY (single button class — accent fill, on-accent text) ──── */
+.fc-cta-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-8);
+    padding: var(--sp-16) var(--sp-24);
+    font-family: 'Inter', sans-serif; font-size: var(--fs-14); font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-on-accent); background: var(--site-accent);
+    border: none; border-radius: var(--radius-pill); cursor: pointer;
+    text-decoration: none;
+    transition: transform var(--duration-ui) var(--ease-spring),
+                filter var(--duration-ui) var(--ease-out);
+}
+.fc-cta-primary:hover { transform: translateY(-2px); }
+
+/* ─── 11. RESPONSIVE (R4 P6 — codebase canonical 780px, NOT 768) ──────────── */
+@media (max-width: 780px) {
+    .fc-nav { height: var(--nav-h-mobile); padding: 0 var(--sp-16); }
+    .fc-nav__links { display: none; }
+    .fc-burger { display: inline-flex; }
+    .fc-h1 { font-size: var(--fs-64); }
+    .fc-h2 { font-size: var(--fs-40); }
+    .fc-h3 { font-size: var(--fs-28); }
+}
+
+/* ─── 12. REDUCED MOTION (R4 P8 — covers all .fc-* primitives) ────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .fc-burger, .fc-burger-panel, .fc-burger-backdrop,
+    .fc-nav__link, .fc-tab, .fc-card,
+    .fc-family-switcher__dot, .fc-accent-orb, .fc-cta-primary {
+        transition: none !important;
+        animation: none !important;
+    }
+}

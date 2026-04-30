@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=20260428b">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260430c">
+    <link rel="stylesheet" href="/css/style.css?v=20260430c">
     <style>
         .wp-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
 
@@ -193,7 +194,7 @@
         }
     </style>
 </head>
-<body>
+<body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
@@ -414,7 +415,7 @@
     <!-- TABLE OF CONTENTS -->
     <section class="chapter" style="padding-top:40px;">
     <div class="wp-wrap">
-        <div class="ch-label">// Contents</div>
+        <div class="ch-label">Contents</div>
         <h2 class="ch-title" style="font-size:clamp(1.4rem,4vw,2rem);margin-bottom:24px;">TABLE OF CONTENTS</h2>
         <nav class="wp-toc">
             <div class="toc-part">
@@ -445,6 +446,7 @@
                 <div class="toc-part-title">Part IV . The Present</div>
                 <a href="#ch16" class="toc-item"><span class="toc-num">16</span><span class="toc-name">The Living System</span><span class="toc-sub">April 17 2026</span></a>
                 <a href="#ch17" class="toc-item"><span class="toc-num">17</span><span class="toc-name">FreedomCore</span><span class="toc-sub">The Mission</span></a>
+                <a href="#ch18" class="toc-item"><span class="toc-num">18</span><span class="toc-name">The High Council</span><span class="toc-sub">How decisions get made</span></a>
             </div>
         </nav>
     </div>
@@ -453,8 +455,8 @@
     <!-- CHAPTER 1: ORIGIN -->
     <section class="chapter" id="ch1">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter One</div>
-        <h2 class="ch-title">THE BEGINNING <span class="dim">// May 2025</span></h2>
+        <div class="ch-label">Chapter One</div>
+        <h2 class="ch-title">THE BEGINNING <span class="dim">May 2025</span></h2>
         <div class="prose">
             <p>There was no grand plan. There was a question: what if a systematic approach to the cryptocurrency markets could generate consistent income without the emotional chaos that destroys most retail traders? And a decision to find out by building something from scratch.</p>
             <p>The tools available were a smartphone, a cloud VPS subscription, and Python. No IDE, no second monitor, no quiet office. The development environment was a phone screen, voice-to-text dictation for longer prompts, and whatever time could be carved out around a demanding work schedule. Every architectural decision, every debugging session, every breakthrough happened through that four-inch screen.</p>
@@ -467,8 +469,8 @@
     <!-- CHAPTER 2: MACHINE LEARNING ERA -->
     <section class="chapter" id="ch2">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Two</div>
-        <h2 class="ch-title">THE MACHINE LEARNING <span class="dim">ERA // December 2025</span></h2>
+        <div class="ch-label">Chapter Two</div>
+        <h2 class="ch-title">THE MACHINE LEARNING <span class="dim">ERA December 2025</span></h2>
         <div class="prose">
             <p>The natural next step, once simple indicators proved insufficient, was machine learning. If the market's patterns were too complex for handcrafted rules, perhaps an algorithm could learn them directly from data.</p>
             <p><strong>XGBoost classifiers</strong> were trained on historical OHLCV data augmented with computed features: RSI, MACD, Bollinger Band width, volume ratios, ADX readings at multiple timeframes. The models showed promising accuracy in backtests. In live markets, they degraded rapidly.</p>
@@ -479,7 +481,7 @@
         </div>
         <div class="pull-quote">
             <p>"The XGBoost was learning the market that existed last quarter. By the time we deployed it, that market was gone. We kept training a model to trade a ghost."</p>
-            <div class="pull-quote-attr">// Development log retrospective, early 2026</div>
+            <div class="pull-quote-attr">Development log retrospective, early 2026</div>
         </div>
     </div>
     </section>
@@ -487,8 +489,8 @@
     <!-- CHAPTER 3: LIQUIDITY STRUCTURE -->
     <section class="chapter" id="ch3">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Three</div>
-        <h2 class="ch-title">LIQUIDITY SWEEPS <span class="dim">// The Real Discovery</span></h2>
+        <div class="ch-label">Chapter Three</div>
+        <h2 class="ch-title">LIQUIDITY SWEEPS <span class="dim">The Real Discovery</span></h2>
         <div class="prose">
             <p>The shift that changed everything came from studying institutional order flow and liquidity structure dynamics. Understanding how and why price actually moves, not just reacting to indicator signals after the fact.</p>
             <p>The core insight: markets move to where liquidity is concentrated. Retail traders place stop losses in predictable locations. Just below previous day's lows, above previous week's highs, at obvious round numbers. These clusters represent pools of liquidity that institutional participants actively seek before moving in their intended direction.</p>
@@ -498,7 +500,7 @@
             <p>This was the turning point. <strong>Backtesting is a liar.</strong> Not sometimes. Structurally. It operates in a world where every fill is perfect, every fee is understated, and every spread is zero. The project moved permanently away from historical backtesting as a source of truth and toward live forward-testing with realistic fees, actual slippage, and real market impact. The sweep levels themselves survived this transition. The backtested configurations did not.</p>
         </div>
         <div class="tech-panel">
-            <div class="tp-label">// Why Backtesting Lies // Lessons from 28M+ Iterations</div>
+            <div class="tp-label">Why Backtesting Lies Lessons from 28M+ Iterations</div>
             <table>
                 <tr><th>What Backtests Showed</th><th>What Actually Happened</th></tr>
                 <tr><td class="g">94% win rate, billions in simulated returns</td><td class="r">31.5% win rate live, account crashed 89% from peak</td></tr>
@@ -514,15 +516,15 @@
     <!-- CHAPTER 4: TTM SQUEEZE -->
     <section class="chapter" id="ch4">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Four</div>
-        <h2 class="ch-title">THE SQUEEZE FIRE <span class="dim">// Finding the Edge</span></h2>
+        <div class="ch-label">Chapter Four</div>
+        <h2 class="ch-title">THE SQUEEZE FIRE <span class="dim">Finding the Edge</span></h2>
         <div class="prose">
             <p>Parallel to the liquidity sweep research, a separate signal mechanism was being developed: the TTM Squeeze, based on John Carter's volatility compression methodology.</p>
             <p>Bollinger Bands (a volatility measure based on standard deviation) are plotted alongside Keltner Channels (a volatility measure based on ATR). When the Bollinger Bands contract inside the Keltner Channels, volatility has compressed to an abnormal degree. The market is coiling. This state is the squeeze.</p>
             <p>The <strong>squeeze fire</strong> is the specific moment when the Bollinger Bands expand back outside the Keltner Channels after compression. This is the moment of ignition. The release of stored energy. The <strong>compression ratio</strong> quantifies tightness: values below 0.75 indicate strong compression, below 0.50 indicate exceptional compression that historically precedes violent directional moves.</p>
         </div>
         <div class="tech-panel">
-            <div class="tp-label">// TTM Squeeze // Technical Specification</div>
+            <div class="tp-label">TTM Squeeze Technical Specification</div>
             <div class="tp-body">
                 <p><span class="key">Bollinger Bands:</span> <span class="val">SMA(20), 2.0 Standard Deviations</span></p>
                 <p><span class="key">Keltner Channels:</span> <span class="val">EMA(20), 1.5 &times; ATR(20)</span></p>
@@ -541,8 +543,8 @@
     <!-- CHAPTER 5: V8 LIVE - THE CRISIS -->
     <section class="chapter" id="ch5">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Five</div>
-        <h2 class="ch-title">THE FIRST PROOF AND THE CRISIS <span class="dim">// October 2025</span></h2>
+        <div class="ch-label">Chapter Five</div>
+        <h2 class="ch-title">THE FIRST PROOF AND THE CRISIS <span class="dim">October 2025</span></h2>
         <div class="prose">
             <p>In October 2025, the V8 Trend Engine went live with &pound;500 of real capital. That first week, the market pumped and the account doubled. Then on a Friday night, a six-hour dump hit while the developer slept. The system had shorted seven positions into it. By morning, the account had made 120% in a single session. &pound;2,200 by Saturday. Kept winning through the weekend. <strong>&pound;3,000 by Monday morning.</strong></p>
             <p>Then the market changed. The trending conditions that had 6x'd the account disappeared. What followed was weeks of relentless chop. Sideways price action, false breakouts, whipsaws. The trend-only system had no answer for it. Across 111 trades, the win rate collapsed to <strong>31.5%</strong>. The account bled from &pound;3,000 all the way down to <strong>&pound;55</strong>.</p>
@@ -554,7 +556,7 @@
         </div>
         <div class="pull-quote">
             <p>"The backtests looked like art. The live trading looked like carnage. The gap between them was four bugs, one broken filter, and twelve months of accumulated assumptions that had never been tested under real market conditions."</p>
-            <div class="pull-quote-attr">// Post-mortem analysis, October 2025</div>
+            <div class="pull-quote-attr">Post-mortem analysis, October 2025</div>
         </div>
     </div>
     </section>
@@ -562,8 +564,8 @@
     <!-- CHAPTER 6: COLOSSUS V12 -->
     <section class="chapter" id="ch6">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Six</div>
-        <h2 class="ch-title">COLOSSUS V12 <span class="dim">// January 2026</span></h2>
+        <div class="ch-label">Chapter Six</div>
+        <h2 class="ch-title">COLOSSUS V12 <span class="dim">January 2026</span></h2>
         <div class="prose">
             <p>The architecture consolidated around two complementary signal sources: squeeze fire breakouts and liquidity sweep reversals. Colossus V12 was the result. Over <strong>42,000 lines</strong> across five core components: the trading engine, the Streamline data pipeline, the HYPERION simulation racing platform, a mobile web dashboard with 12,600 lines of Flask code, and the notification system.</p>
             <p>The <strong>HYPERION simulation racing platform</strong> simultaneously executed up to 17 different parameter configurations across historical data, ranked by performance on a live leaderboard. The "X MEGA COMBO" configuration emerged as the consistent winner.</p>
@@ -583,8 +585,8 @@
     <!-- CHAPTER 7: STRIPPING IT BACK -->
     <section class="chapter" id="ch7">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Seven</div>
-        <h2 class="ch-title">STRIPPING IT BACK <span class="dim">// January 2026</span></h2>
+        <div class="ch-label">Chapter Seven</div>
+        <h2 class="ch-title">STRIPPING IT BACK <span class="dim">January 2026</span></h2>
         <div class="prose">
             <p>The ML era and the Merlin harness were ripped out entirely at the beginning of January. The XGBoost models, the LSTM networks, the feature importance pipelines, all of it. Gone. Not because the technology was wrong, but because it was solving the wrong problem. The models were learning the past and calling it the future.</p>
             <p>What replaced it was radical simplification. The system stripped away accumulated complexity: ML gates, FVG requirements, multi-layer confluence scoring, complex tier sizing. What remained was the core signal: squeeze fire breakout on structural calendar levels, with clean risk management. Daily highs and lows. Weekly highs and lows. Monthly highs and lows. Equilibrium midpoints. The institutional levels where real money actually trades.</p>
@@ -592,7 +594,7 @@
         </div>
         <div class="pull-quote">
             <p>"We spent two months building machine learning models that could predict the past with 78% accuracy and the future with 0% accuracy. Then we deleted all of it and went back to price, structure, and compression. The system started working the day we stopped trying to be clever."</p>
-            <div class="pull-quote-attr">// Development retrospective, January 2026</div>
+            <div class="pull-quote-attr">Development retrospective, January 2026</div>
         </div>
     </div>
     </section>
@@ -600,8 +602,8 @@
     <!-- CHAPTER 8: V13 SOVEREIGN -->
     <section class="chapter" id="ch8">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Eight</div>
-        <h2 class="ch-title">MAVERICK V13 <span class="dim">// The Architecture</span></h2>
+        <div class="ch-label">Chapter Eight</div>
+        <h2 class="ch-title">MAVERICK V13 <span class="dim">The Architecture</span></h2>
         <div class="prose">
             <p>MAVERICK V13 Sovereign is the synthesis of everything that worked and everything that failed. The central innovation is the <strong>Thermodynamic Regime Router</strong>. A classification system that evaluates every signal in under one millisecond and routes it to the execution engine most appropriate for the current market condition.</p>
             <p>The router computes a single scalar value called <strong>Gamma</strong>, derived from the Choppiness Index (CHOP-14), ADX readings, and volatility ratios. Below ~0.42: choppy, mean reverting regime. Above ~0.52: trending with sufficient momentum. Between 0.42 and 0.52 is the <strong>confidence dead zone</strong>: a transitional state where no trades are taken. This dead zone is one of the most important risk controls in the system.</p>
@@ -611,7 +613,7 @@
         <div class="engine-block">
             <div class="eb-header">
                 <span class="eb-name" style="color:var(--accent)">GENESIS ENGINE</span>
-                <span class="eb-tag">// Lifecycle Manager // Birth of Trend Detection</span>
+                <span class="eb-tag">Lifecycle Manager Birth of Trend Detection</span>
             </div>
             <div class="eb-body">
                 <p>Genesis handles the nascent phase of signal development. Entries that don't yet qualify for full Trend or Chop classification but show early signs of directional commitment. It monitors developing squeeze conditions using a VWAP gate and an equilibrium gravity well filter. Genesis manages the critical promotion pathway to MOMENTUM_TREND, where a developing position is reclassified mid flight and handed to the Trend Engine's exit logic for an unlimited trailing run.</p>
@@ -629,7 +631,7 @@
         <div class="engine-block">
             <div class="eb-header">
                 <span class="eb-name" style="color:var(--accent)">TREND ENGINE</span>
-                <span class="eb-tag">// Gen 49 Hybrid // Progressive Constriction</span>
+                <span class="eb-tag">Gen 49 Hybrid Progressive Constriction</span>
             </div>
             <div class="eb-body">
                 <p>The Trend Engine activates in confirmed trending regimes. Entry requirements are deliberately strict: ADX-8 &ge; 25, 4-hour Directional Index alignment, RSI confirming momentum without overextension, and a volatility brake preventing entry during abnormal ATR expansion events.</p>
@@ -651,7 +653,7 @@
         <div class="engine-block">
             <div class="eb-header">
                 <span class="eb-name" style="color:var(--amber)">TRAP ENGINE</span>
-                <span class="eb-tag">// Apex Predator // Wyckoff Effort vs Result</span>
+                <span class="eb-tag">Apex Predator Wyckoff Effort vs Result</span>
             </div>
             <div class="eb-body">
                 <p>The Trap Engine targets a specific institutional pattern: the high-volume breakout candle that fails. When retail traders chase a breakout with maximum volume and the candle produces an extreme rejection wick, institutional distribution is occurring. Institutions have been selling into the retail buying pressure.</p>
@@ -672,7 +674,7 @@
         <div class="engine-block">
             <div class="eb-header">
                 <span class="eb-name" style="color:var(--green)">CHOP ENGINE</span>
-                <span class="eb-tag">// Gen 46 Champion // Mean Reversion Sniper</span>
+                <span class="eb-tag">Gen 46 Champion Mean Reversion Sniper</span>
             </div>
             <div class="eb-body">
                 <p>The Chop Engine is the system's primary alpha generator. In ranging conditions (the majority of market time), squeeze fire signals still occur, but the correct interpretation is the opposite of a breakout. The breakout fails. The correct trade is the fade back to the mean.</p>
@@ -696,14 +698,14 @@
     <!-- CHAPTER 9: RISK ENGINE -->
     <section class="chapter" id="ch9">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Nine</div>
-        <h2 class="ch-title">RISK ENGINE <span class="dim">// Set-and-Forget V3.1</span></h2>
+        <div class="ch-label">Chapter Nine</div>
+        <h2 class="ch-title">RISK ENGINE <span class="dim">Set-and-Forget V3.1</span></h2>
         <div class="prose">
             <p>Every trade passes through the same deterministic risk calculation. The system targets <strong>1.4% of total equity</strong> as dollar risk per trade. Position size is calculated backwards from stop distance and leverage. The margin clamp enforces a floor of 6% and ceiling of 13% of equity per trade.</p>
             <p>The <strong>Tiered Handbrake system</strong> applies different trailing tightening gates by asset class: 3.0% for MEGA tier (BTC, ETH, SOL), 4.5% for LARGE tier ($1B&ndash;$10B market cap), and 6.0% for everything else.</p>
         </div>
         <div class="tech-panel">
-            <div class="tp-label">// Risk Engine Parameters // Set-and-Forget V3.1</div>
+            <div class="tp-label">Risk Engine Parameters Set-and-Forget V3.1</div>
             <table>
                 <tr><th>Parameter</th><th>Value</th><th>Purpose</th></tr>
                 <tr><td>Risk per trade</td><td class="g">1.4% equity</td><td>Fixed loss target if stop hit</td></tr>
@@ -722,8 +724,8 @@
     <!-- CHAPTER 10: STREAMLINE -->
     <section class="chapter" id="ch10">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Ten</div>
-        <h2 class="ch-title">STREAMLINE <span class="dim">// The Data Foundation</span></h2>
+        <div class="ch-label">Chapter Ten</div>
+        <h2 class="ch-title">STREAMLINE <span class="dim">The Data Foundation</span></h2>
         <div class="prose">
             <p>The entire system rests on the Streamline data pipeline. A custom real time data processing engine running continuously since late 2025, streaming and processing market data across 88 cryptocurrency perpetual futures symbols simultaneously.</p>
             <p>A single WebSocket connection receives live candle updates. Every bar update triggers a full computation pass: over 20 indicators calculated, squeeze state tracked, sweep levels updated, features written to SQLite. Subsecond latency between data arrival and record availability across all 88 symbols.</p>
@@ -736,8 +738,8 @@
     <!-- CHAPTER 11: THE ORGANISM SWARM -->
     <section class="chapter" id="ch11">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Eleven</div>
-        <h2 class="ch-title">THE ORGANISM SWARM <span class="dim">// The System That Evolves</span></h2>
+        <div class="ch-label">Chapter Eleven</div>
+        <h2 class="ch-title">THE ORGANISM SWARM <span class="dim">The System That Evolves</span></h2>
         <div class="prose">
             <p>Of everything built during this project, the Organism Swarm represents the greatest departure from conventional algorithmic trading. Every other element represents well understood engineering. The Swarm represents something genuinely novel: <span class="hl">a system that autonomously rewrites its own trading logic based on what the market taught it this week.</span></p>
             <p>The current architecture (V4.1 GOD-MODE, April 2026) is a Gemini 3.1 pipeline. It reads 72 hours of sentinel broadcasts, the weekly strategic digest, 10 losing-trade crime scenes and 10 winning-trade forensics with 25 physics fields each, and persistent evolution memory from every prior cycle. It performs root-cause analysis on every structural defect it finds. Then it generates 50 DNA mutations, each one a complete Python strategy file with pre-filters, regime routing, and promotion logic. Every mutation is assigned one of eleven structural paradigms rotating A through K (Wyckoff Spring, Harmonic XABCD, Order Block Reclaim, FVG Consequent Encroachment, Renko Streak Reversal, Volume Profile, PCA Anomaly, Fibonacci OTE, Asian Range Sweep, Breaker Block Flip, Effort-vs-Result Absorption). Candidates may also invent novel composite features; on crowning, those are AST-extracted and appended to the permanent knowledge base. Every mutation is stress-tested against 6 days of real market data across 88 symbols under the unified engine (same code path the live bot runs) and scored by V9 Portfolio Sim (risk-adjusted dollar return), with V7 Sortino logged in parallel for audit.</p>
@@ -756,7 +758,7 @@
         </div>
         <div class="pull-quote">
             <p>"By Generation 279, the swarm had independently invented stop hunting detection, Efficiency Ratio filtering, and ADX acceleration vetoes. None of these were suggested. The system diagnosed the reasons for its own losses and designed the corrective logic."</p>
-            <div class="pull-quote-attr">// Swarm evolution analysis, March 2026</div>
+            <div class="pull-quote-attr">Swarm evolution analysis, March 2026</div>
         </div>
     </div>
     </section>
@@ -764,8 +766,8 @@
     <!-- CHAPTER 12: PROJECT ILLUMINATION -->
     <section class="chapter" id="ch12">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Twelve</div>
-        <h2 class="ch-title">PROJECT ILLUMINATION <span class="dim">// The Parallel Intelligence</span></h2>
+        <div class="ch-label">Chapter Twelve</div>
+        <h2 class="ch-title">PROJECT ILLUMINATION <span class="dim">The Parallel Intelligence</span></h2>
         <div class="prose">
             <p>A separate evolutionary framework called Project ILLUMINATION. A MAP-Elites quality diversity optimisation system that explores the strategy space not just for the single best configuration, but for the best configuration in each distinct niche of the market regime landscape.</p>
             <p>MAP-Elites maintains an archive of elite solutions across a two-dimensional grid defined by frequency and risk. A high frequency, high risk configuration for volatile trending markets might exist in one cell while a low frequency, low risk configuration for quiet ranging markets exists in another.</p>
@@ -777,13 +779,13 @@
     <!-- CHAPTER 13: TRINITY CORE -->
     <section class="chapter" id="ch13">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Thirteen</div>
-        <h2 class="ch-title">TRINITY CORE <span class="dim">// The Autonomous Intelligence Chain</span></h2>
+        <div class="ch-label">Chapter Thirteen</div>
+        <h2 class="ch-title">TRINITY CORE <span class="dim">The Autonomous Intelligence Chain</span></h2>
         <div class="prose">
             <p>By April 2026, the system had evolved beyond a trading bot into an autonomous intelligence organisation. The Trinity Core is a chain of 7 specialised AI agents that monitor performance, conduct forensic analysis on every trade, compress intelligence into weekly digests, and evolve the trading DNA every Sunday. All running on systemd timers. No human intervention.</p>
         </div>
         <div class="tech-panel">
-            <div class="tp-label">// Trinity Core // Full Intelligence Chain</div>
+            <div class="tp-label">Trinity Core Full Intelligence Chain</div>
             <table>
                 <tr><th>Agent</th><th>Trigger</th><th>Function</th></tr>
                 <tr><td class="g">Shadow Matrix</td><td>Every 6 hours (:50)</td><td>Scans all 88 symbols for missed alpha, squeeze states, sweep detection, regime classification</td></tr>
@@ -804,8 +806,8 @@
     <!-- CHAPTER 14: APRIL DNA EVOLUTION -->
     <section class="chapter" id="ch14">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Fourteen</div>
-        <h2 class="ch-title">THE DNA EVOLUTION ARC <span class="dim">// April 2026</span></h2>
+        <div class="ch-label">Chapter Fourteen</div>
+        <h2 class="ch-title">THE DNA EVOLUTION ARC <span class="dim">April 2026</span></h2>
         <div class="prose">
             <p><strong>Phase One: The Anti Hunt Revolution (April 1-3).</strong> Analysis revealed 18 of 26 consecutive losses were EXCHANGE_STOP_HIT. KuCoin was stop hunting the system. The swarm's response: the <strong>Kaufman Efficiency Ratio (KER)</strong>. KER below 0.3 indicates "drunken walk" (stop hunting territory), above 0.6 indicates "laminar flow" (genuine trending). Leverage dropped from 5-8x to 3x. ATR stops widened 40-60%. Body to wick ratio filter introduced.</p>
             <p><strong>Phase Two: Fractal Intelligence (April 4-7).</strong> The <strong>Path Straightness Index (PSI)</strong> measures net displacement divided by total path length over 12 bars. PSI &gt; 0.62 = trending with institutional commitment. PSI &lt; 0.38 = noise. This single metric proved more reliable than raw ADX or the Choppiness Index. KDA v13.2 scored 10,107 in live evaluation and became the battle tested fallback.</p>
@@ -820,8 +822,8 @@
     <!-- CHAPTER 15: GENESIS RISE AND FALL -->
     <section class="chapter" id="ch15">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Fifteen</div>
-        <h2 class="ch-title">GENESIS <span class="dim">// The Engine That Taught a Lesson</span></h2>
+        <div class="ch-label">Chapter Fifteen</div>
+        <h2 class="ch-title">GENESIS <span class="dim">The Engine That Taught a Lesson</span></h2>
         <div class="prose">
             <p>Genesis was architecturally elegant. Catch the birth of a trend at the moment of VWAP equilibrium, before the Trend Engine's ADX gates activate. In theory: catch the coil before the spring releases.</p>
             <p>In practice: the VWAP gate rejected every genuine momentum signal. In a trending market, price is by definition away from VWAP. A 14.44 ATR distance from VWAP is a <em>characteristic</em> of momentum. Genesis classified it as "overextended" and rejected the signal. The compression gate compounded this. IGNITION signals fire during breakouts, but the very expansion that triggers them disqualifies the trade by Genesis's own gates.</p>
@@ -830,7 +832,7 @@
         </div>
         <div class="pull-quote">
             <p>"891 rejections on ENJ in one day. A 46% rip, completely invisible to the system. Not because the data wasn't there. Because an engine designed for equilibrium was guarding a breakout signal."</p>
-            <div class="pull-quote-attr">// Phase 7 Forensic Audit, April 9, 2026</div>
+            <div class="pull-quote-attr">Phase 7 Forensic Audit, April 9, 2026</div>
         </div>
     </div>
     </section>
@@ -838,8 +840,8 @@
     <!-- CHAPTER 16: THE LIVING SYSTEM -->
     <section class="chapter" id="ch16">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Sixteen</div>
-        <h2 class="ch-title">THE LIVING SYSTEM <span class="dim">// April 17, 2026</span></h2>
+        <div class="ch-label">Chapter Sixteen</div>
+        <h2 class="ch-title">THE LIVING SYSTEM <span class="dim">April 17, 2026</span></h2>
         <div class="prose">
             <p>The 4 engine V13 Sovereign described in chapters 8 through 15 is now history. April 16 was the day the architecture pivoted from "static engine router" to a self mutating organism. Chop, Trap, and Genesis are no longer in the live stack. They were retired because the Swarm evolved past them.</p>
             <p>The current champion is <strong>GOLIATH_GAMMA_V2</strong>, crowned April 21, 2026. It utilizes the Unified Engine architecture that evolved past the 4-engine router and the later H2H Hybrid split. OBS owns its own entry trigger, stop placement, position sizing, leverage, and exit logic across all 88 perpetual futures. There is no router. There is no regime classifier. The strategy IS the system.</p>
@@ -849,7 +851,7 @@
             <p>Underneath lives the <strong>Sovereign Live Adapter</strong>. A cache manager auto-refreshes the in-memory state every 5 minutes so the live bot mirrors the backtest exactly. A champion validator gates every new deploy on DNA shape, contract correctness, cache idempotency, and stop-floor compliance. The atomic hot-swap runs a 45-second health check after every deployment and rolls back on failure. The adapter is the bridge that keeps "what scored in eval" identical to "what fires on the exchange right now."</p>
         </div>
         <div class="tech-panel">
-            <div class="tp-label">// Live Configuration // GOLIATH_GAMMA_V2 (April 21, 2026)</div>
+            <div class="tp-label">Live Configuration GOLIATH_GAMMA_V2 (April 21, 2026)</div>
             <div class="tp-body">
                 <p><span class="key">Champion:</span> <span class="val">GOLIATH_GAMMA_V2</span></p>
                 <p><span class="key">Architecture:</span> <span class="val">UNIFIED ENGINE. Same code path in backtest and live. Zero divergence on entry layer.</span></p>
@@ -875,8 +877,8 @@
     <!-- CHAPTER 17: THE MISSION -->
     <section class="chapter" id="ch17">
     <div class="wp-wrap">
-        <div class="ch-label">// Chapter Seventeen</div>
-        <h2 class="ch-title">FREEDOMCORE <span class="dim">// The Mission</span></h2>
+        <div class="ch-label">Chapter Seventeen</div>
+        <h2 class="ch-title">FREEDOMCORE <span class="dim">The Mission</span></h2>
         <div class="prose">
             <p>FreedomCore is proof that financial independence through autonomous machine intelligence is achievable without institutional resources, without a quant team, without years of formal finance education, and without a desk. Just a phone, a VPS, and AI.</p>
             <p>Everything described in this document was built by one person. A tanker driver from the UK, on a phone, in the gaps between shifts. Every bug was fixed from a phone screen. Every architectural decision was made from a phone screen. 85,000+ lines of Python, 128 million backtest evaluations, 13 major versions, and a self evolving AI trading system that genuinely writes its own code. All built without a computer.</p>
@@ -886,6 +888,37 @@
         </div>
         <div class="callout">
             <p>This document was written in April 2026, twelve months after the first line of code. Every system described here is live and operational. The Organism Swarm continues to evolve. The market continues to trade. The loop continues to close.</p>
+        </div>
+    </div>
+    </section>
+
+    <!-- CHAPTER 18: THE HIGH COUNCIL -->
+    <section class="chapter" id="ch18">
+    <div class="wp-wrap">
+        <div class="ch-label">Chapter Eighteen</div>
+        <h2 class="ch-title">THE HIGH COUNCIL <span class="dim">How decisions get made</span></h2>
+        <div class="prose">
+            <p>FreedomCore does not ship by intuition. Every meaningful change to ARENA, SHADOW, Streamline, Maverick, or the marketing surface goes through a multi-model deliberation called the High Council. The council is six AI seats that argue with each other in rounds until they reach a verdict. The verdict ships verbatim or gets staged for an operator review. There is no committee of humans. There is one operator and a council of language models.</p>
+            <p>The council runs in two stages per round. Stage A is three NVIDIA-hosted scout models reading raw source code, citing exact file paths and line numbers, surfacing defects. Stage B is three premium reasoning models, Claude Opus 4.7, Gemini 3.1 Pro Preview, and OpenAI GPT 5.5, arguing from the scout digest. The premium models never re-read the raw source. They argue from the surfaced facts. The scouts do the donkey work. The premium seats do the deliberation.</p>
+            <p>Each task runs four to ten rounds. Round one diagnoses defects. Middle rounds design the architecture. The penultimate round drafts the literal patch. The final round produces an acceptance checklist and a rollback procedure. After the final round, Claude Opus 4.7 writes a synthesis document that reconciles disagreements, flags unsupported claims, and decides what ships.</p>
+        </div>
+
+        <figure style="margin:32px 0;text-align:center;">
+            <img src="/img/high-council-diagram.png" alt="The High Council. Six-seat multi-LLM deliberation flow." style="max-width:760px;width:100%;height:auto;display:inline-block;border-radius:12px;border:1px solid var(--border);background:var(--bg-elevated);" />
+            <figcaption style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);">
+                Source flows down through Stage A scouts, the digest reaches Stage B premium seats, synthesis lands in vector memory, and the next council picks up where the last one left off.
+            </figcaption>
+        </figure>
+
+        <div class="prose">
+            <p>Every council writes to a vector memory layer. As of late April 2026 the memory holds over five thousand chunks indexed by topic, tier, date, and seat. When a future council fires, it does not start from scratch. It can retrieve any prior round, any prior synthesis, any prior brief, in milliseconds. The system grows smarter every week without anyone touching it.</p>
+            <p>The two-stage architecture is what makes the cost economics work for a one-person team. The scout tier is free or near-free. The premium tier is expensive but only sees the digest, not the raw source, which cuts token consumption by roughly seventy percent versus single-stage councils. The verdicts produced are tighter than any solo prompt because three premium seats argue, agree, and disagree on a shared evidence base.</p>
+            <p>Single-shot prompts produce parallel monologues. Models talk past each other with no shared evidence. The High Council fixes that by forcing a shared digest, then a structured deliberation, then a single synthesis. What ships is not one model's opinion. It is what survives the argument.</p>
+            <p><strong class="hl">The council is the loop. The loop is the moat.</strong></p>
+        </div>
+
+        <div class="callout">
+            <p>The High Council architecture is documented in <code>/root/FreedomCore_Agents/</code>. Council memory lives in <code>/root/FreedomCore_Tools/</code> via LlamaIndex and Chroma. Source briefs and arena logs are auto-indexed at the end of each run. Any subsequent council can query any prior council. The vector memory keeps growing.</p>
         </div>
     </div>
     </section>

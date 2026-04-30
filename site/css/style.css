@@ -1,4 +1,5 @@
 @import url('./tokens.css');
+@import url('./franchise-coord.css');   /* R5 contract — .fc-* canonical primitives */
 
 /* ============================================================================
    FreedomCore Modular CSS — v3.0
@@ -24,9 +25,15 @@
     --surface:      var(--bg-elevated);
     --text:         var(--text-primary);
     --text-dim:     var(--text-muted);
-    --accent:       var(--accent-gold);
+    /* PR4-prequel · 2026-04-30: --accent now follows the per-site accent so the
+       skeleton-key flip propagates through ALL 484 legacy-alias references at
+       once. Falls back to --accent-gold when --site-accent is undefined (e.g.
+       a page somehow without body[data-site]) — the previous hardcoded behaviour. */
+    --accent:       var(--site-accent, var(--accent-gold));
 
-    /* Legacy alias collapse — every former hue resolves into the four. */
+    /* Legacy alias collapse — every former hue now follows --accent (= --site-accent
+       per-site). The aliases stay in place so 484 pre-existing var(--green)/(--gold)/
+       (--blue)/etc. refs across CSS+HTML+JS keep resolving; PR6 will rename them out. */
     --bg2:          var(--surface);
     --card:         var(--surface);
     --gold:         var(--accent);
@@ -79,14 +86,9 @@ body {
     -webkit-font-smoothing: antialiased;
     transition: background 0.3s, color 0.3s;
 }
-body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, var(--scanline) 2px, var(--scanline) 4px);
-    pointer-events: none;
-    z-index: 1;
-}
+/* PR5 (R5 council 2026-04-30): scanline overlay deleted. Synthesis flagged it
+   as alien to every "premium dark" reference (Linear, Stripe, Apple, Igloo).
+   .grid-bg below stays — that's the subtle blueprint texture which IS canon. */
 .grid-bg {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     background-image:
