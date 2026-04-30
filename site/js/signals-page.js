@@ -389,7 +389,15 @@
         const open   = signals.filter(s => s.status === 'filled' || s.status === 'signal').length;
         const closed = signals.filter(s => s.status === 'closed');
         const wins   = closed.filter(s => (s.pnl_usd || 0) > 0).length;
-        const wr     = closed.length ? (wins / closed.length * 100).toFixed(1) + '%' : '—';
+        const losses = closed.length - wins;
+        // WR: show win/loss tally instead of a misleading 100%/0% when the
+        // sample is too small to mean anything. Percentage only kicks in
+        // once at least three trades have closed.
+        const wr     = closed.length === 0
+                        ? '—'
+                        : closed.length < 3
+                            ? `${wins}W/${losses}L`
+                            : (wins / closed.length * 100).toFixed(1) + '%';
         const totPnl = closed.reduce((a, s) => a + (s.pnl_usd || 0), 0);
         const pnlTxt = closed.length
             ? (totPnl >= 0 ? '+$' : '-$') + Math.abs(totPnl).toFixed(2)
