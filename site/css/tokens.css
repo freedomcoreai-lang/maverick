@@ -153,7 +153,12 @@ body[data-site="freedomcore"] { --site-accent: var(--accent-gold); }
 [data-theme="light"] body[data-site="apex"],
 [data-theme="light"] body[data-site="freedomcore"] { --site-accent-text: var(--accent-gold-text); }
 
-[data-fc="maverick"] { color: var(--accent-gold);   }
-[data-fc="shadow"]   { color: var(--accent-violet); }
-[data-fc="quantum"]  { color: var(--accent-cyan);   }
-[data-fc="arena"]    { color: var(--accent-silver); }
+[data-fc="maverick"]   { color: var(--accent-gold);   }
+[data-fc="shadow"]     { color: var(--accent-violet); }
+[data-fc="quantum"]    { color: var(--accent-cyan);   }
+[data-fc="arena"]      { color: var(--accent-silver); }
+/* PR1 follow-up · 2026-04-30 — Streamline (data spine, neutral) and Sovereign
+   (gated access tier, premium gold). One token change here propagates to every
+   place those modules are referenced franchise-wide. */
+[data-fc="streamline"] { color: var(--text-primary); }
+[data-fc="sovereign"]  { color: var(--accent-gold);  }

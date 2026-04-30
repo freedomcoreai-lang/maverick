@@ -125,6 +125,9 @@ body {
    Replaced 2026-04-27 (was using fixed-pixel `top` which guessed wrong on
    different layouts and either blocked info bars or floated below the nav). */
 .nav-neon-line { display: none !important; }
+/* The neon line under the nav — now a skeleton-key surface. Reads
+   --site-accent so it paints gold on Maverick + Hub, violet on Shadow,
+   cyan on Quantum, silver on Arena. Glow halo also tints to match. */
 .nav::after {
     content: '';
     position: absolute;
@@ -133,15 +136,15 @@ body {
     bottom: -1px;
     height: 1px;
     background: linear-gradient(90deg,
-        rgba(78, 205, 196, 0.6) 0%,
-        rgba(78, 205, 196, 0.95) 25%,
-        rgba(62, 168, 245, 1) 50%,
-        rgba(78, 205, 196, 0.95) 75%,
-        rgba(78, 205, 196, 0.6) 100%);
+        color-mix(in srgb, var(--site-accent) 60%, transparent) 0%,
+        color-mix(in srgb, var(--site-accent) 95%, transparent) 25%,
+        var(--site-accent) 50%,
+        color-mix(in srgb, var(--site-accent) 95%, transparent) 75%,
+        color-mix(in srgb, var(--site-accent) 60%, transparent) 100%);
     box-shadow:
-        0 0 8px rgba(78, 205, 196, 0.75),
-        0 0 22px rgba(62, 168, 245, 0.5),
-        0 0 40px rgba(62, 168, 245, 0.22);
+        0 0 8px  color-mix(in srgb, var(--site-accent) 75%, transparent),
+        0 0 22px color-mix(in srgb, var(--site-accent) 50%, transparent),
+        0 0 40px color-mix(in srgb, var(--site-accent) 22%, transparent);
     pointer-events: none;
     z-index: 201;
 }
