@@ -175,21 +175,6 @@
     <main class="cockpit">
 
         <!-- ============================================================
-             STRIKE ALERT (renders when a fire happened in the last 4h)
-             Stays mounted so the layout doesn't jump on activation.
-             ============================================================ -->
-        <aside class="strike-alert" id="strike-alert" aria-live="polite" hidden>
-            <div class="strike-flame" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <div class="strike-body">
-                <div class="strike-eyebrow">// STRIKE LIVE</div>
-                <div class="strike-headline" id="strike-headline">The cascade has fired.</div>
-                <div class="strike-meta" id="strike-meta">&mdash;</div>
-            </div>
-        </aside>
-
-        <!-- ============================================================
              SECTION 1 — STATE OF THE HUNT
              The page is alive even when the cascade has not fired.
              Hero numbers come from /api/hunt/state.
@@ -403,7 +388,7 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260429g"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
-    <script src="/js/signals-page.js?v=20260429c"></script>
+    <script src="/js/signals-page.js?v=20260430a"></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
 </body>

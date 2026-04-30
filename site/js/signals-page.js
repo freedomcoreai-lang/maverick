@@ -132,43 +132,8 @@
     }
 
     /* ────────────────────────────────────────────────────────────────────
-       3 · Hunt hero (/api/hunt/state) + strike alert
+       3 · Hunt hero (/api/hunt/state)
        ──────────────────────────────────────────────────────────────────── */
-    const STRIKE_HEADLINES = [
-        'The cascade has fired.',
-        'Strike confirmed. The hunt landed.',
-        'Capital is moving.',
-        'A medalist just struck.',
-        'The pattern broke. The cascade caught it.',
-    ];
-
-    function pickStrikeHeadline(strike) {
-        // Deterministic pick keyed on the strike id so it stays stable per fire.
-        const seed = (strike && (strike.ts_unix || 0)) % STRIKE_HEADLINES.length;
-        return STRIKE_HEADLINES[seed];
-    }
-
-    function renderStrikeAlert(strike, secondsAgo) {
-        const banner = $('strike-alert');
-        if (!banner) return;
-        const FRESH_WINDOW = 4 * 60 * 60;  // 4 hours
-        if (!strike || secondsAgo === null || secondsAgo === undefined || secondsAgo > FRESH_WINDOW) {
-            banner.hidden = true;
-            return;
-        }
-        banner.hidden = false;
-        setText($('strike-headline'), pickStrikeHeadline(strike));
-
-        const dir   = (strike.direction === 'long' ? 'BULL' : 'BEAR');
-        const sym   = strike.symbol || '—';
-        const tag   = (strike.strategy_name || 'CASCADE').toUpperCase();
-        const px    = (strike.entry_price ? '@ ' + fmtPrice(strike.entry_price) : '');
-        const when  = secondsAgo < 60      ? 'just now'
-                    : secondsAgo < 3600    ? Math.floor(secondsAgo / 60) + 'm ago'
-                    :                        Math.floor(secondsAgo / 3600) + 'h ago';
-        setText($('strike-meta'),
-            `${dir} · ${sym} ${px} · ${tag} · ${when}`);
-    }
 
     /* Trinity Cascade activation: 2026-04-27 19:29 UTC. Used for the
        "no strike yet" fallback so the hero is honest about how long the
@@ -232,7 +197,6 @@
             if (discSub) discSub.textContent = days === 1 ? 'day live' : 'days live';
         }
 
-        renderStrikeAlert(state.last_strike, last);
         setRecentStrike(state.last_strike, last);
     }
 
