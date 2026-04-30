@@ -160,7 +160,18 @@ body {
 }
 .nav-logo-img:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 16px rgba(78, 205, 196, 0.3);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--site-accent) 50%, transparent);
+}
+/* PR1 follow-up · 2026-04-30 — circular brand orb in the nav.
+   Each site shows ITS OWN orb (Maverick/Shadow/Arena/Quantum) so the
+   visual identity is set the moment you see the burger area. */
+.nav-logo-img--orb {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1.5px solid color-mix(in srgb, var(--site-accent) 60%, transparent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--site-accent) 30%, transparent);
+}
+.nav-logo-img--orb:hover {
+    box-shadow: 0 0 20px color-mix(in srgb, var(--site-accent) 60%, transparent);
 }
 .logo-expand-overlay {
     display: none; position: fixed;
