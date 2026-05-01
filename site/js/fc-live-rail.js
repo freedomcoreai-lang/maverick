@@ -53,15 +53,17 @@
         el.id = 'fc-global-ticker-container';
         el.style.cssText = 'position:relative; z-index:150; display:flex; flex-direction:column; gap:6px; margin: 16px auto 24px;';
         
-        var gridBg = document.querySelector('.grid-bg');
-        if (gridBg && gridBg.nextSibling) {
-            gridBg.parentNode.insertBefore(el, gridBg.nextSibling);
+        var hero = document.querySelector('.hero, .a-hero, .q-hero, .hub-hero, .suite-hero, .swarm-hero');
+        if (hero && hero.nextSibling) {
+            hero.parentNode.insertBefore(el, hero.nextSibling);
+        } else if (hero) {
+            hero.parentNode.appendChild(el);
         } else {
             var nav = document.querySelector('nav.nav');
             if (nav && nav.nextSibling) {
                 nav.parentNode.insertBefore(el, nav.nextSibling);
             } else {
-                document.body.insertBefore(el, document.body.firstChild);
+                document.body.appendChild(el);
             }
         }
         return el;

@@ -15,7 +15,7 @@
 .swarm-hero {
     max-width: 1040px;
     margin: 0 auto;
-    padding: var(--sp-96) var(--sp-24) var(--sp-64);
+    padding: var(--sp-16) var(--sp-24) var(--sp-64);
 }
 .swarm-hero__eyebrow {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -71,7 +71,7 @@
     font-weight: 600;
 }
 @media (max-width: 720px) {
-    .swarm-hero { padding: var(--sp-64) var(--sp-16) var(--sp-48); }
+    .swarm-hero { padding: var(--sp-16) var(--sp-16) var(--sp-48); }
     .swarm-hero__metrics { grid-template-columns: repeat(2, 1fr); }
     .swarm-hero__metric:nth-child(2n) { border-right: 0; }
     .swarm-hero__metric:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
