@@ -25,7 +25,7 @@
         css.id = 'fc-shadow-rail-style';
         css.textContent = '' +
             '.fc-shadow-mount { position:fixed; left:0; right:0; z-index:198; }\n' +
-            '.fc-shadow-rail { display:flex; align-items:center; gap:14px; padding:8px 14px; background:rgba(6,10,16,0.94); border-bottom:1px solid rgba(139,92,246,0.30); border-top:1px solid rgba(139,92,246,0.18); font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.72rem; line-height:1.3; color:#f5f5fa; flex-wrap:nowrap; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 6px 18px rgba(0,0,0,0.32); }\n' +
+            '.fc-shadow-rail { display:flex; align-items:center; gap:12px; padding:6px 14px; background:rgba(6,10,16,0.94); border-bottom:1px solid rgba(139,92,246,0.30); border-top:1px solid rgba(139,92,246,0.18); font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.7rem; line-height:1.25; color:#f5f5fa; flex-wrap:nowrap; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 4px 14px rgba(0,0,0,0.32); }\n' +
             '[data-theme="light"] .fc-shadow-rail { background:rgba(248,250,255,0.96); border-bottom-color:rgba(109,59,204,0.40); border-top-color:rgba(109,59,204,0.22); color:#0a0a0f; }\n' +
             '.fc-shadow-rail .eyebrow { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#8b5cf6; font-weight:800; flex-shrink:0; }\n' +
             '[data-theme="light"] .fc-shadow-rail .eyebrow { color:#6d3bcc; }\n' +
@@ -45,7 +45,7 @@
             '.fc-shadow-rail .agg .neg { color:#ef4444; font-weight:700; }\n' +
             '.fc-shadow-rail .cta { color:#8b5cf6; font-weight:800; text-decoration:none; letter-spacing:0.1em; padding:4px 10px; border:1px solid rgba(139,92,246,0.45); border-radius:5px; font-size:0.62rem; flex-shrink:0; transition:all 0.2s; }\n' +
             '.fc-shadow-rail .cta:hover { background:rgba(139,92,246,0.12); }\n' +
-            '@media (max-width: 640px) { .fc-shadow-rail { font-size:0.66rem; gap:8px; padding:6px 10px; } .fc-shadow-rail .eyebrow { display:none; } .fc-shadow-rail .cta { display:none; } .fc-shadow-rail .agg { padding-left:6px; } }\n' +
+            '@media (max-width: 640px) { .fc-shadow-rail { font-size:0.62rem; gap:8px; padding:5px 10px; } .fc-shadow-rail .eyebrow { font-size:0.5rem; letter-spacing:0.16em; } .fc-shadow-rail .cta { display:none; } .fc-shadow-rail .agg { padding-left:6px; } }\n' +
             '@media (max-width: 380px) { .fc-shadow-rail .age { display:none; } }';
         document.head.appendChild(css);
     }
@@ -70,11 +70,7 @@
         // add another 36px of body padding for ourselves.
         if (document.body.dataset.fcShadowMounted) return;
         var current = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
-        var railH = window.innerWidth <= 480 ? 32 : 36;
-        // Maverick rail occupies the bottom railH of the current padding;
-        // we anchor right under it (top = current_padding - 0 = current).
-        // No: Maverick rail top = original_topbar (current - railH).
-        // Maverick rail bottom = current. So Shadow goes at current.
+        var railH = window.innerWidth <= 480 ? 26 : 30;
         mount.style.top = current + 'px';
         document.body.style.paddingTop = (current + railH) + 'px';
         document.body.dataset.fcShadowMounted = '1';
@@ -91,7 +87,7 @@
     function buildShell(mount) {
         mount.innerHTML = '' +
             '<div class="fc-shadow-rail" role="region" aria-label="Shadow live cohort feed">' +
-                '<span class="eyebrow">SHADOW &middot; LIVE</span>' +
+                '<span class="eyebrow">SHADOW</span>' +
                 '<div class="row" id="fc-shadow-row"><span class="age">connecting&hellip;</span></div>' +
                 '<div class="agg" id="fc-shadow-agg">cohort &middot; &mdash;</div>' +
                 '<a class="cta" href="https://shadow.freedomcore.io/">Open SHADOW &rsaquo;</a>' +

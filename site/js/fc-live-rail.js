@@ -31,8 +31,8 @@
             // is the visual band inside. JS sets the `top` value at mount time
             // by reading body padding-top (the topbar stack height per site).
             '.fc-rail-mount { position:fixed; left:0; right:0; z-index:199; }\n' +
-            '.fc-rail { display:flex; align-items:center; gap:14px; padding:8px 14px; background:rgba(6,10,16,0.94); border-top:1px solid rgba(255,215,0,0.30); border-bottom:1px solid rgba(255,215,0,0.30); font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.72rem; line-height:1.3; color:#f5f5fa; flex-wrap:nowrap; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 6px 18px rgba(0,0,0,0.32); }\n' +
-            '[data-theme="light"] .fc-rail { background:rgba(248,250,255,0.96); border-color:rgba(30,127,196,0.40); color:#0a0a0f; }\n' +
+            '.fc-rail { display:flex; align-items:center; gap:12px; padding:6px 14px; background:rgba(6,10,16,0.94); border-top:1px solid rgba(255,215,0,0.30); border-bottom:1px solid rgba(255,215,0,0.30); font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.7rem; line-height:1.25; color:#f5f5fa; flex-wrap:nowrap; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 4px 14px rgba(0,0,0,0.32); }\n' +
+            '[data-theme="light"] .fc-rail { background:rgba(248,250,255,0.96); border-color:rgba(184,116,10,0.40); color:#0a0a0f; }\n' +
             '.fc-rail__eyebrow { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#ffd700; font-weight:800; flex-shrink:0; }\n' +
             '.fc-rail__row { display:flex; align-items:center; gap:8px; flex:1 1 220px; min-width:0; overflow:hidden; transition:opacity 0.22s ease; }\n' +
             '.fc-rail__row.fading { opacity:0; }\n' +
@@ -51,7 +51,7 @@
             '.fc-rail__agg .l { color:#ef4444; font-weight:700; }\n' +
             '.fc-rail__cta { color:#ffd700; font-weight:800; text-decoration:none; letter-spacing:0.1em; padding:4px 10px; border:1px solid rgba(255,215,0,0.45); border-radius:5px; font-size:0.62rem; flex-shrink:0; transition:all 0.2s; }\n' +
             '.fc-rail__cta:hover { background:rgba(255,215,0,0.12); }\n' +
-            '@media (max-width: 640px) { .fc-rail { font-size:0.66rem; gap:8px; padding:6px 10px; } .fc-rail__eyebrow { display:none; } .fc-rail__cta { display:none; } .fc-rail__agg { padding-left:6px; } }\n' +
+            '@media (max-width: 640px) { .fc-rail { font-size:0.62rem; gap:8px; padding:5px 10px; } .fc-rail__eyebrow { font-size:0.5rem; letter-spacing:0.16em; } .fc-rail__cta { display:none; } .fc-rail__agg { padding-left:6px; } }\n' +
             '@media (max-width: 380px) { .fc-rail__age { display:none; } .fc-rail__reason { display:none; } }';
         document.head.appendChild(css);
     }
@@ -76,7 +76,7 @@
         // topbar but stays visible during scroll.
         if (document.body.dataset.fcRailMounted) return;
         var current = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
-        var railH = window.innerWidth <= 480 ? 32 : 36;
+        var railH = window.innerWidth <= 480 ? 26 : 30;
         mount.style.top = current + 'px';
         document.body.style.paddingTop = (current + railH) + 'px';
         document.body.dataset.fcRailMounted = '1';
@@ -93,7 +93,7 @@
     function buildShell(mount) {
         mount.innerHTML = '' +
             '<div class="fc-rail" role="region" aria-label="Maverick live broker ledger">' +
-                '<span class="fc-rail__eyebrow">MAVERICK · LIVE</span>' +
+                '<span class="fc-rail__eyebrow">MAVERICK</span>' +
                 '<div class="fc-rail__row" id="fc-rail-row"><span class="fc-rail__reason">connecting&hellip;</span></div>' +
                 '<div class="fc-rail__agg" id="fc-rail-agg">TODAY &middot; &mdash;</div>' +
                 '<a class="fc-rail__cta" href="https://maverick.freedomcore.io/pages/today.html">View ledger &rsaquo;</a>' +
