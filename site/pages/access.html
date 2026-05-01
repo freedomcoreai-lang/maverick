@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501a">
-    <link rel="stylesheet" href="/css/style.css?v=20260501a">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501c">
+    <link rel="stylesheet" href="/css/style.css?v=20260501c">
     <style>
         .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .ax-hero-badge {
@@ -92,7 +92,7 @@
         .ax-sub-input:focus { outline: none; border-color: var(--accent); }
 
         .ax-select-row {
-            display: grid; grid-template-columns: repeat(3, 1fr);
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 8px; margin: 12px 0;
         }
         .ax-tier-choice {
@@ -161,6 +161,18 @@
             font-size: 0.84rem; line-height: 1.75; color: var(--text-dim);
         }
         .ax-disclaimer strong { color: #f5a623; }
+
+        /* Feature flag — Sovereign tier hidden until /pages/sovereign.html ships
+           (per monetisation verdict 2026-05-01). Flip --fc-sovereign-live: 1
+           on :root in tokens.css when the API-key issuance UI lands, and the
+           tier card + selector chip return automatically. No code changes
+           needed at flip time. */
+        :root { --fc-sovereign-live: 0; }
+        [data-soon="sovereign"] { display: none !important; }
+        @supports (display: revert) {
+            :root[style*="--fc-sovereign-live: 1"] [data-soon="sovereign"],
+            html[data-sovereign-live="true"] [data-soon="sovereign"] { display: revert !important; }
+        }
 
         .ax-faq { margin-top: 50px; }
         .ax-faq h2 {
@@ -430,7 +442,7 @@
                     <div class="ax-select-row">
                         <div class="ax-tier-choice selected" data-tier="signal"><div class="tc-name">Signal</div><div class="tc-price" id="price-signal">$29/mo</div></div>
                         <div class="ax-tier-choice" data-tier="pro"><div class="tc-name">Pro</div><div class="tc-price" id="price-pro">$79/mo</div></div>
-                        <div class="ax-tier-choice" data-tier="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$199/mo</div></div>
+                        <div class="ax-tier-choice" data-tier="sovereign" data-soon="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$199/mo</div></div>
                     </div>
                     <div style="text-align:center; font-size:0.62rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin:6px 0 10px;">Monthly billing &middot; cancel anytime &middot; annual coming soon</div>
                     <input class="ax-sub-input" type="email" id="sub-email" placeholder="your@email.com" autocomplete="email">
@@ -514,7 +526,7 @@
                 </div>
             </a>
 
-            <a class="ax-tier featured" data-tier="sovereign" href="/pages/swarm.html" style="text-decoration:none; color:inherit; display:block;">
+            <a class="ax-tier featured" data-tier="sovereign" data-soon="sovereign" href="/pages/swarm.html" style="text-decoration:none; color:inherit; display:block;">
                 <div class="tier-label">Tier 4 &middot; SOVEREIGN &middot; flagship</div>
                 <h3>Sovereign</h3>
                 <div class="req">Hold 20,000 $MAV</div>
@@ -534,15 +546,54 @@
             </a>
         </div>
 
-        <!-- DISCLAIMER -->
+        <!-- DISCLAIMERS — seven R8 blocks (verdict 2026-05-01).
+             Wording is honest plain-English; final form pending UK counsel ratification (~£500 one-shot).
+             Collapsed accordion so the page stays scannable but every claim is substantiated. -->
         <div class="ax-disclaimer">
             <strong>&#9888; This is not financial advice.</strong> MAVERICK is an experimental AI
             system. It may lose money. It may crash. It may be switched off. You are paying for
             coverage of the experiment &mdash; nothing else. Holding $MAV or subscribing grants you
             access to a software service. You receive no equity, no dividends, no share of trading
-            profits, no guaranteed return. Crypto is volatile; $MAV can go to zero. Card subscribers
-            are billed monthly by Stripe and may cancel anytime with one click. Only participate with
-            money you can afford to lose entirely. Geoblocked where required by local law.
+            profits, no guaranteed return. Crypto is volatile; $MAV can go to zero.
+        </div>
+
+        <div style="max-width:920px; margin:24px auto; font-family:'Inter',sans-serif;">
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">1. Capital safety</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Only participate with money you can afford to lose entirely. We do not run a managed account, we do not custody funds, and we do not guarantee any level of performance. The system can be wrong; markets can move against you in an instant; closed-trade history is not a forecast. Drawdowns of 20-40% are normal in any trading approach and have occurred during MAVERICK's lifetime.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">2. No promise of arbitrage or edge</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Past performance does not guarantee future results. Slippage, fees, exchange downtime, regulatory changes and market regime shifts can erode any historical edge. Backtests are the bot's training context, not a contract with you. The "champion" running today can underperform tomorrow.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">3. Refunds &amp; cancellation</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Monthly subscriptions: cancel anytime with one click in the Stripe portal &mdash; access continues until the end of the paid period. Annual subscriptions (when available): full refund within 14 days under EU/UK consumer rights, prorated thereafter is at our discretion. $MAV token purchases are non-refundable &mdash; they are open-market purchases, not a contract with us. Chargebacks pursued on cards used to access already-delivered signals will be disputed.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">4. Service level &amp; support</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Support: <a href="mailto:support@freedomcore.io" style="color:var(--accent);">support@freedomcore.io</a>. We aim to respond within 24 hours (Mon-Fri UK working days). No uptime guarantee. Live status of scanner, Stripe webhook and on-chain RPC endpoints is published at <a href="/pages/status.html" style="color:var(--accent);">/pages/status.html</a>. The system can be paused at any time without notice for safety, maintenance or operator discretion.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">5. KuCoin trade verifiability</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">MAVERICK trades on a KuCoin sub-account that we operate. Closed PnL, win-rate and equity numbers shown on this site are read directly from that sub-account in 60-second cycles. We currently do not expose signed exchange trade IDs &mdash; numbers are directionally cross-referenceable against KuCoin's public price feed but are not yet individually independently auditable. KuCoin webhook integration to expose trade IDs is on the Phase-3 roadmap.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">6. Tax</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Subscription costs may or may not be deductible against trading income depending on your jurisdiction and personal circumstances. $MAV token gains and losses, if any, are typically a taxable event under most regimes. We do not provide tax advice. Consult a qualified accountant in your country before treating anything on this site as deductible or capital-gains-relevant.</p>
+            </details>
+
+            <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
+                <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">7. Jurisdiction &amp; eligibility</summary>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">FreedomCore is built and operated from the United Kingdom. The service is software &mdash; we do not custody funds, give personalised advice, or solicit US persons. By subscribing or holding $MAV you confirm that participation is lawful in your jurisdiction and that you are responsible for any local registration, tax or licensing obligations. OFAC-sanctioned countries (Cuba, Iran, North Korea, Syria, Crimea and other US-sanctioned regions) are blocked at the payment layer by Stripe. If you are unsure about your local regulations, do not proceed.</p>
+            </details>
+
+            <p style="color:var(--text-dim); font-size:0.72rem; line-height:1.5; margin-top:14px; opacity:0.7;">Wording is plain-English first-draft pending UK counsel ratification. If anything contradicts your local regulator's framing, your local regulator wins.</p>
         </div>
 
         <!-- FAQ -->

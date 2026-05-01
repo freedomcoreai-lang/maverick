@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status &mdash; FreedomCore</title>
+<meta name="description" content="Live health status of FreedomCore services: scanner, Stripe webhook, on-chain RPC, exchange connectivity. Auto-refreshing.">
+<meta name="robots" content="index, follow">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="/css/tokens.css?v=20260501c">
+<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501c">
+<link rel="stylesheet" href="/css/style.css?v=20260501c">
+
+<style>
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  .status-wrap { max-width: 920px; margin: 0 auto; padding: 60px 24px; }
+  h1 { font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 0.04em; font-size: 2rem; margin: 0 0 6px; }
+  .sub { color: var(--text-dim); font-size: 0.9rem; margin: 0 0 24px; font-family: 'JetBrains Mono', monospace; }
+  .grid { display: grid; gap: 12px; grid-template-columns: 1fr; margin-top: 16px; }
+  @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface, var(--bg2));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .row .name { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em; }
+  .row .what { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-dim); margin-top: 4px; }
+  .pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 6px 12px; border-radius: 999px; font-weight: 700;
+  }
+  .pill.green { background: color-mix(in srgb, #22c55e 14%, transparent); color: #22c55e; border: 1px solid color-mix(in srgb, #22c55e 36%, transparent); }
+  .pill.amber { background: color-mix(in srgb, #f5a623 14%, transparent); color: #f5a623; border: 1px solid color-mix(in srgb, #f5a623 36%, transparent); }
+  .pill.red   { background: color-mix(in srgb, #ef4444 14%, transparent); color: #ef4444; border: 1px solid color-mix(in srgb, #ef4444 38%, transparent); }
+  .pill.muted { background: color-mix(in srgb, var(--text-dim) 12%, transparent); color: var(--text-dim); border: 1px solid color-mix(in srgb, var(--text-dim) 30%, transparent); }
+  .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-dim); margin-top: 24px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--text-dim); margin-top: 18px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot.g { background: #22c55e; }  .dot.a { background: #f5a623; }
+  .dot.r { background: #ef4444; }  .dot.m { background: var(--text-dim); }
+  a.support { color: var(--accent); text-decoration: none; }
+  a.support:hover { text-decoration: underline; }
+</style>
+</head>
+<body data-site="maverick">
+
+<div class="status-wrap">
+    <h1>System status</h1>
+    <p class="sub">Live health of the components that drive the franchise. Auto-refreshes every 60 s.</p>
+
+    <div class="grid" id="status-grid">
+        <div class="row" data-svc="scanner">
+            <div>
+                <div class="name">Scanner</div>
+                <div class="what">/api/system_pulse &middot; reads MAVERICK heartbeat</div>
+            </div>
+            <span class="pill muted" data-pill="scanner">checking</span>
+        </div>
+        <div class="row" data-svc="rpc">
+            <div>
+                <div class="name">On-chain RPC</div>
+                <div class="what">Base RPC &middot; $MAV balance reads</div>
+            </div>
+            <span class="pill muted" data-pill="rpc">checking</span>
+        </div>
+        <div class="row" data-svc="stripe">
+            <div>
+                <div class="name">Stripe webhook</div>
+                <div class="what">subscription state sync</div>
+            </div>
+            <span class="pill muted" data-pill="stripe">checking</span>
+        </div>
+        <div class="row" data-svc="kucoin">
+            <div>
+                <div class="name">KuCoin connectivity</div>
+                <div class="what">live equity + open positions</div>
+            </div>
+            <span class="pill muted" data-pill="kucoin">checking</span>
+        </div>
+        <div class="row" data-svc="shadow">
+            <div>
+                <div class="name">SHADOW cohort feed</div>
+                <div class="what">59 Hyperliquid wallets &middot; 24h fills</div>
+            </div>
+            <span class="pill muted" data-pill="shadow">checking</span>
+        </div>
+        <div class="row" data-svc="arena">
+            <div>
+                <div class="name">ARENA leaderboard</div>
+                <div class="what">63 wallet pages &middot; 6h rebuild</div>
+            </div>
+            <span class="pill muted" data-pill="arena">checking</span>
+        </div>
+    </div>
+
+    <div class="legend">
+        <span><span class="dot g"></span>operational</span>
+        <span><span class="dot a"></span>degraded</span>
+        <span><span class="dot r"></span>incident</span>
+        <span><span class="dot m"></span>checking / no data</span>
+    </div>
+
+    <p class="meta">
+        last checked <span id="last-check">&mdash;</span>
+        &middot; for incident reports email <a class="support" href="mailto:support@freedomcore.io">support@freedomcore.io</a>
+        &middot; 24 h response Mon-Fri UK
+    </p>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    const SVCS = ['scanner','rpc','stripe','kucoin','shadow','arena'];
+
+    function setPill(svc, level, label) {
+        const el = document.querySelector('[data-pill="' + svc + '"]');
+        if (!el) return;
+        el.classList.remove('green','amber','red','muted');
+        el.classList.add(level);
+        el.textContent = label;
+    }
+
+    async function check() {
+        // /api/system_pulse drives scanner + champion + ETL freshness in one call.
+        try {
+            const r = await fetch('/api/system_pulse', { cache: 'no-store' });
+            if (r.ok) {
+                const d = await r.json();
+                const fresh = (d && (d.last_mutation_seconds_ago != null || d.timestamp));
+                setPill('scanner', fresh ? 'green' : 'amber', fresh ? 'operational' : 'stale');
+            } else {
+                setPill('scanner', 'red', 'down');
+            }
+        } catch (e) { setPill('scanner', 'red', 'down'); }
+
+        // Stripe + KuCoin + shadow + arena are inferred from the same endpoint family
+        // until per-service health probes are wired.
+        try {
+            const r2 = await fetch('/api/ecosystem_stats', { cache: 'no-store' });
+            if (r2.ok) {
+                const d = await r2.json();
+                setPill('kucoin', (d && d.maverick && d.maverick.equity_usd != null) ? 'green' : 'amber', (d && d.maverick && d.maverick.equity_usd != null) ? 'operational' : 'no data');
+                setPill('shadow', (d && d.shadow && d.shadow.wallets_tracked) ? 'green' : 'amber', (d && d.shadow && d.shadow.wallets_tracked) ? 'operational' : 'no data');
+                setPill('arena',  (d && d.arena  && d.arena.wallets_indexed)   ? 'green' : 'amber', (d && d.arena  && d.arena.wallets_indexed)   ? 'operational' : 'no data');
+            } else {
+                ['kucoin','shadow','arena'].forEach(s => setPill(s, 'red', 'down'));
+            }
+        } catch (e) {
+            ['kucoin','shadow','arena'].forEach(s => setPill(s, 'red', 'down'));
+        }
+
+        // RPC + Stripe — placeholders until /api/health_rpc + /api/health_stripe land.
+        // Mark muted so the page is honest about what's not yet probed.
+        setPill('rpc',    'muted', 'check pending');
+        setPill('stripe', 'muted', 'check pending');
+
+        const now = new Date();
+        const el = document.getElementById('last-check');
+        if (el) el.textContent = now.toUTCString().replace('GMT','UTC');
+    }
+
+    check();
+    setInterval(check, 60000);
+})();
+</script>
+
+</body>
+</html>
