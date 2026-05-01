@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="/js/theme-init.js"></script>
+<script src="/js/site-ticker.js?v=20260422b" defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#060a10">
+<meta name="description" content="FreedomCore High Council. Multi-tier AI deliberation chambers. Pro and Sovereign tiers only.">
+<meta name="robots" content="noindex, nofollow">
+<title>High Council · FreedomCore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tokens.css?v=20260501h">
+<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501h">
+<link rel="stylesheet" href="/css/style.css?v=20260501h">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  .hc-wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
+  .hc-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .hc-h1 { font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 0.02em; font-size: clamp(1.6rem, 4.5vw, 2.6rem); margin: 0 0 14px; line-height: 1.2; }
+  .hc-sub { color: var(--text-dim); font-size: 1rem; line-height: 1.65; max-width: 640px; margin: 0 0 32px; }
+
+  .hc-locked {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 14px;
+    padding: 32px 28px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .hc-locked-icon { font-size: 2.4rem; line-height: 1; margin-bottom: 12px; opacity: 0.85; }
+  .hc-locked-title { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.02em; margin: 0 0 8px; color: var(--text); }
+  .hc-locked-sub { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; margin: 0 0 22px; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .hc-locked-cta {
+    display: inline-block;
+    background: #ffd700;
+    color: #0a0a0f;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: filter 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .hc-locked-cta:hover { filter: brightness(1.1); box-shadow: 0 0 22px rgba(255,215,0,0.32); transform: translateY(-1px); }
+
+  .hc-meta {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-top: 28px;
+  }
+  .hc-meta-tile {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .hc-meta-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+  .hc-meta-value { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+
+  .hc-archive {
+    margin-top: 36px; border-top: 1px solid var(--border); padding-top: 24px;
+  }
+  .hc-archive-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+  .hc-archive ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .hc-archive li {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .hc-archive-name { font-weight: 600; font-size: 0.92rem; color: var(--text); }
+  .hc-archive-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em; }
+  .hc-archive-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,215,0,0.12); color: #ffd700; border: 1px solid rgba(255,215,0,0.45); font-weight: 700;
+  }
+
+  .hc-verdict {
+    margin-top: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 28px;
+    line-height: 1.7;
+  }
+  .hc-verdict h1, .hc-verdict h2 { font-family: 'Orbitron', sans-serif; }
+  .hc-verdict h1 { font-size: 1.4rem; margin: 0 0 14px; }
+  .hc-verdict h2 { font-size: 1.1rem; margin: 28px 0 10px; color: var(--accent); letter-spacing: 0.04em; }
+  .hc-verdict p { margin: 0 0 14px; color: var(--text); font-size: 0.95rem; }
+  .hc-verdict ul, .hc-verdict ol { padding-left: 22px; }
+  .hc-verdict li { margin-bottom: 6px; }
+  .hc-verdict code { background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; }
+  .hc-verdict table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 0.88rem; }
+  .hc-verdict th, .hc-verdict td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  .hc-verdict th { background: rgba(255,215,0,0.06); }
+
+  .hc-nda {
+    margin-top: 32px;
+    background: rgba(255,215,0,0.04);
+    border: 1px solid rgba(255,215,0,0.22);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+  .hc-nda strong { color: #ffd700; }
+</style>
+</head>
+<body data-site="maverick">
+
+<div class="back-bar">
+    <a href="/">&larr; BACK TO FREEDOMCORE</a>
+</div>
+
+<div class="hc-wrap">
+    <div class="hc-eyebrow">High Council · Pro and above</div>
+    <h1 class="hc-h1">The chambers.</h1>
+    <p class="hc-sub">
+        Every strategic decision that shapes the franchise goes through a multi-tier AI council.
+        Scouts propose. The bench deliberates across rounds. A Supreme Court rules.
+        Pro and Sovereign subscribers see the verdicts.
+    </p>
+
+    <div id="hc-content"></div>
+
+    <p class="hc-nda">
+        <strong>Confidentiality:</strong> Council deliberations are operator-level intelligence.
+        Sharing screenshots or copy from this page outside your account is a breach of the access terms.
+        We log every fetch.
+    </p>
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    // Pro tier gate (mirrors signals-page.js pattern). Test override:
+    // run `localStorage.setItem('fc_pro','1')` in DevTools.
+    function isProUser() {
+        try {
+            if (window.localStorage && window.localStorage.getItem('fc_pro') === '1') return true;
+        } catch (e) {}
+        // Future: check window.mavWallet status for tier === 'pro' or 'sovereign'.
+        if (window.mavWallet && window.mavWallet.lastStatus) {
+            var s = window.mavWallet.lastStatus();
+            if (s && s.authenticated && (s.tier === 'pro' || s.tier === 'sovereign')) return true;
+        }
+        return false;
+    }
+
+    function lockedPanel() {
+        return '' +
+            '<div class="hc-locked">' +
+                '<div class="hc-locked-icon">&#128274;</div>' +
+                '<div class="hc-locked-title">Locked. Pro tier required.</div>' +
+                '<div class="hc-locked-sub">' +
+                    'The High Council chambers are reserved for Pro and Sovereign subscribers. ' +
+                    'Subscribe at FreedomCore Access to unlock the verdicts that shape the franchise.' +
+                '</div>' +
+                '<a class="hc-locked-cta" href="/pages/access.html">Get Pro access &rarr;</a>' +
+            '</div>' +
+            '<div class="hc-meta">' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Active deliberations</div><div class="hc-meta-value">1 in chambers</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Sessions to date</div><div class="hc-meta-value">15+</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Seat count</div><div class="hc-meta-value">7 frontier AI</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Avg rounds</div><div class="hc-meta-value">5 to 10</div></div>' +
+            '</div>';
+    }
+
+    function archiveList() {
+        return '' +
+            '<div class="hc-meta">' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Active deliberations</div><div class="hc-meta-value">1 in chambers</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Verdicts shipped</div><div class="hc-meta-value">12</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Seat count</div><div class="hc-meta-value">7 frontier AI</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Avg rounds</div><div class="hc-meta-value">5 to 10</div></div>' +
+            '</div>' +
+            '<div class="hc-verdict">' +
+                '<h1>Tokenomics council, in deliberation</h1>' +
+                '<p>The Supreme Court is currently sitting on the franchise tokenomics question: ticker selection, total supply, distribution table, vesting curves, cross-chain launch venue, traction playbook, utility roadmap, treasury operations, and compliance posture. Ten rounds. Seven seats. Seventy member calls.</p>' +
+                '<p style="font-family:\'JetBrains Mono\',monospace; font-size:0.78rem; color:var(--accent);">Verdict drops as soon as Round 10 synthesises. Refresh this page after the upgrade-channel ntfy fires.</p>' +
+                '<h2>Scope under deliberation</h2>' +
+                '<ul>' +
+                    '<li>R1 &middot; Token name and ticker (FCORE vs MAV vs other)</li>' +
+                    '<li>R2 &middot; Total supply and decimals</li>' +
+                    '<li>R3 &middot; Distribution table (founder, treasury, LP, public, marketing, airdrop, burn)</li>' +
+                    '<li>R4 &middot; Vesting curves and on-chain enforcement</li>' +
+                    '<li>R5 &middot; Launch chain and venue (Pump.fun stealth vs direct DEX vs LayerZero OFT)</li>' +
+                    '<li>R6 &middot; 14-day traction playbook for sub-$5M cap target</li>' +
+                    '<li>R7 &middot; Utility roadmap (consume() path, governance, soulbound NFT)</li>' +
+                    '<li>R8 &middot; Buyback mechanic and treasury transparency</li>' +
+                    '<li>R9 &middot; Compliance posture (FSMA, MiCA, SEC reach)</li>' +
+                    '<li>R10 &middot; Implementation contract and ship-ready spec</li>' +
+                '</ul>' +
+            '</div>' +
+            '<div class="hc-archive">' +
+                '<div class="hc-archive-title">Recent verdicts</div>' +
+                '<ul>' +
+                    '<li><span class="hc-archive-name">Monetisation 10R</span><span class="hc-archive-date">2026-05-01</span><span class="hc-archive-tag">Shipped</span></li>' +
+                    '<li><span class="hc-archive-name">Color coordination 5R</span><span class="hc-archive-date">2026-04-30</span><span class="hc-archive-tag">Shipped</span></li>' +
+                    '<li><span class="hc-archive-name">SHADOW filter marketing 5R</span><span class="hc-archive-date">2026-04-30</span><span class="hc-archive-tag">Shipped</span></li>' +
+                    '<li><span class="hc-archive-name">Repo integrations 4R</span><span class="hc-archive-date">2026-04-30</span><span class="hc-archive-tag">Shipped</span></li>' +
+                    '<li><span class="hc-archive-name">Growth and freedom 4R</span><span class="hc-archive-date">2026-04-30</span><span class="hc-archive-tag">Shipped</span></li>' +
+                '</ul>' +
+            '</div>';
+    }
+
+    var host = document.getElementById('hc-content');
+    if (!host) return;
+    host.innerHTML = isProUser() ? archiveList() : lockedPanel();
+})();
+</script>
+
+<script src="/js/risk-footer.js?v=20260501h" defer></script>
+</body>
+</html>

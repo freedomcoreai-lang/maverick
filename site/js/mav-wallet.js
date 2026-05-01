@@ -432,5 +432,9 @@
     window.mavWallet = {
         connect, disconnect, status, onChange, tierColor, shortAddr,
         openPicker, closePicker, detectInjectedName,
+        // Sync accessor for the cached status (used by the High Council
+        // page Pro gate to read tier without an extra round-trip).
+        lastStatus: function () { return _lastStatus; },
+        tierIsPaid,
     };
 })();
