@@ -1,5 +1,5 @@
-/* fc-shadow-rail.js — cross-site live ticker for SHADOW. 
- * Redesigned as a card mirroring the FreedomCore apex hub.
+/* fc-shadow-rail.js — cross-site live ticker for SHADOW.
+ * Matches the FreedomCore apex hub card design but narrower/shorter.
  */
 (function () {
     'use strict';
@@ -15,42 +15,54 @@
         var css = document.createElement('style');
         css.id = 'fc-shadow-rail-style';
         css.textContent = '' +
-            '.fc-shadow-card { background: linear-gradient(180deg, rgba(20,24,34,0.78), rgba(7,10,16,0.84)); border: 1px solid color-mix(in srgb, #8b5cf6 32%, transparent); border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 32px color-mix(in srgb, #8b5cf6 16%, transparent), inset 0 0 0 1px rgba(255,255,255,0.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #f5f5fa; font-family: "Inter", sans-serif; text-align: left; } ' +
-            '[data-theme="light"] .fc-shadow-card { background: linear-gradient(180deg, rgba(245,240,255,0.92), rgba(250,248,255,0.95)); border-color: rgba(109,59,204,0.4); color: #0a0a0f; box-shadow: 0 4px 16px rgba(0,0,0,0.08); } ' +
-            '.fc-shadow-card__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; } ' +
-            '.fc-shadow-card__eyebrow { font-family: "JetBrains Mono", monospace; font-size: 0.62rem; letter-spacing: 0.18em; color: #8b5cf6; text-transform: uppercase; font-weight: 700; } ' +
-            '[data-theme="light"] .fc-shadow-card__eyebrow { color: #6d3bcc; } ' +
-            '.fc-shadow-card__fresh { font-family: "JetBrains Mono", monospace; font-size: 0.55rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.6); } ' +
-            '[data-theme="light"] .fc-shadow-card__fresh { color: rgba(10,10,15,0.6); } ' +
-            '.fc-shadow-card__ticker { min-height: 28px; padding: 8px 12px; border: 1px solid color-mix(in srgb, #8b5cf6 20%, transparent); border-radius: 6px; background: rgba(0,0,0,0.36); font-family: "JetBrains Mono", monospace; font-size: 0.78rem; letter-spacing: 0.04em; color: rgba(245,245,250,0.92); display: flex; align-items: center; overflow: hidden; transition: opacity 0.3s; } ' +
-            '[data-theme="light"] .fc-shadow-card__ticker { background: rgba(255,255,255,0.78); border-color: rgba(109,59,204,0.2); color: #0a0a0f; } ' +
-            '.fc-shadow-card__ticker.fading { opacity: 0; } ' +
-            '.fc-shadow-card__tag { color: #8b5cf6; font-weight: 800; margin-right: 8px; letter-spacing: 0.10em; flex-shrink: 0; } ' +
-            '[data-theme="light"] .fc-shadow-card__tag { color: #6d3bcc; } ' +
-            '.fc-shadow-card__sym { color: #f5f5fa; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '[data-theme="light"] .fc-shadow-card__sym { color: #0a0a0f; } ' +
-            '.fc-shadow-card__side.buy { color: #22c55e; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '.fc-shadow-card__side.sell { color: #ef4444; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '.fc-shadow-card__reason { color: rgba(245,245,250,0.55); margin-right: 10px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } ' +
-            '[data-theme="light"] .fc-shadow-card__reason { color: rgba(10,10,15,0.6); } ' +
-            '.fc-shadow-card__age { color: rgba(245,245,250,0.45); white-space: nowrap; flex-shrink: 0; } ' +
-            '[data-theme="light"] .fc-shadow-card__age { color: rgba(10,10,15,0.45); } ' +
-            '.fc-shadow-card__agg { font-family: "JetBrains Mono", monospace; font-size: 0.62rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.66); text-transform: uppercase; } ' +
-            '[data-theme="light"] .fc-shadow-card__agg { color: rgba(10,10,15,0.66); } ' +
-            '.fc-shadow-card__agg .pos { color: #22c55e; font-weight: 700; } ' +
-            '.fc-shadow-card__agg .neg { color: #ef4444; font-weight: 700; } ' +
-            '@media (max-width: 640px) { .fc-shadow-card__ticker { font-size: 0.65rem; padding: 6px 8px; } .fc-shadow-card { padding: 10px 12px; } }';
+            '.fc-ticker-wrap { width: min(900px, 94%); margin: 14px auto; padding: 10px 14px; display: grid; grid-template-columns: 1fr; gap: 4px; border: 1px solid color-mix(in srgb, var(--rail-accent, #ffd700) 32%, transparent); border-radius: 8px; background: linear-gradient(90deg, color-mix(in srgb, var(--rail-accent, #ffd700) 8%, transparent), transparent 50%), linear-gradient(180deg, rgba(20, 24, 34, 0.78), rgba(7, 10, 16, 0.84)); box-shadow: 0 0 24px color-mix(in srgb, var(--rail-accent, #ffd700) 12%, transparent), inset 0 0 0 1px rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #f5f5fa; text-align: left; position: relative; z-index: 150; font-family: "Inter", sans-serif; } ' +
+            '[data-theme="light"] .fc-ticker-wrap { background: linear-gradient(90deg, color-mix(in srgb, var(--rail-accent, #b45309) 8%, transparent), transparent 50%), rgba(238,247,255,0.92); border-color: color-mix(in srgb, var(--rail-accent, #b45309) 40%, transparent); color: #0a0a0f; box-shadow: 0 4px 16px rgba(0,0,0,0.08); } ' +
+            '.fc-ticker-wrap .fc-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; } ' +
+            '.fc-ticker-wrap .fc-eyebrow { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; letter-spacing: 0.18em; color: var(--rail-accent, #ffd700); text-transform: uppercase; font-weight: 700; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-eyebrow { color: var(--rail-accent, #b45309); } ' +
+            '.fc-ticker-wrap .fc-fresh { font-family: "JetBrains Mono", monospace; font-size: 0.55rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.6); white-space: nowrap; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-fresh { color: rgba(10,10,15,0.6); } ' +
+            '.fc-ticker-wrap .fc-claim { font-size: 0.8rem; font-weight: 700; line-height: 1.3; margin: 2px 0 4px 0; } ' +
+            '.fc-ticker-wrap .fc-ticker-box { min-height: 26px; padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--rail-accent, #ffd700) 20%, transparent); border-radius: 6px; background: rgba(0,0,0,0.36); font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: 0.04em; color: rgba(245,245,250,0.92); display: flex; align-items: center; overflow: hidden; transition: opacity 0.3s; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box { background: rgba(255,255,255,0.78); border-color: color-mix(in srgb, var(--rail-accent, #b45309) 20%, transparent); color: #0a0a0f; } ' +
+            '.fc-ticker-wrap .fc-ticker-box.fading { opacity: 0; } ' +
+            '.fc-ticker-wrap .fc-ticker-box .tag { color: var(--rail-accent, #ffd700); font-weight: 800; margin-right: 8px; letter-spacing: 0.10em; flex-shrink: 0; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .tag { color: var(--rail-accent, #b45309); } ' +
+            '.fc-ticker-wrap .fc-ticker-box .sym { font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
+            '.fc-ticker-wrap .fc-ticker-box .reason { color: rgba(245,245,250,0.55); margin-right: 10px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .reason { color: rgba(10,10,15,0.6); } ' +
+            '.fc-ticker-wrap .fc-ticker-box .pnl.win { color: #22c55e; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
+            '.fc-ticker-wrap .fc-ticker-box .pnl.loss { color: #ef4444; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
+            '.fc-ticker-wrap .fc-ticker-box .age { color: rgba(245,245,250,0.45); white-space: nowrap; flex-shrink: 0; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .age { color: rgba(10,10,15,0.45); } ' +
+            '.fc-ticker-wrap .fc-agg { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.66); text-transform: uppercase; margin-top: 2px; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-agg { color: rgba(10,10,15,0.66); } ' +
+            '.fc-ticker-wrap .fc-agg .pos { color: #22c55e; font-weight: 700; } ' +
+            '.fc-ticker-wrap .fc-agg .neg { color: #ef4444; font-weight: 700; } ' +
+            '.fc-ticker-wrap .fc-cta { margin-top: 2px; justify-self: end; padding: 6px 16px; background: var(--rail-accent, #ffd700); color: #000; font-family: "Orbitron", sans-serif; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.16em; text-decoration: none; text-transform: uppercase; border-radius: 6px; box-shadow: 0 0 16px color-mix(in srgb, var(--rail-accent, #ffd700) 34%, transparent); transition: transform 0.2s, box-shadow 0.2s; display: inline-block; } ' +
+            '[data-theme="light"] .fc-ticker-wrap .fc-cta { color: #fff; background: var(--rail-accent, #b45309); } ' +
+            '.fc-ticker-wrap .fc-cta:hover { transform: translateY(-2px); box-shadow: 0 0 24px color-mix(in srgb, var(--rail-accent, #ffd700) 58%, transparent); } ' +
+            '@media (max-width: 640px) { .fc-ticker-wrap .fc-ticker-box { font-size: 0.65rem; padding: 6px 8px; } .fc-ticker-wrap { padding: 10px 12px; margin: 10px auto; } .fc-ticker-wrap .fc-cta { justify-self: stretch; text-align: center; } }';
         document.head.appendChild(css);
     }
 
-    function ensureContainer() {
-        var el = document.getElementById('fc-ticker-cards');
+    function getContainer() {
+        var el = document.getElementById('fc-global-ticker-container');
         if (el) return el;
         el = document.createElement('div');
-        el.id = 'fc-ticker-cards';
-        el.style.cssText = 'position:relative; z-index:150; max-width:680px; width:92%; margin: 20px auto 32px; display:flex; flex-direction:column; gap:16px;';
-        document.body.insertBefore(el, document.body.firstChild);
-        document.body.style.paddingTop = ''; 
+        el.id = 'fc-global-ticker-container';
+        // Add to body, right after grid-bg or nav if possible, else top of body
+        var gridBg = document.querySelector('.grid-bg');
+        if (gridBg && gridBg.nextSibling) {
+            gridBg.parentNode.insertBefore(el, gridBg.nextSibling);
+        } else {
+            var nav = document.querySelector('nav.nav');
+            if (nav && nav.nextSibling) {
+                nav.parentNode.insertBefore(el, nav.nextSibling);
+            } else {
+                document.body.insertBefore(el, document.body.firstChild);
+            }
+        }
         return el;
     }
 
@@ -64,20 +76,26 @@
 
     function buildShell() {
         var mount = document.createElement('div');
-        mount.className = 'fc-shadow-card';
+        mount.className = 'fc-ticker-wrap fc-shadow-wrap';
+        mount.style.setProperty('--rail-accent', '#8b5cf6');
+        if (document.documentElement.getAttribute('data-theme') === 'light') {
+            mount.style.setProperty('--rail-accent', '#6d3bcc');
+        }
         mount.setAttribute('role', 'region');
         mount.setAttribute('aria-label', 'Shadow live cohort feed');
         mount.innerHTML = '' +
-            '<div class="fc-shadow-card__head">' +
-                '<span class="fc-shadow-card__eyebrow">SHADOW &middot; WHALE COPY TRADER</span>' +
-                '<span class="fc-shadow-card__fresh" id="fc-shadow-rail-fresh">updated --</span>' +
+            '<div class="fc-head">' +
+                '<span class="fc-eyebrow">SHADOW &middot; WHALE COPY TRADER</span>' +
+                '<span class="fc-fresh" id="fc-shadow-rail-fresh">updated --</span>' +
             '</div>' +
-            '<div class="fc-shadow-card__ticker" id="fc-shadow-rail-ticker" aria-live="polite">' +
+            '<div class="fc-claim">Live consensus fills from top tracked wallets.</div>' +
+            '<div class="fc-ticker-box" id="fc-shadow-rail-ticker" aria-live="polite">' +
                 '<span style="color:rgba(245,245,250,0.45)">connecting&hellip;</span>' +
             '</div>' +
-            '<div class="fc-shadow-card__agg" id="fc-shadow-rail-agg">COHORT &middot; &mdash;</div>';
+            '<div class="fc-agg" id="fc-shadow-rail-agg">COHORT &middot; &mdash;</div>' +
+            '<a class="fc-cta" href="https://shadow.freedomcore.io/">OPEN SHADOW &rarr;</a>';
         
-        var container = ensureContainer();
+        var container = getContainer();
         container.appendChild(mount);
         
         els.ticker = mount.querySelector('#fc-shadow-rail-ticker');
@@ -87,13 +105,13 @@
 
     function renderRow(row) {
         if (!row) return '<span style="color:rgba(245,245,250,0.45)">awaiting cohort fire</span>';
-        var sideCls = (row.side || '').toLowerCase() === 'buy' ? 'buy' : 'sell';
+        var sideCls = (row.side || '').toLowerCase() === 'buy' ? 'win' : 'loss';
         return '' +
-            '<span class="fc-shadow-card__tag">SHD</span>' +
-            '<span class="fc-shadow-card__sym">' + (row.symbol || '--') + '</span>' +
-            '<span class="fc-shadow-card__side ' + sideCls + '">' + (row.side || '--').toUpperCase() + '</span>' +
-            '<span class="fc-shadow-card__reason">' + (row.whales || 0) + ' whales converged</span>' +
-            '<span class="fc-shadow-card__age">' + relTime(row.ts) + '</span>';
+            '<span class="tag">SHD</span>' +
+            '<span class="sym">' + (row.symbol || '--') + '</span>' +
+            '<span class="pnl ' + sideCls + '">' + (row.side || '--').toUpperCase() + '</span>' +
+            '<span class="reason">' + (row.whales || 0) + ' whales converged</span>' +
+            '<span class="age">' + relTime(row.ts) + '</span>';
     }
 
     function tick() {
@@ -107,8 +125,10 @@
         state.idx++;
     }
 
-    function renderAgg(agg) {
-        if (!agg || !els.agg) return;
+    function renderAgg() {
+        if (!els.agg) return;
+        var agg = state.agg || {};
+        
         var fills = (agg.fills_24h == null) ? '--' : agg.fills_24h.toLocaleString();
         var pct_life = agg.pct_lifetime;
         var net = '';
@@ -116,6 +136,7 @@
             var cls = pct_life >= 0 ? 'pos' : 'neg';
             net = ' &middot; LIFETIME <span class="' + cls + '">' + (pct_life >= 0 ? '+' : '') + pct_life.toFixed(2) + '%</span>';
         }
+        
         els.agg.innerHTML = 'COHORT &middot; ' + fills + ' fills/24h' + net;
         
         if (els.fresh) {
@@ -133,7 +154,7 @@
                 if (!data) return;
                 state.rows = data.rows || [];
                 state.agg = data.aggregate_today || null;
-                renderAgg(state.agg);
+                renderAgg();
                 tick();
             })
             .catch(function () { /* silent */ });
@@ -141,13 +162,13 @@
 
     function start() {
         injectStyles();
-        // Wait a tick to ensure container is fully established by Maverick rail if it loaded first
-        setTimeout(function () {
+        // Delay slightly so Maverick gets first position in container
+        setTimeout(function() {
             buildShell();
             poll();
             setInterval(poll, POLL_MS);
             if (!reduceMotion) setInterval(tick, TICK_MS);
-        }, 0);
+        }, 50);
     }
 
     if (document.readyState === 'loading') {
