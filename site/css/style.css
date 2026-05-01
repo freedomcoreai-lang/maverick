@@ -99,9 +99,52 @@ body {
 }
 [data-theme="light"] .grid-bg { opacity: 0.5; }
 
-/* Frontier card CTA → Access page */
+/* Frontier card CTA, Access page */
 .frontier-cta { transition: opacity 0.2s, letter-spacing 0.2s; }
 .frontier-cta:hover { opacity: 0.85; letter-spacing: 2px; }
+
+/* Operator 2026-05-01 — .back-bar canonical styling. Was bare default purple
+   underlined link that looked broken on every page. Now a clean monospace pill
+   that fits the site's chrome. Used on every Maverick subpage as 'BACK TO
+   FREEDOMCORE' navigation. */
+.back-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 20px 0;
+}
+.back-bar a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 7px 14px 7px 11px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.025);
+    transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.back-bar a:hover,
+.back-bar a:focus-visible {
+    color: var(--site-accent);
+    border-color: color-mix(in srgb, var(--site-accent) 50%, transparent);
+    background: color-mix(in srgb, var(--site-accent) 8%, transparent);
+    transform: translateX(-2px);
+    outline: none;
+}
+[data-theme="light"] .back-bar a {
+    background: rgba(0,0,0,0.025);
+    color: var(--text-muted, var(--text-dim));
+}
+@media (max-width: 480px) {
+    .back-bar { padding: 10px 14px 0; }
+    .back-bar a { font-size: 0.6rem; padding: 6px 12px 6px 9px; }
+}
 
 /* === NAV === */
 .nav {

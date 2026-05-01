@@ -11,8 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501f">
-    <link rel="stylesheet" href="/css/style.css?v=20260501f">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501g">
+    <link rel="stylesheet" href="/css/style.css?v=20260501g">
     <style>
         .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .ax-hero-badge {
@@ -23,13 +23,21 @@
             text-transform: uppercase; margin-bottom: 20px;
         }
         .ax-h1 {
-            font-size: clamp(1.4rem, 4.2vw, 2.6rem);
+            font-size: clamp(1.15rem, 3.4vw, 2.05rem);
             background: linear-gradient(135deg, var(--green), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px; font-weight: 900; margin-bottom: 14px;
-            line-height: 1.15;
+            letter-spacing: -0.2px; font-weight: 800; margin-bottom: 14px;
+            line-height: 1.3;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+            text-wrap: balance;
+        }
+        @media (max-width: 480px) {
+            .ax-h1 { font-size: 1.15rem; line-height: 1.4; }
+            .ax-h1 br { display: none; }
         }
         .ax-sub {
             color: var(--text); max-width: 720px; margin: 16px auto 0;
@@ -370,19 +378,21 @@
         <section class="hero" style="min-height:auto;padding-top:40px;padding-bottom:10px;margin-top:0;">
             <div class="hero-glow"></div>
             <div class="ax-hero-badge">Coverage of a live AI experiment</div>
-            <h1 class="ax-h1">FORGED BY A COUNCIL OF FRONTIER AI.<br>SCOUTS PROPOSE. THE BENCH DELIBERATES.<br>A SUPREME COURT DECIDES.<br>ADAPTING WITH EVERY MARKET BREATH.<br>WHILE YOU SLEEP, IT HUNTS.<br>WHILE YOU WAKE, IT REWRITES ITS OWN LOGIC.</h1>
+            <h1 class="ax-h1">A council of frontier AI.<br>Scouts propose. Experts debate. The court rules.<br>While you sleep, it hunts. While you wake, it evolves.</h1>
             <p class="ax-sub">
                 You are not buying yield. You are buying <b>coverage</b>. A front-row seat to watch
                 the best AI in the world rewrite its own trading logic every forty-eight hours,
                 across eighty-eight markets, with real capital on the line.
             </p>
             <div style="margin-top:24px; padding:16px 20px; background:var(--gold-bg); border:1px solid rgba(255,215,0,0.22); border-radius:12px; max-width:680px; margin-left:auto; margin-right:auto; text-align:left;">
-                <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; text-align:center;">Gemini 3.1 + Claude Opus 4.7</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.56rem; color:var(--gold); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:8px; text-align:center;">Multi-tier AI council</div>
                 <div style="color:var(--text); font-size:0.92rem; line-height:1.7;">
-                    Two of the most capable models ever built are teaming up inside MAVERICK.
-                    <b style="color:var(--gold);">Gemini 3.1</b> invents each candidate strategy. <b style="color:var(--gold);">Claude Opus 4.7</b> audits the architecture before live deployment.
+                    A federated council of frontier models sits behind every champion.
+                    <b style="color:var(--gold);">Stage A scouts</b> draft candidate strategies.
+                    <b style="color:var(--gold);">The bench</b> deliberates across rounds, surfacing edge cases and honest-physics violations.
+                    <b style="color:var(--gold);">A Supreme Court</b> synthesises the binding verdict.
                     <br><br>
-                    <span style="color:var(--text-dim); font-size:0.84rem;">Every time Google or Anthropic ships a new model, the swarm auto-upgrades the following cycle. You are always running the best AI available on Earth, not a snapshot. This is the only experiment of its kind.</span>
+                    <span style="color:var(--text-dim); font-size:0.84rem;">Every new frontier model release drops straight into chambers on the next cycle. You are not betting on one mind. You are running ten-plus of the best minds available on Earth, debating in chambers, and only the verdict touches your money.</span>
                 </div>
             </div>
             <p class="ax-sub" style="margin-top:24px;">Two ways in. Pick whichever fits.</p>
@@ -464,7 +474,7 @@
         <!-- SPECTATOR NOTE (free, no wallet, no card) -->
         <div style="text-align:center; max-width:780px; margin:32px auto 8px; padding:14px 20px; border:1px dashed var(--border); border-radius:10px; font-size:0.78rem; color:var(--text); opacity:0.85; line-height:1.6;">
             <span style="font-family:'JetBrains Mono',monospace; color:var(--green); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; font-size:0.65rem;">Tier 0 &middot; Spectator</span><br>
-            Marketing site, security audit, public roadmap and the launch story are free for everyone &mdash; no wallet, no card, no signup. Connect or subscribe below to unlock the live machine.
+            Marketing site, security audit, public roadmap and the launch story are free for everyone. No wallet, no card, no signup. Connect or subscribe below to unlock the live machine.
         </div>
 
         <!-- TIER CARDS (each links to the tier's flagship page) -->
@@ -549,7 +559,7 @@
         <div class="ax-disclaimer">
             <strong>&#9888; This is not financial advice.</strong> MAVERICK is an experimental AI
             system. It may lose money. It may crash. It may be switched off. You are paying for
-            coverage of the experiment &mdash; nothing else. Holding $MAV or subscribing grants you
+            coverage of the experiment, nothing else. Holding $MAV or subscribing grants you
             access to a software service. You receive no equity, no dividends, no share of trading
             profits, no guaranteed return. Crypto is volatile; $MAV can go to zero.
         </div>
@@ -567,7 +577,7 @@
 
             <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
                 <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">3. Refunds &amp; cancellation</summary>
-                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Monthly subscriptions: cancel anytime with one click in the Stripe portal &mdash; access continues until the end of the paid period. Annual subscriptions (when available): full refund within 14 days under EU/UK consumer rights, prorated thereafter is at our discretion. $MAV token purchases are non-refundable &mdash; they are open-market purchases, not a contract with us. Chargebacks pursued on cards used to access already-delivered signals will be disputed.</p>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">Monthly subscriptions: cancel anytime with one click in the Stripe portal. Access continues until the end of the paid period. Annual subscriptions (when available): full refund within 14 days under EU/UK consumer rights, prorated thereafter is at our discretion. $MAV token purchases are non-refundable, they are open-market purchases, not a contract with us. Chargebacks pursued on cards used to access already-delivered signals will be disputed.</p>
             </details>
 
             <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
@@ -577,7 +587,7 @@
 
             <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
                 <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">5. KuCoin trade verifiability</summary>
-                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">MAVERICK trades on a KuCoin sub-account that we operate. Closed PnL, win-rate and equity numbers shown on this site are read directly from that sub-account in 60-second cycles. We currently do not expose signed exchange trade IDs &mdash; numbers are directionally cross-referenceable against KuCoin's public price feed but are not yet individually independently auditable. KuCoin webhook integration to expose trade IDs is on the Phase-3 roadmap.</p>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">MAVERICK trades on a KuCoin sub-account that we operate. Closed PnL, win-rate and equity numbers shown on this site are read directly from that sub-account in 60-second cycles. We currently do not expose signed exchange trade IDs. Numbers are directionally cross-referenceable against KuCoin's public price feed but are not yet individually independently auditable. KuCoin webhook integration to expose trade IDs is on the Phase-3 roadmap.</p>
             </details>
 
             <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
@@ -587,7 +597,7 @@
 
             <details style="background:rgba(255,215,0,0.04); border:1px solid var(--gold-border); border-radius:8px; padding:14px 18px; margin-bottom:8px;">
                 <summary style="cursor:pointer; color:var(--text); font-weight:700; letter-spacing:0.5px;">7. Jurisdiction &amp; eligibility</summary>
-                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">FreedomCore is built and operated from the United Kingdom. The service is software &mdash; we do not custody funds, give personalised advice, or solicit US persons. By subscribing or holding $MAV you confirm that participation is lawful in your jurisdiction and that you are responsible for any local registration, tax or licensing obligations. OFAC-sanctioned countries (Cuba, Iran, North Korea, Syria, Crimea and other US-sanctioned regions) are blocked at the payment layer by Stripe. If you are unsure about your local regulations, do not proceed.</p>
+                <p style="color:var(--text-dim); font-size:0.88rem; line-height:1.6; margin:10px 0 0;">FreedomCore is built and operated from the United Kingdom. The service is software. We do not custody funds, give personalised advice, or solicit US persons. By subscribing or holding $MAV you confirm that participation is lawful in your jurisdiction and that you are responsible for any local registration, tax or licensing obligations. OFAC-sanctioned countries (Cuba, Iran, North Korea, Syria, Crimea and other US-sanctioned regions) are blocked at the payment layer by Stripe. If you are unsure about your local regulations, do not proceed.</p>
             </details>
 
             <p style="color:var(--text-dim); font-size:0.72rem; line-height:1.5; margin-top:14px; opacity:0.7;">Wording is plain-English first-draft pending UK counsel ratification. If anything contradicts your local regulator's framing, your local regulator wins.</p>

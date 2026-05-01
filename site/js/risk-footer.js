@@ -33,8 +33,8 @@
 
     box.innerHTML = '<strong style="font-weight:700; color:#fecaca;">Risk warning:</strong> ' +
         'Software service, not investment advice. You may lose all the money you put at risk. ' +
-        'Past performance does not guarantee future results. We do not custody funds or run a managed account &mdash; ' +
-        'you keep your keys, you keep your decisions. ' +
+        'Past performance does not guarantee future results. We do not custody funds or run a managed account. ' +
+        'You keep your keys, you keep your decisions. ' +
         '<a href="https://maverick.freedomcore.io/pages/access.html#disclaimers" ' +
         'style="color:#fca5a5; text-decoration:underline; font-weight:600;">Full disclaimers &rsaquo;</a>';
 
