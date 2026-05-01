@@ -1011,6 +1011,19 @@ section { position: relative; z-index: 2; padding: 100px 24px; }
 .nav { top: 21px !important; }
 body { padding-top: 22px !important; }
 
+/* Operator 2026-05-01 — Maverick has ticker + nav (no build-phase-banner)
+   so its topbar stack height is 22 (ticker) + 48 (nav) = 70 desktop, mobile 60.
+   Body padding-top default of 22 leaves any first-flow element (e.g. the FCA
+   risk warning we just added) hidden under the fixed nav. Lock the math. */
+body[data-site="maverick"] {
+    padding-top: 70px !important;
+}
+body[data-site="maverick"] .nav {
+    top: 21px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+}
+
 @media (max-width: 768px) {
     .site-ticker { height: 18px !important; }
     .site-ticker .ticker-track { line-height: 18px !important; animation-duration: 140s !important; }
@@ -1018,6 +1031,14 @@ body { padding-top: 22px !important; }
     .site-ticker .ticker-source { font-size: 0.42rem !important; padding: 0 3px !important; margin-right: 4px !important; }
     .nav { top: 17px !important; padding: 8px 12px !important; }
     body { padding-top: 18px !important; }
+    body[data-site="maverick"] {
+        padding-top: 60px !important;
+    }
+    body[data-site="maverick"] .nav {
+        top: 17px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+    }
 }
 
 /* Apr 26 v10 — three sister sites (shadow / quantum / arena) carry a build-phase

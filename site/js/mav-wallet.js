@@ -387,8 +387,14 @@
         onChange((s) => {
             if (!s) return;
             if (s.authenticated) {
-                const tier = (s.tier || 'none').toUpperCase();
-                const col = tierColor(s.tier);
+                let tier = (s.tier || 'none').toUpperCase();
+                // Operator 2026-05-01 — Sovereign tier hidden via feature flag until
+                // /pages/sovereign.html ships. Downgrade the nav badge label to PRO
+                // so we don't advertise a tier that has no surface yet. Owner wallet
+                // still has functional access; the label just matches the public ladder.
+                const sovereignLive = document.documentElement.getAttribute('data-sovereign-live') === 'true';
+                if (tier === 'SOVEREIGN' && !sovereignLive) tier = 'PRO';
+                const col = tierColor(tier === 'PRO' ? 'pro' : s.tier);
                 btn.textContent = tier === 'NONE' ? shortAddr(s.address) : tier;
                 btn.style.color = col;
                 btn.style.borderColor = col;

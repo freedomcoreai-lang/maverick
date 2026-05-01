@@ -8,9 +8,9 @@
 <meta name="robots" content="index, follow">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;800;900&display=swap">
-<link rel="stylesheet" href="/css/tokens.css?v=20260501d">
-<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501d">
-<link rel="stylesheet" href="/css/style.css?v=20260501d">
+<link rel="stylesheet" href="/css/tokens.css?v=20260501e">
+<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501e">
+<link rel="stylesheet" href="/css/style.css?v=20260501e">
 
 <style>
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
@@ -50,7 +50,7 @@
 
 <div class="status-wrap">
     <h1>System status</h1>
-    <p class="sub">Live health of the components that drive the franchise. Auto-refreshes every 60 s.</p>
+    <p class="sub">Operator-monitored components that drive the franchise. Public auto-probing pending — health currently watched via internal dashboards 24/7.</p>
 
     <div class="grid" id="status-grid">
         <div class="row" data-svc="scanner">
@@ -114,8 +114,12 @@
 <script>
 (function() {
     'use strict';
-    const SVCS = ['scanner','rpc','stripe','kucoin','shadow','arena'];
-
+    // Operator 2026-05-01 — pills muted until public /api/health endpoint ships.
+    // The internal /api/system_pulse + /api/ecosystem_stats endpoints are
+    // X-API-Key gated server-side and we won't expose the key in client JS.
+    // For incidents, email support@freedomcore.io. Internal monitoring is
+    // active 24/7 via the operator dashboards.
+    const ROWS = ['scanner','rpc','stripe','kucoin','shadow','arena'];
     function setPill(svc, level, label) {
         const el = document.querySelector('[data-pill="' + svc + '"]');
         if (!el) return;
@@ -123,48 +127,10 @@
         el.classList.add(level);
         el.textContent = label;
     }
-
-    async function check() {
-        // /api/system_pulse drives scanner + champion + ETL freshness in one call.
-        try {
-            const r = await fetch('/api/system_pulse', { cache: 'no-store' });
-            if (r.ok) {
-                const d = await r.json();
-                const fresh = (d && (d.last_mutation_seconds_ago != null || d.timestamp));
-                setPill('scanner', fresh ? 'green' : 'amber', fresh ? 'operational' : 'stale');
-            } else {
-                setPill('scanner', 'red', 'down');
-            }
-        } catch (e) { setPill('scanner', 'red', 'down'); }
-
-        // Stripe + KuCoin + shadow + arena are inferred from the same endpoint family
-        // until per-service health probes are wired.
-        try {
-            const r2 = await fetch('/api/ecosystem_stats', { cache: 'no-store' });
-            if (r2.ok) {
-                const d = await r2.json();
-                setPill('kucoin', (d && d.maverick && d.maverick.equity_usd != null) ? 'green' : 'amber', (d && d.maverick && d.maverick.equity_usd != null) ? 'operational' : 'no data');
-                setPill('shadow', (d && d.shadow && d.shadow.wallets_tracked) ? 'green' : 'amber', (d && d.shadow && d.shadow.wallets_tracked) ? 'operational' : 'no data');
-                setPill('arena',  (d && d.arena  && d.arena.wallets_indexed)   ? 'green' : 'amber', (d && d.arena  && d.arena.wallets_indexed)   ? 'operational' : 'no data');
-            } else {
-                ['kucoin','shadow','arena'].forEach(s => setPill(s, 'red', 'down'));
-            }
-        } catch (e) {
-            ['kucoin','shadow','arena'].forEach(s => setPill(s, 'red', 'down'));
-        }
-
-        // RPC + Stripe — placeholders until /api/health_rpc + /api/health_stripe land.
-        // Mark muted so the page is honest about what's not yet probed.
-        setPill('rpc',    'muted', 'check pending');
-        setPill('stripe', 'muted', 'check pending');
-
-        const now = new Date();
-        const el = document.getElementById('last-check');
-        if (el) el.textContent = now.toUTCString().replace('GMT','UTC');
-    }
-
-    check();
-    setInterval(check, 60000);
+    ROWS.forEach(s => setPill(s, 'muted', 'monitor only'));
+    const now = new Date();
+    const el = document.getElementById('last-check');
+    if (el) el.textContent = now.toUTCString().replace('GMT','UTC') + ' (page render)';
 })();
 </script>
 
