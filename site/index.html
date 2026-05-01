@@ -1,988 +1,1721 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <script src="/js/theme-init.js"></script>
-    <script src="/js/site-ticker.js?v=20260422b" defer></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0b0b0f">
-    <meta name="description" content="FreedomCore - MAVERICK Autonomous AI Trading System. 7 AI agents. 88 markets. Self evolving DNA.">
-    <meta property="og:title" content="MAVERICK · the AI that writes its own trading code">
-    <meta property="og:description" content="Self-evolving strategies. 88 perps. Live on KuCoin. Built solo from a phone.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://maverick.freedomcore.io/">
-    <meta property="og:image" content="https://freedomcore.io/img/og/maverick.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://freedomcore.io/img/og/maverick.png">
-    <title>FreedomCore | MAVERICK Autonomous Trading</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-    <link rel="stylesheet" href="/css/style.css?v=20260501j">
-<!-- FC-SCHEMA-START · SoftwareApplication for MAVERICK -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"MAVERICK by FreedomCore","applicationCategory":"FinanceApplication","operatingSystem":"Web","url":"https://maverick.freedomcore.io/","description":"Autonomous AI perpetual-futures trader on KuCoin. Multi-LLM swarm evolves and crowns champion strategies live. Trinity Cascade runs Platinum, Gold, Silver champions in parallel with shared risk envelope.","publisher":{"@type":"Organization","name":"FreedomCore","url":"https://freedomcore.io/"},"offers":{"@type":"Offer","priceCurrency":"USD","price":"29","url":"https://maverick.freedomcore.io/pages/access.html"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"FreedomCore MAVERICK","url":"https://maverick.freedomcore.io/","publisher":{"@type":"Organization","name":"FreedomCore","url":"https://freedomcore.io/"}}</script>
+<meta charset="UTF-8">
+<script src="/js/theme-init.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="description" content="FreedomCore — the ultimate intelligent trading suite. Maverick AI trading, Shadow whale copy trading, Arena leaderboard intelligence, and Quantum AI web design.">
+<meta property="og:title" content="FreedomCore — autonomous trading intelligence">
+<meta property="og:description" content="Maverick trades. Shadow follows the best. Arena ranks the field. Quantum designs and converts. One FreedomCore suite.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freedomcore.io/">
+<meta property="og:image" content="https://freedomcore.io/img/og/freedomcore.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://freedomcore.io/img/og/freedomcore.png">
+<link rel="canonical" href="https://freedomcore.io/">
+<title>FreedomCore — Ultimate Intelligent Trading Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tokens.css?v=20260501r">
+<link rel="stylesheet" href="/css/components.css?v=20260501r">
+<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501r">
+    <link rel="stylesheet" href="/css/style.css?v=20260501r">
+<style>
+  /* ─── HUB-specific styles ─────────────────────────────────────────────
+     Built on the existing FreedomCore design system — tokens.css + style.css
+     do the chrome. These rules are HUB-specific only. */
+
+  .hub-eye { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+
+  .hub-title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-size: clamp(2.6rem, 8vw, 6rem); font-weight: 900;
+    letter-spacing: 0.04em; line-height: 0.95; margin-bottom: 16px;
+    background: linear-gradient(135deg, #c5e8ff 0%, var(--blue) 50%, #1e6fb3 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+  }
+  .hub-sub {
+    font-family: 'Orbitron', sans-serif; font-weight: 600;
+    letter-spacing: 0.18em; font-size: clamp(0.78rem, 1.8vw, 0.95rem);
+    color: var(--text-dim); text-transform: uppercase; max-width: 720px; margin: 0 auto 26px;
+  }
+  .hub-sub b { color: var(--blue); font-weight: 800; }
+  .hub-desc { color: var(--text-dim); font-size: 1rem; line-height: 1.75; max-width: 640px; margin: 0 auto 30px; }
+  .hub-desc b { color: var(--text); font-weight: 800; }
+  .hub-hero {
+    width: min(1180px, calc(100vw - 32px));
+    max-width: none;
+    /* No min-height + no vertical-centering — content sits at top with
+       natural flow. Was causing 100vh dead space above the title.
+       PR1 follow-up · 2026-04-30: top padding 18 → 4 px so the wordmark
+       sits directly under the nav neon line, not floating in dead space. */
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 44px;
+    text-align: center;
+  }
+  .suite-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: min(680px, calc(100svh - 152px));
+    border: 1px solid rgba(62,168,245,0.24);
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 50% 16%, color-mix(in srgb, var(--site-accent) 28%, transparent), transparent 28%),
+      linear-gradient(135deg, #07111d, #0a0a0f 48%, #0f1728);
+    background-size: cover, cover;
+    background-position: center;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.48);
+    max-width: 100%;
+  }
+  /* Stacked hero — wordmark TOP, video right under, mav-rail beneath, cards last */
+  .hero-writing {
+    text-align: center;
+    margin: 0 auto 16px;       /* was 32px — tighten gap to video */
+    padding: 0 16px;           /* was 24px 16px 0 — drop top pad, wordmark hugs the nav */
+  }
+
+  /* ─── MAVERICK LIVE RAIL — broker proof, swarm-designed ─── */
+  /* PR1 follow-up · 2026-04-30: mav-rail rebuilt as a skeleton-key widget.
+     Border, glow and accent text now read from --site-accent so the same
+     widget paints gold on Hub, gold on Maverick, violet on Shadow, etc.
+     Gradient shifted to the soft tier so the box doesn't fight the video. */
+  .mav-rail {
+    width: min(1180px, calc(100% - 24px));
+    margin: 12px auto 28px;
+    padding: 14px 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    border: 1px solid color-mix(in srgb, var(--site-accent) 32%, transparent);
+    border-radius: 10px;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--site-accent) 8%, transparent), transparent 50%),
+      linear-gradient(180deg, rgba(20, 24, 34, 0.78), rgba(7, 10, 16, 0.84));
+    box-shadow: 0 0 32px color-mix(in srgb, var(--site-accent) 16%, transparent),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    color: var(--text-primary);
+    text-align: left;
+  }
+  .mav-rail__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .mav-rail__eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; color: var(--site-accent); text-transform: uppercase; font-weight: 700; }
+  .mav-rail__fresh { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.6); white-space: nowrap; }
+  .mav-rail__claim { font-family: 'Inter', sans-serif; font-size: clamp(0.85rem, 1.7vw, 1rem); font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .mav-rail__ticker { min-height: 28px; padding: 8px 12px; border: 1px solid color-mix(in srgb, var(--site-accent) 20%, transparent); border-radius: 6px; background: rgba(0,0,0,0.36); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.04em; color: rgba(245,245,250,0.92); display: flex; align-items: center; overflow: hidden; transition: opacity 0.3s; }
+  .mav-rail__ticker.fading { opacity: 0; }
+  .mav-rail__ticker .tag { color: var(--site-accent); font-weight: 800; margin-right: 8px; letter-spacing: 0.10em; }
+  .mav-rail__ticker .tag.PLATINUM { color: #c0c8d4; }
+  .mav-rail__ticker .tag.GOLD { color: var(--gold); }
+  .mav-rail__ticker .tag.SILVER { color: var(--purple); }
+  .mav-rail__ticker .sym { color: #f5f5fa; font-weight: 700; margin-right: 8px; }
+  .mav-rail__ticker .reason { color: rgba(245,245,250,0.55); margin-right: 10px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .mav-rail__ticker .pnl.win { color: #22c55e; font-weight: 700; margin-right: 8px; }
+  .mav-rail__ticker .pnl.loss { color: #ef4444; font-weight: 700; margin-right: 8px; }
+  .mav-rail__ticker .age { color: rgba(245,245,250,0.45); white-space: nowrap; }
+  .mav-rail__loading { color: rgba(245,245,250,0.45); }
+  .mav-rail__agg { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.66); text-transform: uppercase; }
+  .mav-rail__agg .agg-w { color: #22c55e; font-weight: 700; }
+  .mav-rail__agg .agg-l { color: #ef4444; font-weight: 700; }
+  .mav-rail__cta { margin-top: 6px; justify-self: end; padding: 10px 22px; background: var(--site-accent); color: var(--text-on-accent); font-family: 'Orbitron', sans-serif; font-size: 0.78rem; font-weight: 900; letter-spacing: 0.16em; text-decoration: none; text-transform: uppercase; border-radius: 6px; box-shadow: 0 0 22px color-mix(in srgb, var(--site-accent) 34%, transparent); transition: transform 0.2s, box-shadow 0.2s; }
+  .mav-rail__cta:hover { transform: translateY(-2px); box-shadow: 0 0 32px color-mix(in srgb, var(--site-accent) 58%, transparent); }
+  [data-theme="light"] .mav-rail { background: linear-gradient(90deg, rgba(62,168,245,0.10), transparent 50%), rgba(238,247,255,0.92); border-color: rgba(30,127,196,0.40); color: var(--text-primary); }
+  [data-theme="light"] .mav-rail__claim { color: #18130a; }
+  [data-theme="light"] .mav-rail__ticker { background: rgba(255,255,255,0.78); color: #18130a; }
+  [data-theme="light"] .mav-rail__ticker .reason { color: rgba(24,19,10,0.55); }
+  [data-theme="light"] .mav-rail__ticker .age { color: rgba(24,19,10,0.40); }
+  [data-theme="light"] .mav-rail__agg { color: rgba(24,19,10,0.66); }
+  [data-theme="light"] .mav-rail__fresh { color: rgba(24,19,10,0.55); }
+  @media (max-width: 759px) {
+    .mav-rail { padding: 12px 12px 14px; gap: 4px; }
+    .mav-rail__claim { font-size: 0.78rem; }
+    .mav-rail__ticker { font-size: 0.66rem; padding: 6px 8px; }
+    .mav-rail__cta { width: 100%; text-align: center; justify-self: stretch; }
+  }
+  @media (prefers-reduced-motion: reduce) { .mav-rail__ticker { transition: none !important; } }
+
+  /* ─── FREEDOMCORE — fast 3D drop-in, cobalt pulse (Rob's spec 2026-04-28) ─── */
+  .fc-hero-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 8px 0 12px;
+    text-align: center;
+    perspective: 1000px;
+  }
+  .fc-3d-text {
+    margin: 0 auto;
+    display: inline-flex;
+    gap: 2px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .fc-letter {
+    font-family: 'Orbitron', sans-serif;
+    /* Viewport-fitted: scales smoothly so "FREEDOMCORE" never overflows
+       on small screens. ~7vw means 11 letters * 7vw * 0.8 char-width ≈ 60vw
+       leaving comfortable margins on every viewport from 320px up. */
+    font-size: clamp(1.6rem, 7vw, 5.5rem);
+    font-weight: 900;
+    color: #a4b5c4;                       /* metallic steel base */
+    text-transform: uppercase;
+    opacity: 0;
+    /* Hardware-accelerated transforms only — fast load */
+    transform: translateY(-40px) translateZ(-100px) rotateX(25deg);
+    animation:
+      fc-drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+      fc-pulse 4s infinite alternate 1.5s;
+    text-shadow:
+      0 1px 0 #001a33,
+      0 2px 0 #001122,
+      0 3px 0 #000a14;
+  }
+  @keyframes fc-drop-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) translateZ(0) rotateX(0deg) scale(1);
+    }
+  }
+  /* Deep cobalt / sapphire blue pulse */
+  @keyframes fc-pulse {
+    0% {
+      color: #a4b5c4;
+      text-shadow:
+        0 1px 0 #001a33, 0 2px 0 #001122, 0 3px 0 #000a14,
+        0 0 10px rgba(0, 60, 130, 0.2),
+        0 10px 20px rgba(0, 60, 130, 0.1);
+    }
+    100% {
+      color: #cddbe8;
+      text-shadow:
+        0 1px 0 #002244, 0 2px 0 #001833, 0 3px 0 #000f22,
+        0 0 15px rgba(0, 90, 200, 0.5),
+        0 15px 30px rgba(0, 90, 200, 0.3);
+    }
+  }
+  /* Mobile: extra-tight scaling so the 11-letter wordmark never overflows */
+  @media (max-width: 768px) { .fc-letter { font-size: clamp(1.4rem, 6.8vw, 3rem); } }
+  /* Belt-and-braces: ensure the wordmark never grows past the viewport */
+  .fc-3d-text { max-width: 100%; }
+  /* Day-mode: switch metallic steel for darker brand-blue so it stays legible on white.
+     Uses a separate @keyframes name so the pulse colour palette flips correctly. */
+  [data-theme="light"] .fc-letter {
+    color: #1e3a8a;
+    text-shadow:
+      0 1px 0 #93c5fd,
+      0 2px 0 #7eb6f9,
+      0 3px 0 #5497ee;
+    animation:
+      fc-drop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+      fc-pulse-light 4s infinite alternate 1.5s;
+  }
+  @keyframes fc-pulse-light {
+    0% {
+      color: #1e3a8a;
+      text-shadow:
+        0 1px 0 #93c5fd, 0 2px 0 #7eb6f9, 0 3px 0 #5497ee,
+        0 0 10px rgba(30, 58, 138, 0.18),
+        0 10px 20px rgba(30, 58, 138, 0.10);
+    }
+    100% {
+      color: #2563eb;
+      text-shadow:
+        0 1px 0 #b6d7ff, 0 2px 0 #92c1fa, 0 3px 0 #5497ee,
+        0 0 15px rgba(37, 99, 235, 0.40),
+        0 15px 30px rgba(37, 99, 235, 0.22);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fc-letter {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+
+  .hero-video-frame {
+    /* Break out of the capped .hub-section container — fill full viewport width */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 8px;
+    margin-bottom: 36px;
+    height: clamp(260px, 52vh, 640px);
+    overflow: hidden;
+    background: var(--bg-elevated, #0a0a0f);
+    border-top: 1px solid color-mix(in srgb, var(--site-accent) 26%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--site-accent) 26%, transparent);
+    box-shadow: 0 18px 60px rgba(0,0,0,0.42);
+  }
+  .hero-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.92) saturate(0.95);
+  }
+
+  /* ─── DAY MODE OVERRIDES ───────────────────────────────────────
+     The hub-specific blocks above hardcode dark surfaces. Token-based
+     colours flip automatically; these add explicit overrides for the
+     hub-only classes that ship dark gradients. */
+  [data-theme="light"] .suite-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,245,250,0.92));
+    border-color: rgba(10,10,15,0.12);
+    color: var(--text-primary);
+    box-shadow: inset 0 0 0 1px rgba(10,10,15,0.04), 0 12px 32px rgba(10,10,15,0.08);
+  }
+  [data-theme="light"] .suite-card-name { color: var(--text-primary); }
+  [data-theme="light"] .suite-card-line { color: rgba(10,10,15,0.78); }
+  [data-theme="light"] .suite-card-role { color: rgba(75,85,99,0.85); }
+  [data-theme="light"] .suite-card-mark { background: rgba(245,245,250,0.85); }
+
+  [data-theme="light"] .suite-strip {
+    background: rgba(10,10,15,0.10);
+    border-color: rgba(10,10,15,0.10);
+  }
+  [data-theme="light"] .suite-strip span {
+    background: rgba(255,255,255,0.92);
+    color: rgba(10,10,15,0.72);
+  }
+
+  [data-theme="light"] .hero-video-frame {
+    background: var(--bg-elevated, #ffffff);
+    border-color: rgba(10,10,15,0.14);
+    box-shadow: 0 18px 60px rgba(10,10,15,0.10);
+  }
+  [data-theme="light"] .hub-hero { color: var(--text-primary); }
+  [data-theme="light"] .suite-title { color: var(--text-primary); text-shadow: none; }
+  [data-theme="light"] .suite-subtitle { color: var(--text-primary); text-shadow: none; }
+  [data-theme="light"] .suite-kicker { color: color-mix(in srgb, var(--site-accent) 85%, transparent); text-shadow: none; }
+
+  /* STACK rows go dark grey in light mode without these — fix L1-L5 visibility */
+  [data-theme="light"] .stack-row {
+    background: rgba(255,255,255,0.92);
+    border-color: rgba(10,10,15,0.12);
+    color: var(--text-primary);
+  }
+  [data-theme="light"] .stack-row.flagship {
+    background: color-mix(in srgb, var(--site-accent) 6%, transparent);
+    border-color: color-mix(in srgb, var(--site-accent) 45%, transparent);
+  }
+  [data-theme="light"] .stack-row:hover { border-color: color-mix(in srgb, var(--site-accent) 60%, transparent); }
+  [data-theme="light"] .stack-tier { color: rgba(75,85,99,0.85); }
+  [data-theme="light"] .stack-role { color: rgba(75,85,99,0.85); }
+  .suite-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(62,168,245,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(62,168,245,0.08) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .suite-hero::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 42%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(103,232,249,0.9), rgba(62,168,245,0));
+    box-shadow: 0 0 32px rgba(62,168,245,0.85);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .suite-hero-inner {
+    position: relative;
+    z-index: 2;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(24px, 5vw, 58px);
+  }
+  .suite-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.62rem, 1.5vw, 0.82rem);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #9bdcff;
+    text-shadow: 0 0 18px rgba(62,168,245,0.55);
+  }
+  .suite-title {
+    margin-top: 10px;
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-size: clamp(2.8rem, 9vw, 6.2rem);
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 0.88;
+    color: #e8f6ff;
+    text-transform: uppercase;
+    text-shadow:
+      0 2px 0 rgba(255,255,255,0.22),
+      0 0 30px rgba(62,168,245,0.38),
+      0 12px 42px rgba(0,0,0,0.8);
+  }
+  .suite-subtitle {
+    margin: 18px auto 0;
+    max-width: 880px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.82rem, 2.1vw, 1.35rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 18px rgba(0,0,0,0.75);
+  }
+  .suite-copy {
+    max-width: 780px;
+    margin: 16px auto 0;
+    color: rgba(245,245,250,0.78);
+    font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+    line-height: 1.55;
+  }
+  .suite-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 1040px;
+    margin: clamp(24px, 4vw, 44px) auto 0;
+  }
+  @media (min-width: 760px) { .suite-card-grid { grid-template-columns: repeat(4, 1fr); } }
+  .suite-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 170px;
+    padding: 18px 16px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(20,24,34,0.78), rgba(7,10,16,0.78));
+    backdrop-filter: blur(12px);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 18px 48px rgba(0,0,0,0.34);
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .suite-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--suite-color);
+    box-shadow: 0 0 36px var(--suite-glow), 0 20px 54px rgba(0,0,0,0.46);
+  }
+  .suite-card-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+    border: 1px solid var(--suite-color);
+    border-radius: 10px;
+    color: var(--suite-color);
+    background: rgba(8,14,24,0.55);
+    box-shadow: 0 0 20px var(--suite-glow);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.24rem;
+  }
+  .suite-card-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1rem, 2vw, 1.28rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .suite-card-role {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,245,250,0.72);
+  }
+  .suite-card-line {
+    margin-top: 12px;
+    color: rgba(245,245,250,0.92);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .suite-card-line b {
+    display: block;
+    color: var(--suite-color);
+    font-weight: 800;
+  }
+  .suite-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .suite-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    width: min(860px, 100%);
+    margin: 18px auto 0;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.12);
+  }
+  .suite-strip span {
+    padding: 10px 8px;
+    background: rgba(6,10,16,0.62);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,245,250,0.78);
+  }
+  .bottom-poster-link {
+    display: block;
+    max-width: 1180px;
+    margin: 0 auto;
+    border: 1px solid rgba(62,168,245,0.26);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 90px rgba(0,0,0,0.48);
+    text-decoration: none;
+  }
+  .preview-frame {
+    max-width: 1180px;
+    margin: 0 auto;
+    border: 1px solid rgba(62,168,245,0.26);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.42);
+    background: #0a0a0f;
+    aspect-ratio: 672 / 448;
+  }
+  .preview-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bottom-poster-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+  }
+  .bottom-poster-link:hover { box-shadow: 0 30px 110px rgba(62,168,245,0.32); }
+  .bottom-poster-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(6,10,16,0.08), rgba(6,10,16,0.82)),
+      radial-gradient(circle at 50% 12%, rgba(62,168,245,0.4), transparent 26%);
+  }
+  .bottom-poster-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.1rem, 7vw, 5.4rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    line-height: 0.95;
+    color: #eef8ff;
+    text-transform: uppercase;
+    text-shadow: 0 0 32px rgba(62,168,245,0.45), 0 14px 48px rgba(0,0,0,0.8);
+  }
+  .bottom-poster-sub {
+    margin-top: 14px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.78rem, 2.4vw, 1.4rem);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .mobile-title-break { display: none; }
+  @media (max-width: 759px) {
+    /* Tighten section + hero padding on mobile — was leaving a 100+ px gap
+       below the nav before any content. */
+    .hub-section { padding: 18px 14px; }
+    .hub-hero {
+      width: 100%;
+      min-height: auto;
+      padding: 8px 0 24px;
+    }
+    .hero-writing {
+      padding: 0 8px;
+      margin-bottom: 18px;
+    }
+    /* Mobile video — use the source's natural 672:448 ratio so nothing is
+       cropped. The desktop breakout (height: 52vh) cropped half on phones. */
+    .hero-video-frame {
+      height: auto;
+      aspect-ratio: 672 / 448;
+    }
+    .suite-hero {
+      min-height: auto;
+      border-radius: 10px;
+      background-position: center top;
+    }
+    .suite-hero-inner {
+      padding: 28px 14px 20px;
+      min-height: auto;
+    }
+    .suite-kicker {
+      font-size: 0.58rem;
+      letter-spacing: 0.24em;
+    }
+    .suite-title {
+      font-size: clamp(1.65rem, 8.4vw, 2.1rem);
+      line-height: 1.02;
+      letter-spacing: 0;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+    .mobile-title-break { display: block; }
+    .desktop-title-space { display: none; }
+    .suite-subtitle {
+      margin-top: 12px;
+      max-width: 300px;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      line-height: 1.45;
+    }
+    .suite-copy {
+      margin-top: 10px;
+      font-size: 0.84rem;
+      line-height: 1.48;
+      display: none;
+    }
+    .suite-strip {
+      display: none;
+    }
+    .suite-card-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .suite-card {
+      min-height: 142px;
+      padding: 14px 10px;
+    }
+    .suite-card-mark {
+      width: 34px;
+      height: 34px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .suite-card-name {
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+    .suite-card-role {
+      font-size: 0.48rem;
+      letter-spacing: 0.08em;
+      line-height: 1.35;
+    }
+    .suite-card-line {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+    .suite-actions {
+      margin-top: 18px;
+    }
+    .suite-actions .cta-primary,
+    .suite-actions .cta-secondary {
+      width: 100%;
+      justify-content: center;
+      padding: 12px 16px;
+      font-size: 0.62rem;
+    }
+    .core-wrap {
+      margin-top: 34px;
+    }
+    .bottom-poster {
+      border-radius: 10px;
+      min-height: 360px;
+      background-position: center;
+    }
+    .bottom-poster-fallback {
+      padding: 24px 14px;
+    }
+  }
+  @media (max-width: 360px) {
+    .suite-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ─── INTERACTIVE FUSION CORE ────────────────────────────────────
+     A draggable solar-system: tilted decorative rings (background depth),
+     a central FREEDOMCORE orb, and 4 named clickable nodes that orbit
+     it. JS handles rotation + drag-to-spin. CSS handles visuals only. */
+  .core-wrap {
+    position: relative; margin: 56px auto 24px;
+    width: clamp(300px, 70vw, 540px); height: clamp(300px, 70vw, 540px);
+    perspective: 1300px;
+    user-select: none; -webkit-user-select: none;
+    cursor: grab;
+    touch-action: none;
+  }
+  .core-wrap.is-dragging { cursor: grabbing; }
+
+  /* Halo glow — toned: deep steel-blue, no longer dominant */
+  .core-halo {
+    position: absolute; inset: -8%; border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--site-accent) 22%, transparent), color-mix(in srgb, var(--site-accent) 8%, transparent) 55%, transparent 75%);
+    filter: blur(56px);
+    pointer-events: none;
+  }
+
+  /* Tilted decorative ring stack — background depth illusion */
+  .core-plane {
+    position: absolute; inset: 0; transform-style: preserve-3d;
+    transform: rotateX(62deg);
+    pointer-events: none;
+  }
+  .core-ring { position: absolute; inset: 0; }
+  /* Rotations disabled 2026-04-27 — desktop "pulsing" complaint. Static rings
+     still give the orbital depth without inducing motion fatigue. */
+  .core-ring--outer { /* animation: core-spin 30s linear infinite; */ }
+  .core-ring--mid   { /* animation: core-spin 20s linear infinite reverse; */ }
+  .core-ring--inner { /* animation: core-spin 15s linear infinite; */ }
+  .core-ring--track { opacity: 0.45; }
+  .core-ring svg { width: 100%; height: 100%; display: block; }
+
+  /* Field lines — straight cyan lines from center outward, faint, behind nodes */
+  .core-fieldlines {
+    position: absolute; inset: 0; pointer-events: none;
+    transform: rotate(var(--rot, 0deg));
+    will-change: transform;
+  }
+  .core-fieldline {
+    position: absolute; left: 50%; top: 50%;
+    width: 1px; height: 44%;
+    transform-origin: 0 0;
+    background: linear-gradient(to top, transparent, color-mix(in srgb, var(--site-accent) 10%, transparent) 50%, transparent);
+  }
+
+  /* Central orb — FREEDOMCORE */
+  /* Central FREEDOMCORE sphere — radial gradient now reads --site-accent
+     so the master orb tints to the active site (gold on Hub/Maverick,
+     violet on Shadow, cyan on Quantum, silver on Arena). White core
+     specular kept for the lit-from-within sphere illusion. */
+  .core-orb {
+    position: absolute; left: 50%; top: 50%;
+    width: clamp(110px, 26%, 160px); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(closest-side,
+        rgba(255,255,255,0.85),
+        color-mix(in srgb, var(--site-accent) 65%, white 35%) 18%,
+        color-mix(in srgb, var(--site-accent) 90%, black 10%) 50%,
+        color-mix(in srgb, var(--site-accent) 70%, black 30%) 75%,
+        rgba(2,8,23,0.95));
+    box-shadow:
+      0 0 36px 6px color-mix(in srgb, var(--site-accent) 34%, transparent),
+      0 0 0 1.5px color-mix(in srgb, var(--site-accent) 40%, transparent),
+      inset 0 0 20px color-mix(in srgb, var(--site-accent) 45%, transparent),
+      inset 0 0 6px rgba(255,255,255,0.45);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .core-orb::before { /* specular highlight */
+    content: ''; position: absolute; left: 26%; top: 22%; width: 30%; height: 22%;
+    border-radius: 50%; background: rgba(255,255,255,0.55); filter: blur(3px);
+  }
+  .core-orb::after { /* dim ring just outside orb */
+    content: ''; position: absolute; inset: -14%; border-radius: 50%;
+    border: 1px dashed color-mix(in srgb, var(--site-accent) 25%, transparent);
+  }
+
+  /* Center orb label — FREEDOMCORE, floats over the orb */
+  .core-orb-label {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4; pointer-events: none;
+    text-align: center;
+    text-shadow: 0 1px 8px rgba(2,8,23,0.85), 0 0 20px rgba(165,243,252,0.5);
+  }
+  .core-orb-eye {
+    display: block;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.5rem;
+    letter-spacing: 0.32em; color: rgba(255,255,255,0.85); text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .core-orb-name {
+    display: block;
+    font-family: 'Orbitron', sans-serif; font-weight: 900;
+    font-size: clamp(0.7rem, 1.6vw, 0.9rem); letter-spacing: 0.18em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  /* Interactive orbiter layer — flat, JS-controlled rotation, draggable.
+     Each .core-node is positioned via JS using polar coords — keeps labels
+     upright regardless of orbit rotation. */
+  .core-orbiters {
+    position: absolute; inset: 0;
+    z-index: 5;
+    pointer-events: none; /* nodes themselves opt back in */
+  }
+
+  .core-node {
+    position: absolute;
+    /* JS sets left + top in % */
+    transform: translate(-50%, -50%);
+    width: clamp(66px, 14.5%, 88px); aspect-ratio: 1;
+    background-color: rgba(2, 8, 23, 0.92);
+    border: 2px solid var(--node-color);
+    border-radius: 50%;
+    box-shadow:
+      0 0 22px var(--node-glow),
+      inset 0 0 14px rgba(255,255,255,0.10);
+    text-decoration: none;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: scale 0.25s ease-out, box-shadow 0.25s ease-out;
+    will-change: left, top, scale;
+    overflow: hidden;
+  }
+  .core-node:hover, .core-node:focus-visible {
+    scale: 1.15;
+    box-shadow:
+      0 0 36px var(--node-color),
+      0 0 12px rgba(255,255,255,0.35),
+      inset 0 0 14px rgba(255,255,255,0.32);
+    outline: none;
+  }
+  /* Brand orb artwork — fills the entire node circle. */
+  .core-node__img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    pointer-events: none;
+    display: block;
+    z-index: 1;
+  }
+  .core-node-mark { display: none; }   /* artwork carries the letter — kill duplicate */
+  /* Brand-name caption — sits at the bottom of the orb on a dark gradient
+     so the name is always readable, no hover required. */
+  .core-node-tag {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    z-index: 2; pointer-events: none;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.20em; color: #fff; text-transform: uppercase;
+    text-align: center;
+    padding: 18px 4px 8px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.85);
+  }
+  /* Floating tooltip — appears under the node on hover/focus */
+  .core-node-label {
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px; border-radius: 999px;
+    background: rgba(8,14,24,0.92); border: 1px solid var(--node-color);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.28em; color: var(--node-color); text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+    box-shadow: 0 0 14px var(--node-glow);
+  }
+  .core-node:hover .core-node-label,
+  .core-node:focus-visible .core-node-label { opacity: 1; }
+
+  /* Hint underneath the core */
+  .core-hint {
+    position: absolute; bottom: -28px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.32em; color: var(--text-dim); text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  @keyframes core-spin { to { transform: rotate(360deg); } }
+  @keyframes core-breath { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.85; } }
+  @keyframes core-pulse  { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.05); } }
+  @media (prefers-reduced-motion: reduce) {
+    .core-halo, .core-orb, .core-orb::after, .core-ring { animation: none !important; }
+  }
+
+  /* ─── MODULE GRID ───────────────────────────────────────────────── */
+  .modules-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 720px)  { .modules-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .modules-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .module-card {
+    position: relative; display: block; padding: 22px 22px 26px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; text-decoration: none; color: inherit;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    overflow: hidden;
+  }
+  .module-card:hover { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 10px 40px var(--glow-primary); }
+  .module-card.flagship { border-color: rgba(62,168,245,0.45); box-shadow: 0 0 0 1px rgba(62,168,245,0.12), 0 4px 30px var(--glow-primary); }
+
+  .module-meta { display: flex; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--text-dim); }
+  .module-status { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); font-weight: 700; }
+  .module-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--text-dim); }
+  .module-status.live   { color: var(--blue); border-color: rgba(62,168,245,0.4); background: rgba(62,168,245,0.06); }
+  .module-status.live::before  { background: var(--blue); box-shadow: 0 0 6px rgba(62,168,245,0.9); }
+  .module-status.build  { color: var(--gold); border-color: var(--gold-border); background: var(--gold-bg); }
+  .module-status.build::before { background: var(--gold); }
+  .module-status.core   { color: var(--text-dim); }
+  .module-status.gated  { color: var(--gold); border-color: var(--gold-border); background: var(--gold-bg); }
+  .module-status.gated::before { background: var(--gold); box-shadow: 0 0 6px rgba(255,215,0,0.7); }
+
+  .module-name { margin-top: 14px; font-family: 'Orbitron', sans-serif; font-size: 1.55rem; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text); transition: color 0.25s; }
+  .module-card:hover .module-name { color: var(--blue); }
+  .flagship-badge { display: inline-block; margin-left: 10px; vertical-align: middle; padding: 2px 8px; border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.32em; color: var(--gold); background: var(--gold-bg); border: 1px solid var(--gold-border); text-transform: uppercase; }
+  .module-tagline { margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; color: var(--blue); text-transform: uppercase; opacity: 0.85; }
+  .module-desc { margin-top: 14px; font-size: 0.88rem; line-height: 1.65; color: var(--text-dim); }
+  .module-cta { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; }
+  .module-cta-label { color: var(--text-dim); }
+  .module-cta-arrow { color: var(--blue); transition: transform 0.25s; }
+  .module-card:hover .module-cta-arrow { transform: translateX(3px); }
+
+  /* ─── VALUE STRIP ───────────────────────────────────────────────── */
+  .values-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 720px)  { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .values-grid { grid-template-columns: repeat(4, 1fr); } }
+  .value-cell { background: var(--bg); padding: 24px; transition: background 0.25s; }
+  .value-cell:hover { background: var(--card); }
+  .value-num { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.32em; color: var(--blue); text-transform: uppercase; }
+  .value-name { margin-top: 10px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text); }
+  .value-desc { margin-top: 10px; font-size: 0.85rem; line-height: 1.65; color: var(--text-dim); }
+
+  /* ─── FLAGSHIP STACK PANEL ──────────────────────────────────────── */
+  .stack-panel {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+  }
+  .stack-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; background: rgba(8,14,24,0.6); margin-top: 8px; transition: border-color 0.25s; }
+  .stack-row:first-child { margin-top: 0; }
+  .stack-row.flagship { border-color: rgba(62,168,245,0.45); background: rgba(62,168,245,0.05); box-shadow: 0 0 24px var(--glow-primary); }
+  .stack-row:hover { border-color: var(--blue); }
+  .stack-tier { font-family: 'JetBrains Mono', monospace; font-size: 0.5rem; letter-spacing: 0.32em; color: var(--text-dim); text-transform: uppercase; }
+  .stack-name { flex: 1; margin: 0 14px; font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
+  .stack-role { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.28em; color: var(--text-dim); text-transform: uppercase; }
+
+  /* ─── CTAs ──────────────────────────────────────────────────────── */
+  .cta-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.72rem;
+    letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none;
+    background: var(--site-accent); color: var(--text-on-accent);
+    box-shadow: 0 0 32px color-mix(in srgb, var(--site-accent) 40%, transparent);
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+  }
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 48px color-mix(in srgb, var(--site-accent) 60%, transparent);
+  }
+  .cta-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.72rem;
+    letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none;
+    background: transparent; color: var(--site-accent);
+    border: 1px solid color-mix(in srgb, var(--site-accent) 45%, transparent);
+    transition: all 0.25s;
+  }
+  .cta-secondary:hover {
+    border-color: var(--site-accent);
+    background: color-mix(in srgb, var(--site-accent) 14%, transparent);
+    color: var(--text-primary);
+  }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+
+  /* ─── SECTION SPACING ───────────────────────────────────────────── */
+  .hub-section { padding: 60px 20px; max-width: 1180px; margin: 0 auto; }
+  .hub-section.tight { padding: 40px 20px; }
+  .hub-section h2 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 4.2vw, 2.6rem); font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; margin-bottom: 14px; text-align: center; }
+  .hub-section h2 .accent { background: linear-gradient(135deg, #c5e8ff, var(--blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hub-section .section-eye { display: block; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.32em; color: var(--blue); text-transform: uppercase; margin-bottom: 14px; }
+  .hub-section .section-sub { text-align: center; max-width: 640px; margin: 0 auto 30px; color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+  .stats-row { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border); max-width: 600px; margin-left: auto; margin-right: auto; }
+  .stat-cell { text-align: center; }
+  .stat-num  { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--blue); letter-spacing: 0.02em; }
+  .stat-tag  { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.28em; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; }
+
+  .flagship-grid { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 1100px; margin: 0 auto; }
+  @media (min-width: 768px) { .flagship-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; } }
+  .flagship-bullets { list-style: none; padding: 0; margin: 24px 0; }
+  .flagship-bullets li { display: flex; gap: 12px; padding: 8px 0; font-size: 0.9rem; line-height: 1.5; color: var(--text-dim); }
+  .flagship-bullets li::before { content: '→'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+</style>
+<!-- FC-SCHEMA-START · Organization + WebSite (apex) -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"FreedomCore","url":"https://freedomcore.io/","description":"Autonomous AI trading suite. Self-evolving Maverick algos on KuCoin, Shadow whale copy-trading on Hyperliquid, Arena public leaderboard, Quantum crypto web design.","sameAs":["https://maverick.freedomcore.io/","https://shadow.freedomcore.io/","https://arena.freedomcore.io/","https://quantum.freedomcore.io/"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"FreedomCore","url":"https://freedomcore.io/","publisher":{"@type":"Organization","name":"FreedomCore","url":"https://freedomcore.io/"}}</script>
 <!-- FC-SCHEMA-END -->
 </head>
-<body data-site="maverick">
-    <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
-    <div class="grid-bg"></div>
+<body data-site="freedomcore" id="top">
 
-    <!-- NAV -->
-    <nav class="nav">
-        <button class="nav-hamburger" aria-label="Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <a href="/" class="nav-logo">
-            <img src="/img/orbs/maverick.jpg" alt="MAVERICK" class="nav-logo-img nav-logo-img--orb" id="nav-logo-img">
-            <span class="nav-logo-text">MAVERICK</span>
+<!-- BUILD PHASE banner -->
+<div class="build-phase-banner" style="background:#1a1408; color:#f5a623; text-align:center; padding:8px 16px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.25em; text-transform:uppercase; border-bottom:1px solid rgba(245,166,35,0.4);">
+  BUILD PHASE -- ecosystem under active development -- features may change
+</div>
+
+<!-- Site ticker — same pattern as the sister sites, FreedomCore stats -->
+<div class="site-ticker" id="site-ticker"><div class="ticker-track">
+  <div class="ticker-item">FREEDOMCORE &middot; <b>LIVE</b></div>
+  <div class="ticker-item">MODULES &middot; <b>6</b></div>
+  <div class="ticker-item">FLAGSHIP &middot; <b style="color:var(--gold)">MAVERICK</b></div>
+  <div class="ticker-item">PERPETUAL MARKETS &middot; <b>88</b></div>
+  <div class="ticker-item">TRACKED WHALES &middot; <b style="color:var(--blue)">75</b></div>
+  <div class="ticker-item">DATA SPINE &middot; <b>STREAMLINE</b></div>
+  <div class="ticker-item">FREEDOMCORE &middot; <b>LIVE</b></div>
+  <div class="ticker-item">MODULES &middot; <b>6</b></div>
+  <div class="ticker-item">FLAGSHIP &middot; <b style="color:var(--gold)">MAVERICK</b></div>
+  <div class="ticker-item">PERPETUAL MARKETS &middot; <b>88</b></div>
+  <div class="ticker-item">TRACKED WHALES &middot; <b style="color:var(--blue)">75</b></div>
+  <div class="ticker-item">DATA SPINE &middot; <b>STREAMLINE</b></div>
+</div></div>
+
+<div class="grid-bg"></div>
+
+<!-- Static nav matching the sister-site pattern -->
+<nav class="nav">
+  <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <a href="/" class="nav-logo">
+    <!-- FreedomCore mark — clean SVG placeholder until Rob delivers final logo.
+         Hexagon ring + central dot, drawn in steel-blue gradient. -->
+    <svg class="nav-logo-img" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+      <defs>
+        <linearGradient id="fc-mark-grad" x1="0" y1="0" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"  stop-color="#c5e8ff"/>
+          <stop offset="55%" stop-color="#3ea8f5"/>
+          <stop offset="100%" stop-color="#1e6fb3"/>
+        </linearGradient>
+      </defs>
+      <path d="M17 3 L29 9.5 V24.5 L17 31 L5 24.5 V9.5 Z"
+            fill="none" stroke="url(#fc-mark-grad)" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="17" cy="17" r="3.6" fill="url(#fc-mark-grad)"/>
+      <circle cx="17" cy="17" r="6.2" fill="none" stroke="url(#fc-mark-grad)" stroke-width="0.8" opacity="0.55"/>
+    </svg>
+    <span class="nav-logo-text">FREEDOMCORE</span>
+  </a>
+  <div class="nav-center">
+    <a href="#modules">Modules</a>
+    <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" data-fc="maverick" style="font-weight:700;">MAVERICK &#8599;</a>
+    <a href="https://shadow.freedomcore.io/"   target="_blank" rel="noopener" data-fc="shadow"   style="font-weight:700;">SHADOW &#8599;</a>
+    <a href="https://arena.freedomcore.io/"    target="_blank" rel="noopener" data-fc="arena"    style="font-weight:700;">ARENA &#8599;</a>
+    <a href="https://quantum.freedomcore.io/"  target="_blank" rel="noopener" data-fc="quantum"  style="font-weight:700;">QUANTUM &#8599;</a>
+    <a href="https://maverick.freedomcore.io/pages/access.html" target="_blank" rel="noopener" data-fc="sovereign">Access Tiers</a>
+  </div>
+  <div class="nav-right">
+    <div class="ssl-badge" title="SSL Certificate Verified">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+      <span>SSL SECURED</span>
+    </div>
+    <div class="ssl-popup" id="ssl-popup">
+      <div class="ssl-popup-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--green)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+        CONNECTION SECURE
+      </div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Status</span><span class="ssl-popup-value green">VALID</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Protocol</span><span class="ssl-popup-value">TLS 1.3</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Issuer</span><span class="ssl-popup-value">Let's Encrypt (E8)</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Domain</span><span class="ssl-popup-value">freedomcore.io</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Issued</span><span class="ssl-popup-value">9 Apr 2026</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Expires</span><span class="ssl-popup-value green">8 Jul 2026</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Encryption</span><span class="ssl-popup-value">256-bit AES</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">HSTS</span><span class="ssl-popup-value green">ENFORCED · 2y</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">CSP</span><span class="ssl-popup-value green">A+ GRADE</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Frame-Options</span><span class="ssl-popup-value green">DENY</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">Permissions-Policy</span><span class="ssl-popup-value green">LOCKED</span></div>
+      <div class="ssl-popup-row"><span class="ssl-popup-label">CORP</span><span class="ssl-popup-value green">SAME-ORIGIN</span></div>
+      <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
+        <a href="https://maverick.freedomcore.io/pages/security.html" target="_blank" rel="noopener" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
+        <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
+      </div>
+    </div>
+    <button class="theme-btn" id="theme-btn" title="Toggle day/night" aria-label="Toggle day/night">&#9790;</button>
+  </div>
+</nav>
+
+<!-- MOBILE DROPDOWN — opens when burger is tapped -->
+<div class="mobile-dropdown" id="mobile-menu">
+        <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
+    <style>
+      /* === FREEDOMCORE FAMILY HEADING === */
+      .fc-fam-head {
+        display: block; text-align: center; color: #4dd2ff;
+        font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
+        letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
+        padding: 12px 0 8px; pointer-events: none;
+      }
+      /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
+      .fc-fam-link {
+        display: flex !important; align-items: center; gap: 10px;
+        padding: 9px 2px !important; text-decoration: none !important;
+        font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
+        font-weight: 700; letter-spacing: 0.06em;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+      .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
+      .fc-fam-link .fc-fam-desc {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
+        opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
+      }
+      .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
+      .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
+      .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
+      .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
+      .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
+      [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
+      [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
+      [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
+      [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
+      [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
+      [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
+      .fc-fam-divider {
+        height: 1px; background: rgba(255,255,255,0.10);
+        margin: 10px 0 6px; pointer-events: none;
+      }
+      [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
+
+      /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
+      .mobile-dropdown > * {
+        opacity: 0;
+        transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
+        will-change: transform, opacity;
+      }
+      .mobile-dropdown.open > * {
+        animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+      @keyframes fc-menu-drop {
+        0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
+        100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
+      }
+      .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
+      .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
+      .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
+      .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
+      .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
+      .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
+      .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
+      .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
+      .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
+      .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
+      .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
+      .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
+      .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
+      .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
+      .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
+      .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
+      .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
+      .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
+      .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
+      .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
+      .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
+      .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
+      .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
+      .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
+      .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
+      /* The inline <style> block itself is a child but renders as display:none, so it
+         consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
+      @media (prefers-reduced-motion: reduce) {
+        .mobile-dropdown > *,
+        .mobile-dropdown.open > * {
+          opacity: 1 !important; transform: none !important; animation: none !important;
+        }
+      }
+    </style>
+    <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+    <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
+    <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
+    <a class="fc-fam-link" data-fc="shadow"   href="https://shadow.freedomcore.io/"   rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
+    <a class="fc-fam-link" data-fc="arena"    href="https://arena.freedomcore.io/"    rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
+    <a class="fc-fam-link" data-fc="quantum"  href="https://quantum.freedomcore.io/"  rel="noopener">QUANTUM <span class="fc-fam-desc">Web Design</span></a>
+    <div class="fc-fam-divider"></div>
+    <!-- FC-FAMILY-NAV-END -->
+  <a href="#modules">Modules</a>
+  <a href="https://maverick.freedomcore.io/pages/access.html" rel="noopener">Access Tiers</a>
+  <a href="https://maverick.freedomcore.io/pages/about.html"  rel="noopener">About / Docs</a>
+  <a href="#" id="theme-btn-mobile" onclick="event.preventDefault(); document.getElementById('theme-btn').click();" style="border-top:1px solid var(--border); margin-top:6px; padding-top:14px;">&#9790; Toggle Day/Night</a>
+</div>
+
+<!-- HERO — operator-ordered 2026-04-30: wordmark up high, video immediately
+     beneath it, then proof rail (mav-rail), then suite cards. -->
+<section class="hub-section hub-hero">
+
+  <!-- 1. WORDMARK + subtitle — pushed to top of viewport -->
+  <div class="hero-writing">
+    <div class="fc-hero-container">
+      <h1 id="freedomcore-text" class="fc-3d-text">FREEDOMCORE</h1>
+    </div>
+    <p class="suite-subtitle">The Ultimate Intelligent Trading Suite</p>
+  </div>
+
+  <!-- 2. VIDEO — directly under the wordmark per operator -->
+  <div class="hero-video-frame">
+    <video class="hero-video"
+           src="/freedomcore-preview.mp4"
+           autoplay muted loop playsinline preload="metadata"
+           aria-label="FreedomCore preview reel"></video>
+  </div>
+
+  <!-- 3. MAVERICK LIVE RAIL — proof beneath the video (was sandwiched
+       between wordmark + video; broke the visual flow). Card now reads
+       --site-accent so it paints in the active site's colour. -->
+  <div class="mav-rail" id="mav-rail" aria-label="Maverick live broker ledger">
+    <div class="mav-rail__head">
+      <span class="mav-rail__eyebrow">MAVERICK · AUTONOMOUS AI TRADER</span>
+      <span class="mav-rail__fresh" id="mav-rail-fresh">updated --</span>
+    </div>
+    <div class="mav-rail__claim">Last 5 closed KuCoin broker exits. Losses included.</div>
+    <div class="mav-rail__ticker" id="mav-rail-ticker" aria-live="polite">
+      <span class="mav-rail__loading">connecting…</span>
+    </div>
+    <div class="mav-rail__agg" id="mav-rail-agg">7d · — · cascade live —</div>
+    <a class="mav-rail__cta" href="https://maverick.freedomcore.io/" target="_blank" rel="noopener">ENTER MAVERICK &rarr;</a>
+  </div>
+
+  <!-- 4. CARDS -->
+  <div class="suite-card-grid" aria-label="FreedomCore suites">
+        <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" class="suite-card" style="--suite-color:var(--gold);--suite-glow:rgba(255,215,0,0.34);">
+          <span class="suite-card-mark">M</span>
+          <span class="suite-card-name">Maverick</span>
+          <span class="suite-card-role">Flagship AI Trader</span>
+          <span class="suite-card-line"><b>Built to evolve.</b>Designed to win.</span>
         </a>
-        <div class="nav-center">
-            <a href="/pages/today.html">Today</a>
-            <a href="/pages/signals.html">Signals</a>
-            <a href="/pages/medalists.html">Medalists</a>
-            <a href="/pages/performance.html">Performance</a>
-            <a href="/pages/swarm.html">Terminals</a>
-            <a href="/pages/evolution.html">Evolution</a>
-            <a href="/pages/streamline.html">Streamline</a>
-            <a href="/pages/architecture.html">Architecture</a>
-            <a href="/pages/news.html">News</a>
-            <a href="/pages/about.html">About</a>
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6; font-weight:700; text-shadow: 0 0 10px rgba(139, 92, 246,0.3);">SHADOW &#8599; <span class="shadow-count" style="opacity:0.8;font-weight:500;">· 75 tracked</span></a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--amber); font-weight:700; text-shadow: 0 0 10px rgba(245,166,35,0.3);">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700; text-shadow: 0 0 10px rgba(192,200,212,0.3);">ARENA &#8599; <span class="arena-count" style="opacity:0.8;font-weight:500;">· 75 wallets</span></a>
-            <a href="/pages/access.html" style="color:var(--gold); font-weight:800;">Access &rarr;</a>
-        </div>
-        <div class="nav-right">
-            <div class="ssl-badge" title="SSL Certificate Verified">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                <span>SSL SECURED</span>
-            </div>
-            <!-- SSL Certificate Popup -->
-            <div class="ssl-popup" id="ssl-popup">
-                <div class="ssl-popup-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--green)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                    CONNECTION SECURE
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Status</span>
-                    <span class="ssl-popup-value green">VALID</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Protocol</span>
-                    <span class="ssl-popup-value">TLS 1.3</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Issuer</span>
-                    <span class="ssl-popup-value">Let's Encrypt (E8)</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Domain</span>
-                    <span class="ssl-popup-value">freedomcore.io</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Issued</span>
-                    <span class="ssl-popup-value">9 Apr 2026</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Expires</span>
-                    <span class="ssl-popup-value green">8 Jul 2026</span>
-                </div>
-                <div class="ssl-popup-row">
-                    <span class="ssl-popup-label">Encryption</span>
-                    <span class="ssl-popup-value">256-bit AES</span>
-                </div>
-                <div class="ssl-popup-close" style="display:flex; gap:8px; justify-content:space-between; align-items:center; padding-top:12px; margin-top:16px; border-top:1px solid var(--border);">
-                    <a href="/pages/security.html" style="color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; padding:6px 10px; border:1px solid var(--gold); border-radius:5px;">Learn More &rarr;</a>
-                    <span style="color:var(--text-dim); font-size:0.55rem; letter-spacing:1px; text-transform:uppercase;">Tap outside to close</span>
-                </div>
-            </div>
-                <a href="https://ntfy.sh/maverick_apex_9381?auth=0128" target="_blank" rel="noopener noreferrer" class="ntfy-badge" title="Live Push Alerts">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-                ALERTS
-            </a>
-            <a href="https://github.com/freedomcoreai-lang/maverick" target="_blank" rel="noopener noreferrer" title="Source on GitHub" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--border);border-radius:6px;color:var(--text-dim);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='#fff';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            </a>
-            <button class="theme-btn" id="theme-btn" title="Toggle day/night">&#9790;</button>
-            <div class="nav-live"><div class="live-dot"></div> LIVE</div>
-        </div>
-    </nav>
+        <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="suite-card" style="--suite-color:var(--purple);--suite-glow:rgba(139,92,246,0.34);">
+          <span class="suite-card-mark">S</span>
+          <span class="suite-card-name">Shadow</span>
+          <span class="suite-card-role">Whale Copy Trader</span>
+          <span class="suite-card-line"><b>Follow the best.</b>Profit in silence.</span>
+        </a>
+        <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="suite-card" style="--suite-color:var(--silver);--suite-glow:rgba(192,200,212,0.30);">
+          <span class="suite-card-mark">A</span>
+          <span class="suite-card-name">Arena</span>
+          <span class="suite-card-role">Public Leaderboard &amp; Indexer</span>
+          <span class="suite-card-line"><b>Built to discover.</b>Designed to rank.</span>
+        </a>
+        <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="suite-card" style="--suite-color:var(--blue);--suite-glow:rgba(62,168,245,0.34);">
+          <span class="suite-card-mark">Q</span>
+          <span class="suite-card-name">Quantum</span>
+          <span class="suite-card-role">AI Web Design</span>
+          <span class="suite-card-line"><b>Built to design.</b>Designed to convert.</span>
+        </a>
+  </div>
 
-    
-    <div class="nav-neon-line" aria-hidden="true"></div>
-<!-- Logo expand overlay (outside nav to avoid fixed-inside-fixed clipping on mobile) -->
-    <div class="logo-expand-overlay" id="logo-expand">
-        <img src="/img/maverick-logo.jpg" alt="MAVERICK Globe" class="logo-expand-img">
+  <div class="suite-actions">
+    <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" class="cta-primary">Enter Maverick &rarr;</a>
+    <a href="#modules" class="cta-secondary">Explore the suite</a>
+  </div>
+
+  <!-- INTERACTIVE FUSION CORE — drag to spin, tap a node to enter a system -->
+  <div class="core-wrap" id="fc-core" role="group"
+       aria-label="FreedomCore ecosystem — drag to spin, tap a node to enter">
+
+    <div class="core-halo" aria-hidden="true"></div>
+
+    <!-- Decorative tilted ring stack — background depth.
+         SVG `currentColor` inherits from .core-ring (which sets it to --site-accent),
+         so the orbits tint to the active site automatically: gold on Hub/Maverick,
+         violet on Shadow, cyan on Quantum, silver on Arena. -->
+    <div class="core-plane" aria-hidden="true">
+      <div class="core-ring core-ring--outer" style="color: var(--site-accent);">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-opacity="0.55" stroke-width="0.6" stroke-dasharray="3 9" stroke-linecap="round"/></svg>
+      </div>
+      <div class="core-ring core-ring--mid" style="color: var(--site-accent);">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="34" fill="none" stroke="currentColor" stroke-opacity="0.40" stroke-width="0.6" stroke-dasharray="2 6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="core-ring core-ring--inner" style="color: var(--site-accent);">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="23" fill="none" stroke="currentColor" stroke-opacity="0.65" stroke-width="0.6" stroke-dasharray="1 4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="core-ring core-ring--track">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="color-mix(in srgb, var(--site-accent) 12%, transparent)" stroke-width="0.4"/></svg>
+      </div>
     </div>
 
-    <!-- MOBILE DROPDOWN MENU -->
-    <div class="mobile-dropdown" id="mobile-menu">
-                <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
-        <style>
-          /* === FREEDOMCORE FAMILY HEADING === */
-          .fc-fam-head {
-            display: block; text-align: center; color: #4dd2ff;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
-            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
-            padding: 12px 0 8px; pointer-events: none;
-          }
-          /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
-          .fc-fam-link {
-            display: flex !important; align-items: center; gap: 10px;
-            padding: 9px 2px !important; text-decoration: none !important;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
-            font-weight: 700; letter-spacing: 0.06em;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-          }
-          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
-          .fc-fam-link .fc-fam-desc {
-            font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
-            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
-          }
-          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
-          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
-          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
-          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
-          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
-          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
-          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
-          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
-          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
-          .fc-fam-divider {
-            height: 1px; background: rgba(255,255,255,0.10);
-            margin: 10px 0 6px; pointer-events: none;
-          }
-          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
-
-          /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
-          .mobile-dropdown > * {
-            opacity: 0;
-            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
-            will-change: transform, opacity;
-          }
-          .mobile-dropdown.open > * {
-            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-          }
-          @keyframes fc-menu-drop {
-            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
-          }
-          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
-          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
-          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
-          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
-          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
-          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
-          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
-          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
-          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
-          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
-          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
-          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
-          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
-          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
-          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
-          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
-          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
-          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
-          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
-          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
-          .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
-          .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
-          .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
-          .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
-          .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
-          /* The inline <style> block itself is a child but renders as display:none, so it
-             consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
-          @media (prefers-reduced-motion: reduce) {
-            .mobile-dropdown > *,
-            .mobile-dropdown.open > * {
-              opacity: 1 !important; transform: none !important; animation: none !important;
-            }
-          }
-        </style>
-        <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
-        <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
-        <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
-        <a class="fc-fam-link" data-fc="shadow"   href="https://shadow.freedomcore.io/"   rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
-        <a class="fc-fam-link" data-fc="arena"    href="https://arena.freedomcore.io/"    rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
-        <a class="fc-fam-link" data-fc="quantum"  href="https://quantum.freedomcore.io/"  rel="noopener">QUANTUM <span class="fc-fam-desc">Web Design</span></a>
-        <div class="fc-fam-divider"></div>
-        <!-- FC-FAMILY-NAV-END -->
-        <a href="/">Home</a>
-        <a href="/pages/today.html">Today</a>
-        <a href="/pages/performance.html">Performance</a>
-        <a href="/pages/medalists.html">Hall of Fame Medalists</a>
-        <a href="/pages/swarm.html">LLM Swarm Terminals</a>
-        <a href="/pages/evolution.html">Evolution Structure</a>
-        <a href="/pages/signals.html">Signal Feed</a>
-        <a href="/pages/streamline.html">Streamline</a>
-        <a href="/pages/architecture.html">Technical Architecture</a>
-        <a href="/pages/news.html">Market News</a>
-        <a href="/pages/about.html">About / Docs</a>
-
-    
-        <a href="/pages/access.html">Access Tiers</a>
-        <a href="/#positions">Positions</a>
-        <a href="/#security">Security</a>
-        <a href="/#system">System Status</a>
+    <!-- Energy field-lines from centre outward, rotate in sync with orbiters -->
+    <div class="core-fieldlines" id="fc-fieldlines" aria-hidden="true">
+      <span class="core-fieldline" style="transform:rotate(0deg)"></span>
+      <span class="core-fieldline" style="transform:rotate(90deg)"></span>
+      <span class="core-fieldline" style="transform:rotate(180deg)"></span>
+      <span class="core-fieldline" style="transform:rotate(270deg)"></span>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-glow"></div>
-        <div class="hero-badge">The best AI in the world, evolving a trading system in real time</div>
-
-        <!-- Dark mode: animated MAVERICK hero video (poster = static for instant paint) -->
-        <div class="hero-logo-img hero-logo-dark" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
-            <video id="mav-hero-video"
-                   src="/img/maverick-hero.mp4?v=3"
-                   poster="/img/maverick-hero-wide.png"
-                   preload="auto"
-                   autoplay muted loop playsinline webkit-playsinline
-                   style="width:100%; height:auto; display:block; mix-blend-mode:screen; filter: drop-shadow(0 0 60px rgba(62, 168, 245, 0.22));"
-                   aria-label="MAVERICK · Powered by FreedomCore"></video>
-            <button type="button" id="mav-hero-sound" aria-label="Unmute" aria-pressed="false"
-                    style="position:absolute; bottom:14px; right:14px; width:40px; height:40px; border-radius:50%; background:rgba(10,15,24,0.78); color:#4ecdc4; border:1px solid rgba(78,205,196,0.5); backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; box-shadow:0 2px 14px rgba(0,0,0,0.3); z-index:3;">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>
-            </button>
-        </div>
-        <!-- Light mode: bright day-render animated hero, same centred layout as dark mode -->
-        <div class="hero-logo-img hero-logo-light" style="position:relative; z-index:2; width:100%; max-width:880px; margin:0 auto 22px;">
-            <video id="mav-hero-video-light"
-                   src="/img/maverick-hero-light.mp4?v=3"
-                   poster="/img/maverick-hero-wide-light.png"
-                   preload="auto"
-                   autoplay muted loop playsinline webkit-playsinline
-                   style="width:100%; height:auto; display:block; filter: drop-shadow(0 0 40px rgba(62, 168, 245, 0.20));"
-                   aria-label="MAVERICK · Powered by FreedomCore"></video>
-        </div>
-        <script>
-        // Light-mode backdrop video — autoplay silent, pause offscreen.
-        (function lightHeroVid(){
-            var lv = document.getElementById('mav-hero-video-light');
-            if (!lv) return;
-            lv.play().catch(function(){});
-            var io = new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? lv.play().catch(function(){}) : lv.pause(); }); }, { threshold: 0.1 });
-            io.observe(lv);
-            // Retry play when theme toggles to light (element may have been display:none'd and now shown)
-            var obs = new MutationObserver(function(){
-                if (document.documentElement.getAttribute('data-theme') === 'light') {
-                    lv.play().catch(function(){});
-                }
-            });
-            obs.observe(document.documentElement, { attributes:true, attributeFilter:['data-theme'] });
-        })();
-        (function heroVid(){
-            var v = document.getElementById('mav-hero-video');
-            var btn = document.getElementById('mav-hero-sound');
-            if (!v || !btn) return;
-            var STORE = 'mav-hero-unmuted';
-            try { if (localStorage.getItem(STORE) === '1') v.muted = false; } catch(e) {}
-            function upd(){
-                btn.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
-                btn.innerHTML = v.muted
-                    ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" opacity="0.45"/><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.2"/></svg>'
-                    : '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
-            }
-            btn.addEventListener('click', function(e){
-                e.preventDefault(); e.stopPropagation();
-                v.muted = !v.muted;
-                try { localStorage.setItem(STORE, v.muted ? '0' : '1'); } catch(e) {}
-                if (v.paused) v.play().catch(function(){});
-                upd();
-            });
-            v.play().catch(function(){});
-            var io = new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? v.play().catch(function(){}) : v.pause(); }); }, { threshold: 0.15 });
-            io.observe(v);
-            v.addEventListener('volumechange', upd);
-            upd();
-        })();
-        </script>
-
-        <div class="hero-title" style="display:none">MAVERICK</div>
-        <div class="hero-subtitle-brand" style="display:none">FreedomCore</div>
-
-        <p class="hero-desc hero-desc-tight">
-            MAVERICK is a live autonomous trading system that rewrites its own strategy DNA.
-            It scans 88 perpetual futures markets, trades real capital, and publishes the
-            machine&rsquo;s state as it mutates. No polished backtest theatre. No hidden demo layer.
-        </p>
-
-        <div class="hero-proof-grid" aria-label="MAVERICK live system summary">
-            <a href="/pages/streamline.html" class="hero-proof-item">
-                <span class="hero-proof-value">88</span>
-                <span class="hero-proof-label">markets scanned</span>
-            </a>
-            <a href="/pages/swarm.html" class="hero-proof-item">
-                <span class="hero-proof-value">7</span>
-                <span class="hero-proof-label">AI agents live</span>
-            </a>
-            <a href="/pages/performance.html" class="hero-proof-item">
-                <span class="hero-proof-value">real</span>
-                <span class="hero-proof-label">capital at risk</span>
-            </a>
-        </div>
-
-        <!-- POWERED BY — multi-tier AI council. Per operator 2026-05-01: convey
-             the architecture (scouts → bench → supreme court) without naming the
-             seat list. New frontier models drop in on the next cycle as they ship. -->
-        <div class="frontier-panel">
-            <div class="frontier-panel-label">A council of frontier AI</div>
-            <div class="frontier-panel-copy">
-                Scouts propose. The bench deliberates. A Supreme Court rules.
-                Ten-plus frontier minds debate every champion before it touches a position.
-                No single model holds the pen. When stronger models ship, they drop straight into chambers.
-            </div>
-            <a href="/pages/evolution.html" class="frontier-cta">See the evolution loop &rarr;</a>
-        </div>
-
-        <div class="hero-actions" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:26px;">
-            <a href="/pages/access.html" class="btn-outline hero-primary-cta">Watch the Experiment &rarr;</a>
-            <a href="#system" class="btn-outline">How It Works</a>
-        </div>
-        <div class="social-bar">
-            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer" class="social-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @freedomcoreai
-            </a>
-        </div>
-
-        <!-- SWARM EVOLUTION MODULE (unified: status + champion + link to terminals) -->
-        <div id="swarm-hero-banner" class="swarm-module" style="display:none; width:100%; max-width:900px; margin-top:24px; border-radius:10px; font-family:'JetBrains Mono',monospace; position:relative; z-index:2; overflow:hidden; border:1px solid var(--border, rgba(255,255,255,0.08)); background:var(--card-bg, rgba(255,255,255,0.03));">
-
-            <!-- Status header -->
-            <a href="/pages/swarm.html" style="display:block; padding:16px 20px; text-decoration:none; color:inherit;">
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span id="sh-dot" style="width:10px; height:10px; border-radius:50%; display:inline-block;"></span>
-                        <span id="sh-label" style="font-size:0.7rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;"></span>
-                    </div>
-                    <span id="sh-detail" style="font-size:0.62rem; letter-spacing:0.5px; opacity:0.85;"></span>
-                </div>
-                <div style="margin-top:10px; height:3px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden;">
-                    <div id="sh-bar" style="height:100%; border-radius:3px; transition:width 0.8s ease;"></div>
-                </div>
-                <div style="margin-top:6px; text-align:right;">
-                    <span style="font-size:0.55rem; letter-spacing:1px; text-transform:uppercase; opacity:0.45;">View Swarm Terminals &rarr;</span>
-                </div>
-            </a>
-
-            <!-- Champion section (always visible when data exists) -->
-            <div id="sh-champion" style="display:none; border-top:1px solid var(--border, rgba(255,255,255,0.06));">
-                <!-- Champion header - click to expand -->
-                <div id="sh-champ-toggle" style="cursor:pointer; padding:14px 20px; display:flex; align-items:center; justify-content:space-between;">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span style="font-size:0.58rem; color:var(--champion); font-weight:800; letter-spacing:1px; background:var(--champion-bg); padding:3px 10px; border-radius:4px;">CHAMPION</span>
-                        <span id="sh-champ-name" style="font-size:0.65rem; color:var(--text,#e5e7eb); font-weight:600;"></span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span id="sh-champ-score" style="font-size:0.65rem; color:var(--green, #10b981); font-weight:700;"></span>
-                        <span id="sh-champ-arrow" style="font-size:0.7rem; opacity:0.4; transition:transform 0.3s;">&#9660;</span>
-                    </div>
-                </div>
-
-                <!-- Expandable champion detail -->
-                <div id="sh-champ-detail" style="display:none; padding:0 20px 18px;">
-                </div>
-            </div>
-        </div>
-
-        <!-- LIVE STATUS BAR (inside hero) -->
-        <div class="status-bar-wrap" style="position:relative;z-index:2;width:100%;max-width:900px;margin-top:40px;">
-            <div class="status-bar">
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value" id="stat-status">--</div>
-                    <div class="status-label">System</div>
-                </a>
-                <a href="#positions" class="status-item status-link">
-                    <div class="status-value blue" id="stat-positions">--</div>
-                    <div class="status-label">Open Positions</div>
-                </a>
-                <a href="/pages/streamline.html" class="status-item status-link">
-                    <div class="status-value" id="stat-symbols">--</div>
-                    <div class="status-label">Symbols</div>
-                </a>
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value amber" id="stat-db">--</div>
-                    <div class="status-label">Database MB</div>
-                </a>
-                <a href="/pages/swarm.html" class="status-item status-link">
-                    <div class="status-value" id="stat-uptime">--</div>
-                    <div class="status-label">Uptime</div>
-                </a>
-                <a href="/pages/signals.html" class="status-item status-link">
-                    <div class="status-value blue" id="stat-freshness">--</div>
-                    <div class="status-label">Data Age</div>
-                </a>
-                <a href="/pages/medalists.html" class="status-item status-link" title="Currently live trading strategy">
-                    <div class="status-value" id="stat-champion" style="font-size:0.7rem;color:var(--green,#4ecdc4);line-height:1.2;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:120px;">--</div>
-                    <div class="status-label">Live Champion</div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- LIVE POSITIONS -->
-    <section id="positions">
-        <div class="section-inner reveal">
-            <div class="section-label">Live Positions</div>
-            <h2 class="section-title">Open trades right now.</h2>
-            <p class="section-text">
-                Real capital. Real positions. Tap any card to see the full exit architecture,
-                entry reasoning, and live telemetry. Updated every 30 seconds.
-                <span id="pos-total-pnl" class="pos-summary-value" style="margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:1rem;"></span>
-            </p>
-            <div class="gated" id="positions-gate">
-                <div class="gate-lock">
-                    <div class="gate-lock-icon">&#128274;</div>
-                    <div class="gate-lock-text">POSITIONS MONITOR. COMING SOON</div>
-                </div>
-                <div class="positions-grid" id="positions-content">
-                    <div class="pos-empty">Loading positions...</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TICKER -->
-    <div class="ticker-bar">
-        <div class="ticker-track">
-            <div class="ticker-item">STRATEGIES <span>2 EVOLVED</span></div>
-            <div class="ticker-item">AI AGENTS <span>7 LIVE</span></div>
-            <div class="ticker-item">SYMBOLS <span>88 UNIVERSAL</span></div>
-            <div class="ticker-item">INDICATORS/BAR <span>97</span></div>
-            <div class="ticker-item">MUTATIONS/CYCLE <span>1000</span></div>
-            <div class="ticker-item">PIPELINE <span>1-MIN</span></div>
-            <div class="ticker-item">CRIME SCENE <span>160 FIELDS</span></div>
-            <div class="ticker-item">CODEBASE <span>85,000+ LINES</span></div>
-            <div class="ticker-item">STRATEGIES <span>2 EVOLVED</span></div>
-            <div class="ticker-item">AI AGENTS <span>7 LIVE</span></div>
-            <div class="ticker-item">SYMBOLS <span>88 UNIVERSAL</span></div>
-            <div class="ticker-item">INDICATORS/BAR <span>97</span></div>
-            <div class="ticker-item">MUTATIONS/CYCLE <span>1000</span></div>
-            <div class="ticker-item">PIPELINE <span>1-MIN</span></div>
-            <div class="ticker-item">CRIME SCENE <span>160 FIELDS</span></div>
-            <div class="ticker-item">CODEBASE <span>85,000+ LINES</span></div>
-        </div>
+    <!-- Interactive orbiter layer — JS positions each node every frame -->
+    <div class="core-orbiters" id="fc-orbiters">
+      <a class="core-node" data-base-angle="0"
+         href="https://maverick.freedomcore.io/" target="_blank" rel="noopener"
+         style="--node-color: var(--accent-gold); --node-glow: color-mix(in srgb, var(--accent-gold) 55%, transparent);"
+         aria-label="MAVERICK — open the autonomous AI trading suite">
+        <img class="core-node__img" src="/img/orbs/maverick.jpg" alt="" loading="lazy">
+        <span class="core-node-mark">M</span>
+        <span class="core-node-tag">MAVERICK</span>
+        <span class="core-node-label">FLAGSHIP &#8599;</span>
+      </a>
+      <a class="core-node" data-base-angle="90"
+         href="https://shadow.freedomcore.io/" target="_blank" rel="noopener"
+         style="--node-color: var(--accent-violet); --node-glow: color-mix(in srgb, var(--accent-violet) 55%, transparent);"
+         aria-label="SHADOW — open the whale consensus copy-trader">
+        <img class="core-node__img" src="/img/orbs/shadow.jpg" alt="" loading="lazy">
+        <span class="core-node-mark">S</span>
+        <span class="core-node-tag">SHADOW</span>
+        <span class="core-node-label">WHALES &#8599;</span>
+      </a>
+      <a class="core-node" data-base-angle="180"
+         href="https://arena.freedomcore.io/" target="_blank" rel="noopener"
+         style="--node-color: var(--accent-silver); --node-glow: color-mix(in srgb, var(--accent-silver) 55%, transparent);"
+         aria-label="ARENA — open the public Hyperliquid leaderboard">
+        <img class="core-node__img" src="/img/orbs/arena.jpg" alt="" loading="lazy">
+        <span class="core-node-mark">A</span>
+        <span class="core-node-tag">ARENA</span>
+        <span class="core-node-label">LEADERBOARD &#8599;</span>
+      </a>
+      <a class="core-node" data-base-angle="270"
+         href="https://quantum.freedomcore.io/" target="_blank" rel="noopener"
+         style="--node-color: var(--accent-cyan); --node-glow: color-mix(in srgb, var(--accent-cyan) 55%, transparent);"
+         aria-label="QUANTUM — open the brief-driven web design service">
+        <img class="core-node__img" src="/img/orbs/quantum.jpg" alt="" loading="lazy">
+        <span class="core-node-mark">Q</span>
+        <span class="core-node-tag">QUANTUM</span>
+        <span class="core-node-label">DESIGN &#8599;</span>
+      </a>
     </div>
 
-    <!-- ABOUT / ORIGIN -->
-    <section id="about">
-        <div class="section-inner reveal">
-            <div class="section-label">About</div>
-            <h2 class="section-title">It never sleeps.<br>It never stops mutating.</h2>
-            <p class="section-text" style="font-size:1.05rem;line-height:1.8;">
-                MAVERICK is alive. It scans 88 crypto futures markets every sixty seconds, and a single
-                evolved champion owns every decision on the book. Which symbol to enter. How much to risk.
-                Where the stop goes. When to trail. When to exit. No human approves a trade. No human sets
-                a stop. No human picks a symbol. The champion fought its way to the throne, and the
-                champion runs the capital.
-            </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                But the champion is not forever. Every few days an LLM swarm rewrites the DNA from the
-                ground up, using the corpses of losing trades as teaching material. The strategy trading
-                right now has an expiry date. The one that replaces it may look nothing like it.
-            </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                Execution is the easy part. The real machine is what happens between trades.
-            </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                Every loss is dissected. The system watches itself die, studies the tape, and tags the
-                structural defect for the next cycle. Every six hours a Sentinel AI reads the full state of
-                the market and publishes a strategic broadcast. Every forty eight hours a multi-tier council
-                runs a fresh Swarm: a panel of NVIDIA-hosted scouts proposes candidates, a bench of premium
-                frontier models deliberates across rounds, and a Supreme Court synthesises the verdict. It
-                performs root cause analysis on every losing pattern, proposes new DNA, validates the
-                candidate against six days of real market data, and only deploys if the challenger strictly
-                beats the sitting champion.
-                <strong style="color:var(--green);">The strategy that trades tomorrow may not be the same
-                strategy that traded yesterday.</strong> It evolves. It forgets what no longer works. It
-                remembers what killed it.
-            </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                85,000 lines of production Python. 128 million backtest evaluations logged. Seven
-                autonomous AI agents looping forever. A Sovereign Live Adapter refreshing the in memory
-                state every five minutes and gating every candidate through a contract validator before it
-                touches a dollar of live capital. Honest Physics enforced. T minus sixty on every lookup.
-                No lookahead. No theory.
-            </p>
-            <p class="section-text" style="margin-top:16px;font-size:1.05rem;line-height:1.8;">
-                <strong style="color:var(--gold);">Nothing on this website is simulated.</strong> Every
-                number you read came from real markets, real trades, and real capital at risk. You are not
-                watching a demo. You are watching a self-evolving AI bot hunt.
-            </p>
+    <!-- Central FREEDOMCORE orb + label -->
+    <div class="core-orb" aria-hidden="true"></div>
+    <div class="core-orb-label">
+      <span class="core-orb-name">FREEDOMCORE</span>
+    </div>
 
-            <div class="origin-grid">
-                <div class="origin-stat">
-                    <div class="origin-stat-value">85K+</div>
-                    <div class="origin-stat-label">Lines of production Python</div>
-                </div>
-                <div class="origin-stat">
-                    <div class="origin-stat-value">128M+</div>
-                    <div class="origin-stat-label">Backtest evaluations</div>
-                </div>
-                <div class="origin-stat">
-                    <div class="origin-stat-value">88</div>
-                    <div class="origin-stat-label">Markets scanned every 60s</div>
-                </div>
-                <div class="origin-stat">
-                    <div class="origin-stat-value">7</div>
-                    <div class="origin-stat-label">Autonomous AI agents</div>
-                </div>
-            </div>
+    <div class="core-hint" aria-hidden="true">drag to spin &middot; tap a node to enter</div>
+  </div>
 
-            <a href="/pages/about.html" class="explore-btn" style="margin-top:32px;max-width:360px;justify-content:center;">
-                <span>Read the Full Story</span>
-                <span class="explore-btn-arrow">&rarr;</span>
-            </a>
-        </div>
-    </section>
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-num">88</div><div class="stat-tag">markets</div></div>
+    <div class="stat-cell"><div class="stat-num">6</div><div class="stat-tag">modules</div></div>
+    <div class="stat-cell"><div class="stat-num">75</div><div class="stat-tag">whales</div></div>
+    <div class="stat-cell"><div class="stat-num" style="color:var(--gold)">LIVE</div><div class="stat-tag">status</div></div>
+  </div>
+</section>
 
-    <!-- THE SYSTEM -->
-    <section id="system" class="section-divider">
-        <div class="section-inner reveal">
-            <div class="section-label">The System</div>
-            <h2 class="section-title">The Sovereign Hybrid<br>One bot. One champion. Self-rewriting every cycle.</h2>
-            <p class="section-text">
-                A single reigning champion owns everything: entry logic, sizing, leverage, stops, trails,
-                exits. It runs across all 88 perpetual futures, ticking every second. The swarm evolves
-                new candidates continuously. Only a strategy that strictly beats the live champion on a
-                fresh 6-day honest-physics backtest takes the throne. If nothing beats it, the system holds.
-                No change for the sake of change. The current apex is <strong id="live-champion-name">loading…</strong>,
-                and the swarm is actively honing its successor right now.
-            </p>
-            <div class="engine-grid">
-                <div class="engine-card trend">
-                    <div class="engine-icon">&#127919;</div>
-                    <div class="engine-name" id="live-champion-card-name">Live Champion</div>
-                    <div class="engine-desc" id="live-champion-card-desc">The reigning live strategy. Reads <span id="live-champion-features">the live feature set</span> and fires entries the moment its conditions line up, across all 88 perpetual futures. A 2.5 ATR initial stop protects capital, a two-stage volatility trail ratchets profits as the move extends, and a 4-hour time-exit closes any position that fails to work. When the swarm evolves a strategy that strictly beats this one on an honest-physics backtest, the atomic hot-swap pipeline replaces it live - and this card updates the moment it does.</div>
-                </div>
-                <div class="engine-card trap">
-                    <div class="engine-icon">&#9881;</div>
-                    <div class="engine-name">The Unified Engine</div>
-                    <div class="engine-desc">Evaluator and live bot run the same code path. One Python module (<code>maverick_core</code>) routes signals, sizes positions, and manages exits for both backtest and live. The parity gate is locked at zero percent divergence. This kills the oldest class of trading-bot bug: "it worked in backtest but fails live." If the champion scores well in evaluation, it behaves identically on the exchange.</div>
-                </div>
-                <div class="engine-card chop">
-                    <div class="engine-icon">&#128274;</div>
-                    <div class="engine-name">Sovereign Live Adapter</div>
-                    <div class="engine-desc">Auto-refreshes the champion's in-memory cache every 5 minutes so live state mirrors the evaluator's. Every new candidate passes the Champion Validator - DNA schema check, contract correctness on pre_filter / signal_entry / manage_position, idempotent cache guarantees, and the 2.5 ATR stop-floor. The atomic hot-swap runs a 45-second live health check on every deploy and rolls back on failure. No bifurcation between what evaluation saw and what fires on the exchange.</div>
-                </div>
-                <div class="engine-card genesis">
-                    <div class="engine-icon">&#129529;</div>
-                    <div class="engine-name">The God-Mode Swarm</div>
-                    <div class="engine-desc">A federated council of frontier AI sits behind every champion. <strong>Stage A scouts</strong> - a panel of fast, specialised models hosted on NVIDIA - draft candidate strategies from a blank scaffold, anchored to market structure on every thesis. <strong>Stage B councilors</strong> - the premium bench of frontier reasoning models - debate the candidates across rounds, surfacing assumptions, edge cases and honest-physics violations. <strong>The Supreme Court</strong> synthesises a binding verdict. Candidates are rejected if they duplicate a prior thesis, violate the payoff-ratio floor, or crack under T-120 lookahead detection. Every new frontier model release drops into the relevant tier on the next cycle. You are not betting on one mind. You are running ten-plus of the best minds available on Earth, debating in chambers, and only the verdict touches your money.</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- MODULE GRID -->
+<section class="hub-section" id="modules">
+  <span class="section-eye">the ecosystem</span>
+  <h2>Four front doors. <span class="accent">One core.</span></h2>
+  <p class="section-sub">MAVERICK is the flagship. SHADOW, ARENA and QUANTUM extend the same FreedomCore operating layer.</p>
 
-    <!-- EXPLORE DEEP DIVES -->
-    <section class="section-divider">
-        <div class="section-inner reveal">
-            <div class="section-label">Deep Dives</div>
-            <h2 class="section-title">Explore the machine.</h2>
-            <p class="section-text">
-                Everything is transparent. The medalist hall of fame, today's live heartbeat,
-                the LLM swarm terminals, the data pipeline, live trade signals, the evolution
-                architecture. If the system is doing it, you can see it, subject to your tier.
-            </p>
-            <div class="explore-grid">
-                <a href="/pages/access.html" class="explore-btn" style="border-color:var(--accent);">
-                    <span class="explore-btn-icon">&#128273;</span>
-                    <span>Access &amp; Tiers</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/today.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128293;</span>
-                    <span>Today</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/medalists.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#127942;</span>
-                    <span>Hall of Fame</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/swarm.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#129504;</span>
-                    <span>LLM Swarm Terminals</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/evolution.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#129516;</span>
-                    <span>Evolution Structure</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/signals.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#9889;</span>
-                    <span>Signal Feed</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/performance.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128200;</span>
-                    <span>Performance</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/streamline.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#9881;</span>
-                    <span>Streamline</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/architecture.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128295;</span>
-                    <span>Architecture</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-                <a href="/pages/about.html" class="explore-btn">
-                    <span class="explore-btn-icon">&#128209;</span>
-                    <span>Documentation</span>
-                    <span class="explore-btn-arrow">&rarr;</span>
-                </a>
-            </div>
-        </div>
-    </section>
+  <div class="modules-grid">
 
-    <!-- INTELLIGENCE CHAIN -->
-    <section class="section-divider">
-        <div class="section-inner reveal">
-            <div class="section-label">Intelligence Chain</div>
-            <h2 class="section-title">Seven AI agents.<br>One continuous intelligence loop.</h2>
-            <p class="section-text">
-                Every 6 hours, a chain reaction fires. The Shadow Matrix scans all 88 symbols for missed
-                alpha. The Sentinel broadcasts market intelligence. The Watchdog guards account health.
-                By the time the Swarm evolves, it has consumed 48 hours of broadcasts, 10 crime scene
-                forensics from losing trades, 10 success forensics from winners, and the full weekly
-                digest. Then <strong>Gemini 3.1</strong> writes the next candidate, <strong>Claude
-                Opus 4.7</strong> audits the architecture, and the trading DNA is rewritten. Every new
-                Google or Anthropic model release auto-upgrades the pipeline the very next cycle.
-            </p>
-            <div class="chain-flow">
-                <div class="chain-line"></div>
-                <div class="chain-node" data-agent-schedule="shadow">
-                    <div class="chain-dot purple"></div>
-                    <div>
-                        <div class="chain-time">EVERY 6H &middot; :50 <span class="chain-countdown" data-schedule="shadow"></span></div>
-                        <div class="chain-title">Shadow Matrix</div>
-                        <div class="chain-desc">Deep market structure scanner. Audits all 88 symbols for squeeze state, sweep detection, fair value gaps, and regime classification. Identifies alpha the system missed and logs it for the Swarm to learn from.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="sentinel">
-                    <div class="chain-dot amber"></div>
-                    <div>
-                        <div class="chain-time">EVERY 6H &middot; :00 <span class="chain-countdown" data-schedule="sentinel"></span></div>
-                        <div class="chain-title">Sentinel Broadcast</div>
-                        <div class="chain-desc">Reads Shadow Matrix output and all recent trade data. Claude Opus 4.7 synthesises a 6-hourly intelligence broadcast covering regime state, ADX/chop readings, BTC trend, volume ratios, win/loss breakdown, and full trade forensics with crime scene analysis on every loss.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="watchdog">
-                    <div class="chain-dot green"></div>
-                    <div>
-                        <div class="chain-time">EVERY 6H &middot; :05 <span class="chain-countdown" data-schedule="watchdog"></span></div>
-                        <div class="chain-title">Sentinel Watchdog</div>
-                        <div class="chain-desc">Account health guardian. Tracks real equity by summing every trade's PnL from the $8.50 starting balance. Measures the worst losing streak from peak. Push alerts to mobile at 10% loss from peak. Emergency swarm rebuild triggered at 15%. The safety net.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="flagship">
-                    <div class="chain-dot blue"></div>
-                    <div>
-                        <div class="chain-time">DAILY &middot; 07:30 <span class="chain-countdown" data-schedule="flagship"></span></div>
-                        <div class="chain-title">Flagship Intelligence</div>
-                        <div class="chain-desc">Absorbs all 4 sentinel broadcasts from the past 24 hours and produces a comprehensive daily intelligence briefing. Full market regime analysis, engine performance breakdown, and strategic observations from Claude Opus 4.7.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="snapshot">
-                    <div class="chain-dot amber"></div>
-                    <div>
-                        <div class="chain-time">DAILY &middot; 18:00 <span class="chain-countdown" data-schedule="snapshot"></span></div>
-                        <div class="chain-title">Performance Snapshot</div>
-                        <div class="chain-desc">Daily performance capture. 24-hour and 7-day win rates, PnL percentages, equity curve progression, engine-by-engine breakdown, and live position summaries. Everything calculated from real trade data.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="digest">
-                    <div class="chain-dot purple"></div>
-                    <div>
-                        <div class="chain-time">SUNDAYS &middot; 16:15 <span class="chain-countdown" data-schedule="digest"></span></div>
-                        <div class="chain-title">Weekly Digest</div>
-                        <div class="chain-desc">Compresses an entire week of 6-hourly broadcasts into one strategic summary. Regime evolution, execution scorecard, recurring patterns, and shadow matrix analysis. This is what the Swarm reads to understand the week before it starts mutating.</div>
-                    </div>
-                </div>
-                <div class="chain-node" data-agent-schedule="swarm">
-                    <div class="chain-dot green" style="box-shadow: 0 0 20px var(--green);"></div>
-                    <div>
-                        <div class="chain-time">SUNDAYS &middot; 17:15 <span class="chain-countdown" data-schedule="swarm"></span></div>
-                        <div class="chain-title" style="color:var(--green);">AI Swarm</div>
-                        <div class="chain-desc">The apex intelligence. <strong>Gemini 3.1</strong> reads 48 hours of sentinel broadcasts, the weekly digest, crime scene forensics from losses, and success forensics from winners - then writes each new candidate strategy from scratch with total authority over entry logic, pre-filter, position management, and DNA. <strong>Claude Opus 4.7</strong> audits the architecture and hardens the prompt every cycle. A 1000-generation God-Mode mega hunt is actively running. Every candidate is stress-tested against real market data across all 88 symbols under the unified engine with Honest Physics (60s delay, realistic fees, 2.5 ATR stop floor). Only a strategy that strictly beats the reigning champion takes the throne. Auto-upgrades to every new Gemini and Claude release the cycle after it ships.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" class="module-card flagship" data-fc="maverick">
+      <div class="module-meta">
+        <span>01</span>
+        <span class="module-status live">LIVE</span>
+      </div>
+      <div class="module-name" data-fc="maverick">MAVERICK <span class="flagship-badge">◆ Flagship</span></div>
+      <div class="module-tagline" data-fc="maverick">Flagship AI trader</div>
+      <p class="module-desc">Live autonomous execution across 88 perpetual markets. Built to evolve. Designed to win.</p>
+      <div class="module-cta"><span class="module-cta-label">Open module</span><span class="module-cta-arrow" data-fc="maverick">&rarr;</span></div>
+    </a>
 
-    <!-- SWARM section moved to /pages/swarm.html -->
+    <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" class="module-card" data-fc="shadow">
+      <div class="module-meta">
+        <span>02</span>
+        <span class="module-status live">LIVE</span>
+      </div>
+      <div class="module-name" data-fc="shadow">SHADOW</div>
+      <div class="module-tagline" data-fc="shadow">Whale copy trader</div>
+      <p class="module-desc">Tracks the wallets that matter, scores their behaviour, and surfaces consensus before the move is obvious.</p>
+      <div class="module-cta"><span class="module-cta-label">Open module</span><span class="module-cta-arrow" data-fc="shadow">&rarr;</span></div>
+    </a>
 
-    <!-- ACCESS TIERS -->
-    <section id="access" class="section-divider">
-        <div class="section-inner reveal">
-            <div class="section-label">Access</div>
-            <h2 class="section-title">Join the experiment.</h2>
-            <p class="section-text">
-                MAVERICK is live and trading real capital right now. Two rails into the tier system:
-                crypto-native ($MAV token on Base) or monthly card subscription via Stripe. Tap a
-                tier below to preview where that access lands you.
-            </p>
-            <div class="tier-grid">
-                <a class="tier-card" href="/pages/today.html" style="text-decoration:none;color:inherit;display:block;">
-                    <div class="tier-badge">Tier 1 &middot; 1,000 $MAV / $29 mo</div>
-                    <div class="tier-name">Observer</div>
-                    <div class="tier-price">Watch the machine think</div>
-                    <ul class="tier-features">
-                        <li>Live swarm evolution feed</li>
-                        <li>AI agent intelligence chain</li>
-                        <li>Weekly DNA mutation reports</li>
-                        <li>Performance dashboard</li>
-                    </ul>
-                    <div class="tier-soon" style="color:var(--accent);">Preview Today page &rarr;</div>
-                </a>
-                <a class="tier-card featured" href="/pages/signals.html" style="text-decoration:none;color:inherit;display:block;">
-                    <div class="tier-badge">Tier 2 &middot; 10,000 $MAV / $99 mo</div>
-                    <div class="tier-name">Signal</div>
-                    <div class="tier-price">Trade alongside MAVERICK</div>
-                    <ul class="tier-features">
-                        <li>Everything in Observer</li>
-                        <li>Real time trade signals</li>
-                        <li>Entry, exit, and trail alerts</li>
-                        <li>Engine specific filtering</li>
-                    </ul>
-                    <div class="tier-soon" style="color:var(--gold);">Preview Signal feed &rarr;</div>
-                </a>
-                <a class="tier-card" href="/pages/swarm.html" style="text-decoration:none;color:inherit;display:block;">
-                    <div class="tier-badge">Tier 3 &middot; 100,000 $MAV / $499 mo</div>
-                    <div class="tier-name">Sovereign</div>
-                    <div class="tier-price">Full autonomous trading</div>
-                    <ul class="tier-features">
-                        <li>Everything in Signal</li>
-                        <li>Copy trading integration</li>
-                        <li>Custom risk parameters</li>
-                        <li>Direct API access</li>
-                    </ul>
-                    <div class="tier-soon" style="color:#b9c5ff;">Preview Swarm terminals &rarr;</div>
-                </a>
-            </div>
-            <div style="margin-top:28px;text-align:center;">
-                <a href="/pages/access.html" style="display:inline-block;padding:14px 32px;background:var(--accent);color:#000;font-family:'JetBrains Mono',monospace;font-weight:800;letter-spacing:2px;font-size:0.78rem;text-transform:uppercase;text-decoration:none;border-radius:10px;">Connect Wallet or Subscribe &rarr;</a>
-            </div>
-        </div>
-    </section>
+    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" class="module-card" data-fc="arena">
+      <div class="module-meta">
+        <span>03</span>
+        <span class="module-status live">LIVE</span>
+      </div>
+      <div class="module-name" data-fc="arena">ARENA</div>
+      <div class="module-tagline" data-fc="arena">Public leaderboard &amp; indexer</div>
+      <p class="module-desc">Ranks Hyperliquid wallets by edge, return and consistency. Built to discover. Designed to rank.</p>
+      <div class="module-cta"><span class="module-cta-label">Open module</span><span class="module-cta-arrow" data-fc="arena">&rarr;</span></div>
+    </a>
 
-    <!-- SECURITY SHIELD (feature section) -->
-    <section id="security" class="section-divider">
-        <div class="section-inner reveal">
-            <div class="section-label" style="color:var(--gold);">Security</div>
-            <h2 class="section-title">A+ rated security.<br>Thirteen months hardened.</h2>
-            <p class="section-text">
-                Every connection is encrypted with TLS 1.3. Every header is hardened. Every
-                attack vector is locked down. Content Security Policy blocks every unauthorised
-                script, frame, and data injection. Rate limiting guards every API endpoint.
-                Thirteen months of iteration, thirteen server-side upgrades, zero shortcuts.
-                Don't take my word for any of it. Verify the grade yourself below.
-            </p>
+    <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" class="module-card" data-fc="quantum">
+      <div class="module-meta">
+        <span>04</span>
+        <span class="module-status build">BUILD</span>
+      </div>
+      <div class="module-name" data-fc="quantum">QUANTUM</div>
+      <div class="module-tagline" data-fc="quantum">AI web design</div>
+      <p class="module-desc">Brief-driven sites and launch pages built with the same visual discipline as the trading suite. Designed to convert.</p>
+      <div class="module-cta"><span class="module-cta-label">Open module</span><span class="module-cta-arrow" data-fc="quantum">&rarr;</span></div>
+    </a>
 
-            <!-- Gold padlock feature hero — the headline credibility signal -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin:36px 0 44px;">
-                <div style="grid-column:1 / -1; background:linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.02)); border:1px solid rgba(255,215,0,0.35); border-radius:18px; padding:32px 28px; display:flex; gap:22px; align-items:center; flex-wrap:wrap; box-shadow:0 0 40px rgba(255,215,0,0.08);">
-                    <div style="flex-shrink:0; color:var(--gold); filter:drop-shadow(0 0 16px rgba(255,215,0,0.45));">
-                        <svg width="72" height="72" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                    </div>
-                    <div style="flex:1; min-width:240px;">
-                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:8px;">Mozilla Observatory · SSL Labs · SecurityHeaders.com</div>
-                        <div style="font-size:clamp(1.8rem, 4vw, 2.4rem); font-weight:900; color:var(--gold); line-height:1.1; margin-bottom:10px; letter-spacing:-0.5px;">A+ GRADE · 100 / 100</div>
-                        <div style="color:var(--text-dim); font-size:0.92rem; line-height:1.6;">TLS 1.3 with AES-256. HSTS preload. Strict Content Security Policy. No inline scripts. No third-party code loaded without a self-hosted copy. Every header independently audited and scored perfect.</div>
-                    </div>
-                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; width:100%;">
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">13</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Months Hardening</div>
-                        </div>
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">7+</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Header Policies</div>
-                        </div>
-                        <div style="text-align:center; padding:12px; background:rgba(0,0,0,0.25); border-radius:10px; border:1px solid rgba(255,215,0,0.2);">
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:800; color:var(--gold);">0</div>
-                            <div style="font-family:'JetBrains Mono',monospace; font-size:0.54rem; color:var(--text-dim); letter-spacing:1.5px; text-transform:uppercase; margin-top:4px;">Breach Incidents</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="module-card" data-fc="streamline" style="cursor:default;">
+      <div class="module-meta">
+        <span>05</span>
+        <span class="module-status core">CORE</span>
+      </div>
+      <div class="module-name" data-fc="streamline">STREAMLINE</div>
+      <div class="module-tagline" data-fc="streamline">Data engine &middot; Feature pipeline</div>
+      <p class="module-desc">The hidden data engine. It keeps markets, features, fills and wallet telemetry moving underneath the suite.</p>
+      <div class="module-cta"><span class="module-cta-label">Core layer</span></div>
+    </div>
 
-            <div class="security-grid">
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--green);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-                    </div>
-                    <div class="security-title">TLS 1.3 / AES-256</div>
-                    <div class="security-desc">Military-grade encryption on every connection. TLS 1.3 with AES-256-GCM-SHA384 cipher suite. Same standard used by NATO and banking systems.</div>
-                    <div class="security-status">ACTIVE</div>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--accent);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <div class="security-title">HSTS Preload</div>
-                    <div class="security-desc">HTTP Strict Transport Security with 2-year enforcement. Your browser is instructed to never connect over unencrypted HTTP. Preload-ready for Chrome, Firefox, Safari.</div>
-                    <div class="security-status">ENFORCED</div>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--purple);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                    </div>
-                    <div class="security-title">Content Security Policy</div>
-                    <div class="security-desc">Strict CSP blocks all unauthorised scripts, frames, and data injection. Only trusted sources (self, Google Fonts) are permitted. XSS attacks neutralised at the browser level.</div>
-                    <div class="security-status">LOCKED</div>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--amber);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-                    </div>
-                    <div class="security-title">Clickjack & Frame Block</div>
-                    <div class="security-desc">X-Frame-Options DENY and frame-ancestors 'none' prevent any external site from embedding or overlaying FreedomCore. Zero clickjacking risk.</div>
-                    <div class="security-status">BLOCKED</div>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--green);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                    </div>
-                    <div class="security-title">API Rate Limiting</div>
-                    <div class="security-desc">All API endpoints are rate-limited to 10 requests/second per IP with burst protection. GET-only enforcement. All write operations return 403 Forbidden.</div>
-                    <div class="security-status">PROTECTED</div>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon" style="color:var(--accent);">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </div>
-                    <div class="security-title">Privacy Headers</div>
-                    <div class="security-desc">Referrer-Policy controls data leakage. Permissions-Policy blocks camera, microphone, geolocation, payment, USB, and sensor access. Cross-Origin policies isolate all resources.</div>
-                    <div class="security-status">SEALED</div>
-                </div>
-            </div>
+    <a href="https://maverick.freedomcore.io/pages/access.html" target="_blank" rel="noopener" class="module-card" data-fc="sovereign">
+      <div class="module-meta">
+        <span>06</span>
+        <span class="module-status gated">GATED</span>
+      </div>
+      <div class="module-name" data-fc="sovereign">SOVEREIGN</div>
+      <div class="module-tagline" data-fc="sovereign">Gated access layer</div>
+      <p class="module-desc">Priority access to the live intelligence layer: signals, dashboards, alerts and cross-system consensus.</p>
+      <div class="module-cta"><span class="module-cta-label">Unlock</span><span class="module-cta-arrow" data-fc="sovereign">&rarr;</span></div>
+    </a>
 
-            <!-- Live verification button -->
-            <div style="margin-top:32px;text-align:center;">
-                <a href="https://securityheaders.com/?q=freedomcore.io&followRedirects=on" target="_blank" rel="noopener noreferrer" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    VERIFY SECURITY LIVE &rarr;
-                </a>
-            </div>
-        </div>
-    </section>
+  </div>
+</section>
 
-    <!-- CLOSING BANNER — framed section with context + video -->
-    <section style="padding:70px 24px 50px; position:relative; z-index:2;">
-        <div style="max-width:900px; margin:0 auto; text-align:center;">
-            <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--green); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">One AI. Real capital. Live.</div>
-            <h2 style="font-size:clamp(1.6rem, 4vw, 2.4rem); font-weight:800; letter-spacing:-1px; margin-bottom:16px; line-height:1.1;">The experiment in motion.</h2>
-            <p style="font-size:0.95rem; line-height:1.7; color:var(--text-dim); max-width:640px; margin:0 auto 30px;">
-                No staged renders, no stock footage. Every move you see, your move. The AI self-audits, rewrites, fires. You hold the seat.
-            </p>
-            <div class="hero-banner" data-video="1" style="position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--border); box-shadow:0 4px 60px rgba(62,168,245,0.10);">
-                <video
-                    src="/img/grok-banner.mp4"
-                    poster="/img/maverick-banner.jpg"
-                    preload="metadata" muted loop playsinline webkit-playsinline
-                    style="width:100%;height:auto;display:block;"
-                    aria-label="FreedomCore animated banner"></video>
-                <button type="button" class="video-sound-btn" aria-label="Unmute banner audio" aria-pressed="false"
-                    style="position:absolute;bottom:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(10,15,24,0.78);color:#4ecdc4;border:1px solid rgba(78,205,196,0.5);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 14px rgba(0,0,0,0.3);z-index:3;"></button>
-            </div>
-            <div style="display:flex; gap:14px; justify-content:center; margin-top:28px; flex-wrap:wrap;">
-                <a href="/pages/access.html" class="btn-primary">Watch it live &rarr;</a>
-                <a href="/pages/architecture.html" class="btn-outline">How it works</a>
-            </div>
-        </div>
-    </section>
+<!-- VALUE STRIP -->
+<section class="hub-section" style="background: linear-gradient(180deg, transparent, rgba(62,168,245,0.04), transparent);">
+  <span class="section-eye">suite standard</span>
+  <h2>Sharp by default. <span class="accent">Live by design.</span></h2>
+  <p class="section-sub">The FreedomCore standard across every public system.</p>
+  <div class="values-grid">
+    <div class="value-cell">
+      <div class="value-num">/ 01</div>
+      <div class="value-name">Autonomous</div>
+      <p class="value-desc">Execution, signal generation, ranking and routing are machine-driven and audit-logged.</p>
+    </div>
+    <div class="value-cell">
+      <div class="value-num">/ 02</div>
+      <div class="value-name">Connected</div>
+      <p class="value-desc">Maverick, Shadow, Arena and Quantum share one visual language and one operating core.</p>
+    </div>
+    <div class="value-cell">
+      <div class="value-num">/ 03</div>
+      <div class="value-name">Live</div>
+      <p class="value-desc">Real markets, real wallets, real fills, real pages. No demo layer pretending to be production.</p>
+    </div>
+    <div class="value-cell">
+      <div class="value-num">/ 04</div>
+      <div class="value-name">Transparent</div>
+      <p class="value-desc">Every module tells you what it does, where to enter, and what part of the suite it controls.</p>
+    </div>
+  </div>
+</section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-logo">FREEDOMCORE</div>
-        <div class="footer-links">
-            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--purple); font-weight:700;">SHADOW &#8599; <span class="shadow-count" style="opacity:0.7;font-weight:400;">· 75 tracked</span></a>
-            <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--green); font-weight:700;">QUANTUM &#8599;</a>
-            <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA &#8599; <span class="arena-count" style="opacity:0.7;font-weight:400;">· 75 wallets</span></a>
-            <a href="https://freedomcore.io/sitemap.html" target="_blank" rel="noopener">Sitemap</a>
-            <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                @freedomcoreai
-            </a>
-            <a href="mailto:freedomcoreai@gmail.com">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
-                freedomcoreai@gmail.com
-            </a>
-            <a href="#top" class="back-to-top">
-                &uarr; Back to Top
-            </a>
-        </div>
-        <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin:28px 0 16px; padding-top:22px; border-top:1px solid var(--border); max-width:600px; margin-left:auto; margin-right:auto;">
-            <span>Designed by</span>
-            <a href="mailto:quantumspark80@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:800; letter-spacing:2.5px;">QUANTUM SPARK</a>
-            <span style="opacity:0.5;">&middot;</span>
-            <a href="mailto:quantumspark80@gmail.com" style="color:var(--text-dim); text-decoration:none;">quantumspark80@gmail.com</a>
-        </div>
-        <div class="footer-copy">&copy; 2025-2026 FreedomCore. MAVERICK Autonomous Trading System. All rights reserved.</div>
-    </footer>
+<!-- FLAGSHIP POSITIONING -->
+<section class="hub-section">
+  <div class="flagship-grid">
+    <div>
+      <span class="section-eye" style="text-align:left;">hierarchy</span>
+      <h2 style="text-align:left;">Maverick is the <span class="accent">flagship.</span></h2>
+      <p style="color:var(--text-dim); font-size:0.95rem; line-height:1.7; max-width:540px;">Maverick trades real capital across 88 perpetual markets without a human in the loop. Every other system in the FreedomCore stack feeds it, audits it, or extends it.</p>
+      <ul class="flagship-bullets">
+        <li>Shadow watches insider flow and feeds high-conviction setups upstream.</li>
+        <li>Arena runs the public proving ground. Anything Maverick adopts has been audited in the open.</li>
+        <li>Quantum builds the web surfaces; Streamline supplies the feature engine.</li>
+        <li>Sovereign gates priority access to the live signals feed and cross-system consensus.</li>
+      </ul>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:24px;">
+        <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" class="cta-primary">Enter Maverick &rarr;</a>
+        <a href="#modules" class="cta-secondary">Browse the ecosystem</a>
+      </div>
+    </div>
 
-    <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260430f"></script>
-    <script src="/js/mav-wallet.js?v=20260501h"></script>
-    <script src="/js/tracker.js" defer></script>
-    <script src="/js/video-banner.js?v=20260423e" defer></script>
-    <script>
-    // Live champion card sync — pulls current champion from /api/swarm_champion
-    // and updates the "Live Champion" card on every page load + every 60s.
-    // No hot-swap ever leaves marketing copy lying about who is live.
-    (function() {
-        async function refreshLiveChampion() {
-            try {
-                // Use fcFetch (adds X-API-Key header) — plain fetch hits
-                // nginx's 401 gate and the card stays stuck on "loading...".
-                // Fixed 2026-04-23.
-                const res = typeof fcFetch === 'function'
-                    ? await fcFetch('/api/swarm_champion', { cache: 'no-store' })
-                    : await fetch('/api/swarm_champion', {
-                        cache: 'no-store',
-                        headers: { 'X-API-Key': 'fcweb_60fd94aa2d910f38a9f3e0557076791a' }
-                      });
-                if (!res.ok) return;
-                const d = await res.json();
-                if (!d.found) return;
-                const nameEl = document.getElementById('live-champion-name');
-                const cardNameEl = document.getElementById('live-champion-card-name');
-                const featEl = document.getElementById('live-champion-features');
-                if (nameEl && d.name) nameEl.textContent = d.name;
-                if (cardNameEl && d.strategy_name) cardNameEl.textContent = d.strategy_name + ' (Live Champion)';
-                if (featEl && Array.isArray(d.required_features) && d.required_features.length) {
-                    const feats = d.required_features.map(f => f.toUpperCase()).join(', ');
-                    featEl.textContent = feats;
-                }
-            } catch (e) { /* silent — card keeps generic fallback */ }
-        }
-        // On load + every 60s
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', refreshLiveChampion);
-        } else {
-            refreshLiveChampion();
-        }
-        setInterval(refreshLiveChampion, 60000);
-    })();
-    </script>
-<script src="/js/risk-footer.js?v=20260501g" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+    <div class="stack-panel">
+      <div style="display:flex; justify-content:space-between; margin-bottom:14px; font-family:'JetBrains Mono',monospace; font-size:0.55rem; letter-spacing:0.32em; text-transform:uppercase;">
+        <span style="color:var(--text-dim)">stack</span>
+        <span data-fc="freedomcore">live</span>
+      </div>
+      <a class="stack-row flagship" href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;">
+        <span class="stack-tier">L0</span>
+        <span class="stack-name" data-fc="maverick">MAVERICK</span>
+        <span class="stack-role">flagship · trader</span>
+      </a>
+      <a class="stack-row" href="https://shadow.freedomcore.io/"  target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><span class="stack-tier">L1</span><span class="stack-name" data-fc="shadow">SHADOW</span><span class="stack-role">whale consensus</span></a>
+      <a class="stack-row" href="https://arena.freedomcore.io/"   target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><span class="stack-tier">L2</span><span class="stack-name" data-fc="arena">ARENA</span><span class="stack-role">proving ground</span></a>
+      <a class="stack-row" href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><span class="stack-tier">L3</span><span class="stack-name" data-fc="quantum">QUANTUM</span><span class="stack-role">signal research</span></a>
+      <a class="stack-row" href="https://maverick.freedomcore.io/pages/streamline.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><span class="stack-tier">L4</span><span class="stack-name" data-fc="streamline">STREAMLINE</span><span class="stack-role">data spine</span></a>
+      <a class="stack-row" href="https://maverick.freedomcore.io/pages/access.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><span class="stack-tier">L5</span><span class="stack-name" data-fc="sovereign">SOVEREIGN</span><span class="stack-role">gated access</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="hub-section" style="text-align:center; padding-top:80px; padding-bottom:80px; background: radial-gradient(60% 80% at 50% 100%, var(--glow-primary), transparent 60%);">
+  <span class="section-eye">pick your entry</span>
+  <h2>Front row to a <span class="accent">self-running engine.</span></h2>
+  <p class="section-sub">Two ways in. Watch the flagship trade in public, or unlock priority access and cross-system consensus signals.</p>
+  <div class="cta-row" style="margin-top:8px;">
+    <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" class="cta-primary">Enter Maverick &rarr;</a>
+    <a href="https://maverick.freedomcore.io/pages/access.html" target="_blank" rel="noopener" class="cta-secondary">Unlock Sovereign &#8599;</a>
+  </div>
+  <p style="margin-top:40px; font-family:'JetBrains Mono',monospace; font-size:0.55rem; letter-spacing:0.32em; color:var(--text-dim); text-transform:uppercase;">Past performance does not guarantee future results &middot; no investment advice</p>
+</section>
+
+<!-- SUITE POSTER / BOTTOM BANNER — full-bleed quality image, no cropping. -->
+<section class="hub-section tight" aria-label="FreedomCore suite banner">
+  <a href="#top" class="bottom-poster-link" aria-label="FreedomCore suite — Maverick, Shadow, Arena, Quantum">
+    <img src="/freedomcore-suite-hero.jpg?v=20260427"
+         alt="FreedomCore — The Ultimate Intelligent Trading Suite. Maverick, Shadow, Arena, Quantum."
+         class="bottom-poster-img"
+         loading="lazy" decoding="async"
+         width="1168" height="784" />
+  </a>
+</section>
+
+<!-- FOOTER (matches sister-site pattern) -->
+<footer class="footer">
+  <div class="footer-logo">FREEDOMCORE</div>
+  <div class="footer-links">
+    <a href="https://maverick.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--gold); font-weight:700;">MAVERICK &#8599; <span class="shadow-count" style="opacity:0.7;font-weight:400;">· flagship</span></a>
+    <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--purple); font-weight:700;">SHADOW &#8599; <span class="shadow-count" style="opacity:0.7;font-weight:400;">· 75 tracked</span></a>
+    <a href="https://arena.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--silver); font-weight:700;">ARENA &#8599; <span class="arena-count" style="opacity:0.7;font-weight:400;">· 75 wallets</span></a>
+    <a href="https://quantum.freedomcore.io/" target="_blank" rel="noopener" style="color:var(--blue); font-weight:700;">QUANTUM &#8599;</a>
+    <a href="/sitemap.html" style="color:var(--text-dim);">Sitemap</a>
+    <a href="https://maverick.freedomcore.io/pages/access.html" target="_blank" rel="noopener" style="color:var(--gold);">Access Tiers</a>
+    <a href="https://x.com/freedomcoreai" target="_blank" rel="noopener noreferrer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @freedomcoreai
+    </a>
+    <a href="mailto:freedomcoreai@gmail.com">freedomcoreai@gmail.com</a>
+    <a href="#top" class="back-to-top">&uarr; Back to Top</a>
+  </div>
+  <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; margin:26px auto 14px; padding-top:20px; border-top:1px solid var(--border); max-width:600px;">
+    <span>Designed by</span>
+    <a href="mailto:quantumspark80@gmail.com" style="color:var(--blue); text-decoration:none; font-weight:800; letter-spacing:2.5px;">QUANTUM SPARK</a>
+    <span style="opacity:0.5;">&middot;</span>
+    <a href="mailto:quantumspark80@gmail.com" style="color:var(--text-dim); text-decoration:none;">quantumspark80@gmail.com</a>
+  </div>
+  <div class="footer-copy">FreedomCore — operating system for autonomous trading intelligence. © 2025–2026.</div>
+</footer>
+
+<script src="/js/theme-init.js?v=20260424a"></script>
+<script src="/js/app.js?v=20260501b" defer></script>
+<script src="/js/motion.js?v=20260424b" defer></script>
+
+<!-- ─── INTERACTIVE FUSION CORE — drag-to-spin physics + click routing ─── -->
+<script>
+(function() {
+  const wrap       = document.getElementById('fc-core');
+  const orbiters   = document.getElementById('fc-orbiters');
+  const fieldlines = document.getElementById('fc-fieldlines');
+  if (!wrap || !orbiters) return;
+  const nodes = Array.from(orbiters.querySelectorAll('.core-node'));
+
+  let rotation = 0;
+  const baseSpeed = 0.0028;
+  let manualMomentum = 0;
+  let isDragging = false;
+  let lastDragAngle = 0;
+  let lastDragTime  = 0;
+  let velocity = 0;
+  let downX = 0, downY = 0;
+  let downedNode = null;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function placeNodes() {
+    const radius = 44;
+    nodes.forEach(node => {
+      const baseDeg = parseFloat(node.dataset.baseAngle || '0');
+      const a = (baseDeg * Math.PI / 180) + rotation;
+      const x = 50 + radius * Math.cos(a - Math.PI / 2);
+      const y = 50 + radius * Math.sin(a - Math.PI / 2);
+      node.style.left = x + '%';
+      node.style.top  = y + '%';
+    });
+    if (fieldlines) {
+      fieldlines.style.transform = 'rotate(' + (rotation * 180 / Math.PI) + 'deg)';
+    }
+  }
+
+  function step() {
+    if (!isDragging && !reducedMotion) {
+      rotation += baseSpeed + manualMomentum;
+      manualMomentum *= 0.94;
+      if (Math.abs(manualMomentum) < 1e-5) manualMomentum = 0;
+    }
+    placeNodes();
+    requestAnimationFrame(step);
+  }
+
+  placeNodes();
+  if (!reducedMotion) requestAnimationFrame(step);
+
+  function angleFromCentre(clientX, clientY) {
+    const rect = wrap.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    return Math.atan2(clientY - cy, clientX - cx);
+  }
+
+  wrap.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    wrap.classList.add('is-dragging');
+    lastDragAngle = angleFromCentre(e.clientX, e.clientY);
+    lastDragTime  = performance.now();
+    velocity = 0;
+    downX = e.clientX; downY = e.clientY;
+    downedNode = e.target.closest('.core-node');
+    try { wrap.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+
+  wrap.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const a = angleFromCentre(e.clientX, e.clientY);
+    let delta = a - lastDragAngle;
+    while (delta > Math.PI)  delta -= 2 * Math.PI;
+    while (delta < -Math.PI) delta += 2 * Math.PI;
+    rotation += delta;
+    const now = performance.now();
+    const dt = Math.max(1, now - lastDragTime);
+    velocity = delta / dt;
+    lastDragAngle = a;
+    lastDragTime  = now;
+  });
+
+  function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    wrap.classList.remove('is-dragging');
+    manualMomentum = velocity * 16;
+    velocity = 0;
+    try { wrap.releasePointerCapture(e.pointerId); } catch (_) {}
+  }
+  wrap.addEventListener('pointerup', endDrag);
+  wrap.addEventListener('pointercancel', endDrag);
+  wrap.addEventListener('pointerleave', endDrag);
+
+  // Suppress click navigation if the gesture was actually a drag (>6px).
+  nodes.forEach(node => {
+    node.addEventListener('click', (e) => {
+      if (downedNode !== node) return;
+      const dx = e.clientX - downX, dy = e.clientY - downY;
+      if (dx * dx + dy * dy > 36) e.preventDefault();
+    });
+  });
+})();
+</script>
+
+<!-- ─── FREEDOMCORE — split letters for sequential bootup (Rob's spec) ─── -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const textEl = document.getElementById('freedomcore-text');
+  if (!textEl) return;
+  const text = textEl.innerText;
+  textEl.innerHTML = '';
+  text.split('').forEach((letter, index) => {
+    const span = document.createElement('span');
+    span.innerText = letter;
+    span.className = 'fc-letter';
+    /* 0.08s stagger — sequence rips across the screen quickly */
+    span.style.animationDelay = (index * 0.08) + 's';
+    textEl.appendChild(span);
+  });
+});
+</script>
+
+<!-- ─── MAVERICK LIVE RAIL — real broker fills, ticker rotation ─── -->
+<script>
+(function() {
+  const API_KEY = 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+  const tickerEl = document.getElementById('mav-rail-ticker');
+  const aggEl    = document.getElementById('mav-rail-agg');
+  const freshEl  = document.getElementById('mav-rail-fresh');
+  if (!tickerEl) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rows = [];
+  let idx = 0;
+
+  function relTime(ts) {
+    const s = Math.max(0, Math.floor(Date.now() / 1000 - ts));
+    if (s < 60) return s + 's ago';
+    if (s < 3600) return Math.floor(s / 60) + 'm ago';
+    if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+    return Math.floor(s / 86400) + 'd ago';
+  }
+  function renderRow(row) {
+    if (!row) return '<span class="mav-rail__loading">no recent fills</span>';
+    const tag = (row.tag || 'MAVERICK').toUpperCase();
+    const sym = row.symbol || '—';
+    const reason = (row.reason || '—').replace('CHAMPION:', '');
+    const pnl = (row.pnl_pct >= 0 ? '+' : '') + (row.pnl_pct ?? 0).toFixed(2) + '%';
+    const cls = row.pnl_pct >= 0 ? 'win' : 'loss';
+    return '<span class="tag ' + tag + '">' + tag + '</span>'
+         + '<span class="sym">' + sym + '</span>'
+         + '<span class="reason">' + reason + '</span>'
+         + '<span class="pnl ' + cls + '">' + pnl + '</span>'
+         + '<span class="age">' + relTime(row.ts) + '</span>';
+  }
+  function tick() {
+    if (!rows.length) { tickerEl.innerHTML = renderRow(null); return; }
+    const row = rows[idx % rows.length];
+    tickerEl.classList.add('fading');
+    setTimeout(() => {
+      tickerEl.innerHTML = renderRow(row);
+      tickerEl.classList.remove('fading');
+    }, reduceMotion ? 0 : 220);
+    idx++;
+  }
+  async function poll() {
+    try {
+      const r = await fetch('/api/live_ledger', { headers: { 'X-API-Key': API_KEY }, cache: 'no-store' });
+      if (!r.ok) return;
+      const data = await r.json();
+      rows = (data.rows || []);
+      const agg = data.aggregate_7d || {};
+      const cascadeTs = data.cascade_active_since || 0;
+      const cascadeHHMM = cascadeTs ? new Date(cascadeTs * 1000).toUTCString().slice(17, 22) + ' UTC' : '—';
+      aggEl.innerHTML = '7d · '
+        + '<span class="agg-w">' + (agg.wins ?? '–') + 'W</span> / '
+        + '<span class="agg-l">' + (agg.losses ?? '–') + 'L</span> · '
+        + 'WR ' + (agg.wr_pct ?? '–') + '% · '
+        + 'Cascade live since ' + cascadeHHMM;
+      const now = new Date();
+      freshEl.textContent = 'updated ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      tick();
+    } catch (_) { /* keep last good */ }
+  }
+  poll();
+  setInterval(poll, 60000);
+  if (!reduceMotion) setInterval(tick, 3500);
+})();
+</script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>

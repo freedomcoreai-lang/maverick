@@ -1403,3 +1403,11 @@ body[data-site="arena"] .mobile-dropdown {
         padding: 14px 16px;
     }
 }
+
+/* Fix for FreedomCore Hub — no top banners/tickers, so nav is flush to top */
+body[data-site="freedomcore"] { padding-top: 48px !important; }
+body[data-site="freedomcore"] .nav { top: 0 !important; }
+@media (max-width: 768px) {
+    body[data-site="freedomcore"] { padding-top: 42px !important; }
+    body[data-site="freedomcore"] .nav { top: 0 !important; }
+}
