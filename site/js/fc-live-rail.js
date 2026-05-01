@@ -1,12 +1,15 @@
-/* fc-live-rail.js — cross-site live ticker.
- * Matches the FreedomCore apex hub card design but narrower/shorter.
+/* fc-live-rail.js — slim cross-site live ticker.
+ * Card design with internal ticker window, heavily compressed.
  */
 (function () {
     'use strict';
+    // Do not inject on Maverick or FreedomCore Hub sites
+    if (window.location.hostname.indexOf('maverick.') !== -1 || window.location.hostname === 'freedomcore.io') return;
+
     var FEED_URL = 'https://maverick.freedomcore.io/api_data/live_ledger.json';
     var POLL_MS = 60000;
     var TICK_MS = 3500;
-    var state = { rows: [], idx: 0, agg: null, cascadeTs: 0 };
+    var state = { rows: [], idx: 0, agg: null };
     var els = {};
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -15,37 +18,31 @@
         var css = document.createElement('style');
         css.id = 'fc-live-rail-style';
         css.textContent = '' +
-            '.fc-ticker-wrap { width: min(900px, 94%); margin: 14px auto; padding: 10px 14px; display: grid; grid-template-columns: 1fr; gap: 4px; border: 1px solid color-mix(in srgb, var(--rail-accent, #ffd700) 32%, transparent); border-radius: 8px; background: linear-gradient(90deg, color-mix(in srgb, var(--rail-accent, #ffd700) 8%, transparent), transparent 50%), linear-gradient(180deg, rgba(20, 24, 34, 0.78), rgba(7, 10, 16, 0.84)); box-shadow: 0 0 24px color-mix(in srgb, var(--rail-accent, #ffd700) 12%, transparent), inset 0 0 0 1px rgba(255, 255, 255, 0.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #f5f5fa; text-align: left; position: relative; z-index: 150; font-family: "Inter", sans-serif; } ' +
-            '[data-theme="light"] .fc-ticker-wrap { background: linear-gradient(90deg, color-mix(in srgb, var(--rail-accent, #b45309) 8%, transparent), transparent 50%), rgba(238,247,255,0.92); border-color: color-mix(in srgb, var(--rail-accent, #b45309) 40%, transparent); color: #0a0a0f; box-shadow: 0 4px 16px rgba(0,0,0,0.08); } ' +
-            '.fc-ticker-wrap .fc-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; } ' +
-            '.fc-ticker-wrap .fc-eyebrow { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; letter-spacing: 0.18em; color: var(--rail-accent, #ffd700); text-transform: uppercase; font-weight: 700; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-eyebrow { color: var(--rail-accent, #b45309); } ' +
-            '.fc-ticker-wrap .fc-fresh { font-family: "JetBrains Mono", monospace; font-size: 0.55rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.6); white-space: nowrap; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-fresh { color: rgba(10,10,15,0.6); } ' +
-            '.fc-ticker-wrap .fc-claim { font-size: 0.8rem; font-weight: 700; line-height: 1.3; margin: 2px 0 4px 0; } ' +
-            '.fc-ticker-wrap .fc-ticker-box { min-height: 26px; padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--rail-accent, #ffd700) 20%, transparent); border-radius: 6px; background: rgba(0,0,0,0.36); font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: 0.04em; color: rgba(245,245,250,0.92); display: flex; align-items: center; overflow: hidden; transition: opacity 0.3s; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box { background: rgba(255,255,255,0.78); border-color: color-mix(in srgb, var(--rail-accent, #b45309) 20%, transparent); color: #0a0a0f; } ' +
-            '.fc-ticker-wrap .fc-ticker-box.fading { opacity: 0; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .tag { color: var(--rail-accent, #ffd700); font-weight: 800; margin-right: 8px; letter-spacing: 0.10em; flex-shrink: 0; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .tag { color: var(--rail-accent, #b45309); } ' +
-            '.fc-ticker-wrap .fc-ticker-box .tag.PLATINUM { color: #c0c8d4; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .tag.GOLD { color: #ffd700; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .tag.SILVER { color: #8b5cf6; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .sym { font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .reason { color: rgba(245,245,250,0.55); margin-right: 10px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .reason { color: rgba(10,10,15,0.6); } ' +
-            '.fc-ticker-wrap .fc-ticker-box .pnl.win { color: #22c55e; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .pnl.loss { color: #ef4444; font-weight: 700; margin-right: 8px; flex-shrink: 0; } ' +
-            '.fc-ticker-wrap .fc-ticker-box .age { color: rgba(245,245,250,0.45); white-space: nowrap; flex-shrink: 0; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-ticker-box .age { color: rgba(10,10,15,0.45); } ' +
-            '.fc-ticker-wrap .fc-agg { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; letter-spacing: 0.10em; color: rgba(245,245,250,0.66); text-transform: uppercase; margin-top: 2px; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-agg { color: rgba(10,10,15,0.66); } ' +
-            '.fc-ticker-wrap .fc-agg .w { color: #22c55e; font-weight: 700; } ' +
-            '.fc-ticker-wrap .fc-agg .l { color: #ef4444; font-weight: 700; } ' +
-            '.fc-ticker-wrap .fc-cta { margin-top: 2px; justify-self: end; padding: 6px 16px; background: var(--rail-accent, #ffd700); color: #000; font-family: "Orbitron", sans-serif; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.16em; text-decoration: none; text-transform: uppercase; border-radius: 6px; box-shadow: 0 0 16px color-mix(in srgb, var(--rail-accent, #ffd700) 34%, transparent); transition: transform 0.2s, box-shadow 0.2s; display: inline-block; } ' +
-            '[data-theme="light"] .fc-ticker-wrap .fc-cta { color: #fff; background: var(--rail-accent, #b45309); } ' +
-            '.fc-ticker-wrap .fc-cta:hover { transform: translateY(-2px); box-shadow: 0 0 24px color-mix(in srgb, var(--rail-accent, #ffd700) 58%, transparent); } ' +
-            '@media (max-width: 640px) { .fc-ticker-wrap .fc-ticker-box { font-size: 0.65rem; padding: 6px 8px; } .fc-ticker-wrap { padding: 10px 12px; margin: 10px auto; } .fc-ticker-wrap .fc-cta { justify-self: stretch; text-align: center; } }';
+            '.fc-mini-card { width: min(1000px, 94%); margin: 0 auto; padding: 6px 12px; display: flex; align-items: center; gap: 12px; ' +
+            'background: color-mix(in srgb, var(--site-accent, #888) 4%, var(--surface, rgba(20,24,34,0.85))); ' +
+            'border: 1px solid color-mix(in srgb, var(--site-accent, #888) 20%, var(--border, rgba(255,255,255,0.1))); ' +
+            'border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); ' +
+            'font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: var(--text, #f5f5fa); z-index: 150; position: relative; } ' +
+            '[data-theme="light"] .fc-mini-card { background: color-mix(in srgb, var(--site-accent, #888) 4%, var(--surface, #ffffff)); box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-color: color-mix(in srgb, var(--site-accent, #888) 25%, var(--border, #e0e0e0)); color: var(--text, #0a0a0f); } ' +
+            '.fc-mini-brand { font-weight: 800; color: #ffd700; letter-spacing: 0.1em; flex-shrink: 0; } ' +
+            '[data-theme="light"] .fc-mini-brand { color: #b45309; } ' +
+            '.fc-mini-ticker { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.25); padding: 4px 10px; border-radius: 4px; border: 1px inset rgba(255,255,255,0.05); overflow: hidden; transition: opacity 0.3s; } ' +
+            '[data-theme="light"] .fc-mini-ticker { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.05); border-style: solid; } ' +
+            '.fc-mini-ticker.fading { opacity: 0; } ' +
+            '.fc-mini-ticker .tag { color: #ffd700; font-weight: 800; letter-spacing: 0.05em; flex-shrink: 0; } ' +
+            '[data-theme="light"] .fc-mini-ticker .tag { color: #b45309; } ' +
+            '.fc-mini-ticker .sym { font-weight: 700; color: var(--text-primary, #fff); flex-shrink: 0; } ' +
+            '[data-theme="light"] .fc-mini-ticker .sym { color: var(--text-primary, #000); } ' +
+            '.fc-mini-ticker .reason { color: var(--text-dim, rgba(255,255,255,0.6)); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: "Inter", sans-serif; font-size: 0.75rem; } ' +
+            '[data-theme="light"] .fc-mini-ticker .reason { color: rgba(10,10,15,0.6); } ' +
+            '.fc-mini-ticker .pnl.win { color: #22c55e; font-weight: 700; flex-shrink: 0; } ' +
+            '.fc-mini-ticker .pnl.loss { color: #ef4444; font-weight: 700; flex-shrink: 0; } ' +
+            '.fc-mini-ticker .age { color: var(--text-dim, rgba(255,255,255,0.4)); font-size: 0.6rem; flex-shrink: 0; } ' +
+            '.fc-mini-stats { font-size: 0.65rem; color: var(--text-dim, rgba(255,255,255,0.7)); flex-shrink: 0; white-space: nowrap; padding-left: 8px; border-left: 1px solid var(--border, rgba(255,255,255,0.1)); } ' +
+            '[data-theme="light"] .fc-mini-stats { color: rgba(10,10,15,0.7); border-left-color: var(--border, #e0e0e0); } ' +
+            '.fc-mini-stats .w { color: #22c55e; font-weight: 700; } ' +
+            '.fc-mini-stats .l { color: #ef4444; font-weight: 700; } ' +
+            '@media (max-width: 768px) { .fc-mini-card { flex-wrap: wrap; gap: 6px; padding: 6px 10px; margin: 4px auto; } .fc-mini-ticker { width: 100%; flex: none; font-size: 0.65rem; padding: 4px 6px; } .fc-mini-brand { font-size: 0.65rem; } .fc-mini-stats { font-size: 0.6rem; margin-left: auto; border: none; padding-left: 0; } }';
         document.head.appendChild(css);
     }
 
@@ -54,7 +51,8 @@
         if (el) return el;
         el = document.createElement('div');
         el.id = 'fc-global-ticker-container';
-        // Add to body, right after grid-bg or nav if possible, else top of body
+        el.style.cssText = 'position:relative; z-index:150; display:flex; flex-direction:column; gap:6px; margin: 16px auto 24px;';
+        
         var gridBg = document.querySelector('.grid-bg');
         if (gridBg && gridBg.nextSibling) {
             gridBg.parentNode.insertBefore(el, gridBg.nextSibling);
@@ -79,45 +77,33 @@
 
     function buildShell() {
         var mount = document.createElement('div');
-        mount.className = 'fc-ticker-wrap';
-        mount.style.setProperty('--rail-accent', '#ffd700');
-        if (document.documentElement.getAttribute('data-theme') === 'light') {
-            mount.style.setProperty('--rail-accent', '#b45309');
-        }
+        mount.className = 'fc-mini-card';
         mount.setAttribute('role', 'region');
-        mount.setAttribute('aria-label', 'Maverick live broker ledger');
+        mount.setAttribute('aria-label', 'Maverick live ledger');
         mount.innerHTML = '' +
-            '<div class="fc-head">' +
-                '<span class="fc-eyebrow">MAVERICK &middot; AUTONOMOUS AI TRADER</span>' +
-                '<span class="fc-fresh" id="fc-mav-rail-fresh">updated --</span>' +
+            '<div class="fc-mini-brand">MAVERICK</div>' +
+            '<div class="fc-mini-ticker" id="fc-mav-ticker-box" aria-live="polite">' +
+                '<span style="color:var(--text-dim, rgba(255,255,255,0.4))">connecting&hellip;</span>' +
             '</div>' +
-            '<div class="fc-claim">Last 5 closed KuCoin broker exits. Losses included.</div>' +
-            '<div class="fc-ticker-box" id="fc-mav-rail-ticker" aria-live="polite">' +
-                '<span style="color:rgba(245,245,250,0.45)">connecting&hellip;</span>' +
-            '</div>' +
-            '<div class="fc-agg" id="fc-mav-rail-agg">7d &middot; &mdash;</div>' +
-            '<a class="fc-cta" href="https://maverick.freedomcore.io/">ENTER MAVERICK &rarr;</a>';
+            '<div class="fc-mini-stats" id="fc-mav-stats">7D &middot; &mdash;</div>';
         
         var container = getContainer();
         container.appendChild(mount);
         
-        els.ticker = mount.querySelector('#fc-mav-rail-ticker');
-        els.agg = mount.querySelector('#fc-mav-rail-agg');
-        els.fresh = mount.querySelector('#fc-mav-rail-fresh');
+        els.ticker = mount.querySelector('#fc-mav-ticker-box');
+        els.agg = mount.querySelector('#fc-mav-stats');
     }
 
     function renderRow(row) {
-        if (!row) return '<span style="color:rgba(245,245,250,0.45)">no recent fills</span>';
-        var tag = (row.tag || 'MAVERICK').toUpperCase();
+        if (!row) return '<span style="color:var(--text-dim, rgba(255,255,255,0.4))">no recent fills</span>';
         var sym = row.symbol || '--';
         var pnl = (row.pnl_pct >= 0 ? '+' : '') + (row.pnl_pct || 0).toFixed(2) + '%';
         var cls = row.pnl_pct >= 0 ? 'win' : 'loss';
         var reason = (row.reason || '').replace('CHAMPION:', '');
         return '' +
-            '<span class="tag ' + tag + '">' + tag + '</span>' +
             '<span class="sym">' + sym + '</span>' +
-            '<span class="reason">' + reason + '</span>' +
             '<span class="pnl ' + cls + '">' + pnl + '</span>' +
+            '<span class="reason">' + reason + '</span>' +
             '<span class="age">' + relTime(row.ts) + '</span>';
     }
 
@@ -135,21 +121,10 @@
     function renderAgg() {
         if (!els.agg) return;
         var agg = state.agg || {};
-        var cascadeTs = state.cascadeTs || 0;
-        var cascadeHHMM = cascadeTs ? new Date(cascadeTs * 1000).toUTCString().slice(17, 22) + ' UTC' : '—';
-        
         var wins = (agg.wins != null) ? agg.wins : '--';
         var losses = (agg.losses != null) ? agg.losses : '--';
         var wr = (agg.wr_pct != null) ? agg.wr_pct : '--';
-        
-        els.agg.innerHTML = '7d &middot; <span class="w">' + wins + 'W</span> / <span class="l">' + losses + 'L</span> &middot; WR ' + wr + '% &middot; Cascade live since ' + cascadeHHMM;
-        
-        if (els.fresh) {
-            var now = new Date();
-            var hours = now.getHours().toString().padStart(2, '0');
-            var mins = now.getMinutes().toString().padStart(2, '0');
-            els.fresh.textContent = 'updated ' + hours + ':' + mins;
-        }
+        els.agg.innerHTML = '7D: <span class="w">' + wins + 'W</span> / <span class="l">' + losses + 'L</span> &middot; WR ' + wr + '%';
     }
 
     function poll() {
@@ -159,7 +134,6 @@
                 if (!data) return;
                 state.rows = data.rows || [];
                 state.agg = data.aggregate_7d || null;
-                state.cascadeTs = data.cascade_active_since || 0;
                 renderAgg();
                 tick();
             })
