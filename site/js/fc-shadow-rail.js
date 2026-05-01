@@ -77,7 +77,7 @@
         var mount = document.createElement('div');
         mount.className = 'fc-mini-card';
         mount.setAttribute('role', 'region');
-        mount.setAttribute('aria-label', 'Shadow live cohort feed');
+        mount.setAttribute('aria-label', 'Shadow live whales feed');
         mount.innerHTML = '' +
             '<div class="fc-mini-brand shadow">SHADOW&nbsp;&nbsp;</div>' +
             '<div class="fc-mini-ticker" id="fc-shd-ticker-box" aria-live="polite">' +
@@ -93,7 +93,7 @@
     }
 
     function renderRow(row) {
-        if (!row) return '<span style="color:var(--text-dim, rgba(255,255,255,0.4))">awaiting cohort fire</span>';
+        if (!row) return '<span style="color:var(--text-dim, rgba(255,255,255,0.4))">awaiting whale signal</span>';
         var sym = row.symbol || '--';
         var sideCls = (row.side || '').toLowerCase() === 'buy' ? 'win' : 'loss';
         return '' +
