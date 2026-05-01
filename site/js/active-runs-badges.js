@@ -14,15 +14,9 @@
     var FEED_URL = '/api_data/active_runs.json';
     var POLL_MS = 30000;
 
-    function fmtElapsed(sec) {
-        if (sec == null || sec < 0) return 'in chamber';
-        if (sec < 90) return 'live · ' + sec + 's in';
-        var m = Math.floor(sec / 60);
-        if (m < 60) return 'live · ' + m + 'm in';
-        var h = Math.floor(m / 60);
-        var mm = m % 60;
-        return 'live · ' + h + 'h' + (mm ? ' ' + mm + 'm' : '') + ' in';
-    }
+    // Operator 2026-05-01: drop the elapsed time when running. The pulse
+    // dot + 'RUNNING' word is the signal. Time-since-start is noise.
+    function fmtElapsed(sec) { return 'RUNNING'; }
 
     function applyBadges(payload) {
         var active = (payload && payload.active_runs) ? payload.active_runs : [];
@@ -36,6 +30,12 @@
         document.querySelectorAll('.swarm-feed-tab').forEach(function (btn) {
             btn.classList.remove('is-running');
             btn.removeAttribute('data-running');
+            // Restore any countdown class we suppressed while it was running
+            var t = btn.querySelector('.swarm-feed-tab__timer');
+            if (t && t.dataset.fcSuppressedCountdown === '1') {
+                t.classList.add('agent-countdown');
+                delete t.dataset.fcSuppressedCountdown;
+            }
         });
 
         // Stamp the matched tabs
@@ -46,13 +46,17 @@
             btn.classList.add('is-running');
             btn.setAttribute('data-running', '1');
 
-            // Replace timer text with the live state. Keep the .agent-countdown
-            // class but blank the text — let the existing countdown renderer
-            // skip when [data-running] is set.
+            // Replace timer text with a clean RUNNING label + round counter.
+            // Strip the .agent-countdown class while running so the countdown
+            // renderer (app.js updateCountdowns) can't overwrite our text
+            // every second back to next-fire timing. Restored when run ends.
             var timer = btn.querySelector('.swarm-feed-tab__timer');
             if (timer) {
-                timer.textContent = fmtElapsed(run.elapsed_sec) +
-                    (run.rounds_label ? ' · ' + run.rounds_label : '');
+                if (timer.classList.contains('agent-countdown')) {
+                    timer.dataset.fcSuppressedCountdown = '1';
+                    timer.classList.remove('agent-countdown');
+                }
+                timer.textContent = (run.rounds_label ? run.rounds_label + ' · ' : '') + 'RUNNING';
             }
             var name = btn.querySelector('.swarm-feed-tab__name');
             if (name && !name.dataset.origText) name.dataset.origText = name.textContent;

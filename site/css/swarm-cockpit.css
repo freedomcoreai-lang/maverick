@@ -736,3 +736,69 @@
     .terminal-overlay-body  { padding: var(--sp-24) var(--sp-16); font-size: var(--fs-16); }
     .terminal-overlay--reader .terminal-overlay-body > * { max-width: none; }
 }
+
+/* ─── Operator 2026-05-01 — flagship polish on the LLM Swarm Terminals.
+     The terminal section moved to position 2 (right under the hero) because
+     watching AI evolve in real time IS the marketing hook. Sharper edges,
+     bolder active state, tighter tab grid, prominent panel header. */
+.swarm-section--terminals {
+    padding-top: var(--sp-32, 32px);
+}
+.swarm-section--terminals .section-label {
+    color: var(--accent);
+    letter-spacing: 0.22em;
+}
+.swarm-section--terminals .section-title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+/* Tab grid — sharper accent on the active tab, tighter density */
+.swarm-section--terminals .swarm-feed-tabs {
+    border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+                0 18px 48px -22px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.swarm-section--terminals .swarm-feed-tab {
+    padding: 14px 16px 12px;
+    transition: background 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+.swarm-section--terminals .swarm-feed-tab.is-active {
+    background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+    box-shadow: inset 0 -2px 0 var(--accent);
+}
+.swarm-section--terminals .swarm-feed-tab__name {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+}
+.swarm-section--terminals .swarm-feed-tab__timer {
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--text-dim) 80%, transparent);
+}
+
+/* Panel — more confident frame, stronger divider, monospace meta */
+.swarm-section--terminals .swarm-feed-panel {
+    margin-top: 14px;
+    border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+    box-shadow: 0 22px 56px -28px color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.swarm-section--terminals .swarm-feed-panel__header {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent);
+    padding: 16px 22px;
+}
+.swarm-section--terminals .swarm-feed-panel__title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+.swarm-section--terminals .swarm-feed-panel__state {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--text-dim);
+}
+.swarm-section--terminals .swarm-feed-panel__state[data-state="live"] {
+    background: #22c55e;
+    box-shadow: 0 0 12px #22c55e, 0 0 0 2px rgba(34,197,94,0.18);
+    animation: fc-running-pulse 1.6s ease-in-out infinite;
+}

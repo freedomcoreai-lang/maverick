@@ -10,9 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501h">
-    <link rel="stylesheet" href="/css/style.css?v=20260501h">
-    <link rel="stylesheet" href="/css/swarm-cockpit.css?v=20260501h">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501i">
+    <link rel="stylesheet" href="/css/style.css?v=20260501i">
+    <link rel="stylesheet" href="/css/swarm-cockpit.css?v=20260501i">
 </head>
 <body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
@@ -223,6 +223,143 @@
         </div>
     </section>
 
+    <section class="swarm-section swarm-section--terminals" aria-labelledby="agent-feeds-title">
+        <div class="section-inner">
+            <div class="section-label">LLM Swarm Terminals</div>
+            <h2 class="section-title" id="agent-feeds-title">Watch the chambers work.</h2>
+            <p class="section-text">Live feeds from every agent, every council, every scanner. Free tier sees the result. Pro tier sees the entry, the position management, the ntfy push, the Shadow auto-copy. Subscribe to watch the decision, not just the outcome.</p>
+
+            <div class="swarm-feed-tabs" id="swarm-tabs" role="tablist">
+                <button class="swarm-feed-tab is-active" data-agent="swarm" role="tab" aria-selected="true">
+                    <span class="swarm-feed-tab__name">Swarm</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="council" role="tab">
+                    <span class="swarm-feed-tab__name">Council</span>
+                    <span class="swarm-feed-tab__timer"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="sentinel" role="tab">
+                    <span class="swarm-feed-tab__name">Sentinel</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="shadow" role="tab">
+                    <span class="swarm-feed-tab__name">Shadow</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="flagship" role="tab">
+                    <span class="swarm-feed-tab__name">Flagship</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="watchdog" role="tab">
+                    <span class="swarm-feed-tab__name">Watchdog</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="forensics" role="tab">
+                    <span class="swarm-feed-tab__name">Forensics</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="digest" role="tab">
+                    <span class="swarm-feed-tab__name">Weekly Digest</span>
+                    <span class="swarm-feed-tab__timer agent-countdown"></span>
+                </button>
+                <button class="swarm-feed-tab" data-agent="traffic" role="tab">
+                    <span class="swarm-feed-tab__name">Traffic</span>
+                    <span class="swarm-feed-tab__timer"></span>
+                </button>
+            </div>
+
+            <article class="swarm-feed-panel is-active" id="swarm-panel-swarm" data-agent="swarm" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Swarm Evolution Feed</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="swarm">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-swarm">Loading swarm feed...</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-council" data-agent="council" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Multi-LLM Council</h3>
+                    <div class="swarm-feed-panel__tools">
+                        <select id="council-selector" class="swarm-feed-select" aria-label="Select council deliberation">
+                            <option value="">Loading councils&hellip;</option>
+                        </select>
+                        <span id="council-meta" class="swarm-feed-meta"></span>
+                        <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="council">Fullscreen <kbd>F</kbd></button>
+                    </div>
+                </header>
+                <div class="swarm-feed-panel__body swarm-feed-panel__body--prose" id="council-body">
+                    Select a council from the list above.
+                </div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-sentinel" data-agent="sentinel" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Sentinel Broadcast</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="sentinel">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-sentinel">Loading sentinel feed&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-shadow" data-agent="shadow" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Shadow Matrix</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="shadow">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-shadow">Loading shadow matrix&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-flagship" data-agent="flagship" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Flagship Intelligence</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="flagship">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-flagship">Loading flagship intelligence&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-watchdog" data-agent="watchdog" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Watchdog Status</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="watchdog">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-watchdog">Loading watchdog status&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-forensics" data-agent="forensics" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Forensic Data</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="forensics">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-forensics">Loading forensic data&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-digest" data-agent="digest" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Weekly Digest</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="digest">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-digest">Loading weekly digest&hellip;</div>
+            </article>
+
+            <article class="swarm-feed-panel" id="swarm-panel-traffic" data-agent="traffic" role="tabpanel">
+                <header class="swarm-feed-panel__header">
+                    <span class="swarm-feed-panel__state" data-state="live"></span>
+                    <h3 class="swarm-feed-panel__title">Site Traffic Monitor</h3>
+                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="traffic">Fullscreen <kbd>F</kbd></button>
+                </header>
+                <div class="swarm-feed-panel__body" id="swarm-page-feed-traffic">Loading traffic data&hellip;</div>
+            </article>
+        </div>
+    </section>
+
+
     <!-- AGENT TIMELINE -->
     <section class="swarm-section" aria-labelledby="swarm-timeline-title">
         <div class="section-inner">
@@ -382,141 +519,6 @@
     </section>
 
     <!-- AGENT FEEDS -->
-    <section class="swarm-section" aria-labelledby="agent-feeds-title">
-        <div class="section-inner">
-            <div class="section-label">Live Agent Feeds</div>
-            <h2 class="section-title" id="agent-feeds-title">Direct feed from every agent.</h2>
-            <p class="section-text">Nine terminals pull live output from the Swarm API. The active feed refreshes every sixty seconds.</p>
-
-            <div class="swarm-feed-tabs" id="swarm-tabs" role="tablist">
-                <button class="swarm-feed-tab is-active" data-agent="swarm" role="tab" aria-selected="true">
-                    <span class="swarm-feed-tab__name">Swarm</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="council" role="tab">
-                    <span class="swarm-feed-tab__name">Council</span>
-                    <span class="swarm-feed-tab__timer"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="sentinel" role="tab">
-                    <span class="swarm-feed-tab__name">Sentinel</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="shadow" role="tab">
-                    <span class="swarm-feed-tab__name">Shadow</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="flagship" role="tab">
-                    <span class="swarm-feed-tab__name">Flagship</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="watchdog" role="tab">
-                    <span class="swarm-feed-tab__name">Watchdog</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="forensics" role="tab">
-                    <span class="swarm-feed-tab__name">Forensics</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="digest" role="tab">
-                    <span class="swarm-feed-tab__name">Weekly Digest</span>
-                    <span class="swarm-feed-tab__timer agent-countdown"></span>
-                </button>
-                <button class="swarm-feed-tab" data-agent="traffic" role="tab">
-                    <span class="swarm-feed-tab__name">Traffic</span>
-                    <span class="swarm-feed-tab__timer"></span>
-                </button>
-            </div>
-
-            <article class="swarm-feed-panel is-active" id="swarm-panel-swarm" data-agent="swarm" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Swarm Evolution Feed</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="swarm">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-swarm">Loading swarm feed...</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-council" data-agent="council" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Multi-LLM Council</h3>
-                    <div class="swarm-feed-panel__tools">
-                        <select id="council-selector" class="swarm-feed-select" aria-label="Select council deliberation">
-                            <option value="">Loading councils&hellip;</option>
-                        </select>
-                        <span id="council-meta" class="swarm-feed-meta"></span>
-                        <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="council">Fullscreen <kbd>F</kbd></button>
-                    </div>
-                </header>
-                <div class="swarm-feed-panel__body swarm-feed-panel__body--prose" id="council-body">
-                    Select a council from the list above.
-                </div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-sentinel" data-agent="sentinel" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Sentinel Broadcast</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="sentinel">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-sentinel">Loading sentinel feed&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-shadow" data-agent="shadow" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Shadow Matrix</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="shadow">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-shadow">Loading shadow matrix&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-flagship" data-agent="flagship" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Flagship Intelligence</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="flagship">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-flagship">Loading flagship intelligence&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-watchdog" data-agent="watchdog" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Watchdog Status</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="watchdog">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-watchdog">Loading watchdog status&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-forensics" data-agent="forensics" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Forensic Data</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="forensics">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-forensics">Loading forensic data&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-digest" data-agent="digest" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Weekly Digest</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="digest">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-digest">Loading weekly digest&hellip;</div>
-            </article>
-
-            <article class="swarm-feed-panel" id="swarm-panel-traffic" data-agent="traffic" role="tabpanel">
-                <header class="swarm-feed-panel__header">
-                    <span class="swarm-feed-panel__state" data-state="live"></span>
-                    <h3 class="swarm-feed-panel__title">Site Traffic Monitor</h3>
-                    <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="traffic">Fullscreen <kbd>F</kbd></button>
-                </header>
-                <div class="swarm-feed-panel__body" id="swarm-page-feed-traffic">Loading traffic data&hellip;</div>
-            </article>
-        </div>
-    </section>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -539,7 +541,7 @@
     <script src="/js/ethers.umd.min.js"></script>
     <script src="/js/app.js?v=20260430f"></script>
     <script src="/js/mav-wallet.js?v=20260501h"></script>
-    <script src="/js/active-runs-badges.js?v=20260501h" defer></script>
+    <script src="/js/active-runs-badges.js?v=20260501i" defer></script>
     <script src="/js/tracker.js" defer></script>
 <div class="terminal-overlay" id="terminal-overlay"><div class="terminal-overlay-header"><div id="terminal-overlay-title" style="font-family:JetBrains Mono,monospace;font-size:0.7rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;"></div><button class="terminal-close-btn" id="terminal-close">CLOSE TERMINAL [ESC]</button></div><div class="terminal-overlay-body" id="terminal-overlay-content"></div></div>    <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
