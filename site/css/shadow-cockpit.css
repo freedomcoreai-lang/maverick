@@ -1,0 +1,543 @@
+/* ============================================================================
+   SHADOW Cockpit — Supreme Court 10R verdict, 2026-04-30 (P1 chrome commit).
+   Single accent (violet, SHADOW family identity), violet BUILD banner,
+   clean cross-family link colour through [data-fc=…] (no inline gold).
+   Light-mode parity throughout.
+
+   Sections:
+     1. Accent rebind (shadow scope) + alias collapse
+     2. BUILD phase banner (violet, replaces inline gold contamination)
+     3. Family cross-links (use [data-fc] for colour, not inline style)
+     4. Light-mode hardening (zero gold pixels in either theme)
+   ============================================================================ */
+
+/* ─── 1. ACCENT REBIND (shadow scope) ─────────────────────────────────────── */
+body[data-site="shadow"] {
+    --accent:        var(--accent-violet);
+    --site-accent:   var(--accent);
+    --text:          var(--text-primary);
+    --text-dim:      var(--text-muted);
+    --surface:       var(--bg-elevated);
+    /* Legacy hue collapse — every former hue resolves through the four-token scale */
+    --tier1:         var(--accent);
+    --tier2:         color-mix(in srgb, var(--accent) 70%, var(--text-dim));
+    --tier3:         var(--text-dim);
+    --tier1-bg:      color-mix(in srgb, var(--accent) 14%, transparent);
+    --tier1-border:  color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+/* ─── 2. BUILD PHASE BANNER (violet replaces gold/amber) ──────────────────── */
+body[data-site="shadow"] .build-phase-banner {
+    background: color-mix(in srgb, var(--accent-violet) 14%, var(--bg-primary));
+    color: var(--accent-violet);
+    text-align: center;
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-violet) 38%, transparent);
+}
+[data-theme="light"] body[data-site="shadow"] .build-phase-banner {
+    background: color-mix(in srgb, var(--accent-violet) 10%, var(--bg-elevated));
+    color: var(--accent-violet);
+    border-bottom-color: color-mix(in srgb, var(--accent-violet) 30%, transparent);
+}
+
+/* ─── 3. FAMILY CROSS-LINKS (replace inline color:var(--gold|silver|green)) ─ */
+body[data-site="shadow"] [data-fc="maverick"] { color: var(--accent-gold);   font-weight: 700; }
+body[data-site="shadow"] [data-fc="shadow"]   { color: var(--accent-violet); font-weight: 800; }
+body[data-site="shadow"] [data-fc="quantum"]  { color: var(--accent-cyan);   font-weight: 700; }
+body[data-site="shadow"] [data-fc="arena"]    { color: var(--accent-silver); font-weight: 700; }
+
+body[data-site="shadow"] [data-fc="maverick"]:hover,
+body[data-site="shadow"] [data-fc="quantum"]:hover,
+body[data-site="shadow"] [data-fc="arena"]:hover {
+    filter: brightness(1.15);
+}
+
+/* ─── 4. LIGHT-MODE HARDENING ─────────────────────────────────────────────── */
+[data-theme="light"] body[data-site="shadow"] [data-fc="maverick"] { color: #8a6a00; }
+[data-theme="light"] body[data-site="shadow"] [data-fc="quantum"]  { color: #1f6b3a; }
+[data-theme="light"] body[data-site="shadow"] [data-fc="arena"]    { color: #4a5260; }
+[data-theme="light"] body[data-site="shadow"] [data-fc="shadow"]   { color: var(--accent-violet); }
+
+/* ─── 4b. STICKY-STACK GAP — DEFINITIVE LOCKDOWN ──────────────────────────────
+   shadow-cockpit loads LAST in the cascade, so the seam math wins regardless
+   of any rule that comes before. Operator 2026-05-01: locked by hand after
+   three rounds of "still has gap" feedback. Translate3d(0) forces each bar
+   onto its own GPU layer — eliminates compositor-frame seams during scroll. */
+body[data-site="shadow"] .build-phase-banner,
+body[data-site="shadow"] .site-ticker,
+body[data-site="shadow"] .nav {
+    margin: 0 !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: translate3d(0, 0, 0) !important;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+body[data-site="shadow"] .build-phase-banner {
+    top: 0 !important;
+    z-index: 230 !important;
+    border-bottom: 0 !important;
+}
+body[data-site="shadow"] .site-ticker {
+    top: 25px !important;            /* desktop overridden inside @media min-width */
+    height: 22px !important;
+    z-index: 210 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    padding: 0 !important;
+}
+body[data-site="shadow"] .nav {
+    top: 42px !important;            /* desktop overridden inside @media min-width */
+    height: 42px !important;
+    min-height: 42px !important;
+    z-index: 200 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    padding: 3px 14px !important;
+}
+@media (min-width: 769px) {
+    body[data-site="shadow"] .site-ticker { top: 29px !important; height: 22px !important; }
+    body[data-site="shadow"] .nav         { top: 50px !important; height: 48px !important; min-height: 48px !important; padding: 4px 14px !important; }
+}
+body[data-site="shadow"] {
+    padding-top: 86px !important;
+}
+@media (min-width: 769px) {
+    body[data-site="shadow"] { padding-top: 100px !important; }
+}
+body[data-site="shadow"] .grid-bg {
+    /* Prevent grid-bg from injecting a layout-affecting box between ticker and nav */
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ─── 5. STAT BAR / GATE NOTICE / SSL LOCK (gold/green → violet semantic remap) ── */
+body[data-site="shadow"] .gate-fires,
+body[data-site="shadow"] .gate-notice,
+body[data-site="shadow"] .gate-unlock-link {
+    color: var(--accent-violet);
+    font-weight: 700;
+}
+body[data-site="shadow"] .gate-notice {
+    display: none;
+    margin-top: 8px;
+    font-size: 0.82rem;
+}
+body[data-site="shadow"] .gate-unlock-link { text-decoration: underline; font-weight: 600; }
+body[data-site="shadow"] .ssl-lock-icon { color: var(--accent-violet); }
+
+
+/* ─── 6. FILTER SECTION (proprietary moat explainer · 2026-04-30) ────────── */
+body[data-site="shadow"] #filter {
+    padding: var(--sp-64) var(--sp-24) var(--sp-48);
+    border-top: 1px solid color-mix(in srgb, var(--accent-violet) 18%, transparent);
+    border-bottom: 1px solid var(--border);
+    background:
+        radial-gradient(120% 60% at 50% 0%,
+            color-mix(in srgb, var(--accent-violet) 8%, transparent) 0%,
+            transparent 70%),
+        var(--bg-primary);
+}
+body[data-site="shadow"] #filter .section-inner { max-width: 880px; }
+body[data-site="shadow"] #filter .section-title { margin-bottom: var(--sp-32); }
+
+body[data-site="shadow"] .filter-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-24);
+    margin-top: var(--sp-16);
+}
+body[data-site="shadow"] .filter-stanza {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-16);
+    line-height: var(--lh-loose);
+    color: var(--text-primary);
+    border-left: 2px solid color-mix(in srgb, var(--accent-violet) 50%, transparent);
+    padding: 4px 0 4px var(--sp-16);
+    margin: 0;
+}
+body[data-site="shadow"] .filter-stanza-close {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    letter-spacing: 0.04em;
+    color: var(--accent-violet);
+    border-left-color: var(--accent-violet);
+    text-transform: none;
+}
+
+body[data-site="shadow"] .filter-criteria {
+    list-style: none;
+    margin: var(--sp-32) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-8);
+}
+body[data-site="shadow"] .filter-chip {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--accent-violet) 10%, var(--bg-elevated));
+    border: 1px solid color-mix(in srgb, var(--accent-violet) 28%, transparent);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+    white-space: nowrap;
+}
+
+/* ─── 6b. FILTER SCOREBOARD (weekly proof tiles) ─────────────────────────── */
+body[data-site="shadow"] .filter-scoreboard {
+    margin-top: var(--sp-32);
+    padding-top: var(--sp-24);
+    border-top: 1px dashed color-mix(in srgb, var(--accent-violet) 22%, transparent);
+}
+body[data-site="shadow"] .scoreboard-intro {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-14);
+    line-height: var(--lh-base);
+    color: var(--text-muted);
+    margin: 0 0 var(--sp-24);
+    max-width: 64ch;
+}
+body[data-site="shadow"] .scoreboard-intro strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+body[data-site="shadow"] .scoreboard-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-16);
+}
+body[data-site="shadow"] .scoreboard-tile {
+    background: color-mix(in srgb, var(--accent-violet) 6%, var(--bg-elevated));
+    border: 1px solid color-mix(in srgb, var(--accent-violet) 22%, transparent);
+    border-radius: var(--radius-card);
+    padding: var(--sp-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    min-width: 0;
+}
+body[data-site="shadow"] .scoreboard-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--accent-violet) 75%, var(--text-muted));
+}
+body[data-site="shadow"] .scoreboard-value {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: var(--fs-28);
+    line-height: 1.1;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+body[data-site="shadow"] .scoreboard-value[data-positive="true"]  { color: var(--accent-violet); }
+body[data-site="shadow"] .scoreboard-value[data-negative="true"]  { color: color-mix(in srgb, #c44 70%, var(--text-primary)); }
+
+body[data-site="shadow"] .scoreboard-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+}
+body[data-site="shadow"] .scoreboard-asof {
+    margin: var(--sp-16) 0 0;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+/* Light-mode parity */
+[data-theme="light"] body[data-site="shadow"] #filter {
+    background:
+        radial-gradient(120% 60% at 50% 0%,
+            color-mix(in srgb, var(--accent-violet) 6%, transparent) 0%,
+            transparent 70%),
+        var(--bg-primary);
+}
+[data-theme="light"] body[data-site="shadow"] .filter-chip {
+    background: color-mix(in srgb, var(--accent-violet) 6%, var(--bg-elevated));
+    border-color: color-mix(in srgb, var(--accent-violet) 32%, transparent);
+}
+
+/* Tablet: 4 → 2 cols */
+@media (max-width: 759px) {
+    body[data-site="shadow"] #filter { padding: var(--sp-48) var(--sp-16) var(--sp-32); }
+    body[data-site="shadow"] .filter-stanza { font-size: var(--fs-14); padding-left: var(--sp-16); }
+    body[data-site="shadow"] .filter-chip { font-size: 0.68rem; padding: 5px 10px; }
+    body[data-site="shadow"] .scoreboard-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-8); }
+    body[data-site="shadow"] .scoreboard-value { font-size: var(--fs-20); }
+}
+/* Phone: 2 → 1 col */
+@media (max-width: 419px) {
+    body[data-site="shadow"] .scoreboard-row { grid-template-columns: 1fr; }
+}
+
+/* ─── 7. COLLAPSIBLE SECTIONS (details/summary chrome) ─────────────────────── */
+body[data-site="shadow"] .collapsible-section { display: block; }
+body[data-site="shadow"] .collapsible-section > .collapsible-summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    margin: 0;
+}
+body[data-site="shadow"] .collapsible-summary::-webkit-details-marker { display: none; }
+body[data-site="shadow"] .collapsible-summary .section-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: var(--sp-16);
+    padding: var(--sp-32) var(--sp-24) var(--sp-16);
+    position: relative;
+}
+body[data-site="shadow"] .collapsible-summary .section-title {
+    margin: 0;
+    flex: 1 1 auto;
+}
+body[data-site="shadow"] .collapsible-summary .section-label {
+    margin-bottom: 0;
+    flex: 0 0 auto;
+}
+/* Operator 2026-05-01 — toggle pill enlarged + explicit "TAP TO EXPAND" caption.
+   Was a 28px pill with a tiny +/- that read as ambiguous "minus button". Now a
+   44px tap target with a labelled hint that flips to "TAP TO COLLAPSE" when open. */
+body[data-site="shadow"] .collapsible-toggle {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid color-mix(in srgb, var(--accent-violet) 50%, transparent);
+    background: color-mix(in srgb, var(--accent-violet) 12%, var(--bg-elevated));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--accent-violet) 20%, transparent);
+    position: relative;
+    transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+body[data-site="shadow"] .collapsible-toggle::before,
+body[data-site="shadow"] .collapsible-toggle::after {
+    content: "";
+    position: absolute;
+    background: var(--accent-violet);
+    border-radius: 2px;
+    top: 50%;
+    left: 50%;
+}
+body[data-site="shadow"] .collapsible-toggle::before {
+    width: 18px;
+    height: 3px;
+    margin: -1.5px 0 0 -9px;
+}
+body[data-site="shadow"] .collapsible-toggle::after {
+    width: 3px;
+    height: 18px;
+    margin: -9px 0 0 -1.5px;
+    transition: opacity 200ms ease;
+}
+body[data-site="shadow"] details[open] > .collapsible-summary .collapsible-toggle::after {
+    opacity: 0;
+}
+body[data-site="shadow"] .collapsible-summary:hover .collapsible-toggle,
+body[data-site="shadow"] .collapsible-summary:focus-visible .collapsible-toggle {
+    background: color-mix(in srgb, var(--accent-violet) 24%, var(--bg-elevated));
+    box-shadow: 0 0 22px color-mix(in srgb, var(--accent-violet) 38%, transparent);
+}
+/* Explicit "TAP TO EXPAND" caption next to the pill — no more guessing. */
+body[data-site="shadow"] .collapsible-hint {
+    flex: 0 0 auto;
+    margin-left: 12px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent-violet) 80%, var(--text-muted));
+    font-weight: 700;
+    white-space: nowrap;
+    align-self: center;
+}
+body[data-site="shadow"] .collapsible-hint::before { content: "Tap to expand"; }
+body[data-site="shadow"] details[open] > .collapsible-summary .collapsible-hint::before { content: "Tap to collapse"; }
+body[data-site="shadow"] .collapsible-summary { cursor: pointer; }
+body[data-site="shadow"] .collapsible-summary:hover .collapsible-hint {
+    color: var(--accent-violet);
+}
+@media (max-width: 480px) {
+    body[data-site="shadow"] .collapsible-toggle { width: 38px; height: 38px; }
+    body[data-site="shadow"] .collapsible-toggle::before { width: 14px; margin-left: -7px; }
+    body[data-site="shadow"] .collapsible-toggle::after  { height: 14px; margin-top:  -7px; }
+    body[data-site="shadow"] .collapsible-hint { font-size: 0.6rem; margin-left: 8px; }
+}
+
+/* ─── 8. EQUITY-PERIODS PANEL (D / W / M / Q / Y / Lifetime) ───────────────── */
+body[data-site="shadow"] #equity-periods {
+    padding: var(--sp-48) var(--sp-24);
+    background:
+        radial-gradient(120% 60% at 50% 100%,
+            color-mix(in srgb, var(--accent-violet) 6%, transparent) 0%,
+            transparent 70%),
+        var(--bg-primary);
+    border-top: 1px solid var(--border);
+}
+body[data-site="shadow"] .periods-wrap {
+    margin-top: var(--sp-24);
+    padding: var(--sp-24);
+    background: var(--bg-elevated);
+    border: 1px solid color-mix(in srgb, var(--accent-violet) 18%, transparent);
+    border-radius: var(--radius-card);
+}
+body[data-site="shadow"] .periods-now {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-16);
+    padding-bottom: var(--sp-24);
+    margin-bottom: var(--sp-24);
+    border-bottom: 1px dashed color-mix(in srgb, var(--accent-violet) 22%, transparent);
+}
+body[data-site="shadow"] .periods-now-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+body[data-site="shadow"] .periods-now-value {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-40);
+    font-weight: 700;
+    color: var(--accent-violet);
+    font-variant-numeric: tabular-nums;
+}
+body[data-site="shadow"] .periods-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--sp-8);
+}
+body[data-site="shadow"] .periods-tile {
+    background: color-mix(in srgb, var(--accent-violet) 4%, var(--bg-primary));
+    border: 1px solid color-mix(in srgb, var(--accent-violet) 16%, transparent);
+    border-radius: var(--radius-card);
+    padding: var(--sp-16) var(--sp-8);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+body[data-site="shadow"] .periods-tile-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+body[data-site="shadow"] .periods-tile-value {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-20);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+body[data-site="shadow"] .periods-tile-value[data-positive="true"]  { color: var(--accent-violet); }
+body[data-site="shadow"] .periods-tile-value[data-negative="true"]  { color: color-mix(in srgb, #c44 70%, var(--text-primary)); }
+body[data-site="shadow"] .periods-asof {
+    margin: var(--sp-16) 0 0;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--text-muted);
+    text-align: right;
+}
+
+@media (max-width: 759px) {
+    body[data-site="shadow"] .periods-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    body[data-site="shadow"] .periods-now-value { font-size: var(--fs-28); }
+}
+@media (max-width: 419px) {
+    body[data-site="shadow"] .periods-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* ─── 9. WHALE ROSTER (P2 · Migration 0042 / /w/<addr>) ────────────────── */
+body[data-site="shadow"] .whale-roster {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    margin-top: var(--sp-16);
+}
+body[data-site="shadow"] .whale-roster th,
+body[data-site="shadow"] .whale-roster td {
+    padding: 10px 12px;
+    text-align: right;
+    font-size: var(--fs-14);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-violet) 12%, transparent);
+}
+body[data-site="shadow"] .whale-roster th {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--accent-violet) 6%, var(--bg-primary));
+    font-weight: 600;
+}
+body[data-site="shadow"] .whale-roster th.col-wallet,
+body[data-site="shadow"] .whale-roster td.col-wallet,
+body[data-site="shadow"] .whale-roster th.col-rank,
+body[data-site="shadow"] .whale-roster td.col-rank { text-align: left; }
+body[data-site="shadow"] .whale-roster tbody tr { transition: background 120ms ease; }
+body[data-site="shadow"] .whale-roster tbody tr:last-child td { border-bottom: 0; }
+
+/* Single-violet tier signal: 4px inset stripe, opacity steps. NO background fill. */
+body[data-site="shadow"] .whale-roster tbody tr[data-tier="1"] {
+    box-shadow: inset 4px 0 0 0 var(--accent-violet);
+}
+body[data-site="shadow"] .whale-roster tbody tr[data-tier="2"] {
+    box-shadow: inset 4px 0 0 0 color-mix(in srgb, var(--accent-violet) 60%, transparent);
+}
+body[data-site="shadow"] .whale-roster tbody tr[data-tier="3"] {
+    box-shadow: inset 4px 0 0 0 color-mix(in srgb, var(--accent-violet) 30%, transparent);
+}
+body[data-site="shadow"] .whale-roster tbody tr:hover {
+    background: color-mix(in srgb, var(--accent-violet) 8%, transparent);
+    cursor: pointer;
+}
+body[data-site="shadow"] .whale-roster .wallet-link {
+    color: var(--accent-violet);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 600;
+}
+body[data-site="shadow"] .whale-roster .wallet-link:hover { text-decoration: underline; }
+body[data-site="shadow"] .whale-roster .roster-empty td {
+    text-align: center;
+    color: var(--text-muted);
+    padding: var(--sp-32);
+}
+body[data-site="shadow"] .whale-roster .pos { color: var(--accent-violet); font-weight: 600; }
+body[data-site="shadow"] .whale-roster .neg { color: color-mix(in srgb, #c44 70%, var(--text-primary)); font-weight: 600; }
+
+@media (max-width: 759px) {
+    body[data-site="shadow"] .whale-roster th,
+    body[data-site="shadow"] .whale-roster td { padding: 8px 6px; font-size: 0.78rem; }
+    body[data-site="shadow"] .whale-roster th.col-wilson,
+    body[data-site="shadow"] .whale-roster td.col-wilson,
+    body[data-site="shadow"] .whale-roster th.col-roi,
+    body[data-site="shadow"] .whale-roster td.col-roi { display: none; }
+}
