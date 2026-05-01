@@ -427,8 +427,40 @@
         }
     }
 
+    // Pro-gated DNA snapshot · monetisation verdict 2026-05-01.
+    // The full parameter dict is the reproducible artefact behind the Pro
+    // tier — identity (champion name, direction, gate state) stays free,
+    // but the exact knob values require Pro. Today this is a markup gate;
+    // server-side enforcement lands when Stripe products provision (Phase-1
+    // step 6). The .ax-paywall class drops in to render the Pro CTA.
+    // Override for testing: localStorage.setItem('fc_pro', '1');
+    function _isProUser() {
+        try {
+            return window.localStorage && window.localStorage.getItem('fc_pro') === '1';
+        } catch (e) { return false; }
+    }
+
     function dnaBlock(dna) {
         if (!dna || !Object.keys(dna).length) return '';
+        const knobCount = Object.keys(dna).length;
+        const headerHtml =
+            '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:8px;">DNA snapshot at signal time · ' + knobCount + ' knobs</div>';
+
+        if (!_isProUser()) {
+            return (
+                '<div style="margin-top:16px;">' +
+                    headerHtml +
+                    '<div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px;padding:18px;border:1px dashed color-mix(in srgb, var(--site-accent) 35%, transparent);border-radius:8px;background:rgba(8,12,18,0.65);">' +
+                        '<div style="grid-column:1 / -1;text-align:center;">' +
+                            '<div style="font-family:\'Orbitron\',sans-serif;font-size:0.95rem;font-weight:900;letter-spacing:0.18em;color:var(--site-accent);margin-bottom:6px;">PRO TIER REQUIRED</div>' +
+                            '<div style="font-family:\'Inter\',sans-serif;font-size:0.78rem;color:var(--text-primary);max-width:520px;margin:0 auto 10px;line-height:1.5;">Champion identity, direction and gate state are public. The full ' + knobCount + '-knob parameter dict — the reproducible recipe behind the trade — is gated to <strong>Pro</strong> subscribers and $MAV holders.</div>' +
+                            '<a href="/pages/access.html" style="display:inline-block;padding:9px 22px;background:var(--site-accent);color:var(--text-on-accent,#0a0a0f);text-decoration:none;font-family:\'JetBrains Mono\',monospace;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:800;border-radius:999px;">Unlock DNA &rarr;</a>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
         const rows = Object.keys(dna).sort().map(k =>
             '<div style="display:flex;justify-content:space-between;gap:10px;padding:5px 8px;background:rgba(245,245,250,0.03);border-radius:5px;font-family:\'JetBrains Mono\',monospace;font-size:0.68rem;">' +
                 '<span style="color:var(--text-muted);">' + esc(k) + '</span>' +
@@ -437,7 +469,7 @@
         ).join('');
         return (
             '<div style="margin-top:16px;">' +
-                '<div style="font-family:\'JetBrains Mono\',monospace;font-size:0.62rem;letter-spacing:2px;color:var(--accent-cyan);text-transform:uppercase;margin-bottom:8px;">DNA snapshot at signal time · ' + Object.keys(dna).length + ' knobs</div>' +
+                headerHtml +
                 '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px;">' + rows + '</div>' +
             '</div>'
         );

@@ -6,13 +6,13 @@
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#060a10">
-    <meta name="description" content="The best AI in the world, evolving a trading system in real time. Watch it live. $MAV token on Base, or monthly subscription with card. No yield promises.">
+    <meta name="description" content="An autonomous AI trading experiment, run by a UK solo founder. $MAV token on Base, or monthly subscription with card. No yield promises. No managed accounts. You may lose money.">
     <title>Access | MAVERICK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260430f">
-    <link rel="stylesheet" href="/css/style.css?v=20260430f">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501a">
+    <link rel="stylesheet" href="/css/style.css?v=20260501a">
     <style>
         .ax-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .ax-hero-badge {
@@ -178,6 +178,13 @@
 </head>
 <body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
+
+    <!-- FCA-style risk warning (verdict-mandated, monetisation 10R 2026-05-01).
+         Placeholder copy — counsel ratifies the final wording in PR before paid traffic. -->
+    <div role="note" aria-label="Risk warning" style="background:#2a0808; color:#fca5a5; text-align:center; padding:10px 16px; font-family:'Inter',sans-serif; font-size:0.78rem; line-height:1.45; border-bottom:1px solid rgba(252,165,165,0.45); font-weight:600;">
+        <strong>Risk warning:</strong> This service does not constitute investment advice. You may lose all the money you put at risk. Past performance does not guarantee future results. We do not run a managed account on your behalf — you keep your keys, you keep your decisions.
+    </div>
+
     <div class="grid-bg"></div>
 
     <nav class="nav">
@@ -425,7 +432,7 @@
                         <div class="ax-tier-choice" data-tier="pro"><div class="tc-name">Pro</div><div class="tc-price" id="price-pro">$79/mo</div></div>
                         <div class="ax-tier-choice" data-tier="sovereign"><div class="tc-name">Sovereign</div><div class="tc-price" id="price-sovereign">$199/mo</div></div>
                     </div>
-                    <div style="text-align:center; font-size:0.62rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin:6px 0 10px;">Annual: save 33% &middot; cancel anytime</div>
+                    <div style="text-align:center; font-size:0.62rem; color:var(--text-dim); letter-spacing:1px; text-transform:uppercase; margin:6px 0 10px;">Monthly billing &middot; cancel anytime &middot; annual coming soon</div>
                     <input class="ax-sub-input" type="email" id="sub-email" placeholder="your@email.com" autocomplete="email">
                     <button class="ax-btn amber block" id="subscribe-btn" style="margin-top:10px;">SUBSCRIBE &amp; WATCH</button>
                     <div class="ax-note">Already a subscriber? <a href="#" id="magic-link" style="color:var(--accent);">Send me a sign-in link</a></div>
@@ -549,7 +556,7 @@
 
             <div class="ax-faq-item">
                 <div class="ax-faq-q">Crypto or subscription - which should I pick?</div>
-                <div class="ax-faq-a">If you already have a Base wallet, $MAV is simpler long-term and your tier holds whatever happens to MAV's price. If you don't touch crypto, the $29-$199/mo subscription is identical access, billed by Stripe. Both unlock the same tiers. Annual saves 33% on either rail.</div>
+                <div class="ax-faq-a">If you already have a Base wallet, $MAV is simpler long-term and your tier holds whatever happens to MAV's price. If you don't touch crypto, the $29-$199/mo subscription is identical access, billed by Stripe. Both unlock the same tiers. Monthly only at launch; annual billing arrives once the toggle is wired through Stripe.</div>
             </div>
 
             <div class="ax-faq-item">
@@ -587,7 +594,7 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260430f"></script>
+    <script src="/js/app.js?v=20260501a"></script>
     <script src="/js/mav-wallet.js?v=20260422b"></script>
     <script src="/js/access-page.js"></script>
     <script type="application/json" id="__disabled_inline_block__">
