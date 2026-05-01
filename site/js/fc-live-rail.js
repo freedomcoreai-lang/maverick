@@ -17,7 +17,7 @@
     var POLL_MS = 60000;
     var TICK_MS = 3500;
 
-    var state = { rows: [], idx: 0, agg: null, last_updated: 0 };
+    var state = { rows: [], idx: 0, summary_24h: null, last_updated: 0 };
     var els = {};
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -95,7 +95,7 @@
             '<div class="fc-rail" role="region" aria-label="Maverick live broker ledger">' +
                 '<span class="fc-rail__eyebrow">MAVERICK · LIVE</span>' +
                 '<div class="fc-rail__row" id="fc-rail-row"><span class="fc-rail__reason">connecting&hellip;</span></div>' +
-                '<div class="fc-rail__agg" id="fc-rail-agg">7d &middot; &mdash;</div>' +
+                '<div class="fc-rail__agg" id="fc-rail-agg">TODAY &middot; &mdash;</div>' +
                 '<a class="fc-rail__cta" href="https://maverick.freedomcore.io/pages/today.html">View ledger &rsaquo;</a>' +
             '</div>';
         els.row = mount.querySelector('#fc-rail-row');
@@ -125,23 +125,23 @@
         state.idx++;
     }
 
-    function renderAgg(agg) {
+    function renderAgg() {
         if (!els.agg) return;
-        // Operator 2026-05-01: drop weekly net%. Show TODAY only computed
-        // from the rows[] within last 24h. If no trades closed today,
-        // show "TODAY · awaiting close".
-        var now = Date.now() / 1000;
-        var today = state.rows.filter(function (r) { return now - r.ts < 86400; });
-        if (!today.length) {
+        // Operator 2026-05-01: rails MUST match /pages/performance.html
+        // exactly. Read summary_24h from the same canonical source the page
+        // does (performance.json, embedded into live_ledger.json by the
+        // publisher). Display: TODAY · NN trades · WW.W% WR · ±X.XX%.
+        var s = state.summary_24h;
+        if (!s || s.trades == null) {
             els.agg.innerHTML = 'TODAY &middot; awaiting close';
             return;
         }
-        var w = today.filter(function (r) { return r.pnl_pct >= 0; }).length;
-        var l = today.length - w;
-        var net = today.reduce(function (s, r) { return s + (r.pnl_pct || 0); }, 0);
-        var netStr = (net >= 0 ? '+' : '') + net.toFixed(2) + '%';
-        var netCls = net >= 0 ? 'w' : 'l';
-        els.agg.innerHTML = 'TODAY &middot; <span class="w">' + w + 'W</span>/<span class="l">' + l + 'L</span> &middot; <span class="' + netCls + '">' + netStr + '</span>';
+        var trades = s.trades;
+        var wr     = (s.win_rate != null) ? s.win_rate.toFixed(1) + '%' : '--';
+        var pnl    = s.pnl_pct;
+        var pnlStr = (pnl >= 0 ? '+' : '') + (pnl == null ? '0.00' : pnl.toFixed(2)) + '%';
+        var pnlCls = pnl >= 0 ? 'w' : 'l';
+        els.agg.innerHTML = 'TODAY &middot; ' + trades + ' trades &middot; ' + wr + ' WR &middot; <span class="' + pnlCls + '">' + pnlStr + '</span>';
     }
 
     function poll() {
@@ -150,8 +150,8 @@
             .then(function (data) {
                 if (!data) return;
                 state.rows = data.rows || [];
-                state.agg = data.aggregate_7d || null;
-                renderAgg(state.agg);
+                state.summary_24h = data.summary_24h || null;
+                renderAgg();
                 tick();
             })
             .catch(function () { /* silent */ });
