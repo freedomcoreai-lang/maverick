@@ -346,13 +346,21 @@
         if (_lastStatus) fn(_lastStatus);
         return () => _subs.delete(fn);
     }
+    // Operator 2026-05-01 — unified franchise tier badge palette. ALL paid tiers
+    // share the same MAVERICK gold so the tier chip looks identical on every site
+    // in the family (apex, Maverick, Shadow, Arena, Quantum). Was: sovereign=blue,
+    // signal=gold, observer=cyan, pro=missing-fall-through-grey. Confusing.
     function tierColor(tier) {
         switch (tier) {
-            case 'sovereign': return '#b9c5ff';
+            case 'sovereign':
+            case 'pro':
             case 'signal':    return '#ffd700';
-            case 'observer':  return '#4ecdc4';
+            case 'observer':  return '#9ca3af';
             default:          return '#6b7280';
         }
+    }
+    function tierIsPaid(tier) {
+        return tier === 'signal' || tier === 'pro' || tier === 'sovereign';
     }
     function shortAddr(a) { return a ? a.slice(0, 6) + '…' + a.slice(-4) : ''; }
 
@@ -366,11 +374,12 @@
         // Compact on mobile (icon + short tier), fuller on desktop
         wrap.innerHTML =
             '<button id="mav-wallet-btn" style="' +
-            'font-family:\'JetBrains Mono\',monospace;font-size:0.56rem;' +
-            'padding:5px 9px;border:1px solid var(--border);border-radius:6px;' +
-            'background:var(--card);color:var(--text);cursor:pointer;' +
+            'font-family:\'JetBrains Mono\',monospace;font-size:0.58rem;font-weight:700;' +
+            'padding:6px 10px;border:1px solid var(--border);border-radius:6px;' +
+            'background:var(--card);color:var(--text-dim);cursor:pointer;' +
             'letter-spacing:1px;text-transform:uppercase;white-space:nowrap;' +
             'max-width:110px;overflow:hidden;text-overflow:ellipsis;' +
+            'transition:color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;' +
             '">Connect</button>';
         navRight.insertBefore(wrap, navRight.firstChild);
 
@@ -387,21 +396,26 @@
         onChange((s) => {
             if (!s) return;
             if (s.authenticated) {
-                let tier = (s.tier || 'none').toUpperCase();
-                // Operator 2026-05-01 — Sovereign tier hidden via feature flag until
-                // /pages/sovereign.html ships. Downgrade the nav badge label to PRO
-                // so we don't advertise a tier that has no surface yet. Owner wallet
-                // still has functional access; the label just matches the public ladder.
+                let tierKey = (s.tier || 'none');
+                // Operator 2026-05-01 — Sovereign hidden via feature flag until
+                // /pages/sovereign.html ships. Downgrade label to PRO so we don't
+                // advertise a tier that has no surface yet. Owner wallet still has
+                // functional access; the label just matches the public ladder.
                 const sovereignLive = document.documentElement.getAttribute('data-sovereign-live') === 'true';
-                if (tier === 'SOVEREIGN' && !sovereignLive) tier = 'PRO';
-                const col = tierColor(tier === 'PRO' ? 'pro' : s.tier);
-                btn.textContent = tier === 'NONE' ? shortAddr(s.address) : tier;
+                if (tierKey === 'sovereign' && !sovereignLive) tierKey = 'pro';
+                const isPaid = tierIsPaid(tierKey);
+                const col = tierColor(tierKey);
+                btn.textContent = tierKey === 'none' ? shortAddr(s.address) : tierKey.toUpperCase();
                 btn.style.color = col;
-                btn.style.borderColor = col;
+                btn.style.borderColor = isPaid ? 'rgba(255,215,0,0.55)' : col;
+                btn.style.background = isPaid ? 'rgba(255,215,0,0.12)' : 'var(--card)';
+                btn.style.boxShadow = isPaid ? '0 0 12px rgba(255,215,0,0.20)' : 'none';
             } else {
                 btn.textContent = 'CONNECT';
-                btn.style.color = 'var(--text)';
+                btn.style.color = 'var(--text-dim)';
                 btn.style.borderColor = 'var(--border)';
+                btn.style.background = 'var(--card)';
+                btn.style.boxShadow = 'none';
             }
         });
     }
