@@ -44,7 +44,7 @@
     --purple:       var(--accent);
     --champion:     var(--accent);
     --red:          var(--text-dim);
-    --silver:       var(--text-dim);
+    --silver:       var(--accent);
     --bronze:       var(--text-dim);
 
     /* Derived alpha surfaces — locked to the accent (gold). */
@@ -1041,17 +1041,20 @@ body[data-site="freedomcore"] .build-phase-banner {
     text-overflow: ellipsis !important;
     box-sizing: border-box !important;
 }
+/* Operator 2026-05-01 — 1px overlap at every seam. Banner z:230 > ticker z:210 > nav z:200,
+   so each upper bar paints over the next bar's top 1px. Sub-pixel rounding can no longer
+   bleed page background through. Locked across the family on desktop AND mobile. */
 body[data-site="shadow"] .site-ticker,
 body[data-site="quantum"] .site-ticker,
 body[data-site="arena"] .site-ticker,
 body[data-site="freedomcore"] .site-ticker {
-    top: 30px !important;
+    top: 29px !important;
 }
 body[data-site="shadow"] .nav,
 body[data-site="quantum"] .nav,
 body[data-site="arena"] .nav,
 body[data-site="freedomcore"] .nav {
-    top: 52px !important;
+    top: 50px !important;
     height: 48px !important;
     min-height: 48px !important;
     padding: 4px 14px !important;
@@ -1087,36 +1090,47 @@ body[data-site="freedomcore"] .nav-logo-img {
     width: auto !important;
 }
 @media (max-width: 768px) {
+    /* Operator 2026-05-01 — `freedomcore` added to every selector below.
+       Was missing here, so on the hub the banner stayed at desktop height (30px)
+       while ticker shrunk to 18px and nav stayed at top:52, opening a 4px slice
+       of bare page between ticker bottom and nav top. Locked across the family. */
     body[data-site="shadow"] .build-phase-banner,
     body[data-site="quantum"] .build-phase-banner,
-    body[data-site="arena"] .build-phase-banner {
+    body[data-site="arena"] .build-phase-banner,
+    body[data-site="freedomcore"] .build-phase-banner {
         height: 26px !important;
         line-height: 12px !important;
         padding: 7px 12px !important;
         font-size: 9px !important;
     }
+    /* 1px overlap at every seam — banner covers ticker top 1px, ticker covers
+       nav top 1px. Even at sub-pixel rounding the page can't bleed through. */
     body[data-site="shadow"] .site-ticker,
     body[data-site="quantum"] .site-ticker,
-    body[data-site="arena"] .site-ticker {
-        top: 26px !important;
+    body[data-site="arena"] .site-ticker,
+    body[data-site="freedomcore"] .site-ticker {
+        top: 25px !important;
     }
     body[data-site="shadow"] .nav,
     body[data-site="quantum"] .nav,
-    body[data-site="arena"] .nav {
-        top: 44px !important;
+    body[data-site="arena"] .nav,
+    body[data-site="freedomcore"] .nav {
+        top: 42px !important;
         height: 42px !important;
         min-height: 42px !important;
         padding: 3px 10px !important;
     }
-    /* mobile body padding = 26 (banner) + 18 (ticker) + 42 (nav) = 86 */
+    /* mobile body padding = banner-bottom (26) + ticker-bottom-after-overlap (43) + nav (42) ≈ 86 */
     body[data-site="shadow"],
     body[data-site="quantum"],
-    body[data-site="arena"] {
+    body[data-site="arena"],
+    body[data-site="freedomcore"] {
         padding-top: 86px !important;
     }
     body[data-site="shadow"] .nav-logo-img,
     body[data-site="quantum"] .nav-logo-img,
-    body[data-site="arena"] .nav-logo-img {
+    body[data-site="arena"] .nav-logo-img,
+    body[data-site="freedomcore"] .nav-logo-img {
         height: 26px !important;
     }
 }

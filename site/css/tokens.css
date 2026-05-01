@@ -115,6 +115,9 @@
     --accent-violet:  #6d3bcc;
     --accent-cyan:    #1e7fc4;
     --accent-silver:  #5a6270;
+    /* Operator 2026-05-01 — Hub flips identity per theme:
+       light blue on dark theme, dark blue on day theme. */
+    --accent-freedomcore: #1e3a8a;
 
     /* R4 P4 — light-mode border alpha 0.18 (was 0.12) for 1px visibility.
        Gemini pattern: same --border rgba() formula, only --border-alpha flips. */
@@ -151,7 +154,7 @@ body[data-site="freedomcore"] { --site-accent: var(--accent-freedomcore); }
 [data-theme="light"] body[data-site="quantum"]     { --site-accent-text: var(--accent-cyan-text); }
 [data-theme="light"] body[data-site="arena"]       { --site-accent-text: var(--accent-silver);    }
 [data-theme="light"] body[data-site="apex"],
-[data-theme="light"] body[data-site="freedomcore"] { --site-accent-text: var(--accent-gold-text); }
+[data-theme="light"] body[data-site="freedomcore"] { --site-accent-text: var(--accent-freedomcore); }
 
 [data-fc="freedomcore"],
 [data-fc="apex"]       { color: var(--accent-freedomcore); }
