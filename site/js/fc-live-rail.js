@@ -26,8 +26,13 @@
         var css = document.createElement('style');
         css.id = 'fc-live-rail-style';
         css.textContent = '' +
-            '.fc-rail { display:flex; align-items:center; gap:14px; padding:8px 14px; background:rgba(0,0,0,0.42); border:1px solid rgba(255,215,0,0.20); border-radius:8px; font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.72rem; line-height:1.3; color:#f5f5fa; max-width:1200px; margin:10px auto 0; flex-wrap:wrap; }\n' +
-            '[data-theme="light"] .fc-rail { background:rgba(238,247,255,0.92); border-color:rgba(30,127,196,0.40); color:#0a0a0f; }\n' +
+            // Anchored at viewport top (just below the existing topbar stack).
+            // .fc-rail-mount is the wrapper that gets position:fixed; .fc-rail
+            // is the visual band inside. JS sets the `top` value at mount time
+            // by reading body padding-top (the topbar stack height per site).
+            '.fc-rail-mount { position:fixed; left:0; right:0; z-index:199; }\n' +
+            '.fc-rail { display:flex; align-items:center; gap:14px; padding:8px 14px; background:rgba(6,10,16,0.94); border-top:1px solid rgba(255,215,0,0.30); border-bottom:1px solid rgba(255,215,0,0.30); font-family:"JetBrains Mono", ui-monospace, monospace; font-size:0.72rem; line-height:1.3; color:#f5f5fa; flex-wrap:nowrap; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 6px 18px rgba(0,0,0,0.32); }\n' +
+            '[data-theme="light"] .fc-rail { background:rgba(248,250,255,0.96); border-color:rgba(30,127,196,0.40); color:#0a0a0f; }\n' +
             '.fc-rail__eyebrow { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#ffd700; font-weight:800; flex-shrink:0; }\n' +
             '.fc-rail__row { display:flex; align-items:center; gap:8px; flex:1 1 220px; min-width:0; overflow:hidden; transition:opacity 0.22s ease; }\n' +
             '.fc-rail__row.fading { opacity:0; }\n' +
@@ -53,14 +58,28 @@
 
     function ensureMount() {
         var el = document.getElementById('fc-live-rail');
-        if (el) return el;
-        // Auto-inject after the .nav element if no explicit mount provided
+        if (el) {
+            el.classList.add('fc-rail-mount');
+            return el;
+        }
         el = document.createElement('div');
         el.id = 'fc-live-rail';
-        var nav = document.querySelector('nav.nav');
-        if (nav && nav.parentNode) nav.parentNode.insertBefore(el, nav.nextSibling);
-        else if (document.body) document.body.insertBefore(el, document.body.firstChild);
+        el.className = 'fc-rail-mount';
+        document.body.insertBefore(el, document.body.firstChild);
         return el;
+    }
+
+    function anchorAtTop(mount) {
+        // Read body padding-top BEFORE we adjust it. That value reflects the
+        // existing topbar stack height (banner+ticker+nav, per-site varied).
+        // Rail pins at exactly that y-position so it sits flush below the
+        // topbar but stays visible during scroll.
+        if (document.body.dataset.fcRailMounted) return;
+        var current = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
+        var railH = window.innerWidth <= 480 ? 32 : 36;
+        mount.style.top = current + 'px';
+        document.body.style.paddingTop = (current + railH) + 'px';
+        document.body.dataset.fcRailMounted = '1';
     }
 
     function relTime(ts) {
@@ -107,12 +126,22 @@
     }
 
     function renderAgg(agg) {
-        if (!agg || !els.agg) return;
-        var w = (agg.wins == null ? '--' : agg.wins);
-        var l = (agg.losses == null ? '--' : agg.losses);
-        var wr = (agg.wr_pct == null ? '--' : agg.wr_pct + '%');
-        var net = (agg.net_pnl_pct != null) ? ((agg.net_pnl_pct >= 0 ? '+' : '') + agg.net_pnl_pct.toFixed(2) + '%') : '';
-        els.agg.innerHTML = '7d &middot; <span class="w">' + w + 'W</span>/<span class="l">' + l + 'L</span> &middot; WR ' + wr + (net ? ' &middot; ' + net : '');
+        if (!els.agg) return;
+        // Operator 2026-05-01: drop weekly net%. Show TODAY only computed
+        // from the rows[] within last 24h. If no trades closed today,
+        // show "TODAY · awaiting close".
+        var now = Date.now() / 1000;
+        var today = state.rows.filter(function (r) { return now - r.ts < 86400; });
+        if (!today.length) {
+            els.agg.innerHTML = 'TODAY &middot; awaiting close';
+            return;
+        }
+        var w = today.filter(function (r) { return r.pnl_pct >= 0; }).length;
+        var l = today.length - w;
+        var net = today.reduce(function (s, r) { return s + (r.pnl_pct || 0); }, 0);
+        var netStr = (net >= 0 ? '+' : '') + net.toFixed(2) + '%';
+        var netCls = net >= 0 ? 'w' : 'l';
+        els.agg.innerHTML = 'TODAY &middot; <span class="w">' + w + 'W</span>/<span class="l">' + l + 'L</span> &middot; <span class="' + netCls + '">' + netStr + '</span>';
     }
 
     function poll() {
@@ -133,6 +162,7 @@
         var mount = ensureMount();
         if (!mount) return;
         buildShell(mount);
+        anchorAtTop(mount);
         poll();
         setInterval(poll, POLL_MS);
         if (!reduceMotion) setInterval(tick, TICK_MS);
