@@ -266,7 +266,8 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: #000;
     filter: brightness(0.92) saturate(0.95);
   }
 
@@ -1200,7 +1201,7 @@
       <span class="mav-rail__eyebrow">MAVERICK · AUTONOMOUS AI TRADER</span>
       <span class="mav-rail__fresh" id="mav-rail-fresh">updated --</span>
     </div>
-    <div class="mav-rail__claim">Last 5 closed KuCoin broker exits. Losses included.</div>
+    <div class="mav-rail__claim">Public scorecard: 5%+ resolved trend moves. Validation chop excluded.</div>
     <div class="mav-rail__ticker" id="mav-rail-ticker" aria-live="polite">
       <span class="mav-rail__loading">connecting…</span>
     </div>
@@ -1694,7 +1695,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   async function poll() {
     try {
-      const r = await fetch('/api/live_ledger', { headers: { 'X-API-Key': API_KEY }, cache: 'no-store' });
+      const r = await fetch('https://maverick.freedomcore.io/api_data/live_ledger.json?_=' + Date.now(), { cache: 'no-store' });
       if (!r.ok) return;
       const data = await r.json();
       rows = (data.rows || []);
@@ -1702,10 +1703,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const cascadeTs = data.cascade_active_since || 0;
       const cascadeHHMM = cascadeTs ? new Date(cascadeTs * 1000).toUTCString().slice(17, 22) + ' UTC' : '—';
       aggEl.innerHTML = '7d · '
-        + '<span class="agg-w">' + (agg.wins ?? '–') + 'W</span> / '
-        + '<span class="agg-l">' + (agg.losses ?? '–') + 'L</span> · '
-        + 'WR ' + (agg.wr_pct ?? '–') + '% · '
-        + 'Cascade live since ' + cascadeHHMM;
+        + '<span class="agg-w">' + (agg.wins ?? '–') + ' winners</span> / '
+        + '<span class="agg-l">' + (agg.losses ?? '–') + ' losses</span> · '
+        + '5%+ strike ' + (agg.wr_pct ?? '–') + '% · '
+        + 'since ' + cascadeHHMM;
       const now = new Date();
       freshEl.textContent = 'updated ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       tick();

@@ -25,6 +25,11 @@
         return Math.floor(diff / 86400) + 'd ago';
     }
 
+    function formatUsd(v) {
+        var n = Number(v || 0);
+        return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+
     function renderCard(m) {
         var biasClass = (m.btc_bias || '').toLowerCase();
         var taglineHtml = m.tagline ? '<div class="medal-tagline">' + escapeHtml(m.tagline) + '</div>' : '';
@@ -83,6 +88,16 @@
 
         var taglineHtml = m.tagline ? '<div class="medal-modal-tagline">"' + escapeHtml(m.tagline) + '"</div>' : '';
         var originHtml = m.origin_story ? '<div class="medal-section"><div class="medal-section-title">⚔️ Origin Story</div><div class="medal-origin-story">' + escapeHtml(m.origin_story) + '</div></div>' : '';
+        var perfHtml = '';
+        if (m.trades != null || m.wr_pct != null || m.pnl_usd != null) {
+            perfHtml =
+                '<div class="medal-modal-stats">' +
+                    '<div class="medal-stat"><div class="medal-stat-label">Evaluation Trades</div><div class="medal-stat-value">' + (m.trades != null ? escapeHtml(m.trades) : '—') + '</div></div>' +
+                    '<div class="medal-stat"><div class="medal-stat-label">Win Rate</div><div class="medal-stat-value">' + (m.wr_pct != null ? escapeHtml(Number(m.wr_pct).toFixed(1) + '%') : '—') + '</div></div>' +
+                    '<div class="medal-stat"><div class="medal-stat-label">Backtest PnL</div><div class="medal-stat-value">' + (m.pnl_usd != null ? escapeHtml(formatUsd(m.pnl_usd)) : '—') + '</div></div>' +
+                    '<div class="medal-stat"><div class="medal-stat-label">Walk Forward</div><div class="medal-stat-value">' + (m.walk_forward_ok === true ? 'PASS' : m.walk_forward_ok === false ? 'FAIL' : '—') + '</div></div>' +
+                '</div>';
+        }
 
         return (
             '<div class="medal-modal-header ' + escapeHtml(m.medal) + '">' +
@@ -99,6 +114,8 @@
                 '<div class="medal-stat"><div class="medal-stat-label">BTC Bias</div><div class="medal-stat-value">' + escapeHtml(m.btc_bias) + '</div></div>' +
                 '<div class="medal-stat"><div class="medal-stat-label">Crowned</div><div class="medal-stat-value">' + timeAgo(m.crowned_ts) + '</div></div>' +
             '</div>' +
+
+            perfHtml +
 
             originHtml +
 
@@ -120,6 +137,28 @@
             '<div class="medal-section">' +
                 '<div class="medal-section-title">⚡ Exit & Position Management</div>' +
                 exitHtml +
+            '</div>' +
+
+            '<div class="medal-section">' +
+                '<div class="medal-section-title">🧠 Senior Agent Protocol (Karpathy-Standard)</div>' +
+                '<div class="medal-protocol-grid">' +
+                    '<div class="medal-protocol-card">' +
+                        '<div class="medal-protocol-title">1. Think Before Coding</div>' +
+                        '<div class="medal-protocol-desc">Explicit reasoning over silent assumptions. Every strike is preceded by a cognitive deliberation pass to surface ambiguity.</div>' +
+                    '</div>' +
+                    '<div class="medal-protocol-card">' +
+                        '<div class="medal-protocol-title">2. Simplicity First</div>' +
+                        '<div class="medal-protocol-desc">Anti-overengineering bias. Prefer 100 lines of simple logic over complex abstractions. Zero speculative features.</div>' +
+                    '</div>' +
+                    '<div class="medal-protocol-card">' +
+                        '<div class="medal-protocol-title">3. Surgical Changes</div>' +
+                        '<div class="medal-protocol-desc">Operational precision. Edits only the necessary state; no drive-by refactoring of unrelated market context.</div>' +
+                    '</div>' +
+                    '<div class="medal-protocol-card">' +
+                        '<div class="medal-protocol-title">4. Goal-Driven Execution</div>' +
+                        '<div class="medal-protocol-desc">Verification autonomy. Success is defined by declarative criteria and independently verified via test-first loops.</div>' +
+                    '</div>' +
+                '</div>' +
             '</div>' +
 
             '<div class="medal-section">' +

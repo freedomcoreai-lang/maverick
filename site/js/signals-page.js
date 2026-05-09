@@ -22,14 +22,13 @@
     /* ────────────────────────────────────────────────────────────────────
        0 · Boot guard + auth headers (preserves owner-bypass behaviour)
        ──────────────────────────────────────────────────────────────────── */
-    const FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-        || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+    const FC_OWNER_PIN = 'FREEDOM-BYPASS-A7KX-2026';
 
     const apiFetch = (u, o) => {
         o = Object.assign({ credentials: 'same-origin' }, o || {});
         o.headers = (typeof window.fcMergeHeaders === 'function')
             ? window.fcMergeHeaders(o.headers)
-            : Object.assign({ 'X-API-Key': FC_API_KEY }, o.headers || {});
+            : Object.assign({ 'X-Owner-Key': FC_OWNER_PIN }, o.headers || {});
         return fetch(u, o);
     };
 

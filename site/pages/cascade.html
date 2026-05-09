@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js?v=20260506f"></script>
+    <script src="/js/site-ticker.js?v=20260422b" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#060a10">
+    <meta name="description" content="MAVERICK Live Cascade - 8 council-passing trading engines firing autonomously across 88 KuCoin perpetuals.">
+    <title>Live Cascade | MAVERICK Engines</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260507b">
+    <style>
+        .cascade-back {
+            position:absolute;
+            top:80px;
+            left:24px;
+            z-index:5;
+            display:inline-flex;
+            align-items:center;
+            padding:8px 14px;
+            border-radius:8px;
+            background:var(--card);
+            border:1px solid var(--border);
+            color:var(--text);
+            font-size:0.85rem;
+            font-weight:500;
+            text-decoration:none;
+            transition:transform 0.2s ease, border-color 0.2s ease;
+        }
+        .cascade-back:hover {
+            transform:translateX(-3px);
+            border-color:var(--green);
+            color:var(--green);
+        }
+        @media (max-width:640px){
+            .cascade-back { top:70px; left:12px; padding:6px 10px; font-size:0.75rem; }
+            .cascade-hero { padding-top:120px !important; }
+        }
+        .cascade-hero { text-align:center; padding:80px 24px 30px; }
+        .cascade-hero h1 {
+            font-size:clamp(2rem,6vw,3.5rem);
+            font-weight:800;
+            letter-spacing:-1px;
+            margin-bottom:16px;
+            background: linear-gradient(135deg, var(--green), var(--accent));
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;
+        }
+        .cascade-hero p { color:var(--text-dim); max-width:720px; margin:0 auto 8px; line-height:1.6; }
+        .cascade-hero .meta-line {
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.7rem;
+            color:var(--text-dim);
+            letter-spacing:2px;
+            margin-top:18px;
+            text-transform:uppercase;
+        }
+        .live-dot {
+            display:inline-block;
+            width:7px;height:7px;
+            background:var(--green);
+            border-radius:50%;
+            margin-right:6px;
+            box-shadow:0 0 8px var(--green);
+            animation:pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+        .tier-title {
+            text-align:center;
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.8rem;
+            color:var(--text-dim);
+            letter-spacing:3px;
+            margin:48px auto 16px;
+            text-transform:uppercase;
+            max-width:900px;
+        }
+        .tier-title .tier-num {
+            display:inline-block;
+            padding:4px 12px;
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:8px;
+            color:var(--accent);
+            margin-right:8px;
+        }
+
+        .cascade-grid {
+            max-width:1200px;
+            margin:20px auto 0;
+            padding:0 24px;
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:18px;
+        }
+        .engine-card {
+            position:relative;
+            padding:24px 22px;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background:var(--card);
+            transition:transform 0.2s ease, border-color 0.2s ease;
+        }
+        .engine-card:hover { transform:translateY(-3px); border-color:var(--accent); }
+        .engine-tag {
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.65rem;
+            color:var(--text-dim);
+            letter-spacing:2px;
+            margin-bottom:6px;
+            text-transform:uppercase;
+        }
+        .engine-name {
+            font-size:1.05rem;
+            font-weight:700;
+            margin-bottom:4px;
+            color:var(--text);
+            word-break:break-word;
+            overflow-wrap:break-word;
+            line-height:1.3;
+        }
+        .engine-version {
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.7rem;
+            color:var(--text-dim);
+            margin-bottom:14px;
+        }
+        .engine-thesis {
+            font-size:0.85rem;
+            color:var(--text);
+            line-height:1.6;
+            margin-bottom:16px;
+            white-space:normal;
+            overflow-wrap:break-word;
+            word-break:break-word;
+        }
+        .engine-meta {
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+            margin-bottom:8px;
+        }
+        .engine-tag-pill {
+            padding:3px 10px;
+            border-radius:8px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid var(--border);
+            font-family:'JetBrains Mono',monospace;
+            font-size:0.65rem;
+            color:var(--text-dim);
+            text-transform:uppercase;
+            letter-spacing:1px;
+        }
+        .engine-tag-pill.long { color:var(--green); border-color:rgba(0,255,128,0.3); }
+        .engine-tag-pill.both { color:var(--accent); border-color:rgba(255,200,50,0.3); }
+        .engine-tag-pill.lev { color:var(--accent); }
+
+        .engine-card.tier1 { border-left:3px solid var(--green); }
+        .engine-card.tier2 { border-left:3px solid var(--accent); }
+        .engine-card.tier3 { border-left:3px solid var(--text-dim); }
+
+        .cascade-status {
+            max-width:700px;
+            margin:48px auto 80px;
+            padding:24px 28px;
+            border-radius:12px;
+            background:var(--card);
+            border:1px solid var(--border);
+            text-align:center;
+            font-size:0.9rem;
+            color:var(--text-dim);
+            line-height:1.6;
+        }
+        .cascade-status .ok { color:var(--green); }
+        .cascade-status .warn { color:#ffaa44; }
+    </style>
+</head>
+<body>
+    <div id="family-nav-mount"></div>
+
+    <a href="/pages/medalists.html" class="cascade-back" aria-label="Back to Medalists">
+        <span aria-hidden="true">&larr;</span>&nbsp;Back to Medalists
+    </a>
+
+    <section class="cascade-hero">
+        <h1>The Live Cascade</h1>
+        <p>Eight council-passing trading engines fire autonomously across 88 KuCoin perpetuals. Each champion catches a distinct market signature: discount reversals, breakouts, regime-agnostic compression releases, continuation rides. When one fires, the position passes through the genesis-to-trend morph engine and rides to the next multi-year structural ceiling.</p>
+        <div class="meta-line"><span class="live-dot"></span><span id="cascade-live-meta">LIVE  ·  8 ENGINES ARMED</span></div>
+    </section>
+
+    <div class="tier-title"><span class="tier-num">TIER 1</span> Discount Catchers</div>
+    <div class="cascade-grid" id="tier1-grid"><div style="text-align:center;padding:30px;color:var(--text-dim);">Loading...</div></div>
+
+    <div class="tier-title"><span class="tier-num">TIER 2</span> Regime-Agnostic Genesis</div>
+    <div class="cascade-grid" id="tier2-grid"><div style="text-align:center;padding:30px;color:var(--text-dim);">Loading...</div></div>
+
+    <div class="tier-title"><span class="tier-num">TIER 3</span> Continuation</div>
+    <div class="cascade-grid" id="tier3-grid"><div style="text-align:center;padding:30px;color:var(--text-dim);">Loading...</div></div>
+
+    <div class="cascade-status" id="cascade-status">Loading cascade state...</div>
+
+    <script src="/js/app.js?v=20260509a"></script>
+    <script src="/js/family-nav-v3.js?v=20260507a"></script>
+    <script>
+    (function(){
+        function escapeHtml(s){ if(s==null)return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        function tierClass(tier){
+            if(!tier) return 'tier3';
+            if(tier.indexOf('1')===0) return 'tier1';
+            if(tier.indexOf('2')===0) return 'tier2';
+            return 'tier3';
+        }
+
+        function renderEngine(e){
+            var dirClass = (e.direction||'').toLowerCase().indexOf('long')===0 && (e.direction||'').indexOf('short')<0 ? 'long' :
+                           (e.direction||'').indexOf('both')===0 || (e.direction||'').indexOf('long_short')>=0 ? 'both' : '';
+            var versionLine = e.strategy_name + (e.version&&e.version!=='?' ? ' · v'+escapeHtml(e.version) : '');
+            return (
+                '<div class="engine-card '+tierClass(e.tier)+'">'+
+                    '<div class="engine-tag">'+escapeHtml(e.tag)+'</div>'+
+                    '<div class="engine-name">'+escapeHtml(e.strategy_name||e.tag)+'</div>'+
+                    '<div class="engine-version">'+escapeHtml(versionLine)+'</div>'+
+                    '<div class="engine-thesis">'+escapeHtml(e.thesis||'No thesis recorded.')+'</div>'+
+                    '<div class="engine-meta">'+
+                        '<span class="engine-tag-pill '+dirClass+'">'+escapeHtml(e.direction)+'</span>'+
+                        '<span class="engine-tag-pill">'+escapeHtml(e.regime)+'</span>'+
+                        (e.leverage!=null ? '<span class="engine-tag-pill lev">lev '+escapeHtml(e.leverage)+'x</span>' : '')+
+                        '<span class="engine-tag-pill">'+(e.entry_filters||0)+' filters</span>'+
+                    '</div>'+
+                '</div>'
+            );
+        }
+
+        async function load(){
+            try {
+                var r = await (typeof fcFetch === 'function'
+                    ? fcFetch('/api/live/cascade')
+                    : fetch('/api/live/cascade', {cache:'no-store'}));
+                var data = await r.json();
+                if(!data || !data.engines){ throw new Error('bad payload'); }
+
+                var t1=[], t2=[], t3=[];
+                data.engines.forEach(function(e){
+                    var t = e.tier||'';
+                    if(t.indexOf('1')===0) t1.push(e);
+                    else if(t.indexOf('2')===0) t2.push(e);
+                    else t3.push(e);
+                });
+
+                document.getElementById('tier1-grid').innerHTML = t1.length ? t1.map(renderEngine).join('') :
+                    '<div style="text-align:center;padding:30px;color:var(--text-dim);">No Tier 1 engines registered.</div>';
+                document.getElementById('tier2-grid').innerHTML = t2.length ? t2.map(renderEngine).join('') :
+                    '<div style="text-align:center;padding:30px;color:var(--text-dim);">No Tier 2 engines registered.</div>';
+                document.getElementById('tier3-grid').innerHTML = t3.length ? t3.map(renderEngine).join('') :
+                    '<div style="text-align:center;padding:30px;color:var(--text-dim);">No Tier 3 engines registered.</div>';
+
+                document.getElementById('cascade-live-meta').textContent =
+                    'LIVE / ' + data.count + ' ENGINES ARMED';
+
+                var statusBits = [];
+                statusBits.push('Cascade size: <span class="ok">'+data.count+' engines</span>');
+                statusBits.push('Lane B trend ignition: <span class="' + (data.lane_b_trend_live?'ok':'warn') + '">' +
+                    (data.lane_b_trend_live ? 'LIVE' : 'OFF (entries off, position-management on)') + '</span>');
+                if(data.platinum_disengaged){
+                    statusBits.push('PLATINUM: <span class="warn">disengaged (RANGING tool, bullish-bias regime)</span>');
+                }
+                statusBits.push('Each fire transitions to MOMENTUM_TREND via the genesis-to-trend morph engine when chop falls and DI flips.');
+                document.getElementById('cascade-status').innerHTML = statusBits.join('<br>');
+            } catch(e) {
+                document.getElementById('cascade-status').textContent = 'Cascade endpoint unreachable: ' + (e.message||e);
+            }
+        }
+        load();
+        setInterval(load, 30000);
+    })();
+    </script>
+</body>
+</html>

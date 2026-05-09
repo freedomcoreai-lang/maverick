@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-init.js?v=20260506f"></script>
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#060a10">
@@ -10,8 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-    <link rel="stylesheet" href="/css/style.css?v=20260501j">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260507b">
     <style>
         .wp-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
         .chapter { padding: 64px 0; border-top: 1px solid var(--border); scroll-margin-top: 70px; }
@@ -111,7 +112,7 @@
     <div class="grid-bg"></div>
 
     <nav class="nav">
-        <button class="nav-hamburger" aria-label="Menu">
+        <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo"><img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img"><span class="nav-logo-text">MAVERICK</span></a>
@@ -119,6 +120,7 @@
             <a href="/pages/today.html">Today</a>
             <a href="/pages/signals.html">Signals</a>
             <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/cascade.html">Live Cascade</a>
             <a href="/pages/performance.html">Performance</a>
             <a href="/pages/swarm.html">Terminals</a>
             <a href="/pages/evolution.html">Evolution</a>
@@ -166,92 +168,6 @@
 <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
                 <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
-        <style>
-          /* === FREEDOMCORE FAMILY HEADING === */
-          .fc-fam-head {
-            display: block; text-align: center; color: #4dd2ff;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
-            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
-            padding: 12px 0 8px; pointer-events: none;
-          }
-          /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
-          .fc-fam-link {
-            display: flex !important; align-items: center; gap: 10px;
-            padding: 9px 2px !important; text-decoration: none !important;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
-            font-weight: 700; letter-spacing: 0.06em;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-          }
-          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
-          .fc-fam-link .fc-fam-desc {
-            font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
-            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
-          }
-          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
-          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
-          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
-          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
-          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
-          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
-          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
-          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
-          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
-          .fc-fam-divider {
-            height: 1px; background: rgba(255,255,255,0.10);
-            margin: 10px 0 6px; pointer-events: none;
-          }
-          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
-
-          /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
-          .mobile-dropdown > * {
-            opacity: 0;
-            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
-            will-change: transform, opacity;
-          }
-          .mobile-dropdown.open > * {
-            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-          }
-          @keyframes fc-menu-drop {
-            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
-          }
-          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
-          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
-          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
-          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
-          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
-          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
-          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
-          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
-          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
-          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
-          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
-          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
-          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
-          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
-          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
-          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
-          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
-          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
-          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
-          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
-          .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
-          .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
-          .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
-          .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
-          .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
-          /* The inline <style> block itself is a child but renders as display:none, so it
-             consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
-          @media (prefers-reduced-motion: reduce) {
-            .mobile-dropdown > *,
-            .mobile-dropdown.open > * {
-              opacity: 1 !important; transform: none !important; animation: none !important;
-            }
-          }
-        </style>
         <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
         <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
         <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
@@ -546,7 +462,7 @@
         <h2 class="ch-title" style="font-size:clamp(1.4rem,3vw,2rem);margin-top:48px;">THE SELF EVOLVING SWARM</h2>
         <div class="prose">
             <p>The third layer is Trinity Core, where MAVERICK becomes something that no individual trader, regardless of skill or resources, has built before.</p>
-            <p>The AI swarm is a multi-agent system powered by Gemini 3.1 with a Claude Opus 4.7 callback. Every 48 hours it generates 50 strategy mutations across God-Mode Autonomy (Paradigm G). Each generation is assigned one paradigm by the rule <code>gen &#37; 11</code>, preventing the LLM from locking onto any single recipe. Candidates may also invent novel composite features at top-level (<code>feature_*</code>); after a champion crowns, those are AST-extracted and appended to the permanent library. Each candidate is backtested against 7 days of real market data across 88 symbols under <strong>Honest Physics</strong>: a mandatory T-60 delay on every signal lookup so champions cannot read into the future of the bar they are about to trade. Scored on dollar return adjusted for biggest losing streak (Calmar), with downside-only risk score (Sortino) logged alongside for audit.</p>
+            <p>The AI swarm is now a multi-stage court. Fifty strategy mutations are tested against the same live evidence base, then six NVIDIA-hosted scout models inspect the source, logs, and candidate failures before the high-court judges deliberate. Claude Opus, OpenAI GPT-5.5/Codex and Gemini are active at the decision layer. Candidates may also invent novel composite features at top-level (<code>feature_*</code>); after a champion crowns, those are AST-extracted and appended to the permanent library. Each candidate is backtested against 7 days of real market data across 88 symbols under <strong>Honest Physics</strong>: a mandatory T-60 delay on every signal lookup so champions cannot read into the future of the bar they are about to trade. Scored on dollar return adjusted for biggest losing streak (Calmar), with downside-only risk score (Sortino) logged alongside for audit.</p>
             <p>Surviving candidates pass through the Champion Validator before they touch live capital. The validator catches lookahead bias, idempotency failures, micro stops below the 1.2 ATR floor, broken contract returns, and silent precompute failures. A winner must strictly beat the reigning champion on the same window. If nothing wins, the throne is held. The decision not to evolve is itself intelligence.</p>
             <p>The Sovereign Live Adapter ties data, evolution, and execution together. A cache manager auto refreshes the champion's in memory state every 5 minutes so live execution mirrors the backtest exactly. Without it, champions go silent in production within fifteen minutes of deploy because their cache ages out. With it, what scores in evaluation is what fires on the exchange.</p>
             <p>The system's competitive advantage is not speed or capital. It is that MAVERICK writes the logic rather than tuning weights, and validates the logic under physics that match real exchange execution before risking a pound.</p>
@@ -635,13 +551,11 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260430f"></script>
-    <script src="/js/mav-wallet.js?v=20260501h"></script>
+    <script src="/js/app.js?v=20260507a"></script>
+    <script src="/js/mav-wallet.js?v=20260501r"></script>
     <script src="/js/tracker.js" defer></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
-<script src="/js/risk-footer.js?v=20260501g" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>

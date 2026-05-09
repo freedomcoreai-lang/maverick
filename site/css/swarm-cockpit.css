@@ -254,17 +254,27 @@
 }
 
 /* ─── 5. LIVE AGENT FEEDS ─────────────────────────────────────────────────── */
+/* ─── 0. PERFORMANCE & SCROLL LOCKS ────────────────────────────────────────── */
+html { scroll-behavior: auto !important; }
+
 .swarm-feed-tabs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
     margin-top: var(--sp-32);
-    overflow: hidden;
+}
+.swarm-feed-tabs::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 .swarm-feed-tab {
+    flex: 1 0 auto;
+    min-width: 110px;
     background: var(--surface);
     padding: var(--sp-16);
     border: none;
@@ -386,6 +396,8 @@
     padding: var(--sp-24);
     max-height: 65vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: var(--fs-14);
     color: var(--text-dim);

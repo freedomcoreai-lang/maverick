@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-init.js?v=20260506f"></script>
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#060a10">
@@ -11,16 +11,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-    <link rel="stylesheet" href="/css/style.css?v=20260501j">
-    <link rel="stylesheet" href="/css/signals-cockpit.css?v=20260501j">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/signals-cockpit.css?v=20260501r">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260507b">
 </head>
 <body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
     <div class="grid-bg"></div>
 
     <nav class="nav">
-        <button class="nav-hamburger" aria-label="Menu">
+        <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo"><img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img" id="nav-logo-img"><span class="nav-logo-text">MAVERICK</span></a>
@@ -28,6 +29,7 @@
             <a href="/pages/today.html">Today</a>
             <a href="/pages/signals.html">Signals</a>
             <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/cascade.html">Live Cascade</a>
             <a href="/pages/performance.html">Performance</a>
             <a href="/pages/swarm.html">Terminals</a>
             <a href="/pages/evolution.html">Evolution</a>
@@ -74,81 +76,6 @@
     <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
         <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
-        <style>
-          .fc-fam-head {
-            display: block; text-align: center; color: #4dd2ff;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
-            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
-            padding: 12px 0 8px; pointer-events: none;
-          }
-          .fc-fam-link {
-            display: flex !important; align-items: center; gap: 10px;
-            padding: 9px 2px !important; text-decoration: none !important;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
-            font-weight: 700; letter-spacing: 0.06em;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-          }
-          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
-          .fc-fam-link .fc-fam-desc {
-            font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
-            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
-          }
-          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
-          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
-          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
-          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
-          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
-          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
-          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
-          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
-          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
-          .fc-fam-divider {
-            height: 1px; background: rgba(255,255,255,0.10);
-            margin: 10px 0 6px; pointer-events: none;
-          }
-          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
-          .mobile-dropdown > * {
-            opacity: 0;
-            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
-            will-change: transform, opacity;
-          }
-          .mobile-dropdown.open > * {
-            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-          }
-          @keyframes fc-menu-drop {
-            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
-          }
-          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
-          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
-          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
-          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
-          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
-          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
-          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
-          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
-          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
-          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
-          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
-          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
-          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
-          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
-          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
-          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
-          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
-          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
-          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
-          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
-          @media (prefers-reduced-motion: reduce) {
-            .mobile-dropdown > *,
-            .mobile-dropdown.open > * {
-              opacity: 1 !important; transform: none !important; animation: none !important;
-            }
-          }
-        </style>
         <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
         <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
         <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
@@ -181,7 +108,7 @@
              Hero numbers come from /api/hunt/state.
              ============================================================ -->
         <section class="hunt-hero" id="hunt-hero" aria-live="polite">
-            <div class="hunt-eyebrow">CHAMPION SIGNALS &middot; CASCADE LIVE</div>
+            <div class="hunt-eyebrow">CHAMPION SIGNALS &middot; LIVE CONFIG</div>
             <h1 class="hunt-headline" id="hunt-headline">The cascade is hunting.</h1>
             <p class="hunt-subhead" id="hunt-subhead">
                 <span id="hunt-bars">&mdash;</span> symbol-bars evaluated. Capital intact.
@@ -195,9 +122,9 @@
                     <div class="pulse-sub">perpetuals scanned</div>
                 </div>
                 <div class="pulse-card">
-                    <div class="pulse-lbl">Cascade</div>
+                    <div class="pulse-lbl">Champion</div>
                     <div class="pulse-val" id="pulse-champs">&mdash;</div>
-                    <div class="pulse-sub">medalists hunting</div>
+                    <div class="pulse-sub">live strategy hunting</div>
                 </div>
                 <div class="pulse-card">
                     <div class="pulse-lbl">Last Scan</div>
@@ -213,71 +140,27 @@
         </section>
 
         <!-- ============================================================
-             SECTION 2 — TRINITY COCKPIT
-             Three monitors, one per medalist. State badge, gate LEDs,
-             threat board (closest-to-fire), terminal feed.
+             SECTION 2 — CHAMPION COCKPIT
+             Monitor cards are rebuilt from /api/live/arms so a champion
+             promotion updates this page without hand-editing stale labels.
              ============================================================ -->
         <section class="cockpit-section" aria-labelledby="cockpit-h">
-            <div class="section-eyebrow" id="cockpit-h">TRINITY COCKPIT &middot; MEDALIST MONITORS</div>
+            <div class="section-eyebrow" id="cockpit-h">LIVE CHAMPION COCKPIT &middot; CONFIG MONITOR</div>
             <p class="section-lede">
-                Three medalist champions running in parallel. Each one watches the universe for its own setup.
-                When every gate goes green and the 1-minute trigger confirms, the cascade fires. Until then,
-                you can watch them stalk on the latest cached snapshot.
+                The active champion and its gate set are loaded from the live Maverick config.
+                When every gate goes green and the 1-minute trigger confirms, Maverick fires.
+                Until then, this page shows the closest-to-fire symbols from the latest cached snapshot.
             </p>
 
             <div class="monitors" id="monitors">
-                <article class="monitor monitor--silver" data-tag="SILVER">
-                    <header class="monitor-head">
-                        <span class="monitor-rank">SILVER</span>
-                        <span class="monitor-name" data-field="name">FVG_CE_DISPLACEMENT_THRUST</span>
-                        <span class="monitor-state" data-field="state">DORMANT</span>
-                    </header>
-                    <p class="monitor-thesis" data-field="thesis">
-                        Institutional defense of bullish Fair Value Gap with displacement.
-                    </p>
-                    <div class="monitor-leds" data-field="leds" aria-label="Entry gates"></div>
-                    <div class="monitor-board">
-                        <div class="board-head">Threat&nbsp;Board <span class="board-sub">closest-to-fire across the universe</span></div>
-                        <div class="board-body" data-field="threats">
-                            <div class="board-empty">Waiting on first scan&hellip;</div>
-                        </div>
-                    </div>
-                    <div class="monitor-term">
-                        <div class="term-head">HUNT FEED</div>
-                        <div class="term-body" data-field="term"></div>
-                    </div>
-                </article>
-
-                <article class="monitor monitor--gold" data-tag="GOLD">
-                    <header class="monitor-head">
-                        <span class="monitor-rank">GOLD</span>
-                        <span class="monitor-name" data-field="name">POC_DISPLACEMENT_LAMINAR</span>
-                        <span class="monitor-state" data-field="state">DORMANT</span>
-                    </header>
-                    <p class="monitor-thesis" data-field="thesis">
-                        Daily Point-of-Control breakout with displacement and bull volume delta.
-                    </p>
-                    <div class="monitor-leds" data-field="leds" aria-label="Entry gates"></div>
-                    <div class="monitor-board">
-                        <div class="board-head">Threat&nbsp;Board <span class="board-sub">closest-to-fire across the universe</span></div>
-                        <div class="board-body" data-field="threats">
-                            <div class="board-empty">Waiting on first scan&hellip;</div>
-                        </div>
-                    </div>
-                    <div class="monitor-term">
-                        <div class="term-head">HUNT FEED</div>
-                        <div class="term-body" data-field="term"></div>
-                    </div>
-                </article>
-
                 <article class="monitor monitor--platinum" data-tag="PLATINUM">
                     <header class="monitor-head">
                         <span class="monitor-rank">PLATINUM</span>
-                        <span class="monitor-name" data-field="name">SOVEREIGN_POC_REVERSION_MU</span>
+                        <span class="monitor-name" data-field="name">Loading live champion</span>
                         <span class="monitor-state" data-field="state">DORMANT</span>
                     </header>
                     <p class="monitor-thesis" data-field="thesis">
-                        Mean-reversion fade of extreme POC extension during anti-persistent regimes.
+                        Waiting for /api/live/arms to load the current config.py gate set.
                     </p>
                     <div class="monitor-leds" data-field="leds" aria-label="Entry gates"></div>
                     <div class="monitor-board">
@@ -296,13 +179,13 @@
 
         <!-- ============================================================
              SECTION 3 — PRESSURE RADAR
-             Cross-champion view: which symbols are warming up across
-             all three medalists at once. /api/hunt/pressure.
+             Live-champion view: which symbols are warming up across
+             the active config gate set. /api/hunt/pressure.
              ============================================================ -->
         <section class="pressure" aria-labelledby="pressure-h">
-            <div class="section-eyebrow" id="pressure-h">PRESSURE RADAR &middot; CROSS-CASCADE</div>
+            <div class="section-eyebrow" id="pressure-h">PRESSURE RADAR &middot; LIVE CHAMPION</div>
             <p class="section-lede">
-                One row per symbol. The wider the bar, the more gates are passing across all three medalists.
+                One row per symbol. The wider the bar, the more live champion gates are passing.
                 Symbols here are warming. They are not signals.
             </p>
             <div class="pressure-body" id="pressure-body">
@@ -312,14 +195,13 @@
 
         <!-- ============================================================
              SECTION 4 — CONFIRMED STRIKES
-             The archive. Past trades the cascade actually fired.
+             The archive. Past trades the live runtime actually fired.
              /api/champion_signals.
              ============================================================ -->
         <section class="archive" aria-labelledby="archive-h">
             <div class="section-eyebrow" id="archive-h">CONFIRMED STRIKES &middot; CASCADE ARCHIVE</div>
             <p class="section-lede">
-                Every trade fired since Trinity Cascade went live on 27 April 2026. Three medalist
-                champions sharing one runtime, all evaluated on the same gates, all visible here.
+                Every trade fired since the current post-cascade runtime went live on 27 April 2026.
                 Tap any row to see the indicator stack, DNA snapshot, and outcome at fire time.
             </p>
 
@@ -355,8 +237,8 @@
             <div class="section-eyebrow" id="protocol-h">PROTOCOL NOTES</div>
             <div class="protocol-grid">
                 <div class="protocol-card">
-                    <div class="protocol-card-head">CASCADE</div>
-                    <p>Three medalist champions promoted from the LLM swarm. Silver runs first, then Gold, then Platinum. The first medalist whose gates align owns the bar.</p>
+                    <div class="protocol-card-head">PROMOTION</div>
+                    <p>The live champion is promoted by the swarm, installed into Maverick config, and then exposed here from that same config source.</p>
                 </div>
                 <div class="protocol-card">
                     <div class="protocol-card-head">UNIVERSE</div>
@@ -387,13 +269,11 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260501a"></script>
-    <script src="/js/mav-wallet.js?v=20260501h"></script>
+    <script src="/js/app.js?v=20260507a"></script>
+    <script src="/js/mav-wallet.js?v=20260501r"></script>
     <script src="/js/signals-page.js?v=20260501a"></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
-<script src="/js/risk-footer.js?v=20260501g" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>

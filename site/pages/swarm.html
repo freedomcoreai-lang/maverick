@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-init.js?v=20260506f"></script>
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#060a10">
@@ -10,9 +10,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-    <link rel="stylesheet" href="/css/style.css?v=20260501j">
-    <link rel="stylesheet" href="/css/swarm-cockpit.css?v=20260501j">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/swarm-cockpit.css?v=20260506f">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260507b">
 </head>
 <body data-site="maverick">
     <div class="site-ticker" id="site-ticker"><div class="ticker-track" id="ticker-track"><div class="ticker-item">Loading headlines...</div></div></div>
@@ -20,7 +21,7 @@
 
     <!-- NAV -->
     <nav class="nav">
-        <button class="nav-hamburger" aria-label="Menu">
+        <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo">
@@ -31,6 +32,7 @@
             <a href="/pages/today.html">Today</a>
             <a href="/pages/signals.html">Signals</a>
             <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/cascade.html">Live Cascade</a>
             <a href="/pages/performance.html">Performance</a>
             <a href="/pages/swarm.html">Terminals</a>
             <a href="/pages/evolution.html">Evolution</a>
@@ -78,92 +80,6 @@
 <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
                 <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
-        <style>
-          /* === FREEDOMCORE FAMILY HEADING === */
-          .fc-fam-head {
-            display: block; text-align: center; color: #4dd2ff;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
-            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
-            padding: 12px 0 8px; pointer-events: none;
-          }
-          /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
-          .fc-fam-link {
-            display: flex !important; align-items: center; gap: 10px;
-            padding: 9px 2px !important; text-decoration: none !important;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
-            font-weight: 700; letter-spacing: 0.06em;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-          }
-          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
-          .fc-fam-link .fc-fam-desc {
-            font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
-            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
-          }
-          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
-          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
-          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
-          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
-          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
-          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
-          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
-          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
-          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
-          .fc-fam-divider {
-            height: 1px; background: rgba(255,255,255,0.10);
-            margin: 10px 0 6px; pointer-events: none;
-          }
-          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
-
-          /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
-          .mobile-dropdown > * {
-            opacity: 0;
-            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
-            will-change: transform, opacity;
-          }
-          .mobile-dropdown.open > * {
-            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-          }
-          @keyframes fc-menu-drop {
-            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
-          }
-          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
-          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
-          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
-          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
-          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
-          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
-          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
-          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
-          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
-          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
-          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
-          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
-          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
-          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
-          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
-          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
-          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
-          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
-          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
-          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
-          .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
-          .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
-          .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
-          .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
-          .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
-          /* The inline <style> block itself is a child but renders as display:none, so it
-             consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
-          @media (prefers-reduced-motion: reduce) {
-            .mobile-dropdown > *,
-            .mobile-dropdown.open > * {
-              opacity: 1 !important; transform: none !important; animation: none !important;
-            }
-          }
-        </style>
         <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
         <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
         <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
@@ -198,14 +114,14 @@
     <!-- HERO -->
     <section class="swarm-hero" aria-labelledby="swarm-hero-title">
         <div class="swarm-hero__eyebrow">Maverick Swarm</div>
-        <h1 class="swarm-hero__title" id="swarm-hero-title">Nine agents. One evolving trading mind.</h1>
+        <h1 class="swarm-hero__title" id="swarm-hero-title"><span>Six NVIDIA scouts.</span><span>Three judges.</span><span>One trading mind.</span></h1>
         <p class="swarm-hero__sub">
             Live operational feeds from the intelligence chain that scans 88 markets, studies its misses, and evolves only when a new strategy beats the live system.
         </p>
 
         <div class="swarm-hero__metrics" aria-label="Swarm operating facts">
             <div class="swarm-hero__metric">
-                <span class="swarm-hero__metric-label">Agents</span>
+                <span class="swarm-hero__metric-label">Court seats</span>
                 <strong class="swarm-hero__metric-value">9</strong>
             </div>
             <div class="swarm-hero__metric">
@@ -218,7 +134,7 @@
             </div>
             <div class="swarm-hero__metric">
                 <span class="swarm-hero__metric-label">Evolution</span>
-                <strong class="swarm-hero__metric-value">100 gen</strong>
+                <strong class="swarm-hero__metric-value">50 gen</strong>
             </div>
         </div>
     </section>
@@ -227,7 +143,7 @@
         <div class="section-inner">
             <div class="section-label">LLM Swarm Terminals</div>
             <h2 class="section-title" id="agent-feeds-title">Watch the chambers work.</h2>
-            <p class="section-text">Live feeds from every agent, every council, every scanner. Free tier sees the result. Pro tier sees the entry, the position management, the ntfy push, the Shadow auto-copy. Subscribe to watch the decision, not just the outcome.</p>
+            <p class="section-text">Live feeds from every agent, scanner and court chamber. Public visitors see summaries only. The High Council transcript is server-gated behind owner access, Pro/Sovereign subscription, or the matching token tier.</p>
 
             <div class="swarm-feed-tabs" id="swarm-tabs" role="tablist">
                 <button class="swarm-feed-tab is-active" data-agent="swarm" role="tab" aria-selected="true">
@@ -283,7 +199,7 @@
                     <h3 class="swarm-feed-panel__title">Multi-LLM Council</h3>
                     <div class="swarm-feed-panel__tools">
                         <select id="council-selector" class="swarm-feed-select" aria-label="Select council deliberation">
-                            <option value="">Loading councils&hellip;</option>
+                            <option value="">Loading...</option>
                         </select>
                         <span id="council-meta" class="swarm-feed-meta"></span>
                         <button class="swarm-feed-panel__fullscreen fullscreen-trigger" data-terminal="council">Fullscreen <kbd>F</kbd></button>
@@ -442,7 +358,7 @@
                     <div class="swarm-timeline__rail" aria-hidden="true"></div>
                     <div class="swarm-timeline__body">
                         <h4>AI Swarm</h4>
-                        <p>One hundred-generation evolution cycle led by Gemini 3.1 with a 2.5 Flash, Flash-Lite and Claude Opus 4.7 fallback chain. It ingests the sentinel broadcasts, the digest, the shadow matrix of missed trades, persistent cross-cycle memory and a pure-numpy reference library for every structural primitive. Each candidate is backtested across 88 symbols under realistic fees and slippage, walk-forward validated across three rolling sub-windows, and screened for look-ahead bias by a dual-mode T-120 honest-physics gate. Only a candidate that strictly beats the incumbent score on the same fresh window takes the throne, then waits for an operator-confirmed deploy into the live runtime.</p>
+                        <p>Fifty-generation evolution cycle fed by sentinel broadcasts, the weekly digest, the shadow matrix of missed trades, persistent cross-cycle memory and a pure-numpy reference library for every structural primitive. Candidate authorship can use the active frontier bench, but promotion is judged by evidence: backtests across 88 symbols with realistic fees and slippage, walk-forward validation across rolling sub-windows, and a dual-mode T-120 honest-physics gate. Only a candidate that strictly beats the incumbent on the same fresh window can reach operator-confirmed deployment.</p>
                     </div>
                 </article>
 
@@ -453,8 +369,8 @@
                     </div>
                     <div class="swarm-timeline__rail" aria-hidden="true"></div>
                     <div class="swarm-timeline__body">
-                        <h4>Multi-LLM Council</h4>
-                        <p>A three-LLM judicial panel — Claude, Gemini and OpenAI Codex — debates the top three candidates after evaluation ranking. Each speaker reads the candidate DNA, score, regime, family and code summary alongside the incumbent, then votes to crown or veto. Disagreement defaults to the incumbent. Deliberation transcripts are saved verbatim and surfaced in the Council terminal below.</p>
+                        <h4>High Council</h4>
+                        <p>Six NVIDIA-hosted scouts read source, logs and evidence first. The high-court layer then deliberates from that digest: Claude Opus, OpenAI GPT-5.5/Codex and Gemini. Each judge reads the same candidate DNA, score, regime, family and code summary alongside the incumbent, then votes to crown or veto. Disagreement defaults to the incumbent. Transcripts are saved verbatim but the feed is private, server-gated intelligence.</p>
                     </div>
                 </article>
             </div>
@@ -465,9 +381,9 @@
     <section class="swarm-section" aria-labelledby="llm-intelligence-title">
         <div class="section-inner">
             <div class="section-label">LLM Intelligence</div>
-            <h2 class="section-title" id="llm-intelligence-title">One hundred generations. Two stages. Strict survival.</h2>
+            <h2 class="section-title" id="llm-intelligence-title">Fifty generations. Two stages. High-court survival.</h2>
             <p class="section-text">
-                The Swarm runs a single hundred-generation cycle every Saturday. The first thirty generations explore freely across the physics library. The remaining seventy hone the leading candidate one change at a time. After scoring, the top three challengers face a three-LLM judicial panel. A new strategy must beat the incumbent or nothing changes.
+                The Swarm is moving to a tighter fifty-generation cycle. The first phase explores freely across the physics library. The remaining phase hones the leading candidate one change at a time. After scoring, the top challengers face the High Council: six NVIDIA scouts feeding Claude, OpenAI GPT-5.5/Codex and Gemini at the decision layer. A new strategy must beat the incumbent or nothing changes.
             </p>
 
             <div class="llm-phases">
@@ -496,11 +412,11 @@
                 <article class="llm-phase">
                     <header class="llm-phase__header">
                         <span>Verdict</span>
-                        <strong>Three-LLM Council</strong>
+                        <strong>High-Court Council</strong>
                         <em>After scoring</em>
                     </header>
                     <p class="llm-phase__summary">
-                        The top three candidates that beat the incumbent go to a three-LLM judicial panel. Claude, Gemini and OpenAI Codex each read the same DNA, score, regime, family and code summary alongside the incumbent. Each votes to crown one or veto all. Disagreement defaults to the incumbent. Council failure or timeout never blocks live trading. The full deliberation is saved verbatim and surfaced in the Council terminal below.
+                        The top candidates that beat the incumbent go to the High Council. Six NVIDIA scouts produce the evidence digest, then Claude Opus, OpenAI GPT-5.5/Codex and Gemini judge the candidates. Each vote can crown one or veto all. Disagreement defaults to the incumbent. Council failure or timeout never blocks live trading. The full deliberation is saved verbatim and gated behind owner, subscription, or token access.
                     </p>
                 </article>
             </div>
@@ -539,14 +455,12 @@
 
     <!-- JS in app.js?v=20260429g - needs: swarm page tab switching (data-swarm-tab) and feed loading into swarm-page-feed-* elements -->
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260430f"></script>
-    <script src="/js/mav-wallet.js?v=20260501h"></script>
-    <script src="/js/active-runs-badges.js?v=20260501j" defer></script>
+    <script src="/js/app.js?v=20260507a"></script>
+    <script src="/js/mav-wallet.js?v=20260501r"></script>
+    <script src="/js/active-runs-badges.js?v=20260501r" defer></script>
     <script src="/js/tracker.js" defer></script>
 <div class="terminal-overlay" id="terminal-overlay"><div class="terminal-overlay-header"><div id="terminal-overlay-title" style="font-family:JetBrains Mono,monospace;font-size:0.7rem;color:var(--green);letter-spacing:2px;text-transform:uppercase;"></div><button class="terminal-close-btn" id="terminal-close">CLOSE TERMINAL [ESC]</button></div><div class="terminal-overlay-body" id="terminal-overlay-content"></div></div>    <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
-<script src="/js/risk-footer.js?v=20260501g" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>

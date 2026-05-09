@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-init.js?v=20260506f"></script>
     <script src="/js/site-ticker.js?v=20260422b" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#060a10">
@@ -10,8 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-    <link rel="stylesheet" href="/css/style.css?v=20260501j">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260507b">
     <style>
         .wp-wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
 
@@ -200,7 +201,7 @@
 
     <!-- NAV -->
     <nav class="nav">
-        <button class="nav-hamburger" aria-label="Menu">
+        <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <a href="/" class="nav-logo">
@@ -211,6 +212,7 @@
             <a href="/pages/today.html">Today</a>
             <a href="/pages/signals.html">Signals</a>
             <a href="/pages/medalists.html">Medalists</a>
+            <a href="/pages/cascade.html">Live Cascade</a>
             <a href="/pages/performance.html">Performance</a>
             <a href="/pages/swarm.html">Terminals</a>
             <a href="/pages/evolution.html">Evolution</a>
@@ -258,92 +260,6 @@
 <!-- MOBILE DROPDOWN MENU -->
     <div class="mobile-dropdown" id="mobile-menu">
                 <!-- FC-FAMILY-NAV-START · UNIFIED ACROSS ALL FREEDOMCORE SITES — DO NOT EDIT PER-SITE · FC-FAMILY-NAV-V3 -->
-        <style>
-          /* === FREEDOMCORE FAMILY HEADING === */
-          .fc-fam-head {
-            display: block; text-align: center; color: #4dd2ff;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 11px;
-            letter-spacing: 0.35em; font-weight: 700; text-transform: uppercase;
-            padding: 12px 0 8px; pointer-events: none;
-          }
-          /* === FAMILY LINKS (apex / maverick / shadow / arena / quantum) === */
-          .fc-fam-link {
-            display: flex !important; align-items: center; gap: 10px;
-            padding: 9px 2px !important; text-decoration: none !important;
-            font-family: 'Orbitron', 'Inter', sans-serif; font-size: 13px;
-            font-weight: 700; letter-spacing: 0.06em;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-          }
-          .fc-fam-link:hover { transform: translateX(2px); opacity: 0.92; }
-          .fc-fam-link .fc-fam-desc {
-            font-family: 'JetBrains Mono', ui-monospace, monospace;
-            font-size: 10px; font-weight: 400; letter-spacing: 0.04em;
-            opacity: 0.5; color: inherit; margin-left: auto; text-transform: uppercase;
-          }
-          .fc-fam-link[data-fc="apex"]     { color: #4dd2ff; }
-          .fc-fam-link[data-fc="maverick"] { color: #ffd700; }
-          .fc-fam-link[data-fc="shadow"]   { color: #8b5cf6; }
-          .fc-fam-link[data-fc="arena"]    { color: #c0c8d4; }
-          .fc-fam-link[data-fc="quantum"]  { color: #3ea8f5; }
-          [data-theme="light"] .fc-fam-head                     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="apex"]     { color: #006bb3; }
-          [data-theme="light"] .fc-fam-link[data-fc="maverick"] { color: #a17900; }
-          [data-theme="light"] .fc-fam-link[data-fc="shadow"]   { color: #6d28d9; }
-          [data-theme="light"] .fc-fam-link[data-fc="arena"]    { color: #4a5260; }
-          [data-theme="light"] .fc-fam-link[data-fc="quantum"]  { color: #1d6fb8; }
-          .fc-fam-divider {
-            height: 1px; background: rgba(255,255,255,0.10);
-            margin: 10px 0 6px; pointer-events: none;
-          }
-          [data-theme="light"] .fc-fam-divider { background: rgba(0,0,0,0.10); }
-
-          /* === FREEDOMCORE-STYLE 3D DROP-IN CASCADE — every item, every open === */
-          .mobile-dropdown > * {
-            opacity: 0;
-            transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85);
-            will-change: transform, opacity;
-          }
-          .mobile-dropdown.open > * {
-            animation: fc-menu-drop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-          }
-          @keyframes fc-menu-drop {
-            0%   { opacity: 0; transform: translateY(-40px) translateZ(-100px) rotateX(25deg) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0)     translateZ(0)      rotateX(0deg)  scale(1);    }
-          }
-          .mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.04s; }
-          .mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.08s; }
-          .mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.12s; }
-          .mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.16s; }
-          .mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.20s; }
-          .mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.24s; }
-          .mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.28s; }
-          .mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.32s; }
-          .mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.36s; }
-          .mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.40s; }
-          .mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.44s; }
-          .mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.48s; }
-          .mobile-dropdown.open > *:nth-child(13) { animation-delay: 0.52s; }
-          .mobile-dropdown.open > *:nth-child(14) { animation-delay: 0.56s; }
-          .mobile-dropdown.open > *:nth-child(15) { animation-delay: 0.60s; }
-          .mobile-dropdown.open > *:nth-child(16) { animation-delay: 0.64s; }
-          .mobile-dropdown.open > *:nth-child(17) { animation-delay: 0.68s; }
-          .mobile-dropdown.open > *:nth-child(18) { animation-delay: 0.72s; }
-          .mobile-dropdown.open > *:nth-child(19) { animation-delay: 0.76s; }
-          .mobile-dropdown.open > *:nth-child(20) { animation-delay: 0.80s; }
-          .mobile-dropdown.open > *:nth-child(21) { animation-delay: 0.84s; }
-          .mobile-dropdown.open > *:nth-child(22) { animation-delay: 0.88s; }
-          .mobile-dropdown.open > *:nth-child(23) { animation-delay: 0.92s; }
-          .mobile-dropdown.open > *:nth-child(24) { animation-delay: 0.96s; }
-          .mobile-dropdown.open > *:nth-child(25) { animation-delay: 1.00s; }
-          /* The inline <style> block itself is a child but renders as display:none, so it
-             consumes a stagger slot harmlessly — first visible item gets index 2's delay. */
-          @media (prefers-reduced-motion: reduce) {
-            .mobile-dropdown > *,
-            .mobile-dropdown.open > * {
-              opacity: 1 !important; transform: none !important; animation: none !important;
-            }
-          }
-        </style>
         <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
         <a class="fc-fam-link" data-fc="apex"     href="https://freedomcore.io/"          rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
         <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
@@ -742,7 +658,7 @@
         <h2 class="ch-title">THE ORGANISM SWARM <span class="dim">The System That Evolves</span></h2>
         <div class="prose">
             <p>Of everything built during this project, the Organism Swarm represents the greatest departure from conventional algorithmic trading. Every other element represents well understood engineering. The Swarm represents something genuinely novel: <span class="hl">a system that autonomously rewrites its own trading logic based on what the market taught it this week.</span></p>
-            <p>The current architecture (V4.1 GOD-MODE, April 2026) is a Gemini 3.1 pipeline. It reads 72 hours of sentinel broadcasts, the weekly strategic digest, 10 losing-trade crime scenes and 10 winning-trade forensics with 25 physics fields each, and persistent evolution memory from every prior cycle. It performs root-cause analysis on every structural defect it finds. Then it generates 50 DNA mutations, each one a complete Python strategy file with pre-filters, regime routing, and promotion logic. Every mutation is assigned one of eleven structural paradigms rotating A through K (Wyckoff Spring, Harmonic XABCD, Order Block Reclaim, FVG Consequent Encroachment, Renko Streak Reversal, Volume Profile, PCA Anomaly, Fibonacci OTE, Asian Range Sweep, Breaker Block Flip, Effort-vs-Result Absorption). Candidates may also invent novel composite features; on crowning, those are AST-extracted and appended to the permanent knowledge base. Every mutation is stress-tested against 6 days of real market data across 88 symbols under the unified engine (same code path the live bot runs) and scored by V9 Portfolio Sim (risk-adjusted dollar return), with V7 Sortino logged in parallel for audit.</p>
+            <p>The current architecture is no longer a single-model pipeline. It is a staged evidence court. The system reads sentinel broadcasts, the weekly strategic digest, losing-trade crime scenes, winning-trade forensics, SHADOW rail evidence, and persistent evolution memory from every prior cycle. It generates fifty DNA mutations, each one a complete Python strategy file with pre-filters, regime routing, and promotion logic. Six NVIDIA-hosted scouts inspect source and evidence before the high-court judges deliberate. Candidates may also invent novel composite features; on crowning, those are AST-extracted and appended to the permanent knowledge base. Every mutation is stress-tested against 6 days of real market data across 88 symbols under the unified engine (same code path the live bot runs) and scored by V9 Portfolio Sim (risk-adjusted dollar return), with V7 Sortino logged in parallel for audit.</p>
             <p>Mutations are not limited to numeric parameter changes. The Swarm invents entirely new logic. Synthetic Heikin Ashi regime engines. Kaufman Efficiency Ratio calculations. Adaptive RSI ceilings that extend during confirmed trends. Anti wick shields. Swing proximity bridges. MACD direction gates with stochastic rescue paths. These are not preprogrammed options. They emerge from the LLM performing forensic analysis on real trade failures and engineering solutions.</p>
         </div>
         <div class="stat-row">
@@ -794,7 +710,7 @@
                 <tr><td class="g">Flagship Intelligence</td><td>Daily (07:15)</td><td>Absorbs all 4 sentinel broadcasts. Produces daily intelligence briefing via Claude Opus 4.7</td></tr>
                 <tr><td class="g">Performance Snapshot</td><td>Daily (19:00)</td><td>Captures 24h/7d win rates, PnL, equity curves, engine breakdown from live trade data</td></tr>
                 <tr><td class="g">Weekly Digest</td><td>Sunday (16:15)</td><td>Compresses entire week of broadcasts into one strategic summary for the Swarm</td></tr>
-                <tr><td class="g">Organism Swarm V5</td><td>Every 48 hours</td><td>Gemini 3.1 (with Claude Opus 4.7 callback) reads 72h broadcasts + weekly digest + crime scenes + success forensics. Generates 50 DNA mutations across God-Mode Autonomy. The LLM has total authority to rewrite the entry trigger, the risk filters, and the exit logic.
+                <tr><td class="g">Organism Swarm V5</td><td>Weekly / operator-triggered</td><td>The active frontier bench reads broadcasts, weekly digest, crime scenes, success forensics, SHADOW rail evidence and memory. It generates 50 DNA mutations across God-Mode Autonomy. The court can propose rewritten entry triggers, risk filters and exit logic, but live deployment remains operator-confirmed.</td></tr>
             </table>
         </div>
         <div class="prose">
@@ -898,9 +814,9 @@
         <div class="ch-label">Chapter Eighteen</div>
         <h2 class="ch-title">THE HIGH COUNCIL <span class="dim">How decisions get made</span></h2>
         <div class="prose">
-            <p>FreedomCore does not ship by intuition. Every meaningful change to ARENA, SHADOW, Streamline, Maverick, or the marketing surface goes through a multi-model deliberation called the High Council. The council is six AI seats that argue with each other in rounds until they reach a verdict. The verdict ships verbatim or gets staged for an operator review. There is no committee of humans. There is one operator and a council of language models.</p>
-            <p>The council runs in two stages per round. Stage A is three NVIDIA-hosted scout models reading raw source code, citing exact file paths and line numbers, surfacing defects. Stage B is three premium reasoning models, Claude Opus 4.7, Gemini 3.1 Pro Preview, and OpenAI GPT 5.5, arguing from the scout digest. The premium models never re-read the raw source. They argue from the surfaced facts. The scouts do the donkey work. The premium seats do the deliberation.</p>
-            <p>Each task runs four to ten rounds. Round one diagnoses defects. Middle rounds design the architecture. The penultimate round drafts the literal patch. The final round produces an acceptance checklist and a rollback procedure. After the final round, Claude Opus 4.7 writes a synthesis document that reconciles disagreements, flags unsupported claims, and decides what ships.</p>
+            <p>FreedomCore does not ship by intuition. Every meaningful change to ARENA, SHADOW, Streamline, Maverick, or the marketing surface goes through a multi-model deliberation called the High Council. The council combines six NVIDIA scout seats with a three-model high court until it reaches a verdict. The verdict ships verbatim or gets staged for an operator review. There is no committee of humans. There is one operator and a council of language models.</p>
+            <p>The council runs in two stages per round. Stage A is six NVIDIA-hosted scout models reading raw source code, citing exact file paths and line numbers, surfacing defects. Stage B is the premium high-court layer: Claude Opus, OpenAI GPT 5.5/Codex, and Gemini judge the evidence. The premium models do not need to re-read the raw source. They argue from the surfaced facts. The scouts do the evidence work. The judges do the deliberation.</p>
+            <p>Each task runs as many rounds as the evidence needs. Round one diagnoses defects. Middle rounds design the architecture. The penultimate round drafts the literal patch. The final round produces an acceptance checklist and a rollback procedure. The final synthesis reconciles disagreements, flags unsupported claims, and decides what ships.</p>
         </div>
 
         <figure style="margin:32px 0;text-align:center;">
@@ -912,7 +828,7 @@
 
         <div class="prose">
             <p>Every council writes to a vector memory layer. As of late April 2026 the memory holds over five thousand chunks indexed by topic, tier, date, and seat. When a future council fires, it does not start from scratch. It can retrieve any prior round, any prior synthesis, any prior brief, in milliseconds. The system grows smarter every week without anyone touching it.</p>
-            <p>The two-stage architecture is what makes the cost economics work for a one-person team. The scout tier is free or near-free. The premium tier is expensive but only sees the digest, not the raw source, which cuts token consumption by roughly seventy percent versus single-stage councils. The verdicts produced are tighter than any solo prompt because three premium seats argue, agree, and disagree on a shared evidence base.</p>
+            <p>The two-stage architecture is what makes the cost economics work for a one-person team. The scout tier is free or near-free. The premium tier is expensive but only sees the digest, not the raw source, which cuts token consumption versus single-stage councils. The verdicts produced are tighter than any solo prompt because multiple scout lineages surface evidence before the high-court judges agree, disagree, and rule on a shared evidence base.</p>
             <p>Single-shot prompts produce parallel monologues. Models talk past each other with no shared evidence. The High Council fixes that by forcing a shared digest, then a structured deliberation, then a single synthesis. What ships is not one model's opinion. It is what survives the argument.</p>
             <p><strong class="hl">The council is the loop. The loop is the moat.</strong></p>
         </div>
@@ -954,13 +870,11 @@
     </footer>
 
     <script src="/js/ethers.umd.min.js"></script>
-    <script src="/js/app.js?v=20260430f"></script>
-    <script src="/js/mav-wallet.js?v=20260501h"></script>
+    <script src="/js/app.js?v=20260507a"></script>
+    <script src="/js/mav-wallet.js?v=20260501r"></script>
     <script src="/js/tracker.js" defer></script>
     <script src="/js/video-banner.js?v=20260423e" defer></script>
     <script src="/js/closing-banner.js?v=20260424a" defer></script>
-<script src="/js/risk-footer.js?v=20260501g" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>
