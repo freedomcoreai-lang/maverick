@@ -28,7 +28,7 @@
     }
 
     const FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-        || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+        || 'fcweb_RETIRED_KEY_ROTATED_20260514';
 
     // Owner PIN — captured from ?owner=<PIN> on any page load and persisted in
     // localStorage so it auto-attaches as X-Owner-Key on every API request.

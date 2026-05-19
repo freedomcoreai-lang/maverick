@@ -1,7 +1,7 @@
 /* FreedomCore Modular JS - v2.0 */
 
 // ===== API CONFIG =====
-var FC_API_HEADERS = { 'X-API-Key': 'fcweb_60fd94aa2d910f38a9f3e0557076791a' };
+var FC_API_HEADERS = { 'X-API-Key': 'fcweb_RETIRED_KEY_ROTATED_20260514' };
 function fcFetch(url) {
     return fetch(url, { headers: FC_API_HEADERS });
 }

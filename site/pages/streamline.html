@@ -2115,7 +2115,7 @@
        Uses the same public X-API-Key pattern the rest of the family JS uses. */
     (function hydrateStreamlineMeta(){
         var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+            || 'fcweb_RETIRED_KEY_ROTATED_20260514';
         try {
             fetch('/api/streamline/meta', {cache: 'no-store', headers: {'X-API-Key': FC_API_KEY}})
                 .then(function(r){ return r.ok ? r.json() : null; })
@@ -2145,7 +2145,7 @@
         var strip = document.getElementById('sl-pipeline-strip');
         if (!strip) return;
         var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+            || 'fcweb_RETIRED_KEY_ROTATED_20260514';
         var lastEtag = null;
         var pollMs = 5000;
         var timer = null;
@@ -2219,7 +2219,7 @@
         var grid = document.getElementById('sl-families');
         if (!grid) return;
         var FC_API_KEY = (typeof FC_API_HEADERS === 'object' && FC_API_HEADERS['X-API-Key'])
-            || 'fcweb_60fd94aa2d910f38a9f3e0557076791a';
+            || 'fcweb_RETIRED_KEY_ROTATED_20260514';
         fetch('/api/indicators', {cache: 'default', headers: {'X-API-Key': FC_API_KEY}})
             .then(function(r){ return r.ok ? r.json() : null; })
             .then(function(d){

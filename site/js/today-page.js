@@ -49,7 +49,7 @@
     function _apiHeaders() {
         return (typeof window.fcMergeHeaders === 'function')
             ? window.fcMergeHeaders()
-            : {'X-API-Key': 'fcweb_60fd94aa2d910f38a9f3e0557076791a'};
+            : {'X-API-Key': 'fcweb_RETIRED_KEY_ROTATED_20260514'};
     }
 
     function esc(s) {
