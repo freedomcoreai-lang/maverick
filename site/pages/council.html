@@ -2,19 +2,20 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<script src="/js/theme-init.js"></script>
+<script src="/js/theme-init.js?v=20260506f"></script>
 <script src="/js/site-ticker.js?v=20260422b" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#060a10">
-<meta name="description" content="FreedomCore High Council. Multi-tier AI deliberation chambers. Pro and Sovereign tiers only.">
+<meta name="description" content="FreedomCore High Council. Private multi-tier AI deliberation chambers. Pro, Sovereign, token, or owner access only.">
 <meta name="robots" content="noindex, nofollow">
 <title>High Council · FreedomCore</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/tokens.css?v=20260501j">
-<link rel="stylesheet" href="/css/franchise-coord.css?v=20260501j">
-<link rel="stylesheet" href="/css/style.css?v=20260501j">
+<link rel="stylesheet" href="/css/tokens.css?v=20260506f">
+<link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+<link rel="stylesheet" href="/css/style.css?v=20260507b">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260514s">
 <style>
   body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
   .hc-wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
@@ -113,17 +114,38 @@
 </head>
 <body data-site="maverick">
 
+<nav class="fc-lite-nav" aria-label="FreedomCore family">
+    <button class="nav-hamburger" aria-label="Open FreedomCore menu" aria-controls="mobile-menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a class="fc-lite-brand" href="/">HIGH COUNCIL</a>
+    <a class="fc-lite-pill" href="/pages/atlas.html">ATLAS</a>
+</nav>
+<div class="mobile-dropdown" id="mobile-menu">
+    <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+    <a class="fc-fam-link" data-fc="apex" href="https://freedomcore.io/" rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
+    <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
+    <a class="fc-fam-link" data-fc="shadow" href="https://shadow.freedomcore.io/" rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
+    <a class="fc-fam-link" data-fc="arena" href="https://arena.freedomcore.io/" rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
+    <a class="fc-fam-link" data-fc="quantum" href="https://quantum.freedomcore.io/" rel="noopener">QUANTUM <span class="fc-fam-desc">Web Design</span></a>
+    <a class="fc-fam-link" data-fc="atlas" href="/pages/atlas.html">ATLAS <span class="fc-fam-desc">Market Intel</span></a>
+    <div class="fc-fam-divider"></div>
+    <a href="/">Home</a>
+    <a href="/pages/access.html">Access</a>
+    <a href="/pages/swarm.html">Swarm</a>
+</div>
+
 <div class="back-bar">
     <a href="/">&larr; BACK TO FREEDOMCORE</a>
 </div>
 
 <div class="hc-wrap">
-    <div class="hc-eyebrow">High Council · Pro and above</div>
+    <div class="hc-eyebrow">High Council · private chamber</div>
     <h1 class="hc-h1">The chambers.</h1>
     <p class="hc-sub">
         Every strategic decision that shapes the franchise goes through a multi-tier AI council.
         Scouts propose. The bench deliberates across rounds. A Supreme Court rules.
-        Pro and Sovereign subscribers see the verdicts.
+        The public can see that the chamber exists. Transcripts are private operator intelligence, unlocked only by owner access or approved Pro/Sovereign subscription and token gates.
     </p>
 
     <div id="hc-content"></div>
@@ -148,7 +170,7 @@
         // Future: check window.mavWallet status for tier === 'pro' or 'sovereign'.
         if (window.mavWallet && window.mavWallet.lastStatus) {
             var s = window.mavWallet.lastStatus();
-            if (s && s.authenticated && (s.tier === 'pro' || s.tier === 'sovereign')) return true;
+            if (s && s.authenticated && (s.tier === 'pro' || s.tier === 'sovereign' || s.owner)) return true;
         }
         return false;
     }
@@ -157,17 +179,17 @@
         return '' +
             '<div class="hc-locked">' +
                 '<div class="hc-locked-icon">&#128274;</div>' +
-                '<div class="hc-locked-title">Locked. Pro tier required.</div>' +
+                '<div class="hc-locked-title">Locked. High Council access required.</div>' +
                 '<div class="hc-locked-sub">' +
-                    'The High Council chambers are reserved for Pro and Sovereign subscribers. ' +
-                    'Subscribe at FreedomCore Access to unlock the verdicts that shape the franchise.' +
+                    'The High Council chambers are private operator intelligence. ' +
+                    'Owner access, active Pro/Sovereign subscription, or the matching token tier is required.' +
                 '</div>' +
                 '<a class="hc-locked-cta" href="/pages/access.html">Get Pro access &rarr;</a>' +
             '</div>' +
             '<div class="hc-meta">' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Active deliberations</div><div class="hc-meta-value">1 in chambers</div></div>' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Sessions to date</div><div class="hc-meta-value">15+</div></div>' +
-                '<div class="hc-meta-tile"><div class="hc-meta-label">Seat count</div><div class="hc-meta-value">7 frontier AI</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Court shape</div><div class="hc-meta-value">6 scouts + judges</div></div>' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Avg rounds</div><div class="hc-meta-value">5 to 10</div></div>' +
             '</div>';
     }
@@ -177,12 +199,12 @@
             '<div class="hc-meta">' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Active deliberations</div><div class="hc-meta-value">1 in chambers</div></div>' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Verdicts shipped</div><div class="hc-meta-value">12</div></div>' +
-                '<div class="hc-meta-tile"><div class="hc-meta-label">Seat count</div><div class="hc-meta-value">7 frontier AI</div></div>' +
+                '<div class="hc-meta-tile"><div class="hc-meta-label">Court shape</div><div class="hc-meta-value">6 scouts + judges</div></div>' +
                 '<div class="hc-meta-tile"><div class="hc-meta-label">Avg rounds</div><div class="hc-meta-value">5 to 10</div></div>' +
             '</div>' +
             '<div class="hc-verdict">' +
                 '<h1>Tokenomics council, in deliberation</h1>' +
-                '<p>The Supreme Court is currently sitting on the franchise tokenomics question: ticker selection, total supply, distribution table, vesting curves, cross-chain launch venue, traction playbook, utility roadmap, treasury operations, and compliance posture. Ten rounds. Seven seats. Seventy member calls.</p>' +
+                '<p>The Supreme Court is currently sitting on the franchise monetization question: Stripe subscription base, FCORE token access, Pump.fun/Solana, Clanker/Base, Base/Solana gating, proof assets, copy rules, treasury operations, and compliance posture. Six NVIDIA scouts feed the high-court judges. Transcripts are private.</p>' +
                 '<p style="font-family:\'JetBrains Mono\',monospace; font-size:0.78rem; color:var(--accent);">Verdict drops as soon as Round 10 synthesises. Refresh this page after the upgrade-channel ntfy fires.</p>' +
                 '<h2>Scope under deliberation</h2>' +
                 '<ul>' +
@@ -190,12 +212,8 @@
                     '<li>R2 &middot; Total supply and decimals</li>' +
                     '<li>R3 &middot; Distribution table (founder, treasury, LP, public, marketing, airdrop, burn)</li>' +
                     '<li>R4 &middot; Vesting curves and on-chain enforcement</li>' +
-                    '<li>R5 &middot; Launch chain and venue (Pump.fun stealth vs direct DEX vs LayerZero OFT)</li>' +
-                    '<li>R6 &middot; 14-day traction playbook for sub-$5M cap target</li>' +
-                    '<li>R7 &middot; Utility roadmap (consume() path, governance, soulbound NFT)</li>' +
-                    '<li>R8 &middot; Buyback mechanic and treasury transparency</li>' +
-                    '<li>R9 &middot; Compliance posture (FSMA, MiCA, SEC reach)</li>' +
-                    '<li>R10 &middot; Implementation contract and ship-ready spec</li>' +
+                    '<li>R5 &middot; Growth funnel and first 30 days</li>' +
+                    '<li>R6 &middot; Final court verdict and execution contract</li>' +
                 '</ul>' +
             '</div>' +
             '<div class="hc-archive">' +
@@ -216,9 +234,8 @@
 })();
 </script>
 
-<script src="/js/active-runs-badges.js?v=20260501j" defer></script>
-<script src="/js/risk-footer.js?v=20260501h" defer></script>
-<script src="/js/fc-live-rail.js?v=20260501j" defer></script>
-<script src="/js/fc-shadow-rail.js?v=20260501j" defer></script>
+<script src="/js/active-runs-badges.js?v=20260501r" defer></script>
+<script src="/js/family-nav-v3.js?v=20260519cmd"></script>
+<script src="/js/risk-footer.js?v=20260501r" defer></script>
 </body>
 </html>

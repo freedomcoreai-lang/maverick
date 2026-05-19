@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/theme-init.js?v=20260506w"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="description" content="ATLAS documentation: research templates, Wall Street workflows, subscription tiers, daily usage caps, provider state, data lifecycle, query privacy, and compliance. Research output only - not financial advice.">
+  <meta property="og:title" content="ATLAS Documentation · FreedomCore">
+  <meta property="og:description" content="Operator's guide to the ATLAS market intelligence terminal: research workflows, subscription tiers, daily caps, provider state, data lifecycle, privacy, and compliance.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://atlas.freedomcore.io/pages/atlas-docs.html">
+  <meta property="og:image" content="https://freedomcore.io/img/orbs/atlas.svg">
+  <meta property="og:site_name" content="FreedomCore">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ATLAS Documentation · FreedomCore">
+  <meta name="twitter:description" content="Research workflows, provider state, usage caps, data lifecycle, privacy, and compliance for the ATLAS market intelligence terminal.">
+  <meta name="twitter:image" content="https://freedomcore.io/img/orbs/atlas.svg">
+  <link rel="canonical" href="https://atlas.freedomcore.io/pages/atlas-docs.html">
+  <title>ATLAS Documentation · FreedomCore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/franchise-tokens-v2.css?v=20260507a">
+  <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+  <link rel="stylesheet" href="/css/style.css?v=20260507b">
+  <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260514s">
+  <link rel="stylesheet" href="/css/atlas.css?v=20260510h">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://freedomcore.io/#organization","name":"FreedomCore","url":"https://freedomcore.io/","logo":"https://freedomcore.io/img/orbs/atlas.svg"},{"@type":"TechArticle","@id":"https://atlas.freedomcore.io/pages/atlas-docs.html#article","headline":"ATLAS Documentation","description":"Documentation for ATLAS market intelligence workflows, provider state, usage caps, data lifecycle, query privacy, compliance limits, and API surface.","url":"https://atlas.freedomcore.io/pages/atlas-docs.html","dateModified":"2026-05-11","publisher":{"@id":"https://freedomcore.io/#organization"},"mainEntityOfPage":"https://atlas.freedomcore.io/pages/atlas-docs.html"},{"@type":"BreadcrumbList","@id":"https://atlas.freedomcore.io/pages/atlas-docs.html#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"FreedomCore","item":"https://freedomcore.io/"},{"@type":"ListItem","position":2,"name":"ATLAS","item":"https://atlas.freedomcore.io/"},{"@type":"ListItem","position":3,"name":"ATLAS Documentation","item":"https://atlas.freedomcore.io/pages/atlas-docs.html"}]}]}</script>
+</head>
+<body data-site="atlas">
+  <div class="tt-grid-bg"></div>
+  <div class="site-ticker" id="site-ticker"><div class="ticker-track">
+    <div class="ticker-item">ATLAS &middot; <b>DOCUMENTATION</b></div>
+    <div class="ticker-item">RESEARCH OUTPUT ONLY &middot; <b>NOT FINANCIAL ADVICE</b></div>
+    <div class="ticker-item">SUBSCRIPTION RAIL &middot; <b>SIGNAL · PRO · SOVEREIGN</b></div>
+    <div class="ticker-item">ATLAS &middot; <b>DOCUMENTATION</b></div>
+    <div class="ticker-item">RESEARCH OUTPUT ONLY &middot; <b>NOT FINANCIAL ADVICE</b></div>
+    <div class="ticker-item">SUBSCRIPTION RAIL &middot; <b>SIGNAL · PRO · SOVEREIGN</b></div>
+  </div></div>
+
+  <nav class="nav">
+    <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-logo">
+      <img src="/img/orbs/atlas.svg" alt="ATLAS" class="nav-logo-img nav-logo-img--orb">
+      <span class="nav-logo-text">ATLAS</span>
+    </a>
+    <div class="nav-right">
+      <a href="/pages/security.html" class="ssl-badge" title="SSL and platform security" aria-label="Site security">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+      </a>
+      <button class="theme-btn" id="theme-btn" title="Toggle day/night" aria-label="Toggle day/night">&#9790;</button>
+    </div>
+  </nav>
+
+  <div class="mobile-dropdown" id="mobile-menu">
+    <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+    <a class="fc-fam-link" data-fc="apex" href="https://freedomcore.io/" rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
+    <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
+    <a class="fc-fam-link" data-fc="shadow" href="https://shadow.freedomcore.io/" rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
+    <a class="fc-fam-link" data-fc="arena" href="https://arena.freedomcore.io/" rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
+    <a class="fc-fam-link" data-fc="quantum" href="https://quantum.freedomcore.io/" rel="noopener">QUANTUM <span class="fc-fam-desc">Web Design</span></a>
+    <a class="fc-fam-link fc-mobile-current" data-fc="atlas" href="/">ATLAS <span class="fc-fam-desc">Market Intel</span></a>
+    <div class="fc-fam-divider"></div>
+    <a href="/">Workstation</a>
+    <a href="#templates">Templates</a>
+    <a href="#tiers">Tiers &amp; caps</a>
+    <a href="#privacy">Privacy</a>
+    <a href="/pages/access.html">Subscribe</a>
+  </div>
+
+  <main class="docs-main">
+    <header class="docs-head">
+      <div class="atlas-kicker">ATLAS Documentation</div>
+      <h1>Operator's guide to ATLAS</h1>
+      <p class="docs-lede">
+        ATLAS is the FreedomCore market intelligence terminal. It pulls real numbers from
+        an authenticated financial data rail and returns structured research briefs. This page
+        covers the templates, subscription tiers, daily caps, current provider state, what
+        ATLAS does and does not store about your queries, and the compliance perimeter the
+        product runs inside.
+      </p>
+      <ul class="docs-toc" aria-label="On this page">
+        <li><a href="#templates">Research templates</a></li>
+        <li><a href="#tiers">Tiers &amp; caps</a></li>
+        <li><a href="#provider-state">Provider state</a></li>
+        <li><a href="#lifecycle">Data &amp; output lifecycle</a></li>
+        <li><a href="#privacy">Query privacy</a></li>
+        <li><a href="#compliance">Compliance &amp; limits</a></li>
+        <li><a href="#api">API surface</a></li>
+      </ul>
+    </header>
+
+    <section class="docs-section" id="templates">
+      <h2>Research templates</h2>
+      <p>
+        ATLAS does not accept open-ended free-text prompts from the public surface. Every
+        request is a whitelisted template plus a ticker (or list of tickers) plus an output
+        style. This is deliberate: it keeps queries auditable, prevents prompt injection, and
+        lets the data rail stage the right pulls before the model writes the brief.
+      </p>
+      <div class="docs-table-wrap">
+        <table class="docs-table">
+          <thead>
+            <tr><th>Template</th><th>What it surfaces</th><th>Tier</th><th>Fields</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>snapshot</code></td><td>Public-safe asset overview: market cap, P/E, growth, margins, free cash flow, debt, verdict band.</td><td>free</td><td>ticker, style</td></tr>
+            <tr><td><code>crypto_momentum</code></td><td>24h, 7d, 30d, 90d, 1Y returns; drawdown from recent high; relative strength vs BTC / ETH / SOL; trend classification.</td><td>free</td><td>ticker, style</td></tr>
+            <tr><td><code>red_flag</code></td><td>Risk and quality memo: liquidity, dilution, debt, earnings quality, headline checks, verification list.</td><td>Signal</td><td>ticker, style</td></tr>
+            <tr><td><code>earnings_brief</code></td><td>Last 4 quarters of income statement, balance sheet, cash flow. Highlights acceleration, deterioration, dilution.</td><td>Signal</td><td>ticker, style</td></tr>
+            <tr><td><code>council_dossier</code></td><td>Bull case, bear case, hidden risks, balance-sheet check, Priority 0 verification checklist.</td><td>Pro</td><td>ticker, style</td></tr>
+            <tr><td><code>watchlist_compare</code></td><td>Multi-ticker rank by market cap, P/E, growth, margin, FCF, debt. Cleanest to riskiest with reasoning.</td><td>Pro</td><td>tickers, style</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Output style is one of: <code>operator</code>, <code>brief</code>, <code>tweet</code>,
+        <code>council</code>, or <code>table</code>. Style governs format, not content. The
+        same template + ticker returns the same numbers regardless of style.
+      </p>
+    </section>
+
+    <section class="docs-section" id="tiers">
+      <h2>Tiers &amp; caps</h2>
+      <p>
+        ATLAS uses the standard FreedomCore subscription tiers. Free templates run anonymously
+        up to a small daily cap; gated templates require a logged-in subscriber on the matching
+        tier. There is one bill, one account, one rail across the whole suite.
+      </p>
+      <div class="docs-tier-grid">
+        <article class="docs-tier" data-tier="free">
+          <header><span class="docs-tier-badge">FREE</span><h3>Anonymous</h3></header>
+          <p>No account required. Cap: <strong>3 briefs / day</strong>, counted by IP.</p>
+          <p>Templates: <code>snapshot</code>, <code>crypto_momentum</code>.</p>
+        </article>
+        <article class="docs-tier" data-tier="signal">
+          <header><span class="docs-tier-badge">SIGNAL</span><h3>Subscriber</h3></header>
+          <p>Logged-in FreedomCore subscriber. Higher daily cap.</p>
+          <p>Templates: free + <code>red_flag</code>, <code>earnings_brief</code>.</p>
+        </article>
+        <article class="docs-tier" data-tier="pro">
+          <header><span class="docs-tier-badge">PRO</span><h3>Subscriber</h3></header>
+          <p>Higher daily cap, full template menu.</p>
+          <p>Templates: signal + <code>council_dossier</code>, <code>watchlist_compare</code>.</p>
+        </article>
+        <article class="docs-tier" data-tier="sovereign">
+          <header><span class="docs-tier-badge">SOVEREIGN</span><h3>Top tier</h3></header>
+          <p>Highest cap. Priority queue when providers are wired. Reserved for future
+          ATLAS surfaces (cross-system consensus, council-grade aggregation).</p>
+        </article>
+      </div>
+      <p>
+        Caps reset at <strong>midnight UTC</strong>. The workstation status pills show your
+        current tier, today's used / cap, and how many briefs you have remaining. When a cap
+        is hit, ATLAS returns a <code>rate_limited</code> response and the workstation
+        renders a clear "DAILY CAP REACHED" message — no fake content is generated to fill
+        the gap.
+      </p>
+    </section>
+
+    <section class="docs-section" id="provider-state">
+      <h2>Provider state</h2>
+      <p>
+        ATLAS's request/response loop, validation, tier gating, daily caps, and audit ledger
+        are all live. The no-paid public-source rail is also live for SEC company lookup,
+        recent filings, and XBRL company facts on US-listed tickers. Paid market data,
+        redistribution-sensitive feeds, and model-composed briefs remain deliberately gated
+        until terms and keys are cleared.
+      </p>
+      <p>
+        Until those keys are wired, every <code>POST /api/atlas/query</code> returns a
+        structured <code>503 PROVIDER_NOT_CONFIGURED</code> response and the workstation
+        renders a "BACKEND ONLINE / PROVIDERS PENDING" panel. The market center can still
+        show SEC public filings and company facts where available. This is intentional:
+        ATLAS will not fabricate prices, event dates, or statement values to hide a missing
+        provider.
+      </p>
+      <p>
+        What unblocks live briefs:
+      </p>
+      <ol class="docs-list">
+        <li>Paid market-data redistribution terms cleared and the REST key installed
+        server-side.</li>
+        <li>Model-provider commercial-use terms cleared and the corresponding key installed
+        server-side.</li>
+      </ol>
+      <p>
+        Both are commercial decisions, not engineering. When they land, the same exact
+        request/response loop you see today produces a real brief — no public-side change
+        needed.
+      </p>
+      <p>
+        <strong>v1 scout-seat note.</strong> ATLAS's scout research currently runs on a
+        single working NVIDIA seat — <code>llama4_maverick</code> — selected because it
+        returned cleanly under the direct-route uptime conditions during this build.
+        Lane diversity comes from prompt and task separation, not model diversity: each
+        lane (source pack, filings and fundamentals, news catalysts) gets its own prompt
+        and produces its own cited evidence row in the audit ledger. Additional scout
+        seats listed in <code>models.yaml</code> will rejoin the rotation as their NIM
+        model availability and uptime stabilise and their commercial terms are clean —
+        at which point lane diversity becomes model diversity too, with no public-side
+        change needed.
+      </p>
+    </section>
+
+    <section class="docs-section" id="lifecycle">
+      <h2>Data &amp; output lifecycle</h2>
+      <p>
+        Every brief is composed from numbers fetched on demand. ATLAS does not maintain a
+        long-lived cache of asset values that you might be reading "live" while they are
+        actually stale. The data flow is:
+      </p>
+      <ol class="docs-list">
+        <li>Browser submits <code>{template, ticker, style}</code> over HTTPS to the ATLAS
+        backend on the same origin.</li>
+        <li>Backend validates the template, ticker, and style against a strict whitelist;
+        unsupported fields are rejected with <code>400 unsupported_fields</code>.</li>
+        <li>Backend checks subscription tier and daily cap; tier or cap failures return
+        structured errors before any provider call is made.</li>
+        <li>Free public-source endpoints can pull SEC ticker identity, recent filings, and
+        company facts without paid credentials. Paid quote/news/provider calls remain off
+        until commercial terms are cleared.</li>
+        <li>When gated providers are enabled, the backend hands source data and template
+        instructions to the model rail and returns the composed brief in
+        <code>data.brief</code>.</li>
+        <li>The response is rendered into the workstation response panel verbatim. Numbers
+        in the brief come from the data rail; narrative comes from the model.</li>
+      </ol>
+      <p>
+        ATLAS does <strong>not</strong> generate placeholder numbers, recycle yesterday's
+        cached values, or simulate a brief when providers are disabled. Anything you see in
+        the workstation outside that flow is clearly labelled (idle demo / pending / cap
+        reached / tier gate / network error).
+      </p>
+    </section>
+
+    <section class="docs-section" id="privacy">
+      <h2>Query privacy</h2>
+      <p>
+        ATLAS keeps an audit ledger so we can tune caps, debug failures, and refuse abusive
+        traffic. The ledger records, per query:
+      </p>
+      <ul class="docs-list">
+        <li>Account email and tier <em>only when authenticated</em>; anonymous queries record
+        no email.</li>
+        <li>Template ID, ticker(s), and output style.</li>
+        <li>Provider counters (cache hit / miss / refused) and HTTP status.</li>
+        <li>A <strong>payload hash</strong> for replay detection.</li>
+        <li>A <strong>salted IP hash</strong> for daily cap accounting on anonymous traffic.
+        The salt comes from a server-side secret; raw IPs are not retained.</li>
+      </ul>
+      <p>
+        The ledger does <strong>not</strong> retain:
+      </p>
+      <ul class="docs-list">
+        <li>Raw request bodies, free-text prompts, or anything outside the whitelisted
+        template fields.</li>
+        <li>Generated briefs (the brief is sent to your browser; it is not archived per-user).</li>
+        <li>Raw IP addresses, browser fingerprints, or third-party tracking identifiers.</li>
+      </ul>
+      <p>
+        Ledger rows are kept for operational tuning only. They are not sold, syndicated, or
+        used to profile users beyond cap accounting and abuse prevention.
+      </p>
+    </section>
+
+    <section class="docs-section" id="compliance">
+      <h2>Compliance &amp; limits</h2>
+      <p>
+        ATLAS is a <strong>research surface</strong>. Several things are off the table by
+        design:
+      </p>
+      <ul class="docs-list">
+        <li><strong>No financial advice.</strong> Briefs are research output. They do not
+        constitute personalised advice, a recommendation, or an inducement to transact.
+        Decisions remain yours.</li>
+        <li><strong>No brokerage.</strong> ATLAS does not place trades, route orders,
+        custody assets, or execute on your behalf. There is no "buy" button anywhere on
+        this surface.</li>
+        <li><strong>No guaranteed returns.</strong> Past performance, valuation snapshots,
+        and forward-looking statements are descriptive, not predictive.</li>
+        <li><strong>No tax, legal, or jurisdictional advice.</strong> Local rules vary;
+        consult a licensed professional before acting on anything ATLAS surfaces.</li>
+        <li><strong>Data freshness limits.</strong> Public SEC data, macro sources, and
+        future paid providers each have their own refresh cadence. ATLAS does not invent
+        values to fill gaps; missing data is marked.</li>
+      </ul>
+    </section>
+
+    <section class="docs-section" id="api">
+      <h2>API surface</h2>
+      <p>
+        ATLAS's public API is REST, same-origin, and reachable from
+        <code>atlas.freedomcore.io</code>, <code>maverick.freedomcore.io</code>, and the
+        FreedomCore apex. There is no WebSocket today; all calls are synchronous request /
+        response.
+      </p>
+      <div class="docs-table-wrap">
+        <table class="docs-table">
+          <thead><tr><th>Method</th><th>Path</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/health</code></td><td>Liveness + provider state snapshot.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/templates</code></td><td>Catalog of available templates with required tier and field list.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/usage</code></td><td>Auth state, current tier, today's cap and remaining briefs.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/market-snapshot</code></td><td>Public SEC context today; paid quote and market fields remain gated.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/free-sources/company</code></td><td>SEC company match, recent filings, company facts, and source links.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/free-sources/macro</code></td><td>Public macro source catalog without fake live event dates.</td></tr>
+            <tr><td><code>GET</code></td><td><code>/api/atlas/economic-calendar</code></td><td>Calendar contract plus source catalog while dated event provider is pending.</td></tr>
+            <tr><td><code>POST</code></td><td><code>/api/atlas/query</code></td><td>Run a template against a ticker; returns brief on success or a structured error.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Error envelope is consistent: an HTTP status plus a JSON body with
+        <code>error</code>, <code>message</code>, and (where useful) <code>request_id</code>
+        and <code>fields</code>. The workstation maps every error to a human-readable
+        response panel state.
+      </p>
+    </section>
+
+    <section class="docs-section" id="family">
+      <h2>FreedomCore family docs</h2>
+      <p>
+        ATLAS is one of several FreedomCore product surfaces. Each product publishes its own
+        documentation, scoped to its own product:
+      </p>
+      <ul class="docs-list docs-family">
+        <li><a href="https://shadow.freedomcore.io/docs">SHADOW docs &rarr;</a> &mdash; copy-trading evidence, wallet tiers, attribution, risk controls.</li>
+        <li><a href="https://arena.freedomcore.io/docs/">ARENA docs &rarr;</a> &mdash; public leaderboard methodology, wallet pages, scoring, limits.</li>
+        <li>You are here: <strong>ATLAS docs</strong> &mdash; market intelligence terminal.</li>
+      </ul>
+    </section>
+
+    <p class="docs-disclaimer">
+      Research output only. Not financial advice. No brokerage execution. No guaranteed returns.
+      ATLAS does not provide tax, legal, or jurisdictional guidance. Subscription tier governs
+      template access and daily caps. Data freshness is bounded by each public or paid source rail.
+    </p>
+  </main>
+
+  <footer class="tt-footer">
+    <strong>ATLAS · Powered by FreedomCore</strong>
+    <span>Research output only. Not financial advice. No brokerage execution. No guaranteed returns.</span>
+  </footer>
+
+  <script src="/js/family-nav-v3.js?v=20260519cmd"></script>
+  <script src="/js/app.js?v=20260514t" defer></script>
+</body>
+</html>

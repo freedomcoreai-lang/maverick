@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="google-site-verification" content="buR0OEnWnkEwcVeGXunpteCnOfuTl-VyAQrEUnZqP5M">
+  <script src="/js/theme-init.js?v=20260506w"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="description" content="ATLAS by FreedomCore: an AI financial research terminal authenticated through your FreedomCore subscription. Market data, statements, macro calendar, DCF, LBO, equity research, KYC, NAV tie-outs, and council-grade reasoning in one prompt lane. Research only. Not financial advice. No brokerage.">
+  <meta property="og:title" content="ATLAS by FreedomCore">
+  <meta property="og:description" content="FreedomCore-authenticated financial research terminal for stocks, crypto, statements, ratios, watchlists, DCF, LBO, equity research, KYC, NAV, and council-ready briefs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://atlas.freedomcore.io/">
+  <meta property="og:image" content="https://freedomcore.io/img/orbs/atlas.svg">
+  <meta property="og:site_name" content="FreedomCore">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ATLAS by FreedomCore">
+  <meta name="twitter:description" content="Market intelligence, public-source filings, macro context, equity research, DCF, LBO, KYC, NAV, and council-grade briefs on one authenticated rail.">
+  <meta name="twitter:image" content="https://freedomcore.io/img/orbs/atlas.svg">
+  <link rel="canonical" href="https://atlas.freedomcore.io/">
+  <link rel="icon" type="image/svg+xml" href="/img/orbs/atlas.svg">
+  <link rel="shortcut icon" href="/img/orbs/atlas.svg">
+  <link rel="apple-touch-icon" href="/img/orbs/atlas.svg">
+  <title>ATLAS · FreedomCore Market Intelligence</title>
+  <style>
+    /* Atlas hero CTA buttons — light/dark theme-aware */
+    .atlas-hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .atlas-hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.18s;
+    }
+    /* Dark mode — Atlas cyan #22d3ee */
+    .atlas-hero-cta--primary {
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.36);
+      color: #67e8f9;
+    }
+    .atlas-hero-cta--primary:hover {
+      background: rgba(34, 211, 238, 0.18);
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+    .atlas-hero-cta--secondary {
+      background: rgba(148, 210, 255, 0.04);
+      border: 1px solid rgba(148, 210, 255, 0.12);
+      color: #a7bfd2;
+    }
+    /* Day mode — darker cyan #075985 */
+    [data-theme="light"] .atlas-hero-cta--primary {
+      background: rgba(7, 89, 133, 0.08);
+      border: 1px solid rgba(7, 89, 133, 0.42);
+      color: #075985;
+      font-weight: 600;
+    }
+    [data-theme="light"] .atlas-hero-cta--primary:hover {
+      background: rgba(7, 89, 133, 0.16);
+      border-color: rgba(7, 89, 133, 0.65);
+    }
+    [data-theme="light"] .atlas-hero-cta--secondary {
+      background: rgba(20, 30, 50, 0.04);
+      border: 1px solid rgba(20, 30, 50, 0.12);
+      color: #475569;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/franchise-tokens-v2.css?v=20260507a">
+  <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+  <link rel="stylesheet" href="/css/style.css?v=20260507b">
+  <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260514s">
+  <link rel="stylesheet" href="/css/atlas.css?v=20260511j">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://freedomcore.io/#organization","name":"FreedomCore","url":"https://freedomcore.io/","logo":"https://freedomcore.io/img/orbs/atlas.svg"},{"@type":["WebSite","WebApplication"],"@id":"https://atlas.freedomcore.io/#atlas","name":"ATLAS by FreedomCore","url":"https://atlas.freedomcore.io/","applicationCategory":"FinanceApplication","operatingSystem":"Web","isAccessibleForFree":true,"description":"AI financial research terminal served through FreedomCore's authenticated data rail. Public-source filings, market context, macro calendar, DCF, LBO, equity research, KYC, NAV tie-outs, and structured research briefs. Research only. Not financial advice. No brokerage execution.","publisher":{"@id":"https://freedomcore.io/#organization"},"featureList":["Public-source company filing context","Economic calendar research lane","Equity research briefs","DCF model workflow","LBO model workflow","KYC counterparty checks","NAV tie-out workflow","Council-grade research formats"],"offers":{"@type":"Offer","url":"https://atlas.freedomcore.io/pages/access.html","price":"0","priceCurrency":"USD","availability":"https://schema.org/OnlineOnly"}},{"@type":"BreadcrumbList","@id":"https://atlas.freedomcore.io/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"FreedomCore","item":"https://freedomcore.io/"},{"@type":"ListItem","position":2,"name":"ATLAS","item":"https://atlas.freedomcore.io/"}]}]}</script>
+</head>
+<body data-site="atlas">
+  <div class="tt-grid-bg"></div>
+  <div class="site-ticker" id="site-ticker"><div class="ticker-track">
+    <div class="ticker-item">ATLAS &middot; <b>MARKET INTELLIGENCE</b></div>
+    <div class="ticker-item">FREEDOMCORE DATA RAIL &middot; <b>LIVE</b></div>
+    <div class="ticker-item">SUBSCRIPTION RAIL &middot; <b>SIGNAL · PRO · SOVEREIGN</b></div>
+    <div class="ticker-item">STOCKS &middot; <b>17,000+</b></div>
+    <div class="ticker-item">CRYPTO &middot; <b>PRICE HISTORY</b></div>
+    <div class="ticker-item">STATEMENTS &middot; <b>INCOME / BALANCE / CASH FLOW</b></div>
+    <div class="ticker-item">MACRO CALENDAR &middot; <b>CPI · FOMC · NFP</b></div>
+    <div class="ticker-item">WALL STREET WORKFLOWS &middot; <b>DCF · LBO · IC · KYC · NAV</b></div>
+    <div class="ticker-item">ATLAS &middot; <b>MARKET INTELLIGENCE</b></div>
+    <div class="ticker-item">FREEDOMCORE DATA RAIL &middot; <b>LIVE</b></div>
+    <div class="ticker-item">SUBSCRIPTION RAIL &middot; <b>SIGNAL · PRO · SOVEREIGN</b></div>
+  </div></div>
+
+  <nav class="nav">
+    <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="/" class="nav-logo">
+      <img src="/img/orbs/atlas.svg" alt="ATLAS" class="nav-logo-img nav-logo-img--orb">
+      <span class="nav-logo-text">ATLAS</span>
+    </a>
+    <div class="nav-right">
+      <a href="/pages/security.html" class="ssl-badge" title="SSL and platform security" aria-label="Site security">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+      </a>
+      <button class="theme-btn" id="theme-btn" title="Toggle day/night" aria-label="Toggle day/night">&#9790;</button>
+    </div>
+  </nav>
+
+  <div class="mobile-dropdown" id="mobile-menu">
+    <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+    <a class="fc-fam-link" data-fc="apex" href="https://freedomcore.io/" rel="noopener">FREEDOMCORE <span class="fc-fam-desc">The Suite</span></a>
+    <a class="fc-fam-link" data-fc="maverick" href="https://maverick.freedomcore.io/" rel="noopener">MAVERICK <span class="fc-fam-desc">AI Trading</span></a>
+    <a class="fc-fam-link" data-fc="shadow" href="https://shadow.freedomcore.io/" rel="noopener">SHADOW <span class="fc-fam-desc">Copy Trading</span></a>
+    <a class="fc-fam-link" data-fc="arena" href="https://arena.freedomcore.io/" rel="noopener">ARENA <span class="fc-fam-desc">Leaderboard</span></a>
+    <a class="fc-fam-link" data-fc="pumphouse" href="https://memes.freedomcore.io/" rel="noopener">THE PUMPHOUSE <span class="fc-fam-desc">Solana Memes</span></a>
+    <a class="fc-fam-link fc-mobile-current" data-fc="atlas" href="/">ATLAS <span class="fc-fam-desc">Market Intel</span></a>
+    <div class="fc-fam-divider"></div>
+    <a href="#templates">Templates</a>
+    <a href="#market-center">Market Center</a>
+    <a href="#workflows">Workflows</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#how">How it works</a>
+    <a href="https://atlas.freedomcore.io/notes/">Research Notes</a>
+    <a href="https://atlas.freedomcore.io/stocks/">Symbol Coverage</a>
+    <a href="/pages/atlas-docs.html">Docs</a>
+    <a href="/pages/access.html">Subscribe</a>
+  </div>
+
+  <main>
+    <section class="atlas-hero">
+      <div class="atlas-hero-lockup">
+        <div class="atlas-kicker">FreedomCore Market Intelligence</div>
+        <h1>ATLAS · Financial Research Workstation</h1>
+        <p class="atlas-lede">Charts, market data, macro calendar, equity research, DCF and LBO models, KYC counterparty checks, NAV tie-outs, and council-grade research briefs on one authenticated rail. Research output only — never advice.</p>
+        <div class="atlas-hero-cta-row">
+          <a href="https://atlas.freedomcore.io/notes/" class="atlas-hero-cta atlas-hero-cta--primary">Research Notes</a>
+          <a href="https://atlas.freedomcore.io/stocks/" class="atlas-hero-cta atlas-hero-cta--primary">Symbol Coverage</a>
+          <a href="#templates" class="atlas-hero-cta atlas-hero-cta--secondary">Templates</a>
+        </div>
+      </div>
+
+      <section class="atlas-workstation" aria-label="ATLAS research workstation">
+        <header class="aw-bar">
+          <div class="aw-brand">
+            <img src="/img/orbs/atlas.svg" alt="Atlas workstation" class="aw-orb">
+            <span class="aw-brand-name">ATLAS</span>
+            <span class="aw-brand-rail">/ research workstation</span>
+          </div>
+          <div class="aw-pills" role="status" aria-live="polite">
+            <span class="aw-pill" id="aw-pill-auth" data-state="loading">auth …</span>
+            <span class="aw-pill" id="aw-pill-tier" data-state="loading">tier …</span>
+            <span class="aw-pill" id="aw-pill-cap"  data-state="loading">cap …</span>
+            <span class="aw-pill aw-pill--state" id="aw-pill-result" data-state="idle">idle</span>
+          </div>
+        </header>
+
+        <div class="aw-body">
+          <div class="aw-pane aw-pane--form">
+            <form class="aw-form" id="tt-form" autocomplete="off">
+              <label class="aw-label">
+                <span class="aw-label-text">Research template</span>
+                <select name="template" id="atlas-preset" class="aw-input">
+                  <option value="snapshot">Snapshot · free</option>
+                  <option value="crypto_momentum">Crypto Momentum · free</option>
+                  <option value="red_flag">Red-Flag Pack · Signal</option>
+                  <option value="earnings_brief">Earnings Brief · Signal</option>
+                  <option value="equity_research">Equity Research Report · Signal</option>
+                  <option value="macro_event_brief">Macro Event Brief · Signal</option>
+                  <option value="council_dossier">Council Dossier · Pro</option>
+                  <option value="watchlist_compare">Watchlist Compare · Pro</option>
+                  <option value="dcf_model">DCF Model · Pro</option>
+                  <option value="comps_model">Comparable Companies · Pro</option>
+                  <option value="ma_buyer_list">M&amp;A Buyer List · Pro</option>
+                  <option value="kyc_check">KYC Counterparty Check · Pro</option>
+                  <option value="lbo_model">LBO Model · Sovereign</option>
+                  <option value="ic_memo">Investment Committee Memo · Sovereign</option>
+                  <option value="nav_tieout">NAV Tie-Out · Sovereign</option>
+                </select>
+              </label>
+              <label class="aw-label" id="tt-ticker-label">
+                <span class="aw-label-text">Asset or ticker</span>
+                <input class="aw-input" name="ticker" value="AAPL" autocomplete="off">
+              </label>
+              <label class="aw-label">
+                <span class="aw-label-text">Output style</span>
+                <select name="style" class="aw-input">
+                  <option value="operator">Operator sheet</option>
+                  <option value="brief">Concise brief</option>
+                  <option value="tweet">Tweet thread</option>
+                  <option value="council">Council format</option>
+                  <option value="table">Tight table</option>
+                </select>
+              </label>
+              <button class="aw-run" type="submit">
+                <span class="aw-run-text">Run research</span>
+                <span class="aw-run-arrow">&rarr;</span>
+              </button>
+              <p class="aw-status" id="tt-usage-status">Loading ATLAS status…</p>
+            </form>
+            <section class="aw-workflow-context" aria-label="Selected ATLAS workflow" aria-live="polite">
+              <div class="aw-context-eyebrow">selected workflow</div>
+              <h3 id="atlas-selected-workflow-title">Market Snapshot</h3>
+              <p id="atlas-selected-workflow-summary">Fast asset overview with price, valuation, financial health, and source context.</p>
+              <div class="aw-context-grid">
+                <div><span>tier</span><strong id="atlas-selected-workflow-tier">free</strong></div>
+                <div><span>category</span><strong id="atlas-selected-workflow-category">research</strong></div>
+                <div><span>provider</span><strong id="atlas-selected-workflow-provider">pending</strong></div>
+              </div>
+              <div class="aw-context-list-wrap">
+                <span>deliverables</span>
+                <ul class="aw-context-list" id="atlas-selected-workflow-deliverables">
+                  <li>asset summary</li>
+                  <li>key metrics</li>
+                  <li>risk flags</li>
+                </ul>
+              </div>
+              <details class="aw-workflow-details">
+                <summary>Data and connectors</summary>
+                <div class="aw-context-list-wrap">
+                  <span>data needed</span>
+                  <ul class="aw-context-list" id="atlas-selected-workflow-data">
+                    <li>quotes</li>
+                    <li>company profile</li>
+                    <li>financial metrics</li>
+                  </ul>
+                </div>
+                <div class="aw-context-list-wrap">
+                  <span>connectors</span>
+                  <ul class="aw-context-list" id="atlas-selected-workflow-connectors">
+                    <li>FMP or Financial Datasets</li>
+                    <li>LLM provider</li>
+                  </ul>
+                </div>
+              </details>
+            </section>
+          </div>
+
+          <div class="aw-pane aw-pane--response">
+            <div class="aw-pane-head">
+              <span class="aw-dot"></span>
+              <strong>atlas response</strong>
+              <span class="aw-pane-state" id="tt-result-state" data-state="idle">idle</span>
+              <button class="aw-copy" data-copy-target="tt-result" aria-label="Copy response">copy</button>
+            </div>
+            <pre class="aw-output" id="tt-result">Pick a template and hit Run research. The ATLAS response will appear here. Research output only — not financial advice. No brokerage execution.</pre>
+          </div>
+        </div>
+
+        <footer class="aw-foot">
+          <details class="aw-details">
+            <summary>Request payload</summary>
+            <pre class="aw-output aw-output--compact" id="tt-prompt">{
+  "template": "snapshot",
+  "ticker": "AAPL",
+  "style": "operator"
+}</pre>
+            <button class="aw-copy aw-copy--inline" data-copy-target="tt-prompt" aria-label="Copy request">copy request</button>
+          </details>
+          <details class="aw-details">
+            <summary>Metrics terminal</summary>
+            <pre class="aw-output aw-output--compact" id="tt-metrics">[ATLAS] prompt_builder=live target=AAPL
+[DATA] public_sec=LIVE paid_market_data=PENDING model_briefs=PENDING
+[TEMPLATE] snapshot
+[STYLE] operator
+[GUARD] no fabricated values; Market Center can show SEC filings/facts now; AI briefs wait for activated providers</pre>
+            <button class="aw-copy aw-copy--inline" data-copy-target="tt-metrics" aria-label="Copy metrics">copy metrics</button>
+          </details>
+          <p class="aw-disclaimer">Research output only. Not financial advice. No brokerage execution. No guaranteed returns.</p>
+        </footer>
+      </section>
+    </section>
+
+    <section class="atlas-market-center" id="market-center" aria-label="ATLAS market intelligence center">
+      <div class="atlas-section-head">
+        <div class="atlas-kicker">Global market center</div>
+        <h2>Pick any market. Open the chart. Build the brief.</h2>
+        <p>Stocks, London listings, commodities, forex, indices, and crypto sit in one workflow: live chart first, then fundamentals, news, calendar risk, and ATLAS research.</p>
+      </div>
+
+      <div class="atlas-market-shell">
+        <header class="atlas-market-bar">
+          <div>
+            <strong id="atlas-active-symbol-label">Amazon</strong>
+            <span id="atlas-active-symbol-meta">NASDAQ:AMZN · equities · United States</span>
+          </div>
+          <form class="atlas-symbol-search" id="atlas-symbol-form" autocomplete="off">
+            <input class="aw-input" id="atlas-symbol-input" aria-label="Market symbol" value="NASDAQ:AMZN" list="atlas-market-symbols">
+            <datalist id="atlas-market-symbols"></datalist>
+            <button type="submit">Open</button>
+          </form>
+        </header>
+
+        <div class="atlas-asset-rail" aria-label="Fast market shortcuts">
+          <button type="button" data-tv-symbol="NASDAQ:AMZN" data-ticker="AMZN" data-name="Amazon" data-class="Equities" data-region="United States" class="is-active">AMZN</button>
+          <button type="button" data-tv-symbol="NASDAQ:GOOGL" data-ticker="GOOGL" data-name="Alphabet" data-class="Equities" data-region="United States">GOOGL</button>
+          <button type="button" data-tv-symbol="NASDAQ:META" data-ticker="META" data-name="Meta" data-class="Equities" data-region="United States">META</button>
+          <button type="button" data-tv-symbol="LSE:SHEL" data-ticker="SHEL" data-name="Shell" data-class="Equities" data-region="London">SHELL</button>
+          <button type="button" data-tv-symbol="LSE:LLOY" data-ticker="LLOY" data-name="Lloyds Banking Group" data-class="Equities" data-region="London">LLOY</button>
+          <button type="button" data-tv-symbol="LSE:GSK" data-ticker="GSK" data-name="GSK" data-class="Equities" data-region="London">GSK</button>
+          <button type="button" data-tv-symbol="TVC:GOLD" data-ticker="GOLD" data-name="Gold" data-class="Commodity" data-region="Global">GOLD</button>
+          <button type="button" data-tv-symbol="FX:EURUSD" data-ticker="EURUSD" data-name="EUR/USD" data-class="Forex" data-region="Global">EUR/USD</button>
+          <button type="button" data-tv-symbol="BINANCE:BTCUSDT" data-ticker="BTC" data-name="Bitcoin" data-class="Crypto" data-region="Global">BTC</button>
+        </div>
+
+        <div class="atlas-market-browser" aria-label="Segmented market browser">
+          <div class="atlas-market-tabs" id="atlas-market-tabs" role="tablist" aria-label="Market category">
+            <button type="button" class="is-active" data-market-class="all">All</button>
+            <button type="button" data-market-class="equity">Stocks</button>
+            <button type="button" data-market-class="index">Indices</button>
+            <button type="button" data-market-class="forex">Forex</button>
+            <button type="button" data-market-class="commodity">Commodities</button>
+            <button type="button" data-market-class="crypto">Crypto</button>
+            <button type="button" data-market-class="etf">ETFs</button>
+          </div>
+          <div class="atlas-market-selectors">
+            <label>
+              <span>Region</span>
+              <select class="aw-input" id="atlas-market-region-filter" aria-label="Market region">
+                <option value="all">All regions</option>
+                <option value="United States">USA stocks</option>
+                <option value="London">UK stocks</option>
+                <option value="Europe">Europe stocks</option>
+                <option value="Asia-Pacific">Asia stocks</option>
+                <option value="Global">Global indices / FX / commodities</option>
+                <option value="Crypto">Crypto</option>
+              </select>
+            </label>
+            <label>
+              <span>Instrument</span>
+              <select class="aw-input" id="atlas-market-symbol-select" aria-label="Market instrument">
+                <option value="">Loading market universe...</option>
+              </select>
+            </label>
+          </div>
+          <div class="atlas-market-browser-state" id="atlas-market-browser-state">Loading ATLAS market universe...</div>
+        </div>
+
+        <div class="atlas-market-grid">
+          <section class="atlas-chart-panel" aria-label="TradingView chart">
+            <div class="atlas-panel-head">
+              <span>TradingView chart</span>
+              <small id="atlas-chart-state">loading chart</small>
+            </div>
+            <div class="atlas-tv-chart" id="atlas-tv-chart" data-symbol="NASDAQ:AMZN">
+              <div class="atlas-calendar-empty">Loading chart rail…</div>
+            </div>
+          </section>
+
+          <aside class="atlas-market-sidebar" aria-label="ATLAS market context">
+            <section class="atlas-context-card">
+              <div class="atlas-panel-head">
+                <span>Snapshot rail</span>
+                <small id="atlas-market-provider-state">provider pending</small>
+              </div>
+              <dl class="atlas-context-metrics">
+                <div><dt>Price</dt><dd id="atlas-snap-price">provider pending</dd></div>
+                <div><dt>Change</dt><dd id="atlas-snap-change">provider pending</dd></div>
+                <div><dt>Data source</dt><dd id="atlas-snap-source">ATLAS backend</dd></div>
+              </dl>
+            </section>
+
+            <section class="atlas-context-card atlas-public-source-card">
+              <div class="atlas-panel-head">
+                <span>Public source rail</span>
+                <small id="atlas-public-source-state">SEC pending</small>
+              </div>
+              <dl class="atlas-context-metrics atlas-public-source-metrics">
+                <div><dt>Company</dt><dd id="atlas-public-company">waiting for ticker</dd></div>
+                <div><dt>CIK</dt><dd id="atlas-public-cik">waiting</dd></div>
+                <div><dt>Latest filing</dt><dd id="atlas-public-filing">waiting</dd></div>
+              </dl>
+              <ul class="atlas-source-facts" id="atlas-public-facts">
+                <li>SEC company facts load when a US-listed ticker is selected.</li>
+              </ul>
+              <div class="atlas-source-links" id="atlas-public-links"></div>
+            </section>
+
+            <section class="atlas-context-card">
+              <div class="atlas-panel-head">
+                <span>Research lanes</span>
+                <small>what ATLAS will join</small>
+              </div>
+              <ul class="atlas-lane-list" id="atlas-lane-list">
+                <li><strong>Fundamentals</strong><span>Revenue, margins, cash flow, leverage, valuation.</span></li>
+                <li><strong>News desk</strong><span>Company, sector, macro, earnings, analyst and filing headlines.</span></li>
+                <li><strong>Macro map</strong><span>Rates, CPI, labour, FX, commodity shocks that touch the asset.</span></li>
+                <li><strong>Banking workflow</strong><span>DCF, comps, LBO, IC memo, KYC, NAV and model-ready deliverables.</span></li>
+                <li><strong>AI brief</strong><span>Structured output with sources once providers are cleared.</span></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="atlas-workflows" id="workflows" aria-label="ATLAS Wall Street workflow rail">
+      <div class="atlas-section-head">
+        <div class="atlas-kicker">Workflow infrastructure</div>
+        <h2>ATLAS gets the Wall Street operating system.</h2>
+        <p>Anthropic's public financial-services workflow pattern is now mapped into FreedomCore's own tier gates: equity research, DCF, LBO, M&amp;A, KYC, NAV, macro, and council-ready investment memos. Provider execution remains disabled until data rights and keys are cleared.</p>
+        <p class="atlas-workflow-api-state" id="atlas-workflow-state">Loading ATLAS workflow catalog...</p>
+      </div>
+      <div class="atlas-workflow-shell">
+        <div class="atlas-workflow-track" id="atlas-workflow-track">
+          <button class="atlas-template atlas-workflow-card" data-template="equity_research" type="button">
+            <span class="atlas-template-tier" data-tier="signal">SIGNAL</span>
+            <h3>Equity Research</h3>
+            <p>Fundamentals, valuation, chart location, earnings context, macro pressure, news, bull case, bear case, and source checklist.</p>
+            <span class="atlas-template-cta">Open research lane &rarr;</span>
+          </button>
+          <button class="atlas-template atlas-workflow-card" data-template="dcf_model" type="button">
+            <span class="atlas-template-tier" data-tier="pro">PRO</span>
+            <h3>DCF Model</h3>
+            <p>Historical financials, free cash-flow bridge, WACC inputs, terminal value, scenario ranges, and sensitivity table outline.</p>
+            <span class="atlas-template-cta">Open DCF lane &rarr;</span>
+          </button>
+          <button class="atlas-template atlas-workflow-card" data-template="lbo_model" type="button">
+            <span class="atlas-template-tier" data-tier="sovereign">SOVEREIGN</span>
+            <h3>LBO Model</h3>
+            <p>Entry assumptions, debt stack, cash sweep, exit multiple cases, downside stress, IRR and MOIC sensitivity.</p>
+            <span class="atlas-template-cta">Open LBO lane &rarr;</span>
+          </button>
+          <button class="atlas-template atlas-workflow-card" data-template="ic_memo" type="button">
+            <span class="atlas-template-tier" data-tier="sovereign">SOVEREIGN</span>
+            <h3>IC Memo</h3>
+            <p>Thesis, diligence, valuation, risks, open questions, decision path, and committee-ready research structure.</p>
+            <span class="atlas-template-cta">Open IC lane &rarr;</span>
+          </button>
+          <button class="atlas-template atlas-workflow-card" data-template="kyc_check" type="button">
+            <span class="atlas-template-tier" data-tier="pro">PRO</span>
+            <h3>KYC Check</h3>
+            <p>Entity resolution, ownership, sanctions, adverse media, missing documentation, and compliance checklist.</p>
+            <span class="atlas-template-cta">Open KYC lane &rarr;</span>
+          </button>
+          <button class="atlas-template atlas-workflow-card" data-template="nav_tieout" type="button">
+            <span class="atlas-template-tier" data-tier="sovereign">SOVEREIGN</span>
+            <h3>NAV Tie-Out</h3>
+            <p>Positions, pricing, GL reconciliation, custodian breaks, NAV variance notes, and fund-admin review pack.</p>
+            <span class="atlas-template-cta">Open NAV lane &rarr;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="atlas-calendar" id="calendar" aria-label="ATLAS economic calendar">
+      <div class="atlas-section-head">
+        <div class="atlas-kicker">Economic calendar</div>
+        <h2>Macro events before the brief.</h2>
+        <p>ATLAS will track rate decisions, inflation prints, labour data, growth releases, energy shocks, sector risk, and earnings timing before generating market research. Live event dates stay disabled until the provider source is approved.</p>
+      </div>
+
+      <div class="atlas-calendar-shell">
+        <header class="atlas-calendar-bar">
+          <div>
+            <strong>macro calendar</strong>
+            <span id="atlas-calendar-state">provider pending</span>
+          </div>
+          <div class="atlas-calendar-controls" aria-label="Economic calendar filters">
+            <select id="atlas-calendar-region" class="aw-input" aria-label="Calendar region">
+              <option value="US">US</option>
+              <option value="UK">UK</option>
+              <option value="EU">EU</option>
+              <option value="CA">Canada</option>
+              <option value="AU">Australia</option>
+              <option value="JP">Japan</option>
+            </select>
+            <select id="atlas-calendar-window" class="aw-input" aria-label="Calendar window">
+              <option value="7">7 days</option>
+              <option value="14" selected>14 days</option>
+              <option value="30">30 days</option>
+            </select>
+            <select id="atlas-calendar-impact" class="aw-input" aria-label="Calendar impact">
+              <option value="all" selected>All impact</option>
+              <option value="high">High impact</option>
+              <option value="medium">Medium impact</option>
+              <option value="low">Low impact</option>
+            </select>
+          </div>
+        </header>
+        <div class="atlas-calendar-grid" id="atlas-calendar-events">
+          <div class="atlas-calendar-empty">Loading economic calendar rail…</div>
+        </div>
+        <p class="atlas-calendar-note" id="atlas-calendar-note">Research output only. Not financial advice. No brokerage execution.</p>
+      </div>
+    </section>
+
+    <section class="atlas-templates" id="templates">
+      <div class="atlas-section-head">
+        <div class="atlas-kicker">Research and banking templates</div>
+        <h2>Pick a job. Get a structured brief.</h2>
+        <p>Free templates run anonymously up to a daily cap. Signal, Pro, and Sovereign templates unlock with a FreedomCore subscription.</p>
+      </div>
+      <div class="atlas-template-grid">
+        <button class="atlas-template" data-template="snapshot" type="button">
+          <span class="atlas-template-tier" data-tier="free">FREE</span>
+          <h3>Snapshot</h3>
+          <p>Fast public-safe asset overview. Market cap, P/E, growth, margins, free cash flow, debt, verdict.</p>
+          <span class="atlas-template-cta">Run snapshot &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="crypto_momentum" type="button">
+          <span class="atlas-template-tier" data-tier="free">FREE</span>
+          <h3>Crypto Momentum</h3>
+          <p>24h, 7d, 30d, 90d, 1Y returns. Drawdown from high. Relative strength vs BTC / ETH / SOL. Trend classification.</p>
+          <span class="atlas-template-cta">Run momentum &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="red_flag" type="button">
+          <span class="atlas-template-tier" data-tier="signal">SIGNAL</span>
+          <h3>Red-Flag Pack</h3>
+          <p>Liquidity, dilution, debt, earnings quality, headline checks. What to verify before treating as investable.</p>
+          <span class="atlas-template-cta">Run red-flag &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="earnings_brief" type="button">
+          <span class="atlas-template-tier" data-tier="signal">SIGNAL</span>
+          <h3>Earnings Brief</h3>
+          <p>Last 4 quarters of income statement, balance sheet, cash flow. Highlights acceleration, deterioration, dilution.</p>
+          <span class="atlas-template-cta">Run earnings &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="council_dossier" type="button">
+          <span class="atlas-template-tier" data-tier="pro">PRO</span>
+          <h3>Council Dossier</h3>
+          <p>Bull case, bear case, hidden risks, balance-sheet check, Priority 0 verification checklist before any view.</p>
+          <span class="atlas-template-cta">Run dossier &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="watchlist_compare" type="button">
+          <span class="atlas-template-tier" data-tier="pro">PRO</span>
+          <h3>Watchlist Compare</h3>
+          <p>Multi-ticker rank by market cap, P/E, growth, margin, FCF, debt. Cleanest to riskiest, with reasoning.</p>
+          <span class="atlas-template-cta">Run compare &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="equity_research" type="button">
+          <span class="atlas-template-tier" data-tier="signal">SIGNAL</span>
+          <h3>Equity Research</h3>
+          <p>Full company report with fundamentals, chart context, macro pressure, valuation, news, risks, and source trail.</p>
+          <span class="atlas-template-cta">Run report &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="dcf_model" type="button">
+          <span class="atlas-template-tier" data-tier="pro">PRO</span>
+          <h3>DCF Model</h3>
+          <p>Model assumptions, FCF bridge, WACC inputs, terminal value, scenario ranges, and sensitivity structure.</p>
+          <span class="atlas-template-cta">Run DCF &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="comps_model" type="button">
+          <span class="atlas-template-tier" data-tier="pro">PRO</span>
+          <h3>Comparable Companies</h3>
+          <p>Peer universe, multiples, growth, margin, leverage, outliers, and relative value note.</p>
+          <span class="atlas-template-cta">Run comps &rarr;</span>
+        </button>
+        <button class="atlas-template" data-template="macro_event_brief" type="button">
+          <span class="atlas-template-tier" data-tier="signal">SIGNAL</span>
+          <h3>Macro Event Brief</h3>
+          <p>CPI, FOMC, NFP, GDP and commodity events mapped to rates, FX, sectors, charts, and watchlists.</p>
+          <span class="atlas-template-cta">Run macro &rarr;</span>
+        </button>
+      </div>
+      <div class="atlas-cta">
+        <p>FreedomCore subscription unlocks Signal &amp; Pro templates plus higher daily caps.</p>
+        <a class="atlas-cta-btn" href="/pages/access.html">Subscribe to FreedomCore &rarr;</a>
+      </div>
+    </section>
+
+    <section class="atlas-how" id="how">
+      <div class="atlas-section-head">
+        <div class="atlas-kicker">How it works</div>
+        <h2>Authenticated research rail. No fake data.</h2>
+      </div>
+      <div class="atlas-how-grid">
+        <article>
+          <strong>1</strong>
+          <h3>Subscribe</h3>
+          <p>One FreedomCore account unlocks ATLAS alongside the rest of the suite. One bill, all surfaces.</p>
+        </article>
+        <article>
+          <strong>2</strong>
+          <h3>Pick a template</h3>
+          <p>Choose Snapshot, Red-Flag Pack, Earnings Brief, Council Dossier, Equity Research, DCF, LBO, Macro, KYC, NAV, or Watchlist Compare.</p>
+        </article>
+        <article>
+          <strong>3</strong>
+          <h3>Get the brief</h3>
+          <p>ATLAS pulls real numbers through FreedomCore's authenticated data rail and returns a structured brief in the workstation. Research only — never a recommendation.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="tt-footer">
+    <strong>ATLAS · Powered by FreedomCore</strong>
+    <span>Research output only. Not financial advice. No brokerage execution. No guaranteed returns.</span>
+  </footer>
+
+  <script src="/js/family-nav-v3.js?v=20260519cmd"></script>
+  <script src="/js/app.js?v=20260514t" defer></script>
+  <script src="/js/atlas.js?v=20260512e" defer></script>
+</body>
+</html>

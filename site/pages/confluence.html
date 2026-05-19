@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/theme-init.js?v=20260506f"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#060a10">
+    <title>Whale Confluence | FreedomCore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/franchise-coord.css?v=20260507a">
+    <link rel="stylesheet" href="/css/style.css?v=20260518body">
+    <link rel="stylesheet" href="/css/family-nav-v3.css?v=20260514s">
+    <style>
+      .conf-hero { padding: 32px 16px 8px; max-width: 960px; margin: 0 auto; }
+      .conf-hero h1 { font-family: 'Inter', system-ui, sans-serif; font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 800; color: var(--text); margin: 0 0 8px; letter-spacing: -0.01em; }
+      .conf-hero p { font-size: 0.78rem; line-height: 1.55; color: var(--text-dim); margin: 4px 0; }
+      .conf-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: 8px; }
+      .conf-wrap { padding: 0 16px 32px; max-width: 960px; margin: 0 auto; }
+      .conf-grid { display: grid; gap: 12px; margin-top: 16px; }
+      .conf-row {
+        display: grid; grid-template-columns: 110px 78px 70px 1fr 110px;
+        gap: 10px; align-items: center; padding: 12px 14px;
+        border: 1px solid var(--border); border-left: 4px solid var(--accent);
+        border-radius: 10px; background: var(--card);
+        font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      }
+      .conf-row--alert { border-left-color: #ef4444; box-shadow: 0 0 18px rgba(239,68,68,0.18); }
+      .conf-row--near  { border-left-color: #fbbf24; opacity: 0.85; }
+      .conf-row__sym { font-size: 0.95rem; font-weight: 800; color: var(--text); }
+      .conf-row__side { font-weight: 800; letter-spacing: 0.08em; }
+      .conf-row__side--BUY  { color: #22c55e; }
+      .conf-row__side--SELL { color: #ef4444; }
+      .conf-row__wallets { font-size: 1.05rem; font-weight: 800; color: var(--gold, #ffd700); }
+      .conf-row__tier-strip { font-size: 0.58rem; color: var(--text-dim); letter-spacing: 0.06em; }
+      .conf-row__chart {
+        padding: 6px 10px; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase;
+        border: 1px solid var(--accent); background: transparent; color: var(--accent);
+        border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+      }
+      .conf-empty { padding: 32px; text-align: center; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
+      .conf-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold, #ffd700); font-weight: 800; margin: 24px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+      .conf-cta {
+        display: inline-block; margin-top: 12px; padding: 8px 14px;
+        border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent);
+        color: var(--accent); border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em;
+        text-transform: uppercase; text-decoration: none; font-weight: 700;
+      }
+      .conf-tv-overlay { position: fixed; inset: 0; z-index: 5000; background: #02060d; display: flex; flex-direction: column; }
+      .conf-tv-head { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 11px 14px; background: #06090f; border-bottom: 1px solid rgba(245,245,250,0.08); font-family: 'JetBrains Mono', monospace; }
+      .conf-tv-head span { color: var(--accent); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .conf-tv-close { background: rgba(0,0,0,0.85); border: 1px solid #ef4444; border-radius: 50%; color: #fff; font-size: 1rem; width: 30px; height: 30px; cursor: pointer; }
+      .conf-tv-overlay iframe { flex: 1; width: 100%; border: none; background: #0a0a0f; }
+    </style>
+</head>
+<body data-site="maverick">
+    <div class="grid-bg"></div>
+
+    <nav class="nav">
+        <button class="nav-hamburger" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="nav-logo">
+            <img src="/img/maverick-logo.jpg" alt="MAVERICK" class="nav-logo-img">
+            <span class="nav-logo-text">MAVERICK</span>
+        </a>
+        <div class="nav-right">
+            <a href="https://shadow.freedomcore.io/" target="_blank" rel="noopener" style="color:#8b5cf6;font-weight:700;text-decoration:none;font-size:0.7rem;">SHADOW &#8599;</a>
+            <button class="theme-btn" id="theme-btn">&#9790;</button>
+        </div>
+    </nav>
+
+    <div class="nav-neon-line" aria-hidden="true"></div>
+
+    <div class="mobile-dropdown" id="mobile-menu">
+        <div class="fc-fam-head">FREEDOMCORE FAMILY</div>
+        <a class="fc-fam-link" href="https://freedomcore.io/"><span class="fc-fam-icon">&#9737;</span> FREEDOMCORE</a>
+        <a class="fc-fam-link" href="https://maverick.freedomcore.io/"><span class="fc-fam-icon">&#9733;</span> MAVERICK</a>
+        <a class="fc-fam-link" href="https://shadow.freedomcore.io/"><span class="fc-fam-icon">&#128065;</span> SHADOW</a>
+        <a class="fc-fam-link" href="https://arena.freedomcore.io/"><span class="fc-fam-icon">&#127942;</span> ARENA</a>
+        <a class="fc-fam-link" href="https://memes.freedomcore.io/"><span class="fc-fam-icon">&#127867;</span> THE PUMPHOUSE</a>
+        <div class="fc-fam-divider"></div>
+        <a href="/">Home</a>
+        <a href="/pages/today.html">Today</a>
+        <a href="/pages/signals.html">Signals</a>
+        <a href="/pages/medalists.html">Medalists</a>
+        <a href="/pages/swarm.html">Swarm Terminals</a>
+        <a href="/pages/performance.html">Performance</a>
+        <a href="/pages/architecture.html">Architecture</a>
+        <a href="/pages/news.html">News</a>
+        <a href="/pages/about.html">About</a>
+        <a href="/pages/access.html">Access Tiers</a>
+    </div>
+
+    <div class="back-bar"><a href="/">&larr; BACK TO FREEDOMCORE</a></div>
+
+    <section class="conf-hero">
+        <h1>Whale Confluence Board</h1>
+        <p>Live SHADOW signal: when <strong style="color:var(--gold)">10+ tracked whales</strong> align on the same side of the same coin within a 60-minute window, the board lights up.</p>
+        <p>NTFY alerts fire on every fresh threshold breach with 30-minute cooldown per symbol+side.</p>
+        <div class="conf-meta">
+            Window: 60 min &middot; Threshold: &ge;10 whales &middot; Cooldown: 30 min &middot; Last updated: <span id="conf-updated">&mdash;</span>
+        </div>
+        <a href="https://ntfy.sh/freedomcore_confluence" target="_blank" rel="noopener" class="conf-cta">Subscribe to NTFY alerts &rarr;</a>
+    </section>
+
+    <div class="conf-wrap">
+        <div class="conf-section-title" id="conf-alerts-title">&#128293; Active Alerts (&ge;10 whales)</div>
+        <div class="conf-grid" id="conf-alerts"></div>
+
+        <div class="conf-section-title">&#9888; Near-misses (5&ndash;9 whales)</div>
+        <div class="conf-grid" id="conf-near"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">FREEDOMCORE</div>
+        <div class="footer-copy">&copy; 2025-2026 FreedomCore.</div>
+    </footer>
+
+    <script>
+    (function () {
+        function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+        function fmtRel(iso) {
+            if (!iso) return '—';
+            try {
+                var diff = Math.max(0, Date.now() - new Date(iso).getTime()) / 1000;
+                if (diff < 60) return Math.floor(diff) + 's ago';
+                if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+                return Math.floor(diff / 3600) + 'h ago';
+            } catch (_e) { return '—'; }
+        }
+        function tvUrl(symbol) {
+            var clean = String(symbol || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (!clean) return '';
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            return 'https://s.tradingview.com/widgetembed/?frameElementId=tv_conf_' + clean +
+                '&symbol=' + encodeURIComponent('HYPERLIQUID:' + clean + 'USD.P') +
+                '&interval=15&hidesidetoolbar=0&symboledit=0&saveimage=0' +
+                '&toolbarbg=' + (isLight ? 'ffffff' : '0a0a0f') +
+                '&theme=' + (isLight ? 'light' : 'dark') +
+                '&style=1&timezone=Etc%2FUTC&withdateranges=1&showpopupbutton=0&showvolume=true';
+        }
+        function openChart(symbol) {
+            var existing = document.getElementById('conf-tv-overlay');
+            if (existing) existing.remove();
+            var ov = document.createElement('div');
+            ov.id = 'conf-tv-overlay';
+            ov.className = 'conf-tv-overlay';
+            ov.innerHTML =
+                '<div class="conf-tv-head"><span>SHADOW &middot; ' + esc(String(symbol).toUpperCase()) + '</span><button type="button" class="conf-tv-close" aria-label="Close">&times;</button></div>' +
+                '<iframe src="' + esc(tvUrl(symbol)) + '" allowfullscreen></iframe>';
+            document.body.appendChild(ov);
+            document.body.style.overflow = 'hidden';
+            function close() {
+                var el = document.getElementById('conf-tv-overlay');
+                if (el) el.remove();
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', onKey);
+            }
+            function onKey(e) { if (e.key === 'Escape') close(); }
+            ov.addEventListener('click', function (e) {
+                if (e.target.classList.contains('conf-tv-close') || e.target === ov) close();
+            });
+            document.addEventListener('keydown', onKey);
+        }
+        function row(item, cls) {
+            return '<div class="conf-row ' + cls + '">' +
+                '<div><div class="conf-row__sym">' + esc(item.symbol) + '</div><div class="conf-row__tier-strip">PLAT ' + esc(item.plat_wallets) + ' &middot; T1 ' + esc(item.t1_wallets) + ' &middot; T2 ' + esc(item.t2_wallets) + '</div></div>' +
+                '<div class="conf-row__side conf-row__side--' + esc(item.side) + '">' + esc(item.side) + '</div>' +
+                '<div><div class="conf-row__wallets">' + esc(item.wallet_count) + '</div><div class="conf-row__tier-strip">whales</div></div>' +
+                '<div class="conf-row__tier-strip">' + esc(item.fill_count) + ' fills &middot; first ' + esc(fmtRel(item.first_ts_iso)) + ' &middot; latest ' + esc(fmtRel(item.latest_ts_iso)) + '</div>' +
+                '<button type="button" class="conf-row__chart" data-symbol="' + esc(item.symbol) + '">Chart</button>' +
+                '</div>';
+        }
+        function render(payload) {
+            var alerts = (payload && payload.alerts) || [];
+            var near = (payload && payload.near_misses) || [];
+            var alertsEl = document.getElementById('conf-alerts');
+            var nearEl = document.getElementById('conf-near');
+            var titleEl = document.getElementById('conf-alerts-title');
+            if (titleEl) titleEl.textContent = '🔥 Active Alerts (≥' + (payload.threshold || 10) + ' whales) — ' + alerts.length + ' live';
+            alertsEl.innerHTML = alerts.length ? alerts.map(function (a) { return row(a, 'conf-row--alert'); }).join('') : '<div class="conf-empty">No active confluence alerts right now. Waiting for a coordinated whale move…</div>';
+            nearEl.innerHTML = near.length ? near.map(function (a) { return row(a, 'conf-row--near'); }).join('') : '<div class="conf-empty">No near-misses in window.</div>';
+            var upd = document.getElementById('conf-updated');
+            if (upd && payload.generated_at) upd.textContent = fmtRel(payload.generated_at);
+        }
+        function poll() {
+            fetch('/api_data/shadow_confluence.json?ts=' + Date.now(), { cache: 'no-store' })
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (d) { if (d) render(d); })
+                .catch(function () {});
+        }
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('.conf-row__chart');
+            if (btn) { e.preventDefault(); openChart(btn.getAttribute('data-symbol')); }
+        });
+        poll();
+        setInterval(poll, 30000);
+    })();
+    </script>
+</body>
+</html>
