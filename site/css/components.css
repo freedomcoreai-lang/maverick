@@ -1,0 +1,604 @@
+@import url('./tokens.css');
+
+/* ============================================================================
+   FreedomCore Family — Component Library
+   Ten single-class primitives. Every value resolves to a tokens.css variable.
+   Zero hardcoded hex. Zero magic sizes outside the 8-step scales.
+
+   Site identity is controlled by <body data-site="maverick|shadow|quantum|arena">.
+   That single attribute swaps the --site-accent everywhere. No per-site CSS
+   overrides permitted — if a site needs a new look, fix the component here.
+
+   Mobile: every primitive exposes a <name>--mobile modifier class, ALSO
+   auto-applied via @media (max-width: 780px). Mobile is designed, not stacked.
+   ============================================================================ */
+
+
+/* ─── Site accent swap ──────────────────────────────────────────────────────
+   One neutral var (--site-accent) that every component references.
+   body[data-site] controls which identity token it resolves to.
+   color-mix() derives low-alpha variants so we don't maintain four glow vars. */
+
+[data-site]            { --site-accent: var(--accent-cyan); }         /* fallback */
+[data-site="maverick"] { --site-accent: var(--accent-gold); }
+[data-site="shadow"]   { --site-accent: var(--accent-violet); }
+[data-site="quantum"]  { --site-accent: var(--accent-cyan); }
+[data-site="arena"]    { --site-accent: var(--accent-silver); }
+[data-site="apex"],
+[data-site="freedomcore"] { --site-accent: var(--accent-freedomcore); }
+
+[data-site] {
+    /* Derived accents — computed from the site identity token. Four
+       siblings get their low-alpha variants without maintaining 4×3 vars. */
+    --site-accent-dim:  color-mix(in srgb, var(--site-accent) 12%, transparent);
+    --site-accent-soft: color-mix(in srgb, var(--site-accent) 24%, transparent);
+    --site-accent-glow: color-mix(in srgb, var(--site-accent) 38%, transparent);
+}
+/* Radii live in tokens.css — single source of truth. */
+
+
+/* ─── .eyebrow — helper: JetBrains Mono uppercase label ───────────────────── */
+.eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+.eyebrow--accent { color: var(--site-accent); }
+
+
+/* ─── .section — vertical rhythm wrapper ─────────────────────────────────── */
+.section {
+    position: relative;
+    padding: var(--sp-16) var(--sp-24);
+    max-width: 1120px;
+    margin: 0 auto;
+}
+@media (max-width: 780px) {
+    .section { padding: var(--sp-48) var(--sp-16); }
+}
+
+
+/* ─── 1. .nav — top navigation, 64px, accent swap via body[data-site] ───── */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    height: 64px;
+    padding: 0 var(--sp-24);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-16);
+    background: var(--chrome-bg);
+    border-bottom: 1px solid var(--chrome-border);
+    backdrop-filter: blur(22px);
+    transition: background var(--duration-ui) var(--ease-out);
+}
+.nav__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-8);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: var(--fs-16);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color var(--duration-ui) var(--ease-out);
+}
+.nav__logo:hover { color: var(--site-accent); }
+.nav__logo-mark {
+    width: 32px; height: 32px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 4px var(--site-accent-glow));
+}
+.nav__links {
+    display: flex;
+    gap: var(--sp-16);
+    align-items: center;
+    margin-left: auto;
+}
+.nav__link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--duration-ui) var(--ease-out);
+}
+.nav__link:hover,
+.nav__link[aria-current="page"] { color: var(--site-accent); }
+.nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-8);
+    margin-left: var(--sp-16);
+}
+
+.nav--mobile,
+.nav[data-mobile="true"] { padding: 0 var(--sp-16); height: 56px; }
+.nav--mobile .nav__links,
+.nav[data-mobile="true"] .nav__links { display: none; }
+
+@media (max-width: 780px) {
+    .nav { padding: 0 var(--sp-16); height: 56px; }
+    .nav__links { display: none; }
+}
+
+
+/* ─── 2. .ticker — live-data scroller row ────────────────────────────────── */
+.ticker {
+    position: relative;
+    overflow: hidden;
+    height: 28px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+}
+.ticker__track {
+    display: flex;
+    gap: var(--sp-48);
+    white-space: nowrap;
+    animation: ticker-scroll 120s linear infinite;
+    will-change: transform;
+}
+.ticker__item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+.ticker__item b,
+.ticker__item .value { color: var(--site-accent); font-weight: 700; }
+@keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+
+/* ─── 3. .hero — Orbitron H1 + Inter sub + 1 primary + 1 secondary ─────── */
+.hero {
+    position: relative;
+    min-height: 60vh;
+    padding: var(--sp-128) var(--sp-24) var(--sp-64);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+.hero__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--site-accent);
+    margin-bottom: var(--sp-16);
+}
+.hero__title {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: var(--fs-96);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: var(--sp-24);
+}
+.hero__sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: var(--fs-20);
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto var(--sp-48);
+}
+.hero__actions {
+    display: flex;
+    gap: var(--sp-16);
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero--mobile,
+@media (max-width: 780px) {
+    .hero { min-height: 0; padding: var(--sp-16) var(--sp-16) var(--sp-48); }
+}
+@media (max-width: 780px) {
+    .hero__title { font-size: var(--fs-64); }
+    .hero__sub   { font-size: var(--fs-16); }
+    .hero__actions { flex-direction: column; width: 100%; }
+    .hero__actions > * { width: 100%; }
+}
+
+
+/* ─── 4. .stat-card — 12px radius, 24px pad, hover translateY(-2px) ─────── */
+.stat-card {
+    padding: var(--sp-24);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    transition:
+        transform var(--duration-ui) var(--ease-spring),
+        border-color var(--duration-ui) var(--ease-out);
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--site-accent);
+}
+.stat-card__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--sp-8);
+}
+.stat-card__value {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: var(--fs-40);
+    line-height: 1;
+    color: var(--text-primary);
+}
+.stat-card__value--accent { color: var(--site-accent); }
+.stat-card__trend {
+    margin-top: var(--sp-8);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-14);
+    color: var(--text-muted);
+}
+
+
+/* ─── 5. .cta-primary / .cta-secondary — accent + neutral buttons ────────── */
+.cta-primary,
+.cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-8);
+    padding: var(--sp-16) var(--sp-32);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-14);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+        transform var(--duration-ui) var(--ease-spring),
+        background var(--duration-ui) var(--ease-out),
+        border-color var(--duration-ui) var(--ease-out),
+        box-shadow var(--duration-ui) var(--ease-out);
+}
+.cta-primary {
+    background: var(--site-accent);
+    color: var(--bg-primary);
+}
+.cta-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 32px var(--site-accent-soft);
+}
+.cta-primary:active { transform: translateZ(-4px) scale(0.98); }
+.cta-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+.cta-secondary:hover {
+    transform: scale(1.02);
+    border-color: var(--site-accent);
+    color: var(--site-accent);
+}
+.cta-secondary:active { transform: translateZ(-4px) scale(0.98); }
+
+
+/* ─── 6. .footer — three-column structure + family cross-promo ───────────── */
+.footer {
+    padding: var(--sp-64) var(--sp-24) var(--sp-32);
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+}
+.footer__grid {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--sp-48);
+}
+.footer__logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: var(--fs-20);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: var(--sp-16);
+}
+.footer__tag {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-14);
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 360px;
+}
+.footer__col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--sp-16);
+}
+.footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+}
+.footer__links a {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-14);
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--duration-ui) var(--ease-out);
+}
+.footer__links a:hover { color: var(--site-accent); }
+.footer__family {
+    max-width: 1120px;
+    margin: var(--sp-48) auto 0;
+    padding-top: var(--sp-24);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-24);
+    flex-wrap: wrap;
+}
+.footer__copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+.footer--mobile,
+@media (max-width: 780px) {
+    .footer { padding: var(--sp-48) var(--sp-16) var(--sp-24); }
+}
+@media (max-width: 780px) {
+    .footer__grid { grid-template-columns: 1fr; gap: var(--sp-32); }
+    .footer__family { flex-direction: column; align-items: flex-start; }
+}
+
+
+/* ─── 7. .family-switcher — top-right chip, 3 sibling dots ──────────────── */
+/* Shows the OTHER three siblings, never the current one. Each site sets
+   --hide-site="maverick|shadow|quantum|arena" on body to hide its own dot. */
+
+.family-switcher {
+    position: fixed;
+    top: calc(64px + var(--sp-8));   /* just below the nav */
+    right: var(--sp-16);
+    z-index: 201;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-8);
+    padding: var(--sp-8) var(--sp-16);
+    height: 28px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: border-color var(--duration-ui) var(--ease-out);
+}
+.family-switcher:hover { border-color: var(--site-accent); }
+.family-switcher__label { opacity: 0.7; }
+.family-switcher__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: block;
+    transition:
+        transform var(--duration-ui) var(--ease-spring),
+        box-shadow var(--duration-ui) var(--ease-out);
+}
+.family-switcher a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+}
+.family-switcher a:hover .family-switcher__dot {
+    transform: scale(1.35);
+}
+.family-switcher__dot[data-site="maverick"] { background: var(--accent-gold); }
+.family-switcher__dot[data-site="shadow"]   { background: var(--accent-violet); }
+.family-switcher__dot[data-site="quantum"]  { background: var(--accent-cyan); }
+.family-switcher__dot[data-site="arena"]    { background: var(--accent-silver); }
+.family-switcher a:hover .family-switcher__dot[data-site="maverick"] { box-shadow: 0 0 10px var(--accent-gold); }
+.family-switcher a:hover .family-switcher__dot[data-site="shadow"]   { box-shadow: 0 0 10px var(--accent-violet); }
+.family-switcher a:hover .family-switcher__dot[data-site="quantum"]  { box-shadow: 0 0 10px var(--accent-cyan); }
+.family-switcher a:hover .family-switcher__dot[data-site="arena"]    { box-shadow: 0 0 10px var(--accent-silver); }
+
+/* Hide the dot for the site currently shown — body[data-site="maverick"]
+   hides the maverick dot everywhere in its own family-switcher, etc. */
+[data-site="maverick"] .family-switcher__dot[data-site="maverick"],
+[data-site="maverick"] .family-switcher__dot[data-site="maverick"] + span,
+[data-site="shadow"]   .family-switcher__dot[data-site="shadow"],
+[data-site="shadow"]   .family-switcher__dot[data-site="shadow"] + span,
+[data-site="quantum"]  .family-switcher__dot[data-site="quantum"],
+[data-site="quantum"]  .family-switcher__dot[data-site="quantum"] + span,
+[data-site="arena"]    .family-switcher__dot[data-site="arena"],
+[data-site="arena"]    .family-switcher__dot[data-site="arena"] + span {
+    display: none;
+}
+[data-site="maverick"] .family-switcher a[data-site="maverick"],
+[data-site="shadow"]   .family-switcher a[data-site="shadow"],
+[data-site="quantum"]  .family-switcher a[data-site="quantum"],
+[data-site="arena"]    .family-switcher a[data-site="arena"] { display: none; }
+
+@media (max-width: 780px) {
+    .family-switcher { top: calc(56px + var(--sp-8)); right: var(--sp-8); }
+    .family-switcher__label { display: none; }
+}
+
+
+/* ─── 8. .modal + .toast — dialog and notification primitives ────────────── */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-24);
+    background: color-mix(in srgb, var(--bg-primary) 72%, transparent);
+}
+.modal[aria-hidden="false"] { display: flex; }
+.modal__panel {
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--sp-32);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+.modal__title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: var(--fs-28);
+    color: var(--text-primary);
+    margin-bottom: var(--sp-16);
+}
+.modal__body {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-16);
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+.modal__actions {
+    margin-top: var(--sp-32);
+    display: flex;
+    gap: var(--sp-16);
+    justify-content: flex-end;
+}
+.modal__close {
+    position: absolute;
+    top: var(--sp-16);
+    right: var(--sp-16);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: var(--fs-20);
+    cursor: pointer;
+    transition: color var(--duration-ui) var(--ease-out);
+}
+.modal__close:hover { color: var(--text-primary); }
+
+.toast-stack {
+    position: fixed;
+    bottom: var(--sp-24);
+    right: var(--sp-24);
+    z-index: 310;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    max-width: 360px;
+}
+.toast {
+    padding: var(--sp-16) var(--sp-24);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--site-accent);
+    border-radius: var(--radius-button);
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-14);
+    color: var(--text-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    animation: toast-in var(--duration-ui) var(--ease-spring);
+}
+.toast--success { border-left-color: var(--site-accent); }
+.toast--error   { border-left-color: var(--text-primary); }
+@keyframes toast-in {
+    from { opacity: 0; transform: translateX(16px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+
+/* ─── 9. .input / .form-field — text, select, textarea ─────────────────── */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    margin-bottom: var(--sp-24);
+}
+.form-field__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--site-accent);
+}
+.input,
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: var(--sp-16);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: var(--fs-16);
+    transition:
+        border-color var(--duration-ui) var(--ease-out),
+        box-shadow var(--duration-ui) var(--ease-out);
+}
+.input::placeholder,
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+.input:focus,
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: var(--site-accent);
+    box-shadow: 0 0 0 3px var(--site-accent-dim);
+}
+.form-field textarea { resize: vertical; min-height: 120px; }
+
+
+/* ─── 10. Reduced-motion fallback ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .stat-card,
+    .cta-primary,
+    .cta-secondary,
+    .family-switcher__dot,
+    .toast { transition: none !important; animation: none !important; }
+    .stat-card:hover,
+    .cta-primary:hover,
+    .cta-secondary:hover { transform: none; }
+    .ticker__track { animation: none; }
+}

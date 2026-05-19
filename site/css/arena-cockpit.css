@@ -1,0 +1,795 @@
+/* ============================================================================
+   ARENA Cockpit — Supreme Court 10R verdict, 2026-04-30.
+   Single accent (silver, ARENA family identity), Inter prose + Mono data,
+   Orbitron retired, dual-video hero with theme-driven opacity crossfade,
+   tier polarity through FILL / OUTLINE / MUTED (no hue), PnL polarity
+   through weight + glyph (no hue).
+
+   Sections:
+     1. Accent rebind (arena scope) + alias collapse
+     2. Typography
+     3. Hero (dual-video, theme switch, reduced-motion poster fallback)
+     4. Feature strip (5 numbered pills)
+     5. Leaderboard table chrome
+     6. Per-wallet hero + stats grid
+     7. Shadow Bridge card + arena CTAs
+
+   CI gate: this file must contain zero hex colour literals — all colour
+   resolves through the four-token scale in tokens.css.
+   ============================================================================ */
+
+/* ─── 1. ACCENT REBIND (arena scope) ──────────────────────────────────────── */
+body[data-site="arena"] {
+    --accent:        var(--accent-silver);
+    --site-accent:   var(--accent);
+    --text:          var(--text-primary);
+    --text-dim:      var(--text-muted);
+    --surface:       var(--bg-elevated);
+    /* Legacy hue collapse — every former hue resolves into the four-token scale */
+    --gold:          var(--accent);
+    --silver:        var(--accent);
+    --bronze:        var(--text-dim);
+    --blue:          var(--accent);
+    --cyan:          var(--accent);
+    --purple:        var(--accent);
+    --green:         var(--text);
+    --red:           var(--text-dim);
+    --neg:           var(--text-dim);
+    --amber:         var(--accent);
+    --champion:      var(--accent);
+    --card:          var(--surface);
+    --bg2:           var(--bg-primary);
+    --gold-bg:       color-mix(in srgb, var(--accent) 12%, transparent);
+    --gold-border:   color-mix(in srgb, var(--accent) 32%, transparent);
+    --blue-dim:      color-mix(in srgb, var(--accent) 10%, transparent);
+    --green-dim:     color-mix(in srgb, var(--accent) 10%, transparent);
+    --champion-bg:   color-mix(in srgb, var(--accent) 14%, transparent);
+}
+[data-theme="light"] body[data-site="arena"] {
+    --gold-bg:       color-mix(in srgb, var(--accent) 14%, transparent);
+    --gold-border:   color-mix(in srgb, var(--accent) 38%, transparent);
+    --blue-dim:      color-mix(in srgb, var(--accent) 10%, transparent);
+    --green-dim:     color-mix(in srgb, var(--accent) 10%, transparent);
+    --champion-bg:   color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+/* ─── 2. TYPOGRAPHY (Inter + Mono only — Orbitron retired) ────────────────── */
+body[data-site="arena"] .a-hero-title,
+body[data-site="arena"] .a-hero-sub,
+body[data-site="arena"] .a-tagline,
+body[data-site="arena"] .w-hero-title,
+body[data-site="arena"] .a-h2 {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: var(--text);
+}
+
+body[data-site="arena"] .a-eye {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-16);
+}
+
+body[data-site="arena"] .a-hero-title {
+    font-size: clamp(var(--fs-40), 9vw, var(--fs-96));
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    text-transform: none;
+    margin: 0 0 var(--sp-16);
+}
+
+body[data-site="arena"] .a-hero-sub {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-20);
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text-dim);
+    margin: 0 0 var(--sp-32);
+    max-width: 64ch;
+}
+
+body[data-site="arena"] .a-h2 {
+    font-size: clamp(var(--fs-20), 2.6vw, var(--fs-28));
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    margin: 0 0 var(--sp-16);
+}
+
+body[data-site="arena"] .a-tagline {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding-top: var(--sp-16);
+    margin-top: var(--sp-32);
+    max-width: 640px;
+}
+
+body[data-site="arena"] .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── 3. HERO (text → video → stats, Maverick franchise pattern) ────────── */
+body[data-site="arena"] .a-hero {
+    position: relative;
+    padding: calc(16px + var(--sp-16)) var(--sp-24) var(--sp-48);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-primary);
+}
+body[data-site="arena"] .a-hero-head {
+    max-width: 760px;
+    margin: 0 auto var(--sp-32);
+}
+body[data-site="arena"] .a-hero-head .a-eye { margin-bottom: var(--sp-16); }
+body[data-site="arena"] .a-hero-head .a-hero-title { margin: 0 0 var(--sp-16); text-align: center; }
+body[data-site="arena"] .a-hero-head .a-hero-sub  { margin: 0 auto; text-align: center; max-width: 56ch; }
+
+/* Stage uses the bulletproof padding-bottom aspect-ratio trick. 56.25% = 16/9. */
+body[data-site="arena"] .a-hero-stage {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    height: 0;
+    padding-bottom: 56.25%;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+}
+body[data-site="arena"] .a-hero-video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--bg-primary);
+    transition: opacity var(--duration-hero) var(--ease-out);
+    display: block;
+    pointer-events: none;
+}
+body[data-site="arena"] .a-hero-video--night { opacity: 1; }
+body[data-site="arena"] .a-hero-video--day   { opacity: 0; }
+[data-theme="light"] body[data-site="arena"] .a-hero-video--night { opacity: 0; }
+[data-theme="light"] body[data-site="arena"] .a-hero-video--day   { opacity: 1; }
+
+/* Stats grid — uses display:block on label/value so spans CANNOT collapse inline */
+body[data-site="arena"] .a-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    width: 100%;
+    max-width: 720px;
+    margin: var(--sp-32) auto 0;
+}
+body[data-site="arena"] .a-hero-stat {
+    display: block;
+    background: var(--surface);
+    padding: var(--sp-16) var(--sp-8);
+    text-align: center;
+}
+body[data-site="arena"] .a-hero-stat-label {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+body[data-site="arena"] .a-hero-stat-value {
+    display: block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-20);
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+}
+
+@media (max-width: 720px) {
+    body[data-site="arena"] .a-hero {
+        padding: calc(8px + var(--sp-16)) var(--sp-16) var(--sp-32);
+    }
+    body[data-site="arena"] .a-hero-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 420px) {
+    body[data-site="arena"] .a-hero-stats { grid-template-columns: 1fr; }
+}
+
+/* Wallet hero — text-only shell, no video stage. Left-aligned. */
+body[data-site="arena"] .a-hero--wallet {
+    padding-top: calc(86px + var(--sp-32));
+    padding-bottom: var(--sp-32);
+    text-align: left;
+}
+body[data-site="arena"] .a-hero--wallet .a-hero-content {
+    max-width: 1040px;
+    margin: 0 auto;
+}
+body[data-site="arena"] .a-hero--wallet .a-hero-title,
+body[data-site="arena"] .a-hero--wallet .w-hero-title { text-align: left; }
+body[data-site="arena"] .a-hero--wallet .a-hero-sub  { text-align: left; margin: 0; max-width: 72ch; }
+
+/* Reduced motion → hide videos, keep poster as background of the stage */
+@media (prefers-reduced-motion: reduce) {
+    body[data-site="arena"] .a-hero-video { display: none; }
+    body[data-site="arena"] .a-hero-stage {
+        background-image: url('/img/arena-night-poster.jpg');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    [data-theme="light"] body[data-site="arena"] .a-hero-stage {
+        background-image: url('/img/arena-day-poster.jpg');
+    }
+}
+
+/* ─── 4. FEATURE STRIP (five numbered pills) ──────────────────────────────── */
+body[data-site="arena"] .a-features {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1180px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transform: translateY(-32px);
+    box-shadow: 0 12px 36px color-mix(in srgb, var(--bg-primary) 55%, transparent);
+}
+body[data-site="arena"] .a-feature {
+    background: var(--surface);
+    padding: var(--sp-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    text-decoration: none;
+    color: var(--text);
+    transition: background var(--duration-ui) var(--ease-out);
+}
+body[data-site="arena"] .a-feature:hover {
+    background: var(--gold-bg);
+}
+body[data-site="arena"] .a-feature-num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.16em;
+    color: var(--accent);
+}
+body[data-site="arena"] .a-feature-label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-16);
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--text);
+}
+@media (max-width: 980px) {
+    body[data-site="arena"] .a-features { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+    body[data-site="arena"] .a-features { grid-template-columns: 1fr; transform: none; }
+}
+
+/* ─── 5. LEADERBOARD TABLE ────────────────────────────────────────────────── */
+body[data-site="arena"] .a-board-wrap {
+    max-width: 1180px;
+    margin: var(--sp-24) auto 0;
+    overflow-x: auto;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+body[data-site="arena"] .a-board-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--surface));
+    border-radius: 0 var(--radius-card) var(--radius-card) 0;
+}
+@media (max-width: 780px) {
+    body[data-site="arena"] .a-board-wrap::after { display: none; }
+}
+body[data-site="arena"] .a-board-wrap::-webkit-scrollbar { height: 6px; }
+body[data-site="arena"] .a-board-wrap::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+body[data-site="arena"] .a-board-wrap::-webkit-scrollbar-track { background: transparent; }
+
+body[data-site="arena"] table.a-board {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-14);
+    min-width: 900px;
+    font-variant-numeric: tabular-nums;
+}
+body[data-site="arena"] table.a-board th {
+    text-align: left;
+    padding: var(--sp-16) 12px;
+    background: var(--bg-primary);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+body[data-site="arena"] table.a-board th:hover { color: var(--accent); }
+body[data-site="arena"] table.a-board td {
+    padding: var(--sp-16) 12px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text);
+    white-space: nowrap;
+}
+body[data-site="arena"] table.a-board td:last-child { border-right: none; }
+@media (max-width: 780px) {
+    body[data-site="arena"] table.a-board td,
+    body[data-site="arena"] table.a-board th {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    body[data-site="arena"] table.a-board { min-width: 1000px; }
+}
+body[data-site="arena"] table.a-board tr:last-child td { border-bottom: none; }
+body[data-site="arena"] table.a-board tr:hover td { background: var(--gold-bg); }
+body[data-site="arena"] table.a-board td a {
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+}
+body[data-site="arena"] table.a-board td a:hover { color: var(--accent); }
+
+body[data-site="arena"] .rank-cell {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700;
+    font-size: var(--fs-16);
+    color: var(--text-dim);
+    width: 48px;
+    text-align: center;
+}
+body[data-site="arena"] .rank-cell.top3 { color: var(--accent); }
+body[data-site="arena"] .addr-cell {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+}
+
+/* Tier badge — semantic order through FILL > OUTLINE > MUTED. No hue. */
+body[data-site="arena"] .tier-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+}
+body[data-site="arena"] .tier-1 {
+    background: var(--text);
+    color: var(--bg-primary);
+    border-color: var(--text);
+}
+body[data-site="arena"] .tier-2 {
+    background: transparent;
+    color: var(--accent);
+    border-color: var(--accent);
+}
+body[data-site="arena"] .tier-3 {
+    background: transparent;
+    color: var(--text-dim);
+    border-color: var(--border);
+}
+
+/* PnL polarity through weight + glyph — no hue */
+body[data-site="arena"] .stat-pos,
+body[data-site="arena"] .stat-neg {
+    color: var(--text);
+    font-weight: 700;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+}
+body[data-site="arena"] .stat-pos::before {
+    content: "▲ ";
+    color: var(--accent);
+    font-size: 0.8em;
+    margin-right: 2px;
+}
+body[data-site="arena"] .stat-neg::before {
+    content: "▽ ";
+    color: var(--text-dim);
+    font-size: 0.8em;
+    margin-right: 2px;
+}
+body[data-site="arena"] .stat-neg { color: var(--text-dim); font-weight: 600; }
+
+/* Sort chips */
+body[data-site="arena"] .a-controls {
+    display: flex;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+    margin: var(--sp-32) 0 0;
+    align-items: center;
+    justify-content: center;
+}
+body[data-site="arena"] .a-controls .chip {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color var(--duration-ui) var(--ease-out),
+                border-color var(--duration-ui) var(--ease-out);
+}
+body[data-site="arena"] .a-controls .chip.active {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+body[data-site="arena"] .a-controls .chip:hover { color: var(--text); }
+
+/* Fills sub-table on wallet pages */
+body[data-site="arena"] table.fills {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-14);
+    font-variant-numeric: tabular-nums;
+    min-width: 640px;
+}
+body[data-site="arena"] table.fills th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg-primary);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+}
+body[data-site="arena"] table.fills td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+}
+body[data-site="arena"] table.fills th:last-child,
+body[data-site="arena"] table.fills td:last-child { border-right: none; }
+body[data-site="arena"] table.fills td.buy,
+body[data-site="arena"] table.fills td.sell {
+    color: var(--text);
+    font-weight: 700;
+}
+
+@media (max-width: 780px) {
+    body[data-site="arena"] .a-board-wrap {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+    }
+    body[data-site="arena"] .a-hero-title { font-size: clamp(var(--fs-40), 13vw, var(--fs-64)); }
+}
+
+/* ─── 6. PER-WALLET HERO + STATS ──────────────────────────────────────────── */
+body[data-site="arena"] .w-hero-title {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(var(--fs-28), 4.5vw, var(--fs-40));
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    margin: 0 0 var(--sp-16);
+    color: var(--text);
+}
+body[data-site="arena"] .w-addr {
+    display: inline-block;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-14);
+    color: var(--text-dim);
+    word-break: break-all;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    padding: 6px 10px;
+    margin-bottom: var(--sp-24);
+    user-select: all;
+}
+body[data-site="arena"] .w-narrative {
+    color: var(--text-dim);
+    font-size: var(--fs-16);
+    line-height: 1.7;
+    max-width: 760px;
+    margin: var(--sp-24) auto 0;
+}
+
+body[data-site="arena"] .w-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    margin-bottom: var(--sp-32);
+}
+body[data-site="arena"] .w-stat {
+    background: var(--surface);
+    padding: var(--sp-24) var(--sp-16);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+body[data-site="arena"] .w-stat-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+body[data-site="arena"] .w-stat-value {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-20);
+    font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+/* ─── 7. SHADOW BRIDGE + CTAs (root link only, no ?wallet=) ────────────────── */
+body[data-site="arena"] .w-cta-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--sp-32);
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--sp-32);
+    margin: var(--sp-32) 0 var(--sp-16);
+}
+body[data-site="arena"] .w-cta-card .left b {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-20);
+    font-weight: 700;
+    color: var(--text);
+}
+body[data-site="arena"] .w-cta-card .left p {
+    margin: var(--sp-8) 0 0;
+    color: var(--text-dim);
+    font-size: var(--fs-14);
+    line-height: 1.6;
+    max-width: 56ch;
+}
+body[data-site="arena"] .w-cta-card a,
+body[data-site="arena"] .w-cta {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--bg-primary);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700;
+    padding: 12px 22px;
+    border-radius: var(--radius-button);
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: filter var(--duration-ui) var(--ease-out),
+                transform var(--duration-ui) var(--ease-out);
+    border: 1px solid var(--accent);
+    white-space: nowrap;
+}
+body[data-site="arena"] .w-cta-card a:hover,
+body[data-site="arena"] .w-cta:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 720px) {
+    body[data-site="arena"] .w-cta-card {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+}
+
+/* Footer + nav: drop legacy hue references — selectors below catch the inline
+   anchors in build.py once their `style="color:var(--…)"` attrs are stripped. */
+body[data-site="arena"] .footer-links a,
+body[data-site="arena"] .footer-copy a {
+    color: var(--text-dim);
+    text-decoration: none;
+}
+body[data-site="arena"] .footer-links a:hover { color: var(--accent); }
+
+body[data-site="arena"] .arena-cta {
+    display: block;
+    max-width: 520px;
+    margin: 0 auto var(--sp-32);
+    padding: var(--sp-16) var(--sp-24);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-card);
+    background: var(--gold-bg);
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-16);
+    color: var(--text);
+    transition: background var(--duration-ui) var(--ease-out);
+}
+body[data-site="arena"] .arena-cta strong { color: var(--accent); font-weight: 700; }
+body[data-site="arena"] .arena-cta:hover { background: var(--champion-bg); }
+
+/* ─── 8. SECTION + CONTAINER + WALLET HELPERS ────────────────────────────── */
+body[data-site="arena"] .a-board-section {
+    padding: var(--sp-32) 0 var(--sp-96);
+}
+body[data-site="arena"] .a-board-section .container,
+body[data-site="arena"] .a-bridge-inner,
+body[data-site="arena"] .a-wallet-section .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--sp-24);
+}
+body[data-site="arena"] .a-bridge {
+    background: var(--bg-primary);
+    padding: var(--sp-64) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+body[data-site="arena"] .a-bridge-inner {
+    max-width: 880px;
+    text-align: center;
+}
+body[data-site="arena"] .a-bridge-copy {
+    color: var(--text-dim);
+    max-width: 680px;
+    margin: 0 auto var(--sp-24);
+    font-size: var(--fs-16);
+    line-height: 1.65;
+}
+body[data-site="arena"] .a-bridge .a-h2 {
+    text-align: center;
+    margin-bottom: var(--sp-16);
+}
+body[data-site="arena"] .a-board-meta {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: var(--fs-14);
+    margin-top: var(--sp-16);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+body[data-site="arena"] .a-board-meta b {
+    color: var(--text);
+    font-weight: 700;
+}
+body[data-site="arena"] .a-board-meta a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+body[data-site="arena"] .a-fills-heading {
+    margin: var(--sp-48) 0 var(--sp-16);
+    text-align: left;
+}
+body[data-site="arena"] .a-wallet-section {
+    padding: var(--sp-32) 0 var(--sp-96);
+}
+body[data-site="arena"] .a-wallet-section .container { max-width: 1040px; }
+body[data-site="arena"] .w-narrative {
+    color: var(--text-dim);
+    font-size: var(--fs-16);
+    line-height: 1.75;
+    max-width: 760px;
+    margin: var(--sp-24) auto 0;
+}
+body[data-site="arena"] .w-stat-value--text {
+    font-size: var(--fs-16);
+    font-weight: 600;
+    color: var(--text);
+    text-transform: capitalize;
+}
+body[data-site="arena"] .fills-when { color: var(--text-dim); }
+body[data-site="arena"] .fills-symbol { font-weight: 700; color: var(--text); }
+body[data-site="arena"] .fills-empty {
+    text-align: center;
+    color: var(--text-dim);
+    padding: var(--sp-32);
+}
+
+/* SSL popup hardening — strips legacy hue from popup row + close strip */
+body[data-site="arena"] .ssl-popup .ssl-popup-value { color: var(--text); }
+body[data-site="arena"] .ssl-popup-close {
+    display: flex;
+    gap: var(--sp-8);
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--sp-16);
+    margin-top: var(--sp-16);
+    border-top: 1px solid var(--border);
+}
+body[data-site="arena"] .ssl-learn-more {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 10px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-button);
+}
+body[data-site="arena"] .ssl-tap-out {
+    color: var(--text-dim);
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Footer credit row */
+body[data-site="arena"] .footer-credit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--fs-12);
+    color: var(--text-dim);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: var(--sp-32) auto var(--sp-16);
+    padding-top: var(--sp-24);
+    border-top: 1px solid var(--border);
+    max-width: 600px;
+}
+body[data-site="arena"] .footer-credit-name {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+body[data-site="arena"] .footer-credit-sep { opacity: 0.5; }
+body[data-site="arena"] .footer-credit a { text-decoration: none; }
+body[data-site="arena"] .footer-credit a:not(.footer-credit-name) { color: var(--text-dim); }
+
+/* Nav active state */
+body[data-site="arena"] .nav-center .nav-active { color: var(--accent); font-weight: 700; }

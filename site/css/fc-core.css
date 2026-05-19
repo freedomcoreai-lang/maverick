@@ -1,0 +1,176 @@
+/* FREEDOMCORE FUSION CORE — shared across the entire suite.
+   Lifted verbatim from /var/www/freedomcore-hub/assets/css/freedomcore-hub.css
+   (the canonical hub implementation). One file, copied to every site's /css/.
+   Drag-to-spin solar system: tilted ring stack, central FREEDOMCORE sphere,
+   four brand-image nodes orbiting it. JS handles rotation; CSS handles
+   visuals only. */
+
+.core-wrap {
+    position: relative; margin: 56px auto 24px;
+    width: clamp(300px, 70vw, 540px); height: clamp(300px, 70vw, 540px);
+    perspective: 1300px;
+    user-select: none; -webkit-user-select: none;
+    cursor: grab;
+    touch-action: none;
+}
+.core-wrap.is-dragging { cursor: grabbing; }
+
+.core-halo {
+    position: absolute; inset: -8%; border-radius: 50%;
+    background: radial-gradient(closest-side,
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        color-mix(in srgb, var(--accent) 8%, transparent) 55%,
+        transparent 75%);
+    filter: blur(56px);
+    pointer-events: none;
+}
+
+.core-plane {
+    position: absolute; inset: 0; transform-style: preserve-3d;
+    transform: rotateX(62deg);
+    pointer-events: none;
+}
+.core-ring { position: absolute; inset: 0; }
+.core-ring--track { opacity: 0.45; }
+.core-ring svg { width: 100%; height: 100%; display: block; }
+
+.core-fieldlines {
+    position: absolute; inset: 0; pointer-events: none;
+    transform: rotate(var(--rot, 0deg));
+    will-change: transform;
+}
+.core-fieldline {
+    position: absolute; left: 50%; top: 50%;
+    width: 1px; height: 44%;
+    transform-origin: 0 0;
+    background: linear-gradient(to top,
+        transparent,
+        color-mix(in srgb, var(--accent) 10%, transparent) 50%,
+        transparent);
+}
+
+.core-orb {
+    position: absolute; left: 50%; top: 50%;
+    width: clamp(110px, 26%, 160px); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+        radial-gradient(closest-side,
+            color-mix(in srgb, white 85%, transparent),
+            color-mix(in srgb, var(--accent) 65%, white 35%) 18%,
+            color-mix(in srgb, var(--accent) 90%, black 10%) 50%,
+            color-mix(in srgb, var(--accent) 70%, black 30%) 75%,
+            color-mix(in srgb, var(--bg) 95%, transparent));
+    box-shadow:
+        0 0 36px 6px color-mix(in srgb, var(--accent) 34%, transparent),
+        0 0 0 1.5px color-mix(in srgb, var(--accent) 40%, transparent),
+        inset 0 0 20px color-mix(in srgb, var(--accent) 45%, transparent),
+        inset 0 0 6px color-mix(in srgb, white 45%, transparent);
+    z-index: 3;
+    pointer-events: none;
+}
+.core-orb::before {
+    content: ''; position: absolute; left: 26%; top: 22%; width: 30%; height: 22%;
+    border-radius: 50%;
+    background: color-mix(in srgb, white 55%, transparent);
+    filter: blur(3px);
+}
+.core-orb::after {
+    content: ''; position: absolute; inset: -14%; border-radius: 50%;
+    border: 1px dashed color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.core-orb-label {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4; pointer-events: none;
+    text-align: center;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6), 0 0 20px color-mix(in srgb, var(--cyan) 50%, transparent);
+}
+.core-orb-name {
+    display: block;
+    font-family: var(--sans); font-weight: 900;
+    font-size: clamp(0.7rem, 1.6vw, 0.9rem); letter-spacing: 0.18em;
+    color: var(--text);
+    text-transform: uppercase;
+}
+
+.core-orbiters {
+    position: absolute; inset: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+.core-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: clamp(66px, 14.5%, 88px); aspect-ratio: 1;
+    background-color: var(--bg-2);
+    border: 2px solid var(--node-color);
+    border-radius: 50%;
+    box-shadow:
+        0 0 22px var(--node-glow),
+        inset 0 0 14px color-mix(in srgb, white 10%, transparent);
+    text-decoration: none;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: scale 0.25s ease-out, box-shadow 0.25s ease-out;
+    will-change: left, top, scale;
+    overflow: hidden;
+}
+.core-node:hover, .core-node:focus-visible {
+    scale: 1.15;
+    box-shadow:
+        0 0 36px var(--node-color),
+        0 0 12px color-mix(in srgb, white 35%, transparent),
+        inset 0 0 14px color-mix(in srgb, white 32%, transparent);
+    outline: none;
+}
+.core-node__img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    pointer-events: none;
+    display: block;
+    z-index: 1;
+}
+.core-node-mark {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 0; pointer-events: none;
+    font-family: var(--sans); font-size: 1.35rem; font-weight: 900;
+    letter-spacing: 0.12em; color: var(--node-color);
+    text-shadow: 0 0 14px var(--node-glow);
+}
+.core-node-tag {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    z-index: 2; pointer-events: none;
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.20em; color: white; text-transform: uppercase;
+    text-align: center;
+    padding: 18px 4px 8px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.85);
+}
+.core-node-label {
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--panel-strong); border: 1px solid var(--node-color);
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.28em; color: var(--node-color); text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+    box-shadow: 0 0 14px var(--node-glow);
+}
+.core-node:hover .core-node-label,
+.core-node:focus-visible .core-node-label { opacity: 1; }
+
+.core-hint {
+    position: absolute; bottom: -28px; left: 0; right: 0;
+    text-align: center;
+    font-family: var(--mono); font-size: 0.55rem;
+    letter-spacing: 0.32em; color: var(--muted); text-transform: uppercase;
+    opacity: 0.6;
+}

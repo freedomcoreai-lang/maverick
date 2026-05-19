@@ -1,0 +1,550 @@
+body[data-site="traditoo"] {
+  --accent: #22d3ee;
+  --site-accent: #22d3ee;
+  --site-accent-text: #67e8f9;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body[data-site="traditoo"] *,
+body[data-site="traditoo"] *::before,
+body[data-site="traditoo"] *::after {
+  box-sizing: border-box;
+}
+
+body[data-site="traditoo"][data-theme="light"],
+html[data-theme="light"] body[data-site="traditoo"] {
+  --accent: #075985;
+  --site-accent: #075985;
+  --site-accent-text: #075985;
+}
+
+.tt-grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 20% 18%, color-mix(in srgb, var(--accent) 25%, transparent), transparent 28rem),
+    radial-gradient(circle at 78% 12%, rgba(34, 197, 94, 0.16), transparent 24rem),
+    linear-gradient(90deg, rgba(148, 210, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(148, 210, 255, 0.06) 1px, transparent 1px);
+  background-size: auto, auto, 96px 96px, 96px 96px;
+}
+
+main {
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 132px 0 70px;
+  overflow: hidden;
+}
+
+.tt-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.72fr);
+  gap: clamp(24px, 5vw, 58px);
+  align-items: center;
+  min-height: calc(100vh - 180px);
+}
+
+.tt-hero-copy,
+.tt-section,
+.tt-two-col > *,
+.tt-card,
+.tt-workflows article,
+.tt-mcp-grid article {
+  min-width: 0;
+}
+
+.tt-kicker {
+  color: var(--site-accent-text);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.tt-hero h1,
+.tt-section h2 {
+  margin: 12px 0 18px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.tt-hero h1 {
+  font-size: clamp(4rem, 10vw, 6.4rem);
+}
+
+.tt-section h2 {
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+}
+
+.tt-lede,
+.tt-section p {
+  max-width: 760px;
+  color: var(--text-dim);
+  font-size: clamp(1rem, 2vw, 1.24rem);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.tt-actions,
+.tt-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.tt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tt-btn-primary {
+  background: var(--accent);
+  color: var(--text-on-accent, #031018);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+.tt-btn-secondary {
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  color: var(--text);
+}
+
+.tt-orb-panel,
+.tt-terminal,
+.tt-output,
+.tt-card,
+.tt-workflows article,
+.tt-mcp-grid article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel) 86%, transparent);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+}
+
+.tt-orb-panel {
+  padding: clamp(20px, 4vw, 34px);
+  min-width: 0;
+}
+
+.tt-orb {
+  display: grid;
+  place-items: center;
+  width: min(100%, 340px);
+  aspect-ratio: 1;
+  margin: 0 auto 24px;
+  border: 1px solid color-mix(in srgb, var(--accent) 48%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 45% 40%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 35%),
+    radial-gradient(circle, color-mix(in srgb, var(--bg) 30%, transparent), var(--bg-2));
+  box-shadow: 0 0 70px color-mix(in srgb, var(--accent) 28%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.tt-orb img {
+  width: 48%;
+  border-radius: 50%;
+  opacity: 0.88;
+}
+
+.tt-orb span {
+  position: absolute;
+  bottom: 20%;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+}
+
+.tt-status-stack {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tt-status-stack div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-2) 72%, transparent);
+}
+
+.tt-status-stack span,
+.tt-card span,
+.tt-workflows span {
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tt-status-stack strong {
+  color: var(--site-accent-text);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.tt-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 70px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--line);
+}
+
+.tt-strip div {
+  padding: 22px 18px;
+  background: color-mix(in srgb, var(--panel) 90%, transparent);
+}
+
+.tt-strip strong {
+  display: block;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: clamp(1.25rem, 3vw, 2.2rem);
+  font-weight: 900;
+}
+
+.tt-strip span {
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tt-section {
+  margin: 0 0 86px;
+}
+
+.tt-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
+  gap: clamp(22px, 4vw, 44px);
+  align-items: start;
+}
+
+.tt-card-grid,
+.tt-workflows,
+.tt-mcp-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.tt-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 26px;
+}
+
+.tt-card,
+.tt-workflows article,
+.tt-mcp-grid article {
+  padding: 22px;
+}
+
+.tt-card h3,
+.tt-workflows h3,
+.tt-mcp-grid h3 {
+  margin: 12px 0 10px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1.08rem;
+}
+
+.tt-card p,
+.tt-workflows p,
+.tt-mcp-grid p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.tt-terminal,
+.tt-output {
+  overflow: hidden;
+}
+
+.tt-terminal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tt-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 18px var(--green);
+}
+
+.tt-copy {
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.tt-terminal-lines,
+.tt-output pre {
+  margin: 0;
+  padding: 18px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 0.84rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.tt-terminal-lines p {
+  margin: 0 0 12px;
+  max-width: none;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.tt-terminal-lines span {
+  color: var(--site-accent-text);
+}
+
+.tt-workflows {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tt-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.tt-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tt-form input,
+.tt-form select {
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+  color: var(--text);
+  font: 700 0.92rem var(--sans);
+  padding: 0 12px;
+}
+
+.tt-form button {
+  grid-column: 1 / -1;
+}
+
+.tt-mcp-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tt-mcp-grid strong {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 50%;
+  color: var(--site-accent-text);
+  font-family: var(--mono);
+}
+
+.tt-mcp-grid code {
+  display: block;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.tt-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: min(1180px, calc(100vw - 32px));
+  margin: 0 auto;
+  padding: 28px 0 46px;
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 920px) {
+  main {
+    padding-top: 112px;
+  }
+
+  .tt-hero,
+  .tt-two-col,
+  .tt-card-grid,
+  .tt-workflows,
+  .tt-mcp-grid,
+  .tt-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .tt-hero {
+    min-height: auto;
+  }
+
+  .tt-form {
+    grid-template-columns: 1fr;
+  }
+
+  .tt-footer {
+    display: grid;
+  }
+}
+
+@media (max-width: 560px) {
+  main,
+  .tt-footer {
+    width: min(calc(100vw - 86px), 1180px);
+  }
+
+  main {
+    padding-top: 104px;
+  }
+
+  .tt-hero h1 {
+    font-size: clamp(3.15rem, 16vw, 3.9rem);
+    line-height: 1;
+  }
+
+  .tt-hero-copy {
+    width: min(100%, 292px);
+  }
+
+  .tt-section h2 {
+    font-size: clamp(2.05rem, 11vw, 2.9rem);
+  }
+
+  .tt-lede,
+  .tt-section p {
+    max-width: 100%;
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .tt-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .tt-btn {
+    width: 100%;
+    min-width: 0;
+    padding: 0 14px;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+  }
+
+  .tt-orb-panel,
+  .tt-terminal,
+  .tt-output,
+  .tt-card,
+  .tt-workflows article,
+  .tt-mcp-grid article {
+    border-radius: 8px;
+  }
+
+  .tt-orb {
+    width: min(100%, 248px);
+  }
+
+  .tt-status-stack div {
+    display: grid;
+    gap: 6px;
+  }
+
+  .tt-status-stack strong {
+    text-align: left;
+    font-size: 0.72rem;
+  }
+
+  .tt-strip div,
+  .tt-card,
+  .tt-workflows article,
+  .tt-mcp-grid article {
+    padding: 18px;
+  }
+
+  .tt-terminal-head {
+    flex-wrap: wrap;
+  }
+
+  .tt-copy {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
