@@ -8,6 +8,37 @@ A self-evolving AI trading organism. Built in public. Published open.
 
 ---
 
+## Latest activity
+
+**Last updated: 2026-05-19**
+
+This repo ships changes constantly. The section below reflects the most recent public-facing state — recent commits, live surfaces, and where to read the deep architecture.
+
+**Recent commits (this week):**
+
+| Date | Commit | Summary |
+|---|---|---|
+| 2026-05-19 | `84542dd` | API key rotation hygiene |
+| 2026-05-19 | `a024056` | Weekly reports + sitemap + tokens refresh |
+| 2026-05-19 | `6311b01` | Daily notes pipeline — May 16/18/19 |
+| 2026-05-19 | `f5ac3f2` | Site pages — atlas + confluence + traditoo + Pumphouse |
+| 2026-05-19 | `d4b135b` | Framework — atlas / fusion-core / shadow / arena |
+
+**Live public surfaces:**
+
+| URL | Surface |
+|---|---|
+| [freedomcore.io](https://freedomcore.io) | Main site + dashboard |
+| [maverick.freedomcore.io](https://maverick.freedomcore.io) | Trading organism |
+| [shadow.freedomcore.io](https://shadow.freedomcore.io) | Copy-trade lens |
+| [arena.freedomcore.io](https://arena.freedomcore.io) | Public wallet leaderboard |
+| [memes.freedomcore.io](https://memes.freedomcore.io) | Pumphouse — Solana memecoin tracker |
+| [atlas.freedomcore.io](https://atlas.freedomcore.io) | Atlas — market context |
+
+For the full architecture story, see [freedomcore.io/pages/architecture.html](https://freedomcore.io/pages/architecture.html). For the LLM swarm terminals in real time, see [maverick.freedomcore.io/pages/swarm.html](https://maverick.freedomcore.io/pages/swarm.html). For the security posture and A+ grades, see [/pages/security.html](https://freedomcore.io/pages/security.html).
+
+---
+
 ## What this repository is
 
 Everything in this repo is the public face of MAVERICK:
