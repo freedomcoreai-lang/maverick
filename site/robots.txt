@@ -1,10 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /api_data/
 Disallow: /pages/council.html
 Disallow: /pages/_council
 Disallow: /council/
 
 Sitemap: https://maverick.freedomcore.io/sitemap.xml
-Sitemap: https://arena.freedomcore.io/sitemap.xml
-Sitemap: https://freedomcore.io/sitemap.xml

@@ -15,17 +15,20 @@
 
 :root {
     /* ─── CORE PALETTE (locked, 4 neutrals) ──────────────────────────────── */
-    --bg-primary:     #0a0a0f;   /* page background */
-    --bg-elevated:    #14141c;   /* cards, panels, modals, nav */
-    --text-primary:   #f5f5fa;   /* body text, headings */
-    --text-muted:     #9ca3af;   /* R4 P3 — was #6b7280 (3.87:1 fails AA on bg-elevated); now ≥4.7:1 */
+    --bg-primary:     #06111f;   /* page background: night-blue shell */
+    --bg-elevated:    #0b1b31;   /* cards, panels, modals, nav */
+    --bg-panel:       #102844;   /* launch-unified cards and dropdowns */
+    --bg-field:       #08182b;   /* form fields, selects, compact controls */
+    --bg-hover:       #14345a;   /* hover / selected card surface */
+    --text-primary:   #f5f9ff;   /* body text, headings */
+    --text-muted:     #a9bad2;   /* AA-readable on the night-blue shell */
 
     /* ─── SITE ACCENTS (exactly one active per page) ─────────────────────── */
     --accent-gold:        #ffd700;   /* MAVERICK identity */
     --accent-violet:      #8b5cf6;   /* SHADOW identity */
     --accent-cyan:        #3ea8f5;   /* QUANTUM identity (mid blue) */
     --accent-silver:      #c0c8d4;   /* ARENA identity */
-    --accent-freedomcore: #4dd2ff;   /* HUB / parent brand — light blue (matches burger menu .fc-fam-head) */
+    --accent-freedomcore: #38bdf8;   /* HUB / parent brand — electric blue */
 
     /* ─── TYPE SCALE (px → rem at 16px base) ─────────────────────────────── */
     --fs-12:  0.75rem;
@@ -58,9 +61,21 @@
        Gemini-pattern: theme switch only flips --border-alpha; rgba composition is automatic. */
     --border-alpha:   0.14;
     --border:         rgba(245, 245, 250, var(--border-alpha));
-    --radius-card:    12px;
+    --border-strong:  rgba(174, 209, 255, 0.28);
+    --radius-card:    10px;
     --radius-pill:    999px;
     --radius-button:  8px;
+    --tap-target:     44px;
+
+    /* ─── LAUNCH CHROME — one blue shell for every franchise surface ────── */
+    --chrome-bg:      color-mix(in srgb, var(--bg-elevated) 92%, transparent);
+    --chrome-border:  var(--border-strong);
+    --card-bg:        color-mix(in srgb, var(--bg-panel) 78%, var(--bg-elevated));
+    --card-bg-hover:  color-mix(in srgb, var(--bg-hover) 86%, var(--bg-panel));
+    --menu-bg:        color-mix(in srgb, #07182c 94%, transparent);
+    --control-bg:     color-mix(in srgb, var(--bg-field) 92%, transparent);
+    --control-hover:  color-mix(in srgb, var(--bg-hover) 82%, transparent);
+    --shadow-elevated: 0 18px 50px rgba(0, 0, 0, 0.32);
 
     /* ─── LINE HEIGHT (used by streamline cockpit + future cockpits) ─────── */
     --lh-tight:       1.05;
@@ -106,23 +121,34 @@
    are shifted slightly darker for contrast on light backgrounds.
    ─────────────────────────────────────────────────────────────────────────── */
 [data-theme="light"] {
-    --bg-primary:     #f5f5fa;
-    --bg-elevated:    #ffffff;
-    --text-primary:   #0a0a0f;
-    --text-muted:     #4b5563;
+    --bg-primary:     #eaf4ff;
+    --bg-elevated:    #f8fbff;
+    --bg-panel:       #dcecff;
+    --bg-field:       #eef7ff;
+    --bg-hover:       #cfe4ff;
+    --text-primary:   #07111f;
+    --text-muted:     #435872;
 
     --accent-gold:    #c89b00;
     --accent-violet:  #6d3bcc;
     --accent-cyan:    #1e7fc4;
     --accent-silver:  #5a6270;
-    /* Operator 2026-05-01 — Hub flips identity per theme:
-       light blue on dark theme, dark blue on day theme. */
-    --accent-freedomcore: #1e3a8a;
+    /* Operator 2026-05-06 — day mode is still blue, just lighter and readable. */
+    --accent-freedomcore: #0f5fa8;
 
     /* R4 P4 — light-mode border alpha 0.18 (was 0.12) for 1px visibility.
        Gemini pattern: same --border rgba() formula, only --border-alpha flips. */
     --border-alpha:   0.18;
     --border:         rgba(10, 10, 15, var(--border-alpha));
+    --border-strong:  rgba(14, 77, 130, 0.26);
+    --chrome-bg:      rgba(248, 251, 255, 0.94);
+    --chrome-border:  var(--border-strong);
+    --card-bg:        color-mix(in srgb, var(--bg-elevated) 78%, var(--bg-panel));
+    --card-bg-hover:  color-mix(in srgb, var(--bg-hover) 84%, var(--bg-elevated));
+    --menu-bg:        rgba(248, 251, 255, 0.98);
+    --control-bg:     color-mix(in srgb, var(--bg-field) 92%, white);
+    --control-hover:  color-mix(in srgb, var(--bg-hover) 84%, white);
+    --shadow-elevated: 0 18px 42px rgba(14, 77, 130, 0.16);
 
     /* R4 P1 — text-on-light variants for accents that fail AA at full saturation.
        Pick: #8a6a00 (≥4.5:1 on #f5f5fa). Swap to #a67c00 if brand prefers — both pass AA. */

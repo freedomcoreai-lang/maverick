@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>MAVERICK Weekly Reports · FreedomCore</title>
+  <link>https://maverick.freedomcore.io/reports/</link>
+  <description>Brutally honest weekly intelligence digests from the MAVERICK autonomous trading swarm.</description>
+  <language>en-gb</language>
+  <atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="https://maverick.freedomcore.io/reports/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>MAVERICK Weekly Intelligence Digest · 2026-05-11 to 2026-05-16</title>
+    <link>https://maverick.freedomcore.io/reports/2026-05-16/</link>
+    <guid>https://maverick.freedomcore.io/reports/2026-05-16/</guid>
+    <pubDate>Sat, 16 May 2026 00:00:00 +0000</pubDate>
+    <description>MAVERICK Weekly Digest for 2026-05-11 to 2026-05-16: 74 trades (11W/63L), win rate 14.9%, net equity +0.00%. Regime evolution, execution scorecard, swarm DNA evolution, kill patterns. Honest analysis.</description>
+  </item>
+  <item>
+    <title>MAVERICK Weekly Intelligence Digest · </title>
+    <link>https://maverick.freedomcore.io/reports/2026-05-09/</link>
+    <guid>https://maverick.freedomcore.io/reports/2026-05-09/</guid>
+    <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate>
+    <description>MAVERICK Weekly Digest for : 104 trades (32W/72L), win rate 30.8%, net equity +0.00%. Regime evolution, execution scorecard, swarm DNA evolution, kill patterns. Honest analysis.</description>
+  </item>
+  <item>
+    <title>MAVERICK Weekly Intelligence Digest · </title>
+    <link>https://maverick.freedomcore.io/reports/2026-05-02/</link>
+    <guid>https://maverick.freedomcore.io/reports/2026-05-02/</guid>
+    <pubDate>Sat, 02 May 2026 00:00:00 +0000</pubDate>
+    <description>MAVERICK Weekly Digest for : 59 trades (36W/23L), win rate 61.0%, net equity +0.00%. Regime evolution, execution scorecard, swarm DNA evolution, kill patterns. Honest analysis.</description>
+  </item>
+  <item>
+    <title>MAVERICK Weekly Intelligence Digest · Monday 20 April to Saturday 25 April 2026</title>
+    <link>https://maverick.freedomcore.io/reports/2026-04-25/</link>
+    <guid>https://maverick.freedomcore.io/reports/2026-04-25/</guid>
+    <pubDate>Sat, 25 Apr 2026 00:00:00 +0000</pubDate>
+    <description>MAVERICK Weekly Digest for Monday 20 April to Saturday 25 April 2026: 120 trades (58W/62L), win rate 48.3%, net equity -114.89%. Regime evolution, execution scorecard, swarm DNA evolution, kill patterns. Honest analysis.</description>
+  </item>
+</channel>
+</rss>

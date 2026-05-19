@@ -1,5 +1,5 @@
-@import url('./tokens.css');
-@import url('./franchise-coord.css');   /* R5 contract — .fc-* canonical primitives */
+@import url('./tokens.css?v=20260506f');
+@import url('./franchise-coord.css?v=20260506f');   /* R5 contract — .fc-* canonical primitives */
 
 /* ============================================================================
    FreedomCore Modular CSS — v3.0
@@ -47,14 +47,14 @@
     --silver:       var(--accent);
     --bronze:       var(--text-dim);
 
-    /* Derived alpha surfaces — locked to the accent (gold). */
-    --green-dim:         rgba(255, 215, 0, 0.10);
-    --blue-dim:          rgba(255, 215, 0, 0.10);
-    --gold-bg:           rgba(255, 215, 0, 0.10);
-    --gold-border:       rgba(255, 215, 0, 0.28);
-    --glow-primary:      rgba(255, 215, 0, 0.15);
-    --glow-secondary:    rgba(255, 215, 0, 0.08);
-    --champion-bg:       rgba(255, 215, 0, 0.12);
+    /* Derived alpha surfaces — follow the active site accent. */
+    --green-dim:         color-mix(in srgb, var(--accent) 10%, transparent);
+    --blue-dim:          color-mix(in srgb, var(--accent) 10%, transparent);
+    --gold-bg:           color-mix(in srgb, var(--accent) 10%, transparent);
+    --gold-border:       color-mix(in srgb, var(--accent) 28%, transparent);
+    --glow-primary:      color-mix(in srgb, var(--accent) 15%, transparent);
+    --glow-secondary:    color-mix(in srgb, var(--accent) 8%, transparent);
+    --champion-bg:       color-mix(in srgb, var(--accent) 12%, transparent);
     --scanline:          rgba(0, 0, 0, 0.02);
 }
 
@@ -62,13 +62,13 @@
     /* Tokens flip in tokens.css; here we re-derive the alpha surfaces and
        collapse the legacy hue aliases the same way they collapse in dark. */
     --card:              var(--surface);
-    --green-dim:         rgba(200, 155, 0, 0.10);
-    --blue-dim:          rgba(200, 155, 0, 0.10);
-    --gold-bg:           rgba(200, 155, 0, 0.10);
-    --gold-border:       rgba(200, 155, 0, 0.35);
-    --glow-primary:      rgba(200, 155, 0, 0.12);
-    --glow-secondary:    rgba(200, 155, 0, 0.06);
-    --champion-bg:       rgba(200, 155, 0, 0.12);
+    --green-dim:         color-mix(in srgb, var(--accent) 10%, transparent);
+    --blue-dim:          color-mix(in srgb, var(--accent) 10%, transparent);
+    --gold-bg:           color-mix(in srgb, var(--accent) 10%, transparent);
+    --gold-border:       color-mix(in srgb, var(--accent) 35%, transparent);
+    --glow-primary:      color-mix(in srgb, var(--accent) 12%, transparent);
+    --glow-secondary:    color-mix(in srgb, var(--accent) 6%, transparent);
+    --champion-bg:       color-mix(in srgb, var(--accent) 12%, transparent);
     --scanline:          rgba(0, 0, 0, 0.008);
 
     --amber:             var(--accent);
@@ -1410,4 +1410,1086 @@ body[data-site="freedomcore"] .nav { top: 0 !important; }
 @media (max-width: 768px) {
     body[data-site="freedomcore"] { padding-top: 42px !important; }
     body[data-site="freedomcore"] .nav { top: 0 !important; }
+}
+
+/* ==========================================================================
+   Launch Blue Unification · 2026-05-06
+   One franchise chrome: blue day/night shell, tokenized cards, uniform menus,
+   reliable mobile tap targets. Suite accents remain semantic identity only.
+   ========================================================================== */
+
+body {
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent-freedomcore) 12%, transparent), transparent 34rem),
+        var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] body {
+    background:
+        radial-gradient(circle at top left, rgba(15, 95, 168, 0.12), transparent 34rem),
+        var(--bg-primary);
+}
+
+.nav,
+.fc-nav,
+.site-ticker,
+.build-phase-banner {
+    background: var(--chrome-bg) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--chrome-border) !important;
+    backdrop-filter: blur(22px);
+}
+
+.nav {
+    border-bottom: 1px solid var(--chrome-border) !important;
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--accent-freedomcore) 10%, transparent);
+}
+
+.nav-logo,
+.nav-logo-text,
+.nav__logo,
+.fc-nav__logo,
+.swarm-feed-panel__title,
+.terminal-overlay-title {
+    color: var(--text-primary) !important;
+}
+
+.nav-center a,
+.nav__link,
+.fc-nav__link,
+.nav-live,
+.ntfy-badge,
+.site-ticker .ticker-item,
+.swarm-feed-meta {
+    color: var(--text-muted) !important;
+}
+
+.nav-center a:hover,
+.nav-center a[aria-current="page"],
+.nav__link:hover,
+.fc-nav__link:hover,
+.fc-nav__link[aria-current="page"],
+.site-ticker .ticker-item a:hover {
+    color: var(--site-accent-text) !important;
+}
+
+.nav-hamburger,
+.theme-btn,
+.nav-icon-link,
+.github-btn,
+.wallet-btn,
+.ssl-badge,
+.nav-cta,
+.pro-btn,
+.fc-burger,
+.fc-burger-close,
+.swarm-feed-panel__fullscreen,
+.back-bar a,
+.explore-btn,
+.btn,
+.btn-primary,
+.btn-outline,
+button[class*="btn"],
+a[class*="btn"] {
+    min-width: var(--tap-target);
+    min-height: var(--tap-target);
+    background: var(--control-bg) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--chrome-border) !important;
+    border-radius: var(--radius-button) !important;
+    box-shadow: none;
+}
+
+.nav-hamburger:hover,
+.theme-btn:hover,
+.nav-icon-link:hover,
+.nav-icon-link:focus-visible,
+.github-btn:hover,
+.wallet-btn:hover,
+.ssl-badge:hover,
+.nav-cta:hover,
+.pro-btn:hover,
+.fc-burger:hover,
+.swarm-feed-panel__fullscreen:hover,
+.back-bar a:hover,
+.explore-btn:hover,
+.btn:hover,
+.btn-primary:hover,
+.btn-outline:hover,
+button[class*="btn"]:hover,
+a[class*="btn"]:hover {
+    background: var(--control-hover) !important;
+    color: var(--site-accent-text) !important;
+    border-color: color-mix(in srgb, var(--site-accent) 48%, var(--chrome-border)) !important;
+    transform: translateY(-1px);
+}
+
+.nav-hamburger svg,
+.theme-btn svg,
+.nav-icon-link svg,
+.github-btn svg,
+.wallet-btn svg,
+.fc-burger svg {
+    width: 22px;
+    height: 22px;
+    color: currentColor;
+    stroke: currentColor;
+}
+
+.mobile-dropdown,
+.fc-burger-panel,
+.fc-fam-menu,
+.fc-fam-panel,
+.dropdown-menu,
+.terminal-overlay,
+.terminal-overlay--reader,
+.terminal-overlay-header {
+    background: var(--menu-bg) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--chrome-border) !important;
+    box-shadow: var(--shadow-elevated);
+}
+
+.mobile-dropdown.open {
+    border-bottom: 1px solid var(--chrome-border) !important;
+}
+
+.mobile-dropdown a,
+.fc-burger-panel a,
+.fc-fam-link,
+.dropdown-menu a {
+    color: var(--text-primary) !important;
+    border-bottom-color: var(--chrome-border) !important;
+}
+
+.mobile-dropdown a:hover,
+.mobile-dropdown a:active,
+.fc-burger-panel a:hover,
+.fc-fam-link:hover,
+.dropdown-menu a:hover {
+    color: var(--site-accent-text) !important;
+    background: color-mix(in srgb, var(--site-accent) 10%, transparent) !important;
+}
+
+body[data-site="shadow"] .mobile-dropdown,
+body[data-site="quantum"] .mobile-dropdown,
+body[data-site="arena"] .mobile-dropdown {
+    top: 108px !important;
+}
+
+body[data-site="freedomcore"] .mobile-dropdown {
+    top: 48px !important;
+}
+
+@media (max-width: 768px) {
+    body[data-site="shadow"] .mobile-dropdown,
+    body[data-site="quantum"] .mobile-dropdown,
+    body[data-site="arena"] .mobile-dropdown {
+        top: 84px !important;
+    }
+
+    body[data-site="freedomcore"] .mobile-dropdown {
+        top: 42px !important;
+    }
+
+    .nav-hamburger,
+    .theme-btn,
+.nav-icon-link,
+    .github-btn,
+    .wallet-btn,
+    .ssl-badge,
+    .fc-burger {
+        width: var(--tap-target);
+        height: var(--tap-target);
+        padding: 0 !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.fc-card,
+.card,
+.panel,
+.term-card,
+.security-card,
+.module-card,
+.suite-card,
+.stat-card,
+.signal-card,
+.access-card,
+.proof-card,
+.tier-card,
+.frontier-panel,
+.hero-proof-item,
+.swarm-feed-panel,
+.swarm-feed-tab,
+.terminal-window,
+.terminal-panel,
+.council-seat-shell,
+.council-code-block,
+.council-table-block,
+.council-loading-state,
+.arena-card,
+.q-proof,
+.q-tier,
+.tx-card,
+.metric-card,
+.wallet-card,
+.position-card {
+    background: var(--card-bg) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--chrome-border) !important;
+    border-radius: var(--radius-card) !important;
+    box-shadow: none;
+}
+
+.fc-card:hover,
+.card:hover,
+.security-card:hover,
+.suite-card:hover,
+.stat-card:hover,
+.access-card:hover,
+.proof-card:hover,
+.tier-card:hover,
+.swarm-feed-tab:hover,
+.arena-card:hover,
+.q-proof:hover,
+.q-tier:hover {
+    background: var(--card-bg-hover) !important;
+    border-color: color-mix(in srgb, var(--site-accent) 44%, var(--chrome-border)) !important;
+}
+
+.swarm-feed-tab.is-active,
+.swarm-feed-tab[aria-selected="true"],
+.fc-tab[aria-selected="true"] {
+    background: color-mix(in srgb, var(--site-accent) 16%, var(--card-bg)) !important;
+    color: var(--site-accent-text) !important;
+    border-color: color-mix(in srgb, var(--site-accent) 54%, var(--chrome-border)) !important;
+}
+
+.swarm-feed-select,
+.terminal-overlay--reader select,
+input,
+select,
+textarea {
+    background: var(--control-bg) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--chrome-border) !important;
+    border-radius: var(--radius-button) !important;
+}
+
+.swarm-feed-select {
+    min-height: 44px;
+    padding: 10px 40px 10px 14px !important;
+    font-size: clamp(0.64rem, 1.8vw, 0.76rem) !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.04em !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.swarm-feed-select:disabled {
+    opacity: 0.62;
+    pointer-events: none;
+}
+
+.swarm-feed-select option {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    background: var(--menu-bg);
+}
+
+.swarm-feed-panel__body,
+.terminal-overlay-body,
+.council-seat-shell__body {
+    color: var(--text-primary) !important;
+}
+
+.swarm-feed-panel__body p,
+.terminal-overlay-body p,
+.council-seat-shell__body p,
+.card p,
+.panel p,
+.security-desc,
+.frontier-panel-copy {
+    color: color-mix(in srgb, var(--text-primary) 86%, var(--text-muted)) !important;
+}
+
+.fc-meta,
+.fc-eyebrow,
+.eyebrow,
+.frontier-panel-label,
+.section-kicker,
+.meta,
+.label,
+.stat-label {
+    color: var(--site-accent-text) !important;
+}
+
+.grid-bg {
+    background-image:
+        linear-gradient(color-mix(in srgb, var(--accent-freedomcore) 7%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--accent-freedomcore) 7%, transparent) 1px, transparent 1px);
+}
+
+.hero-primary-cta,
+.fc-cta-primary {
+    background: var(--site-accent) !important;
+    color: var(--text-on-accent) !important;
+    border-color: var(--site-accent) !important;
+}
+
+/* 2026-05-15: Hyperliquid-style chart/position cards.
+   Applies to public Maverick position cards and every embedded TradingView
+   surface that uses .tv-chart-wrap. Static/UI only. */
+body[data-site="maverick"] {
+    --hl-bg: #0f171f;
+    --hl-panel: #111c26;
+    --hl-panel-2: #16232e;
+    --hl-line: rgba(151, 166, 184, 0.18);
+    --hl-line-strong: rgba(151, 166, 184, 0.32);
+    --hl-text: #e2e8f0;
+    --hl-muted: #8a96a6;
+    --hl-faint: #52606f;
+    --hl-green: #31c6a6;
+    --hl-red: #f0646f;
+    --hl-blue: #5b8dff;
+}
+
+body[data-site="maverick"] .positions-grid {
+    gap: 14px;
+}
+
+body[data-site="maverick"] .pos-card {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 8px !important;
+    border: 1px solid var(--hl-line) !important;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--hl-panel-2) 84%, transparent), var(--hl-panel)) !important;
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.24);
+    transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+
+body[data-site="maverick"] .pos-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--hl-line-strong) !important;
+}
+
+body[data-site="maverick"] .pos-card.long,
+body[data-site="maverick"] .pos-card.short {
+    border-left-width: 1px;
+}
+
+body[data-site="maverick"] .pos-card.long {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--hl-green) 82%, transparent), 0 12px 34px rgba(0, 0, 0, 0.24);
+}
+
+body[data-site="maverick"] .pos-card.short {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--hl-red) 82%, transparent), 0 12px 34px rgba(0, 0, 0, 0.24);
+}
+
+body[data-site="maverick"] .pos-card-header,
+body[data-site="maverick"] .pos-summary,
+body[data-site="maverick"] .pos-detail {
+    padding-left: clamp(12px, 2.4vw, 18px);
+    padding-right: clamp(12px, 2.4vw, 18px);
+}
+
+body[data-site="maverick"] .pos-card-header {
+    min-height: 54px;
+    margin: 0;
+    border-bottom: 1px solid var(--hl-line);
+    background: rgba(6, 12, 18, 0.34);
+}
+
+body[data-site="maverick"] .pos-symbol {
+    color: var(--hl-text);
+    font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+    letter-spacing: 0;
+}
+
+body[data-site="maverick"] .pos-regime {
+    color: var(--hl-muted);
+    background: rgba(255, 255, 255, 0.035);
+    border-color: var(--hl-line);
+    border-radius: 6px;
+}
+
+body[data-site="maverick"] .pos-summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: rgba(0, 0, 0, 0.12);
+}
+
+body[data-site="maverick"] .pos-summary-item {
+    min-height: 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.035);
+    border-radius: 6px;
+}
+
+body[data-site="maverick"] .pos-summary-label {
+    color: var(--hl-faint);
+    letter-spacing: 0.08em;
+}
+
+body[data-site="maverick"] .pos-summary-value {
+    color: var(--hl-text);
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+}
+
+body[data-site="maverick"] .pos-summary-value.positive,
+body[data-site="maverick"] .positive {
+    color: var(--hl-green) !important;
+}
+
+body[data-site="maverick"] .pos-summary-value.negative,
+body[data-site="maverick"] .negative {
+    color: var(--hl-red) !important;
+}
+
+body[data-site="maverick"] .pos-detail {
+    margin-top: 0;
+    padding-top: 12px;
+    padding-bottom: 14px;
+    border-top-color: var(--hl-line);
+    background: linear-gradient(180deg, rgba(10, 18, 25, 0.42), rgba(10, 18, 25, 0.08));
+}
+
+body[data-site="maverick"] .pos-layer {
+    background: rgba(255, 255, 255, 0.032);
+    border-color: var(--hl-line);
+    border-radius: 8px;
+}
+
+body[data-site="maverick"] .pos-telemetry {
+    gap: 8px;
+    margin: 10px 0 12px;
+}
+
+body[data-site="maverick"] .pos-telem-item {
+    padding: 8px 10px;
+    border: 1px solid var(--hl-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.026);
+    color: var(--hl-muted);
+}
+
+body[data-site="maverick"] .pos-telem-item span {
+    color: var(--hl-text);
+    font-variant-numeric: tabular-nums;
+}
+
+body[data-site="maverick"] .tv-chart-wrap {
+    display: flex;
+    flex-direction: column;
+    height: clamp(360px, 58svh, 680px);
+    margin-top: 14px;
+    border-radius: 8px;
+    border-color: var(--hl-line-strong);
+    background: var(--hl-bg);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.015);
+}
+
+body[data-site="maverick"] .tv-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--hl-line);
+    background: rgba(11, 18, 25, 0.92);
+    color: var(--hl-text);
+    font-family: var(--mono, 'JetBrains Mono', monospace);
+}
+
+body[data-site="maverick"] .tv-card-top div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+body[data-site="maverick"] .tv-card-top div:last-child {
+    align-items: flex-end;
+}
+
+body[data-site="maverick"] .tv-card-top strong {
+    font-size: 0.84rem;
+    line-height: 1;
+}
+
+body[data-site="maverick"] .tv-card-top span {
+    color: var(--hl-muted);
+    font-size: 0.62rem;
+    line-height: 1;
+}
+
+body[data-site="maverick"] .tv-chart-wrap iframe {
+    flex: 1;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0;
+    margin-top: 0 !important;
+    border-radius: 0 !important;
+}
+
+body[data-site="maverick"] .tv-fullscreen-btn {
+    top: 58px;
+    right: 10px;
+    bottom: auto;
+    border: 1px solid var(--hl-line);
+    background: rgba(16, 24, 32, 0.86);
+    color: var(--hl-muted);
+    border-radius: 7px;
+}
+
+body[data-site="maverick"] .tv-fullscreen-btn:hover {
+    color: var(--hl-text);
+    background: rgba(22, 34, 45, 0.96);
+}
+
+@media (max-width: 720px) {
+    body[data-site="maverick"] .positions-grid {
+        gap: 12px;
+        margin-left: -4px;
+        margin-right: -4px;
+    }
+
+    body[data-site="maverick"] .pos-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body[data-site="maverick"] .pos-layers {
+        grid-template-columns: 1fr;
+    }
+
+    body[data-site="maverick"] .pos-telemetry {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body[data-site="maverick"] .tv-chart-wrap {
+        height: min(72svh, 620px);
+        min-height: 440px;
+        margin-left: -4px;
+        margin-right: -4px;
+    }
+
+    body[data-site="maverick"] .tv-card-top {
+        min-height: 52px;
+    }
+}
+
+/* 2026-05-15: Day-mode skin for the Hyperliquid cards above.
+   The chart-first layout stays identical; only surface tokens flip. */
+[data-theme="light"] body[data-site="maverick"] {
+    --hl-bg: #f7fbff;
+    --hl-panel: #ffffff;
+    --hl-panel-2: #edf4fb;
+    --hl-line: rgba(15, 31, 52, 0.12);
+    --hl-line-strong: rgba(15, 31, 52, 0.22);
+    --hl-text: #0c1624;
+    --hl-muted: #5a6a7c;
+    --hl-faint: #7b8998;
+    --hl-green: #0f9f86;
+    --hl-red: #d94a5f;
+    --hl-blue: #2563eb;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-card {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(238, 245, 252, 0.96)) !important;
+    box-shadow: 0 16px 38px rgba(15, 31, 52, 0.12) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-card.long {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--hl-green) 82%, transparent), 0 16px 38px rgba(15, 31, 52, 0.12) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-card.short {
+    box-shadow: inset 3px 0 0 color-mix(in srgb, var(--hl-red) 82%, transparent), 0 16px 38px rgba(15, 31, 52, 0.12) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-card-header,
+[data-theme="light"] body[data-site="maverick"] .tv-card-top {
+    background: rgba(247, 251, 255, 0.92) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-summary {
+    background: rgba(221, 232, 244, 0.42) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-summary-item,
+[data-theme="light"] body[data-site="maverick"] .pos-layer,
+[data-theme="light"] body[data-site="maverick"] .pos-telem-item {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border-color: var(--hl-line) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .pos-detail {
+    background: linear-gradient(180deg, rgba(238, 245, 252, 0.84), rgba(255, 255, 255, 0.52)) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .tv-chart-wrap {
+    background: var(--hl-bg) !important;
+    box-shadow: inset 0 0 0 1px rgba(15, 31, 52, 0.035), 0 18px 40px rgba(15, 31, 52, 0.10) !important;
+}
+
+[data-theme="light"] body[data-site="maverick"] .tv-fullscreen-btn {
+    background: rgba(255, 255, 255, 0.88) !important;
+    color: var(--hl-muted) !important;
+}
+
+/* ───────── Swarm-terminal LED states + activity ticker (2026-05-18) ─────────
+   Operator complaint: panels open blank for 3-4 minutes, no LED indicator,
+   no countdown, no activity feed. These rules give every panel a visible
+   state dot (running / scheduled / idle / failed), an immediate loader
+   animation when fullscreen opens, and a slot for last-N events. */
+
+.swarm-feed-panel__state {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #6b7280;
+    box-shadow: 0 0 0 0 transparent;
+    margin-right: 8px;
+    vertical-align: middle;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    cursor: help;
+}
+.swarm-feed-panel__state[data-state="live"],
+.swarm-feed-panel__state[data-state="running"] {
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e, 0 0 0 2px rgba(34,197,94,0.15);
+    animation: fc-led-pulse 1.4s ease-in-out infinite;
+}
+.swarm-feed-panel__state[data-state="scheduled"] {
+    background: #fbbf24;
+    box-shadow: 0 0 6px rgba(251,191,36,0.55);
+    animation: fc-led-slow-pulse 3s ease-in-out infinite;
+}
+.swarm-feed-panel__state[data-state="idle"] {
+    background: #4b5563;
+    box-shadow: 0 0 4px rgba(75,85,99,0.4);
+}
+.swarm-feed-panel__state[data-state="failed"] {
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444, 0 0 0 2px rgba(239,68,68,0.25);
+    animation: fc-led-pulse 0.8s ease-in-out infinite;
+}
+@keyframes fc-led-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(0.78); opacity: 0.55; }
+}
+@keyframes fc-led-slow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.95; }
+    50%      { transform: scale(0.88); opacity: 0.6; }
+}
+
+/* Panel state text — "next: 00:22 BST" / "running 12m" / "last: PASS" */
+.swarm-feed-panel__status-line {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+.swarm-feed-panel__status-line .fc-status-key {
+    color: var(--text-muted, var(--text-dim));
+    margin-right: 4px;
+}
+.swarm-feed-panel__status-line .fc-status-running { color: #22c55e; font-weight: 700; }
+.swarm-feed-panel__status-line .fc-status-scheduled { color: #fbbf24; font-weight: 700; }
+.swarm-feed-panel__status-line .fc-status-failed { color: #ef4444; font-weight: 700; }
+
+/* Activity ticker below panel header — last 3 events per organism */
+.swarm-feed-ticker {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    line-height: 1.55;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 6px;
+    max-height: 76px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+.swarm-feed-ticker__row {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 2px 0;
+}
+.swarm-feed-ticker__time {
+    color: var(--text-muted, var(--text-dim));
+    flex: 0 0 auto;
+    min-width: 84px;
+}
+.swarm-feed-ticker__action {
+    flex: 0 0 auto;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.swarm-feed-ticker__action.fc-action-demote { color: #f59e0b; }
+.swarm-feed-ticker__action.fc-action-quarantine { color: #ef4444; }
+.swarm-feed-ticker__action.fc-action-promote { color: #22c55e; }
+.swarm-feed-ticker__action.fc-action-hof { color: #ffd700; }
+.swarm-feed-ticker__action.fc-action-throttle { color: #fbbf24; }
+.swarm-feed-ticker__action.fc-action-info { color: var(--text-dim); }
+.swarm-feed-ticker__detail {
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1 1 auto;
+}
+.swarm-feed-ticker__empty {
+    color: var(--text-muted, var(--text-dim));
+    font-style: italic;
+}
+
+/* Immediate-load animation in terminal overlay — replaces 3-min blank wait */
+.fc-terminal-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+}
+.fc-terminal-loader--panel { padding: 32px 16px; }
+.fc-terminal-loader__title {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--text);
+    font-weight: 700;
+}
+.fc-terminal-loader__spinner {
+    width: 56px;
+    height: 56px;
+    border: 3px solid var(--border);
+    border-top-color: #22c55e;
+    border-right-color: #22c55e;
+    border-radius: 50%;
+    animation: fc-terminal-spin 0.9s linear infinite;
+    margin-bottom: 14px;
+    position: relative;
+}
+.fc-terminal-loader__spinner::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 2px solid rgba(255,215,0,0.05);
+    border-bottom-color: #ffd700;
+    border-left-color: #ffd700;
+    border-radius: 50%;
+    animation: fc-terminal-spin-rev 1.4s linear infinite;
+}
+.fc-terminal-loader__ring {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    transform: rotate(-90deg);
+}
+.fc-terminal-loader__ring svg { width: 100%; height: 100%; overflow: visible; }
+.fc-loader-ring-track {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 3;
+}
+.fc-loader-ring-progress {
+    fill: none;
+    stroke: #22c55e;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 150.8;
+    stroke-dashoffset: 150.8;
+    transform-origin: 28px 28px;
+    animation: fc-loader-ring-fill 1.8s ease-in-out infinite,
+               fc-loader-ring-spin 2.2s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(34,197,94,0.55));
+}
+.fc-terminal-loader__detail {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted, var(--text-dim));
+    max-width: 360px;
+    text-align: center;
+    line-height: 1.6;
+}
+.fc-terminal-loader__dots::after { content: ''; }
+
+/* Slim horizontal progress bar — replaces the dot-ellipsis stutter.
+   Indeterminate sweep, smooth easing, no text shake. */
+.fc-terminal-loader__bar {
+    position: relative;
+    width: min(280px, 70vw);
+    height: 2px;
+    margin: 14px 0 10px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.fc-terminal-loader__bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #22c55e 50%,
+        transparent 100%
+    );
+    animation: fc-loader-sweep 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes fc-loader-sweep {
+    0%   { left: -40%; }
+    100% { left: 100%; }
+}
+
+/* Rotating status phases — fades one line in at a time, no letter-shake.
+   The JS-driven version cycles through real phase labels; the CSS-only
+   version is a static fallback if JS hasn't bound yet. */
+.fc-terminal-loader__phases {
+    position: relative;
+    height: 1.4em;
+    width: min(360px, 80vw);
+    margin-top: 4px;
+}
+.fc-terminal-loader__phase {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    color: var(--text-muted, var(--text-dim));
+    text-align: center;
+    opacity: 0;
+    animation: fc-loader-phase 8s ease-in-out infinite;
+    text-transform: uppercase;
+}
+.fc-terminal-loader__phase:nth-child(1) { animation-delay: 0s; }
+.fc-terminal-loader__phase:nth-child(2) { animation-delay: 2s; }
+.fc-terminal-loader__phase:nth-child(3) { animation-delay: 4s; }
+.fc-terminal-loader__phase:nth-child(4) { animation-delay: 6s; }
+@keyframes fc-loader-phase {
+    0%, 22%  { opacity: 0; transform: translateY(4px); }
+    4%, 18%  { opacity: 1; transform: translateY(0); }
+    25%,100% { opacity: 0; transform: translateY(-4px); }
+}
+@keyframes fc-terminal-spin     { to { transform: rotate(360deg); } }
+@keyframes fc-terminal-spin-rev { to { transform: rotate(-360deg); } }
+@keyframes fc-loader-ring-spin { to { transform: rotate(360deg); } }
+@keyframes fc-loader-ring-fill {
+    0%   { stroke-dashoffset: 150.8; }
+    50%  { stroke-dashoffset: 30; }
+    100% { stroke-dashoffset: 150.8; }
+}
+
+/* Body scroll lock — picker open shouldn't let the page scroll behind it.
+   Mirrors the terminal-overlay scroll-lock and fixes the clunkiness Rob
+   flagged in the council dropdown. */
+body.fc-picker-locked {
+    overflow: hidden;
+    touch-action: none;
+}
+
+/* Mobile bottom-sheet picker — desktop keeps the inline-dropdown shape;
+   under 768px we anchor the menu to the viewport bottom so it can't
+   overflow off-screen and the user always sees the full list with a
+   backdrop. Operator 2026-05-18: 'menu opens floating off the chart on
+   mobile, page scrolls behind, you lose where you are'. */
+@media (max-width: 767.98px) {
+    .council-picker[data-open="true"]::before,
+    .swarm-picker[data-open="true"]::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.42);
+        backdrop-filter: blur(2px);
+        z-index: 950;
+    }
+    .council-picker[data-open="true"] .council-picker__menu,
+    .swarm-picker[data-open="true"] .council-picker__menu {
+        position: fixed;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        top: auto;
+        max-height: 72vh;
+        z-index: 960;
+        padding: 14px;
+        border-radius: 14px;
+        box-shadow: 0 -16px 48px rgba(0,0,0,0.45);
+    }
+    /* Larger tap target on the menu options for mobile thumb */
+    .council-picker[data-open="true"] .council-picker__option,
+    .swarm-picker[data-open="true"] .council-picker__option {
+        padding: 14px 14px;
+        font-size: 0.72rem;
+    }
+    /* Visible 'tap to close' affordance at the top of the sheet */
+    .council-picker[data-open="true"] .council-picker__menu::before,
+    .swarm-picker[data-open="true"] .council-picker__menu::before {
+        content: '';
+        display: block;
+        width: 38px;
+        height: 4px;
+        margin: 0 auto 10px;
+        border-radius: 4px;
+        background: var(--text-dim);
+        opacity: 0.55;
+    }
+}
+
+/* Per-run detail card rendered into the Swarm panel body when the operator
+   selects a previous run from the dropdown — mirrors how the Council Verdict
+   Room renders a chosen council transcript. */
+.fc-swarm-run {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px 8px 4px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.fc-swarm-run__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.fc-swarm-run__window {
+    padding: 2px 8px;
+    border: 1px solid var(--gold, #ffd700);
+    color: var(--gold, #ffd700);
+    border-radius: 4px;
+    font-weight: 800;
+}
+.fc-swarm-run__decision {
+    padding: 2px 8px;
+    background: rgba(34,197,94,0.10);
+    color: #22c55e;
+    border-radius: 4px;
+    font-weight: 800;
+}
+.fc-swarm-run__date { color: var(--text-muted, var(--text-dim)); }
+.fc-swarm-run__metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+.fc-swarm-run__metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+}
+.fc-swarm-run__metric .k {
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted, var(--text-dim));
+}
+.fc-swarm-run__metric .v {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--text);
+}
+.fc-swarm-run__metric .v.pos { color: #22c55e; }
+.fc-swarm-run__metric .v.neg { color: #ef4444; }
+.fc-swarm-run__summary {
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 8px 0 0;
+    border-top: 1px solid var(--border);
+}
+.fc-swarm-run__section-title {
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    color: var(--gold, #ffd700);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+.fc-swarm-run__thesis {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-line;
+    padding: 4px 0 0;
+}
+.fc-swarm-run__pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 6px 0 0;
+}
+
+/* Mav DNA detail slot — sits between the panel header and the always-on
+   swarm-log conversation history. Operator 2026-05-18: dropdown choice
+   must not eat the full deliberation log below. */
+.swarm-feed-panel__detail {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 14px 16px;
+    margin-bottom: 10px;
+}
+.swarm-feed-panel__detail:empty {
+    display: none;
+}
+/* Divider label for the always-on conversation log under the detail slot */
+.swarm-feed-panel__detail + .swarm-feed-panel__body::before {
+    content: 'Deliberation History';
+    display: block;
+    color: var(--gold, #ffd700);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 4px 0 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed var(--border);
 }
