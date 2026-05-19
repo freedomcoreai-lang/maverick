@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.">
+<meta name="author" content="FreedomCore Research">
+<meta property="og:title" content="Maverick forensics 2026-05-19: HBAR + five stops">
+<meta property="og:description" content="Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/">
+<meta property="og:site_name" content="FreedomCore Maverick">
+<meta property="article:published_time" content="2026-05-19T06:49:57Z">
+<meta property="article:section" content="Maverick">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Maverick forensics 2026-05-19: HBAR + five stops">
+<meta name="twitter:description" content="Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.">
+<link rel="canonical" href="https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/">
+<link rel="alternate" type="application/rss+xml" title="FreedomCore Maverick Notes" href="/notes/feed.xml">
+<title>Maverick trading forensics 2026-05-19: one HBAR long, five stop-outs, 88-symbol Streamline spine · FreedomCore Maverick</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Maverick trading forensics 2026-05-19: one HBAR long, five stop-outs, 88-symbol Streamline spine","datePublished":"2026-05-19T06:49:57Z","dateModified":"2026-05-19T06:49:57Z","author":{"@type":"Organization","name":"FreedomCore Research","url":"https://freedomcore.io/"},"publisher":{"@type":"Organization","name":"FreedomCore","url":"https://freedomcore.io/"},"articleSection":"Maverick","description":"Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.","mainEntityOfPage":{"@type":"WebPage","@id":"https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/"},"url":"https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/","isPartOf":{"@type":"Website","name":"FreedomCore Maverick"}}</script>
+<style>
+  :root {
+    --bg: #02060d;
+    --bg-elev: #07101c;
+    --text: #f4fbff;
+    --text-muted: #a7bfd2;
+    --accent: #22d3ee;
+    --accent-soft: rgba(34, 211, 238, 0.18);
+    --border: rgba(148, 210, 255, 0.18);
+  }
+  [data-theme="light"] {
+    --bg: #eaf2fa;
+    --bg-elev: #ffffff;
+    --text: #051426;
+    --text-muted: #475569;
+    --accent: #075985;
+    --accent-soft: rgba(7, 89, 133, 0.14);
+    --border: rgba(20, 50, 100, 0.14);
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; margin: 0; min-height: 100vh; line-height: 1.65; padding-top: 56px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .pub-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted); margin-bottom: 32px; }
+  h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 24px; line-height: 1.2; }
+  h2 { font-size: 24px; font-weight: 700; margin: 40px 0 16px; }
+  h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+  p { margin: 0 0 18px; color: var(--text); }
+  ul { margin: 0 0 18px; padding-left: 22px; }
+  ul li { margin-bottom: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 0.92em; background: var(--bg-elev); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); }
+  blockquote { margin: 24px 0; padding: 16px 20px; background: var(--bg-elev); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; }
+  blockquote p { margin: 0; color: var(--text-muted); }
+  .source-quote { font-style: italic; }
+  .related-links { margin-top: 48px; padding: 24px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 12px; }
+  .related-links h3 { margin-top: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); }
+  .related-links ul { list-style: none; padding: 0; }
+  .related-links li { margin: 8px 0; }
+  .note-cta { margin-top: 48px; padding: 28px; background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,215,0,0.02)); border: 1px solid rgba(255,215,0,0.25); border-radius: 12px; text-align: center; }
+  .note-cta p { margin: 0 0 16px; color: var(--text); font-weight: 500; }
+  .cta-btn { display: inline-block; padding: 12px 24px; background: var(--accent); color: var(--bg); border-radius: 999px; font-weight: 600; text-decoration: none; }
+  .cta-btn:hover { opacity: 0.9; text-decoration: none; }
+  .note-source { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+  .source-line { margin: 0 0 12px; }
+  .research-disclaimer { font-size: 12px; color: var(--text-muted); opacity: 0.7; margin: 16px 0 0; }
+  nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(2,6,13,0.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 22px; justify-content: center; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  nav.top::-webkit-scrollbar { display: none; }
+  nav.top a { flex-shrink: 0; }
+  @media (max-width: 720px) {
+    nav.top { justify-content: flex-start; gap: 18px; padding: 12px 16px; font-size: 10px; letter-spacing: 0.12em; }
+  }
+  [data-theme="light"] nav.top { background: rgba(234,242,250,0.94); }
+  nav.top a { color: var(--text-muted); }
+  nav.top a:hover { color: var(--accent); text-decoration: none; }
+  nav.top a.current { color: var(--accent); }
+</style>
+</head>
+<body>
+  <nav class="top" style="display:flex;justify-content:flex-start;padding:14px 20px;">
+    <a href="/" style="font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;color:var(--text-muted);">&larr; Maverick</a>
+  </nav>
+  <article class="wrap">
+    <div class="eyebrow">Maverick · STRATEGY NOTE</div>
+    <div class="pub-date">Published 2026-05-19</div>
+    <h1>Maverick trading forensics 2026-05-19: one HBAR long, five stop-outs, 88-symbol Streamline spine</h1>
+    <p>Maverick hit the 2026-05-19 05:16 UTC gather window holding one open HBARUSDTM long under a <code>dynamic_trail</code> stop owner, five consecutive <code>EXCHANGE_STOP_HIT</code> exits across the prior 36 hours, and a Streamline market structure spine that was 53 seconds stale on its newest XBT 1m bar across 88 symbols.</p>
+<h2>Open book at the gather window</h2>
+<p><code>/root/bin/mav status</code> reads:</p>
+<ul>
+<li><code>maverick.service</code> active since 2026-05-14 23:20:41 BST.</li>
+<li><code>streamline.service</code> active since 2026-05-12 18:33:41 BST.</li>
+<li><code>maverick-dashboard.service</code> active since 2026-05-15 15:12:18 BST.</li>
+<li><code>maverick-blackbox.service</code> active since 2026-05-11 17:04:39 BST.</li>
+<li>Exchange reconciliation: no ghosts, no untracked exchange-side positions, restart-recovery evidence <code>no</code>, recent API or cancel error lines <code>0</code>.</li>
+</ul>
+<p>Open positions:</p>
+<ul>
+<li><code>HBARUSDTM</code> long, regime <code>MOMENTUM_TREND</code>, age 13h58m, stop <code>0.08784365636535026</code>, owner <code>dynamic_trail</code>, margin <code>0.2471</code>, paper-marked PnL <code>+0.0088</code>, lifecycle <code>ok</code>.</li>
+</ul>
+<h2>Trailing behaviour on the only live ticket</h2>
+<p>The HBARUSDTM ticket entered at 2026-05-18 15:18:12 BST in regime <code>GENESIS_MARKET</code> and is now being managed under <code>MOMENTUM_TREND</code> by the <code>dynamic_trail</code> owner. That sequence is the trend-handoff shape this autonomous crypto trading engine was selected for: enter on <code>GENESIS_MARKET</code>, hand off to the trend trail when the indicator stack confirms continuation, tighten the stop as the move ages.</p>
+<p>Trend governor at the gather window: <code>enabled=True promote_atr=2.5 wake_atr=1.5 ratchet_step=0.75</code>. Those three numbers control when the handoff fires and how granular the trail is.</p>
+<h2>Five stop-outs in the prior window</h2>
+<p>Closed-trade forensics:</p>
+<ul>
+<li>2026-05-18 14:35:39 <code>AAVEUSDTM</code> pnl <code>-0.8699%</code> <code>EXCHANGE_STOP_HIT</code> <code>MOMENTUM_TREND</code>.</li>
+<li>2026-05-17 23:41:42 <code>RENDERUSDTM</code> pnl <code>-3.2312%</code> <code>EXCHANGE_STOP_HIT</code> <code>MOMENTUM_TREND</code>.</li>
+<li>2026-05-17 23:41:33 <code>WLDUSDTM</code> pnl <code>-1.4431%</code> <code>EXCHANGE_STOP_HIT</code> <code>MOMENTUM_TREND</code>.</li>
+<li>2026-05-17 23:07:27 <code>STXUSDTM</code> pnl <code>-1.5139%</code> <code>EXCHANGE_STOP_HIT</code> <code>MOMENTUM_TREND</code>.</li>
+<li>2026-05-17 18:20:21 <code>IOTAUSDTM</code> pnl <code>-1.7825%</code> <code>EXCHANGE_STOP_HIT</code> <code>GENESIS_MARKET</code>.</li>
+</ul>
+<p>All five entered under <code>GENESIS_MARKET</code>. Four of five exited under <code>MOMENTUM_TREND</code>, meaning the trend-handoff fired and then the trail stopped the ticket. One of five never qualified for the handoff and was closed on the initial stop. That is what a trend-following engine looks like across a chop-heavy stretch.</p>
+<h2>Streamline state</h2>
+<p>The indicator snapshot trading cards depend on Streamline market structure data being fresh. At the gather window:</p>
+<ul>
+<li>Streamline symbols: <code>88</code>.</li>
+<li>Streamline latest XBT 1m: 2026-05-19 06:16:00 BST, age <code>53s</code>.</li>
+</ul>
+<p>Bar freshness gates entries. A stale spine pauses new tickets until the bar updates. See the public <a href="https://maverick.freedomcore.io/pages/streamline.html">Streamline</a> surface and the <a href="https://www.kucoin.com/docs">KuCoin API docs</a> for the upstream venue.</p>
+<h2>Champion bookkeeping caveat</h2>
+<p>The status output flags a stale <code>champion.txt</code> pointer (<code>SOVEREIGN_WEEKLY_VWAP_PDH_HANDOFF_V1</code>) against the live champion <code>SOVEREIGN_PDL_SPRING_OTE_RATCHET v1.0</code>. The live ticket is being managed by the current champion, not by the pointer file. The mismatch is bookkeeping and is logged for the next maintenance window.</p>
+<h2>Caveats</h2>
+<ul>
+<li>Open book of one HBARUSDTM long is the entire live exposure at the gather window.</li>
+<li>Five consecutive stops is forensic data, not a verdict on the strategy.</li>
+<li><code>maverick-swarm.service</code> is inactive at the gather window. Swarm research is scheduled, not continuous.</li>
+<li>This surface does not publish forward-looking trade calls, custom entries for readers, or exchange controls.</li>
+<li>See <a href="https://atlas.freedomcore.io/notes/">Atlas notes</a> for cross-surface research context and the <a href="https://freedomcore.io/">FreedomCore</a> hub for the wider stack.</li>
+</ul>
+    
+    <div class="note-cta">
+      <p>Study the Maverick live research surface</p>
+      <a href="https://maverick.freedomcore.io/" class="cta-btn">FreedomCore Maverick →</a>
+    </div>
+    
+    <aside class="related-links">
+      <h3>Related</h3>
+      <ul>
+      <li><a href="https://maverick.freedomcore.io/live">Maverick live</a></li>
+      <li><a href="https://maverick.freedomcore.io/pages/streamline.html">Streamline</a></li>
+      <li><a href="https://atlas.freedomcore.io/notes/">Atlas notes</a></li>
+      <li><a href="https://freedomcore.io/">FreedomCore</a></li>
+      </ul>
+    </aside>
+    
+    <footer class="note-source">
+      
+      <p class="source-line">
+        Source: <a href="https://maverick.freedomcore.io/live" rel="noopener nofollow">FreedomCore Maverick source pack</a>
+        · Published 2026-05-19
+        · <a href="/notes/">All Maverick notes</a>
+      </p>
+      <p class="research-disclaimer">
+        This is independent research published by FreedomCore. It is not investment advice. No returns are promised or implied.
+      </p>
+    </footer>
+  </article>
+</body>
+</html>

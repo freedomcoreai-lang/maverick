@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FreedomCore Maverick - Research Notes</title>
+    <link>https://maverick.freedomcore.io/notes/</link>
+    <atom:link href="https://maverick.freedomcore.io/notes/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Independent research notes from FreedomCore Maverick.</description>
+    <language>en-gb</language>
+    <lastBuildDate>Tue, 19 May 2026 06:49:57 GMT</lastBuildDate>
+    <generator>FreedomCore owned-note publisher v1</generator>
+    <item>
+      <title>Maverick trading forensics 2026-05-19: one HBAR long, five stop-outs, 88-symbol Streamline spine</title>
+      <link>https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/</link>
+      <guid isPermaLink="true">https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-19-0516/</guid>
+      <pubDate>Tue, 19 May 2026 06:49:57 GMT</pubDate>
+      <description>Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.</description>
+    </item>
+    <item>
+      <title>Maverick trading forensics 2026-05-18: GENESIS_MARKET regime, single AAVE long, stale champion pointer</title>
+      <link>https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-18-0516/</link>
+      <guid isPermaLink="true">https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-18-0516/</guid>
+      <pubDate>Tue, 19 May 2026 06:42:54 GMT</pubDate>
+      <description>Maverick autonomous crypto trading engine status at 2026-05-18 06:16 BST: one AAVEUSDTM long under GENESIS_MARKET, five exits via exchange stops, Streamline 49s</description>
+    </item>
+    <item>
+      <title>Maverick trading forensics 2026-05-16: GENESIS regime entries and exchange-stop exit anatomy</title>
+      <link>https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-16-0515/</link>
+      <guid isPermaLink="true">https://maverick.freedomcore.io/notes/maverick-daily-note-2026-05-16-0515/</guid>
+      <pubDate>Tue, 19 May 2026 06:42:54 GMT</pubDate>
+      <description>Maverick trading forensics for 2026-05-16: open GENESIS-regime positions, exchange-stop exit anatomy, Streamline at 5-second freshness.</description>
+    </item>
+  </channel>
+</rss>

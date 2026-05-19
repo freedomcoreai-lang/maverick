@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Independent research notes from FreedomCore Maverick. Macro signals, market structure, and the FreedomCore take.">
+<meta property="og:title" content="FreedomCore Maverick - Research Notes">
+<meta property="og:description" content="Independent research notes from FreedomCore Maverick.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://maverick.freedomcore.io/notes/">
+<link rel="canonical" href="https://maverick.freedomcore.io/notes/">
+<link rel="alternate" type="application/rss+xml" title="FreedomCore Maverick Notes" href="https://maverick.freedomcore.io/notes/feed.xml">
+<title>Maverick Notes · FreedomCore Research</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #02060d;
+    --bg-elev: #07101c;
+    --text: #f4fbff;
+    --text-muted: #a7bfd2;
+    --accent: #22d3ee;
+    --accent-soft: rgba(34, 211, 238, 0.18);
+    --border: rgba(148, 210, 255, 0.18);
+  }
+  [data-theme="light"] {
+    --bg: #eaf2fa;
+    --bg-elev: #ffffff;
+    --text: #051426;
+    --text-muted: #475569;
+    --accent: #075985;
+    --accent-soft: rgba(7, 89, 133, 0.14);
+    --border: rgba(20, 50, 100, 0.14);
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; margin: 0; min-height: 100vh; padding-top: 56px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  h1 { font-size: 42px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .lede { font-size: 18px; line-height: 1.6; color: var(--text-muted); margin: 0 0 48px; }
+  .notes-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .note-card { display: block; padding: 28px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); transition: transform 0.15s, border-color 0.15s; }
+  .note-card:hover { transform: translateY(-2px); border-color: var(--accent); text-decoration: none; }
+  .card-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .card-title { font-size: 22px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .card-desc { color: var(--text-muted); margin: 0 0 16px; line-height: 1.55; }
+  .card-read { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .empty-state { padding: 48px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 12px; text-align: center; }
+  .empty-state h2 { font-size: 20px; margin: 20px 0 12px; font-weight: 600; }
+  .empty-state p { color: var(--text-muted); margin: 0 0 20px; }
+  .pill { display: inline-block; padding: 6px 14px; background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); border-radius: 999px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .feed-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+  footer a { color: var(--accent); text-decoration: none; }
+  nav.top { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(2,6,13,0.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 22px; justify-content: center; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  nav.top::-webkit-scrollbar { display: none; }
+  nav.top a { flex-shrink: 0; }
+  @media (max-width: 720px) {
+    nav.top { justify-content: flex-start; gap: 18px; padding: 12px 16px; font-size: 10px; letter-spacing: 0.12em; }
+  }
+  [data-theme="light"] nav.top { background: rgba(234,242,250,0.94); }
+  nav.top a { color: var(--text-muted); text-decoration: none; }
+  nav.top a:hover { color: var(--accent); }
+  nav.top a.current { color: var(--accent); }
+</style>
+</head>
+<body>
+  <nav class="top" style="display:flex;justify-content:flex-start;padding:14px 20px;">
+    <a href="/" style="font-family:'JetBrains Mono',monospace;font-size:12px;text-decoration:none;color:var(--text-muted);">&larr; Maverick</a>
+  </nav>
+  <div class="wrap">
+    <div class="eyebrow">FreedomCore Maverick</div>
+    <h1>Research Notes</h1>
+    <p class="lede">Independent research from the FreedomCore desk. Each note links to the source it analyses. The destination is the note, not a teaser.</p>
+    <div class="notes-grid">
+      <a href="/notes/maverick-daily-note-2026-05-19-0516/" class="note-card">
+        <div class="card-eyebrow">STRATEGY NOTE · 2026-05-19 06:49 UTC</div>
+        <h2 class="card-title">Maverick trading forensics 2026-05-19: one HBAR long, five stop-outs, 88-symbol Streamline spine</h2>
+        <p class="card-desc">Maverick trading forensics 2026-05-19: one open HBAR long under dynamic trail, five stop-outs, Streamline 88-symbol spine and indicator snapshot trading cards.</p>
+        <span class="card-read">Read note →</span>
+      </a>
+      <a href="/notes/maverick-daily-note-2026-05-18-0516/" class="note-card">
+        <div class="card-eyebrow">STRATEGY NOTE · 2026-05-19 06:42 UTC</div>
+        <h2 class="card-title">Maverick trading forensics 2026-05-18: GENESIS_MARKET regime, single AAVE long, stale champion pointer</h2>
+        <p class="card-desc">Maverick autonomous crypto trading engine status at 2026-05-18 06:16 BST: one AAVEUSDTM long under GENESIS_MARKET, five exits via exchange stops, Streamline 49s</p>
+        <span class="card-read">Read note →</span>
+      </a>
+      <a href="/notes/maverick-daily-note-2026-05-16-0515/" class="note-card">
+        <div class="card-eyebrow">STRATEGY NOTE · 2026-05-19 06:42 UTC</div>
+        <h2 class="card-title">Maverick trading forensics 2026-05-16: GENESIS regime entries and exchange-stop exit anatomy</h2>
+        <p class="card-desc">Maverick trading forensics for 2026-05-16: open GENESIS-regime positions, exchange-stop exit anatomy, Streamline at 5-second freshness.</p>
+        <span class="card-read">Read note →</span>
+      </a></div>
+    <footer>
+      <p>FreedomCore Maverick · <a href="https://freedomcore.io/">FreedomCore.io</a> · <a href="/notes/feed.xml">RSS</a> · <a href="/sitemap.xml">Sitemap</a></p>
+    </footer>
+  </div>
+</body>
+</html>
