@@ -1,0 +1,359 @@
+/* FreedomCore family nav V3 — one burger/dropdown contract across the suite. */
+.nav-hamburger {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line, var(--border, rgba(148, 210, 255, 0.22)));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-2, #06111f) 74%, transparent);
+  color: var(--text, #f4fbff);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.nav-hamburger:hover,
+.nav-hamburger:focus-visible {
+  border-color: var(--accent, var(--cyan, #4adeff));
+  color: var(--accent, var(--cyan, #4adeff));
+  outline: none;
+}
+
+.nav-hamburger svg {
+  display: block;
+}
+
+.fc-lite-nav {
+  position: sticky;
+  top: 10px;
+  z-index: 520;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(960px, calc(100vw - 28px));
+  min-height: 54px;
+  margin: 12px auto 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line, var(--border, rgba(148, 210, 255, 0.22)));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel-strong, var(--bg-2, #06111f)) 90%, transparent);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(22px);
+}
+
+.fc-lite-brand {
+  color: var(--text, #f4fbff);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.fc-lite-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--accent, #4adeff) 38%, transparent);
+  border-radius: 8px;
+  color: var(--accent, #4adeff);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.mobile-dropdown {
+  position: fixed;
+  top: 86px;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  border-bottom: 0 solid transparent;
+  background: color-mix(in srgb, var(--panel-strong, var(--bg-2, #06111f)) 94%, transparent);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(24px);
+  pointer-events: none;
+  transition: max-height 0.34s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s ease;
+}
+
+.mobile-dropdown.open {
+  max-height: calc(100vh - 92px);
+  overflow-y: auto;
+  pointer-events: auto;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent, var(--cyan, #4adeff));
+}
+
+body[data-site="maverick"] .mobile-dropdown {
+  top: 69px;
+}
+
+.fc-lite-nav + .mobile-dropdown {
+  top: 78px;
+}
+
+body[data-site="maverick"] .fc-lite-nav + .mobile-dropdown {
+  top: 78px;
+}
+
+.mobile-dropdown > * {
+  opacity: 0;
+  transform: translateY(-34px) translateZ(-80px) rotateX(18deg) scale(0.9);
+  will-change: transform, opacity;
+}
+
+.mobile-dropdown.open > * {
+  animation: fc-menu-drop 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.175) forwards;
+}
+
+@keyframes fc-menu-drop {
+  0% { opacity: 0; transform: translateY(-34px) translateZ(-80px) rotateX(18deg) scale(0.9); }
+  100% { opacity: 1; transform: none; }
+}
+
+.mobile-dropdown.open > *:nth-child(1)  { animation-delay: 0.03s; }
+.mobile-dropdown.open > *:nth-child(2)  { animation-delay: 0.06s; }
+.mobile-dropdown.open > *:nth-child(3)  { animation-delay: 0.09s; }
+.mobile-dropdown.open > *:nth-child(4)  { animation-delay: 0.12s; }
+.mobile-dropdown.open > *:nth-child(5)  { animation-delay: 0.15s; }
+.mobile-dropdown.open > *:nth-child(6)  { animation-delay: 0.18s; }
+.mobile-dropdown.open > *:nth-child(7)  { animation-delay: 0.21s; }
+.mobile-dropdown.open > *:nth-child(8)  { animation-delay: 0.24s; }
+.mobile-dropdown.open > *:nth-child(9)  { animation-delay: 0.27s; }
+.mobile-dropdown.open > *:nth-child(10) { animation-delay: 0.30s; }
+.mobile-dropdown.open > *:nth-child(11) { animation-delay: 0.33s; }
+.mobile-dropdown.open > *:nth-child(12) { animation-delay: 0.36s; }
+
+.mobile-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line, var(--border, rgba(148, 210, 255, 0.18)));
+  color: var(--text, #f4fbff);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.16s ease, background 0.16s ease, padding-left 0.16s ease;
+}
+
+.mobile-dropdown a:hover,
+.mobile-dropdown a:focus-visible {
+  padding-left: 30px;
+  color: var(--accent, var(--cyan, #4adeff));
+  background: color-mix(in srgb, var(--accent, #4adeff) 9%, transparent);
+  outline: none;
+}
+
+.fc-fam-head {
+  display: block;
+  padding: 14px 24px 8px;
+  color: var(--cyan, #4adeff);
+  font-family: var(--sans, Inter, system-ui, sans-serif);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.32em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.fc-fam-link {
+  font-family: var(--sans, Inter, system-ui, sans-serif) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.07em !important;
+}
+
+.fc-fam-link .fc-fam-desc {
+  margin-left: auto;
+  color: inherit;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.58;
+  text-transform: uppercase;
+}
+
+.fc-fam-link[data-fc="apex"]     { color: var(--cyan, #4adeff); }
+.fc-fam-link[data-fc="maverick"] { color: var(--gold, #f7d56b); }
+.fc-fam-link[data-fc="shadow"]   { color: var(--violet, #a78bfa); }
+.fc-fam-link[data-fc="arena"]    { color: var(--silver, #c0c8d4); }
+.fc-fam-link[data-fc="quantum"]  { color: var(--blue, #38bdf8); }
+.fc-fam-link[data-fc="atlas"]    { color: var(--cyan, #22d3ee); }
+/* Pumphouse green — neon in dark, forest in light. Matches the muted palette
+   the other family entries use (no eye-burning bright green on white). */
+.fc-fam-link[data-fc="pumphouse"]                          { color: #4ade80; }
+[data-theme="light"] .fc-fam-link[data-fc="pumphouse"]     { color: #047857; }
+
+/* Burger icons are now inline <span class="fc-fam-icon"> text inside the HTML
+   itself (2026-05-14) — survives any CSS caching. This rule just gives them
+   the circular-badge visual so they sit consistently with the family theme. */
+.fc-fam-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent);
+  font-size: 13px;
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', system-ui;
+  line-height: 1;
+  flex: 0 0 28px;
+  vertical-align: middle;
+}
+
+.fc-fam-divider {
+  height: 1px;
+  margin: 8px 0 6px;
+  background: var(--line, var(--border, rgba(148, 210, 255, 0.18)));
+  pointer-events: none;
+}
+
+.fc-mobile-current {
+  box-shadow: inset 3px 0 0 currentColor;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+@media (max-width: 1060px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    min-height: 54px;
+    margin: 10px auto 0 !important;
+    gap: 0;
+    padding: 8px 56px;
+  }
+
+  .site-header .primary-nav {
+    display: none !important;
+  }
+
+  .site-header .nav-hamburger {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
+
+  .site-header .brand-lockup {
+    justify-content: center;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .site-header .brand-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .site-header .brand-lockup strong {
+    white-space: nowrap;
+  }
+
+  .site-header .brand-lockup small {
+    display: none;
+  }
+
+  .site-header .theme-btn,
+  .site-header .theme-toggle {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    display: inline-grid !important;
+    place-items: center;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .fc-lite-nav {
+    width: calc(100vw - 18px);
+    margin-top: 8px;
+  }
+
+  .fc-lite-brand {
+    max-width: 54vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fc-lite-pill {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header .header-cta {
+    display: none !important;
+  }
+
+  .mobile-dropdown {
+    top: 72px;
+  }
+
+  body[data-site="maverick"] .mobile-dropdown {
+    top: 59px;
+  }
+
+  .mobile-dropdown a {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .fc-fam-link .fc-fam-desc {
+    font-size: 0.56rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-dropdown,
+  .mobile-dropdown > *,
+  .mobile-dropdown.open > * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .mobile-dropdown.open > * {
+    opacity: 1 !important;
+  }
+}
