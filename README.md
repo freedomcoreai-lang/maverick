@@ -37,6 +37,18 @@ This repo ships changes constantly. The section below reflects the most recent p
 
 For the full architecture story, see [freedomcore.io/pages/architecture.html](https://freedomcore.io/pages/architecture.html). For the LLM swarm terminals in real time, see [maverick.freedomcore.io/pages/swarm.html](https://maverick.freedomcore.io/pages/swarm.html). For the security posture and A+ grades, see [/pages/security.html](https://freedomcore.io/pages/security.html).
 
+## Atlas public data and authority
+
+Atlas publishes a crawlable public-data and provenance surface. These are ordinary links for discovery, citation, and verification, not a paid-link scheme:
+
+- Public data catalog: [atlas.freedomcore.io/datasets/](https://atlas.freedomcore.io/datasets/)
+- Authority index, every asset in one place: [atlas.freedomcore.io/datasets/authority/](https://atlas.freedomcore.io/datasets/authority/)
+- Symbol coverage index: [atlas.freedomcore.io/datasets/atlas-symbol-coverage/](https://atlas.freedomcore.io/datasets/atlas-symbol-coverage/)
+- Market pulse dataset: [atlas.freedomcore.io/datasets/atlas-market-pulse/](https://atlas.freedomcore.io/datasets/atlas-market-pulse/)
+- Security posture evidence: [atlas.freedomcore.io/datasets/atlas-security-posture/](https://atlas.freedomcore.io/datasets/atlas-security-posture/)
+- Authority manifest JSON: [atlas.freedomcore.io/datasets/atlas-authority-manifest.json](https://atlas.freedomcore.io/datasets/atlas-authority-manifest.json)
+- Provenance note: [docs/atlas-public-data-authority.md](docs/atlas-public-data-authority.md)
+
 ---
 
 ## What this repository is
